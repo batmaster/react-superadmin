@@ -1,4 +1,33 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "🧪 Running pre-commit CI tests..."
+echo "================================"
+
+# Run the local CI test script
+./scripts/test-ci.sh
+
+# Exit early if CI tests fail
+if [ $? -ne 0 ]; then
+    echo "❌ Pre-commit CI tests failed - commit blocked"
+    echo "Please fix the issues above before committing"
+    exit 1
+fi
+
+echo "✅ Pre-commit CI tests passed"
+echo ""
+echo "🔍 Running lint-staged formatting and linting..."
+echo "================================"
+
+# Run lint-staged for formatting and linting
 npx lint-staged
+
+# Exit early if lint-staged fails
+if [ $? -ne 0 ]; then
+    echo "❌ Lint-staged failed - commit blocked"
+    echo "Please fix the formatting/linting issues above before committing"
+    exit 1
+fi
+
+echo "✅ Pre-commit checks completed - proceeding with commit"
+exit 0

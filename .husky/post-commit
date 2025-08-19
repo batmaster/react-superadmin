@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Post-commit CI checks..."
+echo "================================"
+
+# Run additional CI checks that don't block commits
+echo "🔍 Running post-commit checks..."
+
+# Check if we can run act (GitHub Actions locally)
+if command -v act &> /dev/null; then
+    echo "📋 Testing GitHub Actions workflow locally..."
+    echo "Note: This is optional and won't block your commit"
+    
+    # Test the CI workflow in dry-run mode
+    act -W .github/workflows/ci.yml --list --dryrun 2>/dev/null || true
+else
+    echo "ℹ️  Act not installed - install with 'brew install act' to test workflows locally"
+fi
+
+echo "✅ Post-commit checks completed"
+echo "Your commit was successful! 🎉"

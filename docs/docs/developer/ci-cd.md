@@ -147,7 +147,7 @@ Track pipeline performance:
 
 ### Pre-commit Hooks
 
-Local development uses Husky for code quality:
+Local development uses Husky for comprehensive CI testing:
 
 ```bash
 # Install hooks
@@ -157,10 +157,30 @@ pnpm install
 pnpm run prepare
 
 # Pre-commit checks
+- Local CI test execution (./scripts/test-ci.sh)
 - ESLint + Prettier formatting
 - TypeScript compilation
 - Commit message validation
+
+# Post-commit checks
+- GitHub Actions workflow validation
+- Optional local workflow testing with Act
 ```
+
+### Local CI Testing
+
+**Before every commit**, the pre-commit hook automatically runs:
+
+```bash
+# What gets tested automatically:
+✅ Dependency installation
+✅ Linting (ESLint)
+✅ Building (TypeScript compilation)
+✅ TypeScript type checking
+✅ All CI commands locally
+```
+
+**If any test fails, the commit is blocked** until issues are resolved.
 
 ### Workflow Testing
 
@@ -176,6 +196,28 @@ act -W .github/workflows/ci.yml
 # Run with specific event
 act push -W .github/workflows/ci.yml
 ```
+
+### Commit Hooks for CI
+
+The project includes automated commit hooks that test CI locally:
+
+```bash
+# Pre-commit hook (blocks commits if CI fails)
+.husky/pre-commit     # Runs ./scripts/test-ci.sh
+
+# Commit message validation
+.husky/commit-msg     # Validates commit format
+
+# Post-commit hook (informational)
+.husky/post-commit    # Tests workflows with Act
+```
+
+**Benefits:**
+
+- 🚫 **Prevents broken commits** - CI must pass locally
+- 🔍 **Early error detection** - Catch issues before pushing
+- ⚡ **Faster feedback** - No waiting for GitHub Actions
+- 🎯 **Quality assurance** - Every commit is tested
 
 ## 🔄 Workflow Lifecycle
 
