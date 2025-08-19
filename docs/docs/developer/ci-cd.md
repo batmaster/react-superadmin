@@ -73,6 +73,7 @@ Automated dependency management and security:
 Automated deployment pipeline:
 
 - **Documentation**: GitHub Pages deployment
+- **Firebase Hosting**: Firebase deployment for docs
 - **Package Publishing**: NPM package publishing
 - **Conditional Triggers**: Only runs on relevant changes
 - **Sequential Execution**: Docs deploy before packages
@@ -86,6 +87,15 @@ Automated deployment pipeline:
 
 ## 🔧 Configuration
 
+### Firebase Setup
+
+The project uses Firebase Hosting for documentation deployment alongside GitHub Pages:
+
+1. **Firebase Project**: `react-superadmin`
+2. **Hosting Directory**: `docs/build`
+3. **Deployment Channel**: `live`
+4. **Configuration**: Uses existing `firebase.json` and `.firebaserc`
+
 ### Required Secrets
 
 Set these secrets in your GitHub repository settings:
@@ -93,6 +103,9 @@ Set these secrets in your GitHub repository settings:
 ```bash
 # GitHub Actions
 GITHUB_TOKEN          # Automatically provided
+
+# Firebase (required for docs deployment)
+FIREBASE_SERVICE_ACCOUNT_KEY  # Firebase service account JSON
 
 # SonarCloud (optional)
 SONAR_TOKEN           # For code quality metrics
