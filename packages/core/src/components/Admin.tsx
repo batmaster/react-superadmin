@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { SuperAdminProvider } from "../contexts/SuperAdminContext";
 import { AdminConfig } from "../types";
+import { cn } from "../utils/cn";
 
 export interface AdminProps {
   /** Configuration object for the admin application */
@@ -37,7 +38,7 @@ export const Admin: React.FC<AdminProps> = ({
   return (
     <SuperAdminProvider config={config}>
       <div
-        className={`react-superadmin ${className}`.trim()}
+        className={cn("react-superadmin", className)}
         style={style}
         data-testid="admin-container"
       >

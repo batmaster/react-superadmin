@@ -1,2 +1,8 @@
 // Core components
 export { Admin, type AdminProps } from "./Admin";
+export { ResourceWrapper, type ResourceWrapperProps } from "./Resource";
+export { Layout, type LayoutProps } from "./Layout";
+export { AppBar, type AppBarProps } from "./AppBar";
+export { Sidebar, type SidebarProps } from "./Sidebar";
+export { Footer, type FooterProps } from "./Footer";
+export { AdminLayout, type AdminLayoutProps } from "./AdminLayout";
