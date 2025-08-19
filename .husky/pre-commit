@@ -1,8 +1,19 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Get current branch name
+CURRENT_BRANCH=$(git branch --show-current)
+
 echo "🧪 Running pre-commit CI tests..."
+echo "Branch: $CURRENT_BRANCH"
 echo "================================"
+
+# Stricter rules for main branch
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo "⚠️  You're on main branch - enforcing strict CI checks!"
+    echo "All tests must pass without any warnings or errors."
+    echo ""
+fi
 
 # Run the local CI test script
 ./scripts/test-ci.sh
@@ -27,6 +38,29 @@ if [ $? -ne 0 ]; then
     echo "❌ Lint-staged failed - commit blocked"
     echo "Please fix the formatting/linting issues above before committing"
     exit 1
+fi
+
+# Additional checks for main branch
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo ""
+    echo "🔒 Main branch protection checks..."
+    echo "================================"
+    
+    # Check for uncommitted changes
+    if [ -n "$(git status --porcelain)" ]; then
+        echo "❌ Uncommitted changes detected on main - commit blocked"
+        echo "Main branch must be clean before committing"
+        exit 1
+    fi
+    
+    # Check if working directory is clean
+    if ! git diff-index --quiet HEAD --; then
+        echo "❌ Working directory not clean on main - commit blocked"
+        echo "Please stage and commit all changes properly"
+        exit 1
+    fi
+    
+    echo "✅ Main branch protection checks passed"
 fi
 
 echo "✅ Pre-commit checks completed - proceeding with commit"

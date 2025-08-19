@@ -219,6 +219,30 @@ The project includes automated commit hooks that test CI locally:
 - ⚡ **Faster feedback** - No waiting for GitHub Actions
 - 🎯 **Quality assurance** - Every commit is tested
 
+### Main Branch Protection
+
+The main branch has enhanced protection rules:
+
+```bash
+# Local pre-commit hooks
+- Stricter CI checks when on main branch
+- Working directory must be clean
+- No uncommitted changes allowed
+
+# GitHub Actions protection
+- Branch protection workflow (.github/workflows/branch-protection.yml)
+- Strict linting (no warnings allowed)
+- Security vulnerability checks
+- Pull request requirements enforcement
+```
+
+**Main Branch Rules:**
+
+- 🚫 **No direct pushes** - Must use pull requests
+- ✅ **All CI checks must pass** - Including security audits
+- 📝 **PR requirements** - Meaningful description and conventional commit format
+- 🔒 **Vulnerability blocking** - Security issues prevent merging
+
 ## 🔄 Workflow Lifecycle
 
 ### Pull Request Flow
