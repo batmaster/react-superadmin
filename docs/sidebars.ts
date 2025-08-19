@@ -1,4 +1,4 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
@@ -16,10 +16,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Components',
-      items: [
-        'components/button',
-        'components/forms',
-      ],
+      items: ['components/button', 'components/forms'],
     },
     {
       type: 'category',
@@ -31,6 +28,7 @@ const sidebars: SidebarsConfig = {
         'developer/components',
         'developer/hooks',
         'developer/utilities',
+        'developer/testing',
         'developer/contributing',
       ],
     },

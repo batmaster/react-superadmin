@@ -34,7 +34,7 @@ pnpm build
 
 ## 📚 Documentation
 
-Visit our [documentation](https://react-superadmin.dev) for detailed guides and API references.
+Visit our [documentation](https://react-superadmin.web.app) for detailed guides and API references.
 
 ## 🤝 Contributing
 

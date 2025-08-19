@@ -1,4 +1,3 @@
-import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -53,8 +52,27 @@ const config: Config = {
   // Enable live code examples
   themes: ['@docusaurus/theme-live-codeblock'],
 
-  // Custom search implementation using Fuse.js
-  // No plugins needed for custom search
+  // Search configuration - using local search plugin with proper settings
+  plugins: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+        searchBarPosition: 'right',
+        // Fix for search indexing
+        indexDocs: true,
+        searchContextByPaths: ['docs'],
+        // Ensure proper indexing
+        docsRouteBasePath: ['docs'],
+        ignoreFiles: [],
+        indexPages: true,
+        docsDir: ['docs'],
+      },
+    ],
+  ],
 
   themeConfig: {
     navbar: {
@@ -70,7 +88,10 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
-        // Search handled by custom navbar component
+        {
+          type: 'search',
+          position: 'right',
+        },
         {
           href: 'https://gitlab.com/batmaster/react-superadmin',
           label: 'GitHub',
@@ -111,8 +132,6 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} React SuperAdmin. Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
       additionalLanguages: ['typescript', 'tsx'],
     },
     colorMode: {
