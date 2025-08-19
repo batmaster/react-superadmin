@@ -22,5 +22,11 @@ module.exports = {
   '*.{js,ts,json}': [
     'prettier --write --ignore-unknown',
     'git add'
+  ],
+  
+  // Documentation files - ensure they're properly formatted
+  'docs/**/*.{md,mdx,ts,tsx,js,jsx}': [
+    'prettier --write --ignore-unknown',
+    'git add'
   ]
 };

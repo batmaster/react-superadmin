@@ -31,6 +31,15 @@ else
     echo "❌ Build failed"
 fi
 
+# Test docs building
+echo "📚 Testing docs build..."
+pnpm docs:build
+if [ $? -eq 0 ]; then
+    echo "✅ Docs build successful"
+else
+    echo "❌ Docs build failed"
+fi
+
 # Test TypeScript check (if available)
 if pnpm run type-check >/dev/null 2>&1; then
     echo "🔍 Testing TypeScript check..."

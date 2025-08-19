@@ -1,10 +1,13 @@
 # Code Formatting Guide
 
-This document explains how code formatting works in the React SuperAdmin project and how to use it effectively.
+This document explains how code formatting works in the React SuperAdmin project
+and how to use it effectively.
 
 ## 🎯 Overview
 
-The project uses **Prettier** for automatic code formatting and **ESLint** for code quality checks. All code is automatically formatted before commits, ensuring consistency across the entire codebase.
+The project uses **Prettier** for automatic code formatting and **ESLint** for
+code quality checks. All code is automatically formatted before commits,
+ensuring consistency across the entire codebase.
 
 ## 🚀 Quick Start
 
@@ -21,6 +24,7 @@ pnpm install
 ### 2. Install VS Code Extensions
 
 For the best development experience, install these extensions:
+
 - **Prettier - Code formatter** (esbenp.prettier-vscode)
 - **ESLint** (dbaeumer.vscode-eslint)
 
@@ -38,6 +42,19 @@ pnpm format:fix
 
 # Run the comprehensive formatting script
 pnpm format:script
+```
+
+### 4. Validate Documentation
+
+```bash
+# Validate documentation builds correctly
+pnpm docs:validate
+
+# Build documentation
+pnpm docs:build
+
+# Check documentation build
+pnpm docs:build:check
 ```
 
 ## 🔧 Configuration Files
@@ -64,31 +81,31 @@ The project uses these Prettier settings:
 
 ```json
 {
-  "semi": true,                    // Always add semicolons
-  "trailingComma": "es5",          // Add trailing commas where valid in ES5
-  "singleQuote": true,             // Use single quotes
-  "printWidth": 80,                // Line length limit
-  "tabWidth": 2,                   // 2 spaces for indentation
-  "useTabs": false,                // Use spaces, not tabs
-  "bracketSpacing": true,          // Spaces inside object brackets
-  "arrowParens": "avoid",          // Omit parens when possible in arrow functions
-  "endOfLine": "lf",               // Unix line endings
-  "jsxSingleQuote": true,          // Single quotes in JSX
-  "bracketSameLine": false         // JSX closing brackets on new line
+  "semi": true, // Always add semicolons
+  "trailingComma": "es5", // Add trailing commas where valid in ES5
+  "singleQuote": true, // Use single quotes
+  "printWidth": 80, // Line length limit
+  "tabWidth": 2, // 2 spaces for indentation
+  "useTabs": false, // Use spaces, not tabs
+  "bracketSpacing": true, // Spaces inside object brackets
+  "arrowParens": "avoid", // Omit parens when possible in arrow functions
+  "endOfLine": "lf", // Unix line endings
+  "jsxSingleQuote": true, // Single quotes in JSX
+  "bracketSameLine": false // JSX closing brackets on new line
 }
 ```
 
 ## 📁 File Types Covered
 
-| File Type | Extension | Formatter | Parser |
-|-----------|-----------|-----------|---------|
-| TypeScript | `.ts`, `.tsx` | Prettier + ESLint | TypeScript |
-| JavaScript | `.js`, `.jsx` | Prettier + ESLint | Babel |
-| JSON | `.json`, `.jsonc` | Prettier | JSON |
-| Markdown | `.md` | Prettier | Markdown |
-| Styles | `.css`, `.scss`, `.less` | Prettier | CSS |
-| HTML | `.html` | Prettier | HTML |
-| YAML | `.yml`, `.yaml` | Prettier | YAML |
+| File Type  | Extension                | Formatter         | Parser     |
+| ---------- | ------------------------ | ----------------- | ---------- |
+| TypeScript | `.ts`, `.tsx`            | Prettier + ESLint | TypeScript |
+| JavaScript | `.js`, `.jsx`            | Prettier + ESLint | Babel      |
+| JSON       | `.json`, `.jsonc`        | Prettier          | JSON       |
+| Markdown   | `.md`                    | Prettier          | Markdown   |
+| Styles     | `.css`, `.scss`, `.less` | Prettier          | CSS        |
+| HTML       | `.html`                  | Prettier          | HTML       |
+| YAML       | `.yml`, `.yaml`          | Prettier          | YAML       |
 
 ## 🔄 Automatic Formatting
 
@@ -99,7 +116,16 @@ The project uses Husky to run pre-commit hooks that:
 1. **Format code** with Prettier
 2. **Fix ESLint issues** automatically
 3. **Run tests** to ensure nothing is broken
-4. **Validate commit messages** follow conventional format
+4. **Build documentation** to catch build errors
+5. **Validate commit messages** follow conventional format
+
+### Documentation Validation
+
+The pre-commit hooks now include documentation validation:
+
+- **All branches**: Basic docs structure validation
+- **Main branch**: Full docs build check to prevent broken documentation
+- **Manual validation**: Use `pnpm docs:validate` to test docs locally
 
 ### VS Code Integration
 
@@ -132,34 +158,43 @@ The following files and directories are excluded from formatting:
 
 #### 1. Formatting Not Working
 
-**Problem**: Prettier isn't formatting files
-**Solution**: 
+**Problem**: Prettier isn't formatting files **Solution**:
+
 - Check if Prettier extension is installed in VS Code
 - Verify `.prettierrc` exists in project root
 - Run `pnpm format:check` to see what needs formatting
 
 #### 2. ESLint Conflicts
 
-**Problem**: ESLint and Prettier have conflicting rules
-**Solution**: 
+**Problem**: ESLint and Prettier have conflicting rules **Solution**:
+
 - Run `pnpm format:fix` to fix both formatting and linting
 - Check if ESLint config extends Prettier config
 
 #### 3. Pre-commit Hook Fails
 
-**Problem**: Git commit fails due to formatting issues
-**Solution**:
+**Problem**: Git commit fails due to formatting issues **Solution**:
+
 - Run `pnpm format` to fix formatting
 - Run `pnpm lint` to fix linting issues
 - Try committing again
 
 #### 4. VS Code Not Formatting
 
-**Problem**: Files don't format on save
-**Solution**:
+**Problem**: Files don't format on save **Solution**:
+
 - Check VS Code settings for `editor.formatOnSave: true`
 - Verify Prettier is set as default formatter
 - Restart VS Code after installing Prettier extension
+
+#### 5. Documentation Build Fails
+
+**Problem**: Docs build fails during pre-commit **Solution**:
+
+- Run `pnpm docs:validate` to identify issues
+- Check for syntax errors in markdown files
+- Verify all referenced files exist
+- Run `pnpm docs:build` locally to see detailed errors
 
 ### Debug Commands
 
@@ -175,6 +210,12 @@ npx prettier "**/*.{ts,tsx,js,jsx,json,md}" --print-width 80
 
 # Check ESLint configuration
 npx eslint --print-config packages/core/src/index.ts
+
+# Validate documentation
+pnpm docs:validate
+
+# Check documentation build
+pnpm docs:build:check
 ```
 
 ## 📚 Best Practices
@@ -224,4 +265,6 @@ If you encounter formatting issues:
 
 ---
 
-**Remember**: The goal is to have consistent, readable code across the entire project. Prettier handles the formatting automatically, so you can focus on writing great code! 🚀 
+**Remember**: The goal is to have consistent, readable code across the entire
+project. Prettier handles the formatting automatically, so you can focus on
+writing great code! 🚀

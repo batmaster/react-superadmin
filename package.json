@@ -9,6 +9,8 @@
     "docs": "pnpm --filter=react-superadmin-docs start",
     "docs:dev": "pnpm --filter=react-superadmin-docs start",
     "docs:build": "pnpm --filter=react-superadmin-docs build",
+    "docs:build:check": "pnpm docs:build && echo '✅ Documentation build successful'",
+    "docs:validate": "./scripts/validate-docs.sh",
     "docs:serve": "pnpm --filter=react-superadmin-docs serve",
     "docs:deploy": "pnpm docs:build && npx firebase deploy",
     "firebase:init": "npx firebase init hosting",
@@ -46,9 +48,7 @@
   "author": "batmaster",
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",

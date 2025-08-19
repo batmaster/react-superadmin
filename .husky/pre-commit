@@ -25,6 +25,22 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Additional docs build check for main branch
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo ""
+    echo "📚 Additional docs build check for main branch..."
+    echo "================================"
+    
+    echo "🔍 Building documentation..."
+    pnpm docs:build
+    if [ $? -ne 0 ]; then
+        echo "❌ Docs build failed on main branch - commit blocked"
+        echo "Please fix the documentation build issues before committing to main"
+        exit 1
+    fi
+    echo "✅ Docs build check passed"
+fi
+
 echo "✅ Pre-commit CI tests passed"
 echo ""
 echo "🔍 Running lint-staged formatting and linting..."
