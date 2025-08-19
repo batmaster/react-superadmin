@@ -1,12 +1,14 @@
 # React SuperAdmin
 
-A powerful, modern React framework for building CRUD admin interfaces with TypeScript support.
+A powerful, modern React framework for building CRUD admin interfaces with
+TypeScript support.
 
 ## 🚀 Features
 
 - **TypeScript First**: Built with TypeScript for better developer experience
 - **Modern React**: Uses React 18+ with hooks and modern patterns
-- **Flexible CRUD**: Easy-to-use CRUD operations with customizable forms and tables
+- **Flexible CRUD**: Easy-to-use CRUD operations with customizable forms and
+  tables
 - **Responsive Design**: Mobile-first responsive design with Tailwind CSS
 - **Plugin System**: Extensible architecture with plugin support
 - **Dark Mode**: Built-in dark/light theme support
@@ -34,7 +36,8 @@ pnpm build
 
 ## 📚 Documentation
 
-Visit our [documentation](https://react-superadmin.web.app) for detailed guides and API references.
+Visit our [documentation](https://react-superadmin.web.app) for detailed guides
+and API references.
 
 ### 📖 Local Documentation
 
@@ -44,8 +47,11 @@ Visit our [documentation](https://react-superadmin.web.app) for detailed guides 
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [contributing guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [contributing guide](CONTRIBUTING.md)
+for details.
 
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+# Test comment
