@@ -14,3 +14,5 @@ export { Input, type InputProps } from "./Input";
 export { Textarea, type TextareaProps } from "./Textarea";
 export { Select, type SelectProps, type SelectOption } from "./Select";
 export { Checkbox, type CheckboxProps } from "./Checkbox";
+export { TextField, type TextFieldProps } from "./TextField";
+export { NumberField, type NumberFieldProps } from "./NumberField";
