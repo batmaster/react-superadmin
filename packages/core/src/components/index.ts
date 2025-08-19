@@ -20,3 +20,4 @@ export { DateInput, type DateInputProps } from "./DateInput";
 export { EmailInput, type EmailInputProps } from "./EmailInput";
 export { PasswordInput, type PasswordInputProps } from "./PasswordInput";
 export { NumberInput, type NumberInputProps } from "./NumberInput";
+export { UrlInput, type UrlInputProps } from "./UrlInput";
