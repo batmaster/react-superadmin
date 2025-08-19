@@ -39,7 +39,7 @@ jobs:
         run: pnpm lint:ci
 
       - name: TypeScript strict check
-        run: pnpm type-check
+        run: pnpm typecheck
 
       - name: Build verification
         run: pnpm build

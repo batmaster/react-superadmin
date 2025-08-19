@@ -41,9 +41,9 @@ else
 fi
 
 # Test TypeScript check (if available)
-if pnpm run type-check >/dev/null 2>&1; then
+if pnpm run typecheck >/dev/null 2>&1; then
     echo "🔍 Testing TypeScript check..."
-    pnpm type-check
+    pnpm typecheck
     if [ $? -eq 0 ]; then
         echo "✅ TypeScript check passed"
     else
