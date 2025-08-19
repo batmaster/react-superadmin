@@ -11,6 +11,8 @@
  * // Output: "base-class conditional-class another-class"
  * ```
  */
-export function cn(...inputs: (string | boolean | undefined | null)[]): string {
+export function cn(
+  ...inputs: (string | boolean | undefined | null | number)[]
+): string {
   return inputs.filter(Boolean).join(" ");
 }
