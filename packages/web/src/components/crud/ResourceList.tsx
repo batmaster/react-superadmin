@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useSuperAdmin } from '@react-superadmin/core';
-import { Plus, Search, Filter, Edit, Eye, Trash2 } from 'lucide-react';
-import { DataTable } from './DataTable';
-import { SearchBar } from './SearchBar';
-import { Pagination } from './Pagination';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
-import { Badge } from '../ui/Badge';
-import { Modal } from '../ui/Modal';
-import { userService, postService, productService, User, Post, Product } from '../../services/mockService';
-import { formatDate } from '../../utils/formatDate';
+import { useSuperAdmin } from "@react-superadmin/core";
+import { Filter, Plus } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  postService,
+  productService,
+  userService,
+} from "../../services/mockService";
+import { formatDate } from "../../utils/formatDate";
+import { Badge } from "../ui/Badge";
+import { Button } from "../ui/Button";
+import { Card } from "../ui/Card";
+import { Modal } from "../ui/Modal";
+import { DataTable } from "./DataTable";
+import { Pagination } from "./Pagination";
+import { SearchBar } from "./SearchBar";
 
 interface ResourceListProps {
   resourceName: string;
@@ -26,18 +30,18 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setPageSize] = useState(10);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<any>(null);
 
   // Get the appropriate service based on resource name
   const getService = () => {
     switch (resourceName) {
-      case 'users':
+      case "users":
         return userService;
-      case 'posts':
+      case "posts":
         return postService;
-      case 'products':
+      case "products":
         return productService;
       default:
         return null;
@@ -49,10 +53,10 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
   // Load data
   const loadData = async () => {
     if (!service) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await service.list({
         page,
@@ -62,8 +66,8 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
       setData(result.data);
       setTotal(result.total);
     } catch (error) {
-      setError('Failed to load data');
-      console.error('Error loading data:', error);
+      setError("Failed to load data");
+      console.error("Error loading data:", error);
     } finally {
       setLoading(false);
     }
@@ -102,15 +106,15 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
 
   const confirmDelete = async () => {
     if (!service || !itemToDelete) return;
-    
+
     try {
       await service.delete(itemToDelete.id);
       setShowDeleteModal(false);
       setItemToDelete(null);
       loadData(); // Reload data
     } catch (error) {
-      setError('Failed to delete item');
-      console.error('Error deleting item:', error);
+      setError("Failed to delete item");
+      console.error("Error deleting item:", error);
     }
   };
 
@@ -121,32 +125,32 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
   // Define columns based on resource type
   const getColumns = () => {
     switch (resourceName) {
-      case 'users':
+      case "users":
         return [
-          { key: 'name', label: 'Name', sortable: true },
-          { key: 'email', label: 'Email', sortable: true },
-          { key: 'role', label: 'Role', sortable: true },
-          { key: 'status', label: 'Status', sortable: true },
-          { key: 'department', label: 'Department', sortable: true },
-          { key: 'createdAt', label: 'Created At', sortable: true },
+          { key: "name", label: "Name", sortable: true },
+          { key: "email", label: "Email", sortable: true },
+          { key: "role", label: "Role", sortable: true },
+          { key: "status", label: "Status", sortable: true },
+          { key: "department", label: "Department", sortable: true },
+          { key: "createdAt", label: "Created At", sortable: true },
         ];
-      case 'posts':
+      case "posts":
         return [
-          { key: 'title', label: 'Title', sortable: true },
-          { key: 'author', label: 'Author', sortable: true },
-          { key: 'status', label: 'Status', sortable: true },
-          { key: 'category', label: 'Category', sortable: true },
-          { key: 'publishedAt', label: 'Published At', sortable: true },
-          { key: 'views', label: 'Views', sortable: true },
+          { key: "title", label: "Title", sortable: true },
+          { key: "author", label: "Author", sortable: true },
+          { key: "status", label: "Status", sortable: true },
+          { key: "category", label: "Category", sortable: true },
+          { key: "publishedAt", label: "Published At", sortable: true },
+          { key: "views", label: "Views", sortable: true },
         ];
-      case 'products':
+      case "products":
         return [
-          { key: 'name', label: 'Name', sortable: true },
-          { key: 'category', label: 'Category', sortable: true },
-          { key: 'price', label: 'Price', sortable: true },
-          { key: 'status', label: 'Status', sortable: true },
-          { key: 'stock', label: 'Stock', sortable: true },
-          { key: 'rating', label: 'Rating', sortable: true },
+          { key: "name", label: "Name", sortable: true },
+          { key: "category", label: "Category", sortable: true },
+          { key: "price", label: "Price", sortable: true },
+          { key: "status", label: "Status", sortable: true },
+          { key: "stock", label: "Stock", sortable: true },
+          { key: "rating", label: "Rating", sortable: true },
         ];
       default:
         return [];
@@ -156,51 +160,49 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
   // Render cell content with formatting
   const renderCell = (item: any, column: any) => {
     const value = item[column.key];
-    
+
     switch (column.key) {
-      case 'status':
-        const statusColors: Record<string, 'success' | 'warning' | 'danger' | 'secondary'> = {
-          active: 'success',
-          inactive: 'warning',
-          suspended: 'danger',
-          published: 'success',
-          draft: 'warning',
-          archived: 'secondary',
-          in_stock: 'success',
-          low_stock: 'warning',
-          out_of_stock: 'danger',
+      case "status": {
+        const statusColors: Record<
+          string,
+          "success" | "warning" | "danger" | "secondary"
+        > = {
+          active: "success",
+          inactive: "warning",
+          suspended: "danger",
+          published: "success",
+          draft: "warning",
+          archived: "secondary",
+          in_stock: "success",
+          low_stock: "warning",
+          out_of_stock: "danger",
         };
         return (
-          <Badge variant={statusColors[value] || 'default'}>
-            {value}
-          </Badge>
+          <Badge variant={statusColors[value] || "default"}>{value}</Badge>
         );
-      
-      case 'createdAt':
-      case 'publishedAt':
-        return value ? formatDate(value) : '-';
-      
-      case 'price':
-        return value ? `$${Number(value).toFixed(2)}` : '-';
-      
-      case 'views':
-      case 'stock':
-      case 'rating':
-        return value || '0';
-      
-      case 'role':
-        return (
-          <Badge variant="outline">
-            {value}
-          </Badge>
-        );
-      
+      }
+
+      case "createdAt":
+      case "publishedAt":
+        return value ? formatDate(value) : "-";
+
+      case "price":
+        return value ? `$${Number(value).toFixed(2)}` : "-";
+
+      case "views":
+      case "stock":
+      case "rating":
+        return value || "0";
+
+      case "role":
+        return <Badge variant="outline">{value}</Badge>;
+
       default:
-        return value || '-';
+        return value || "-";
     }
   };
 
-  const columns = getColumns().map(col => ({
+  const columns = getColumns().map((col) => ({
     ...col,
     render: (value: any, row: any) => renderCell(row, col),
   }));
@@ -226,7 +228,9 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{resource.label}</h1>
-          <p className="text-gray-600">Manage your {resource.label.toLowerCase()}</p>
+          <p className="text-gray-600">
+            Manage your {resource.label.toLowerCase()}
+          </p>
         </div>
         <Button onClick={handleCreate} className="flex items-center">
           <Plus className="w-4 h-4 mr-2" />
@@ -237,7 +241,10 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
       <Card>
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <SearchBar onSearch={handleSearch} placeholder={`Search ${resource.label.toLowerCase()}...`} />
+            <SearchBar
+              onSearch={handleSearch}
+              placeholder={`Search ${resource.label.toLowerCase()}...`}
+            />
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="sm">
                 <Filter className="w-4 h-4 mr-2" />
@@ -257,7 +264,8 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
 
           <div className="mt-4 flex items-center justify-between">
             <div className="text-sm text-gray-700">
-              Showing {((page - 1) * limit) + 1} to {Math.min(page * limit, total)} of {total} results
+              Showing {(page - 1) * limit + 1} to{" "}
+              {Math.min(page * limit, total)} of {total} results
             </div>
             <Pagination
               currentPage={page}
@@ -276,7 +284,8 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
       >
         <div className="p-6">
           <p className="text-gray-600 mb-4">
-            Are you sure you want to delete this {resource.label.toLowerCase()}? This action cannot be undone.
+            Are you sure you want to delete this {resource.label.toLowerCase()}?
+            This action cannot be undone.
           </p>
           <div className="flex justify-end space-x-3">
             <Button variant="outline" onClick={() => setShowDeleteModal(false)}>

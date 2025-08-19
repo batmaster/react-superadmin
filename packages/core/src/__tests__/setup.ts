@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock localStorage
 const localStorageMock = {
@@ -6,7 +6,9 @@ const localStorageMock = {
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
-};
+  length: 0,
+  key: jest.fn(),
+} as Storage;
 global.localStorage = localStorageMock;
 
 // Mock console methods to reduce noise in tests

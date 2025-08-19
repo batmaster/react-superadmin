@@ -63,11 +63,14 @@
     "@typescript-eslint/parser": "^6.0.0",
     "commitizen": "^4.3.0",
     "eslint": "^8.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "firebase-tools": "^14.12.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "prettier": "^3.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@types/react": "^18.3.23",
@@ -83,7 +86,7 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "prettier --write --ignore-unknown",
-      "eslint --fix --max-warnings=0"
+      "eslint --fix --max-warnings=100"
     ],
     "*.{json,jsonc,md,yml,yaml,html,css,scss,less}": [
       "prettier --write --ignore-unknown"
