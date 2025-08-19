@@ -1,16 +1,19 @@
-import { mockUsers, mockPosts, mockProducts } from '../data/mockData';
-import { ListParams, ListResponse } from '@react-superadmin/core';
+import { mockUsers, mockPosts, mockProducts } from "../data/mockData";
+import { ListParams, ListResponse } from "@react-superadmin/core";
 
 // Initialize localStorage with mock data if empty
 const initializeStorage = () => {
-  if (!localStorage.getItem('react-superadmin-users')) {
-    localStorage.setItem('react-superadmin-users', JSON.stringify(mockUsers));
+  if (!localStorage.getItem("react-superadmin-users")) {
+    localStorage.setItem("react-superadmin-users", JSON.stringify(mockUsers));
   }
-  if (!localStorage.getItem('react-superadmin-posts')) {
-    localStorage.setItem('react-superadmin-posts', JSON.stringify(mockPosts));
+  if (!localStorage.getItem("react-superadmin-posts")) {
+    localStorage.setItem("react-superadmin-posts", JSON.stringify(mockPosts));
   }
-  if (!localStorage.getItem('react-superadmin-products')) {
-    localStorage.setItem('react-superadmin-products', JSON.stringify(mockProducts));
+  if (!localStorage.getItem("react-superadmin-products")) {
+    localStorage.setItem(
+      "react-superadmin-products",
+      JSON.stringify(mockProducts),
+    );
   }
 };
 
@@ -44,19 +47,19 @@ export class MockService<T extends { id: string | number }> {
     // Apply search
     if (params?.search) {
       const searchLower = params.search.toLowerCase();
-      filteredData = filteredData.filter(item =>
-        Object.values(item).some(value =>
-          String(value).toLowerCase().includes(searchLower)
-        )
+      filteredData = filteredData.filter((item) =>
+        Object.values(item).some((value) =>
+          String(value).toLowerCase().includes(searchLower),
+        ),
       );
     }
 
     // Apply filters
     if (params?.filters) {
       Object.entries(params.filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          filteredData = filteredData.filter(item =>
-            item[key as keyof T] === value
+        if (value !== undefined && value !== null && value !== "") {
+          filteredData = filteredData.filter(
+            (item) => item[key as keyof T] === value,
           );
         }
       });
@@ -67,33 +70,33 @@ export class MockService<T extends { id: string | number }> {
       filteredData.sort((a, b) => {
         const aValue = a[params.sort as keyof T];
         const bValue = b[params.sort as keyof T];
-        
-        if (aValue < bValue) return params.order === 'asc' ? -1 : 1;
-        if (aValue > bValue) return params.order === 'asc' ? 1 : -1;
+
+        if (aValue < bValue) return params.order === "asc" ? -1 : 1;
+        if (aValue > bValue) return params.order === "asc" ? 1 : -1;
         return 0;
       });
     }
 
     const total = filteredData.length;
     const page = params?.page || 1;
-    const limit = params?.limit || 10;
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
+    const perPage = params?.perPage || 10;
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
     const paginatedData = filteredData.slice(startIndex, endIndex);
 
     return {
       data: paginatedData,
       total,
       page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      perPage,
+      totalPages: Math.ceil(total / perPage),
     };
   }
 
   async read(id: string | number): Promise<T> {
-    const item = this.data.find(item => item.id === id);
+    const item = this.data.find((item) => item.id === id);
     if (!item) {
-      throw new Error('Item not found');
+      throw new Error("Item not found");
     }
     return item;
   }
@@ -103,16 +106,16 @@ export class MockService<T extends { id: string | number }> {
       ...data,
       id: String(Date.now()), // Generate unique ID
     } as T;
-    
+
     this.data.push(newItem);
     this.saveData();
     return newItem;
   }
 
   async update(id: string | number, data: Partial<T>): Promise<T> {
-    const index = this.data.findIndex(item => item.id === id);
+    const index = this.data.findIndex((item) => item.id === id);
     if (index === -1) {
-      throw new Error('Item not found');
+      throw new Error("Item not found");
     }
 
     const updatedItem = { ...this.data[index], ...data };
@@ -122,9 +125,9 @@ export class MockService<T extends { id: string | number }> {
   }
 
   async delete(id: string | number): Promise<void> {
-    const index = this.data.findIndex(item => item.id === id);
+    const index = this.data.findIndex((item) => item.id === id);
     if (index === -1) {
-      throw new Error('Item not found');
+      throw new Error("Item not found");
     }
 
     this.data.splice(index, 1);
@@ -136,11 +139,14 @@ export class MockService<T extends { id: string | number }> {
 initializeStorage();
 
 // Create service instances
-export const userService = new MockService('react-superadmin-users', mockUsers);
-export const postService = new MockService('react-superadmin-posts', mockPosts);
-export const productService = new MockService('react-superadmin-products', mockProducts);
+export const userService = new MockService("react-superadmin-users", mockUsers);
+export const postService = new MockService("react-superadmin-posts", mockPosts);
+export const productService = new MockService(
+  "react-superadmin-products",
+  mockProducts,
+);
 
 // Export service types
-export type User = typeof mockUsers[0];
-export type Post = typeof mockPosts[0];
-export type Product = typeof mockProducts[0];
+export type User = (typeof mockUsers)[0];
+export type Post = (typeof mockPosts)[0];
+export type Product = (typeof mockProducts)[0];

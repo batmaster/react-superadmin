@@ -60,7 +60,7 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
     try {
       const result = await service.list({
         page,
-        limit,
+        perPage: limit,
         search,
       });
       setData(result.data);

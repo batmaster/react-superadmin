@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDataProvider } from '../../hooks/useDataProvider';
-import { dataProviderPresets } from '../../config/dataProviderConfig';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
+import React, { useState, useEffect } from "react";
+import { useDataProvider } from "../../hooks/useDataProvider";
+import { dataProviderPresets } from "../../config/dataProviderConfig";
+import { Button } from "../ui/Button";
+import { Card } from "../ui/Card";
 
 interface User {
   id: string;
@@ -24,16 +24,16 @@ export const DataProviderDemo: React.FC = () => {
     setError(null);
 
     try {
-      const result = await dataProvider.getList<User>('users', {
+      const result = await dataProvider.getList<User>("users", {
         pagination: { page: 1, perPage: 10 },
-        sort: { field: 'name', order: 'ASC' },
+        sort: { field: "name", order: "ASC" },
         filter: {},
-        search: '',
+        search: "",
       });
 
       setUsers(result.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -41,12 +41,13 @@ export const DataProviderDemo: React.FC = () => {
 
   const createUser = async () => {
     try {
-      const newUser = await dataProvider.create<User>('users', {
+      const newUser = await dataProvider.create<User>("users", {
         data: {
+          id: `temp-${Date.now()}`, // Temporary ID that will be replaced by the service
           name: `User ${Date.now()}`,
           email: `user${Date.now()}@example.com`,
-          role: 'user',
-          createdAt: new Date().toISOString().split('T')[0],
+          role: "user",
+          createdAt: new Date().toISOString().split("T")[0],
         },
       });
 
@@ -54,18 +55,18 @@ export const DataProviderDemo: React.FC = () => {
       await fetchUsers();
       alert(`Created user: ${newUser.data.name}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(err instanceof Error ? err.message : "Unknown error");
     }
   };
 
   const switchToMock = () => {
     switchProvider(dataProviderPresets.mock);
-    setCurrentProvider('mock');
+    setCurrentProvider("mock");
   };
 
   const switchToPrisma = () => {
     switchProvider(dataProviderPresets.prisma);
-    setCurrentProvider('prisma');
+    setCurrentProvider("prisma");
   };
 
   useEffect(() => {
@@ -106,7 +107,7 @@ export const DataProviderDemo: React.FC = () => {
               variant="outline"
               className="mb-4"
             >
-              {loading ? 'Loading...' : 'Refresh Users'}
+              {loading ? "Loading..." : "Refresh Users"}
             </Button>
 
             {error && (
@@ -119,7 +120,7 @@ export const DataProviderDemo: React.FC = () => {
               <div className="text-center py-8">Loading users...</div>
             ) : (
               <div className="space-y-2">
-                {users.map(user => (
+                {users.map((user) => (
                   <div key={user.id} className="border rounded p-3 bg-gray-50">
                     <div className="font-medium">{user.name}</div>
                     <div className="text-sm text-gray-600">{user.email}</div>
@@ -149,18 +150,18 @@ export const DataProviderDemo: React.FC = () => {
                 <strong>Type:</strong> {getConfig().type}
               </p>
               <p>
-                <strong>Logging:</strong>{' '}
-                {getConfig().options?.enableLogging ? 'Enabled' : 'Disabled'}
+                <strong>Logging:</strong>{" "}
+                {getConfig().options?.enableLogging ? "Enabled" : "Disabled"}
               </p>
               <p>
-                <strong>Local Storage:</strong>{' '}
+                <strong>Local Storage:</strong>{" "}
                 {getConfig().options?.enableLocalStorage
-                  ? 'Enabled'
-                  : 'Disabled'}
+                  ? "Enabled"
+                  : "Disabled"}
               </p>
               <p>
-                <strong>Caching:</strong>{' '}
-                {getConfig().options?.enableCaching ? 'Enabled' : 'Disabled'}
+                <strong>Caching:</strong>{" "}
+                {getConfig().options?.enableCaching ? "Enabled" : "Disabled"}
               </p>
             </div>
           </div>
