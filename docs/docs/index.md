@@ -74,4 +74,4 @@ function App() {
 
 - [Installation](./installation) - Complete setup guide
 - [Quick Start](./quick-start) - Build your first admin panel
-- [Core Concepts](./core-concepts/resources) - Understand the fundamentals
+- [Architecture](./developer/architecture) - Understand the framework architecture

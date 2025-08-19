@@ -123,7 +123,7 @@ You should now see a fully functional admin panel with:
 
 ## What's Next?
 
-- [Core Concepts](./core-concepts/resources) - Learn about resources, fields, and views
-- [Configuration](./configuration/admin-config) - Customize your admin panel
+- [Architecture](../developer/architecture) - Learn about the framework architecture
+- [Setup](../developer/setup) - Customize your development environment
 - [Examples](./examples/basic-usage) - See more complex examples
-- [API Reference](./api/types) - Detailed API documentation
+- [API Reference](../developer/api) - Detailed API documentation

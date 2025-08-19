@@ -26,7 +26,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/yourusername/react-superadmin/edit/main/docs/',
+          editUrl: 'https://gitlab.com/batmaster/react-superadmin/edit/main/docs/',
           routeBasePath: '/',
           // Enable MDX for component rendering
           remarkPlugins: [],
@@ -52,7 +52,7 @@ const config: Config = {
   // Enable live code examples
   themes: ['@docusaurus/theme-live-codeblock'],
   
-  // Enable local search
+  // Search configuration - using local search plugin
   plugins: [
     [
       require.resolve('@easyops-cn/docusaurus-search-local'),
@@ -85,7 +85,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://github.com/yourusername/react-superadmin',
+          href: 'https://gitlab.com/batmaster/react-superadmin',
           label: 'GitHub',
           position: 'right',
         },
@@ -99,15 +99,15 @@ const config: Config = {
           items: [
             {
               label: 'Getting Started',
-              to: '/docs/getting-started',
+              to: '/introduction',
             },
             {
               label: 'Components',
-              to: '/docs/components',
+              to: '/components/button',
             },
             {
               label: 'Examples',
-              to: '/docs/examples',
+              to: '/examples/basic-usage',
             },
           ],
         },
@@ -116,7 +116,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/yourusername/react-superadmin',
+              href: 'https://gitlab.com/batmaster/react-superadmin',
             },
           ],
         },

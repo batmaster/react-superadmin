@@ -5,7 +5,7 @@ Thank you for your interest in contributing to React SuperAdmin! This document p
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/react-superadmin.git`
+2. Clone your fork: `git clone https://gitlab.com/batmaster/react-superadmin.git`
 3. Install dependencies: `pnpm install`
 4. Create a feature branch: `git checkout -b feature/your-feature-name`
 

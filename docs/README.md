@@ -421,7 +421,7 @@ const authConfig = {
 
 ### Getting Help
 
-- Check the [GitHub Issues](https://github.com/yourusername/react-superadmin/issues)
+- Check the [GitHub Issues](https://gitlab.com/batmaster/react-superadmin/issues)
 - Review the [examples](./examples) directory
 - Open a new issue with detailed information
 

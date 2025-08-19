@@ -128,6 +128,6 @@ export default defineConfig({
 ## Next Steps
 
 - [Quick Start](./quick-start) - Build your first admin panel
-- [Core Concepts](./core-concepts/resources) - Understand the fundamentals
+- [Architecture](./developer/architecture) - Understand the framework architecture
 - [Examples](./examples/basic-usage) - See working examples
-- [API Reference](./api/types) - Detailed API documentation
+- [API Reference](./developer/api) - Detailed API documentation

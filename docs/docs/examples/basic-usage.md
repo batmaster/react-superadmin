@@ -260,7 +260,7 @@ const userResource = createResource({
 
 ## Next Steps
 
-- [Core Concepts](./core-concepts/resources) - Learn about resources, fields, and views
-- [Configuration](./configuration/admin-config) - Customize your admin panel
-- [Components](./components/button) - Explore available UI components
-- [API Reference](./api/types) - Detailed API documentation
+- [Architecture](../developer/architecture) - Learn about the framework architecture
+- [Setup](../developer/setup) - Customize your development environment
+- [Components](../components/button) - Explore available UI components
+- [API Reference](../developer/api) - Detailed API documentation

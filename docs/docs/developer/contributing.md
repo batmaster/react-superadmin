@@ -102,13 +102,13 @@ We believe admin interfaces should be:
 
 1. **Fork the Repository**
    ```bash
-   # Go to https://github.com/yourusername/react-superadmin
+   # Go to https://gitlab.com/batmaster/react-superadmin
    # Click "Fork" button
    ```
 
 2. **Clone Your Fork**
    ```bash
-   git clone https://github.com/yourusername/react-superadmin.git
+   git clone https://gitlab.com/batmaster/react-superadmin.git
    cd react-superadmin
    ```
 
