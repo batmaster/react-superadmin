@@ -36,3 +36,6 @@ export { useResourceNavigation } from './hooks/useResourceNavigation';
 export { cn } from './utils/cn';
 export { formatDate } from './utils/formatDate';
 export { formatCurrency } from './utils/formatCurrency';
+
+// Data Providers
+export * from './dataProviders';

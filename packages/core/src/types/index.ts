@@ -18,19 +18,19 @@ export interface CrudOperations<T = any> {
 // List parameters
 export interface ListParams {
   page?: number;
-  limit?: number;
+  perPage?: number;
   search?: string;
   sort?: string;
   order?: 'asc' | 'desc';
   filters?: Record<string, any>;
 }
 
-// List response
+// List response - using dataProvider interface
 export interface ListResponse<T = any> {
   data: T[];
   total: number;
   page: number;
-  limit: number;
+  perPage: number;
   totalPages: number;
 }
 
@@ -38,7 +38,16 @@ export interface ListResponse<T = any> {
 export interface FieldConfig {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'date' | 'boolean' | 'file';
+  type:
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'select'
+    | 'textarea'
+    | 'date'
+    | 'boolean'
+    | 'file';
   required?: boolean;
   options?: Array<{ value: any; label: string }>;
   validation?: ValidationRule[];
@@ -160,3 +169,5 @@ export interface ColumnConfig<T = any> {
   sortable?: boolean;
   width?: number | string;
 }
+
+export * from './dataProvider';

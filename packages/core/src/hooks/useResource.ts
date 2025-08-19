@@ -28,10 +28,12 @@ export interface UseResourceReturn<T = any> {
   setFilters: (filters: Record<string, any>) => void;
 }
 
-export function useResource<T = any>(options: UseResourceOptions<T>): UseResourceReturn<T> {
+export function useResource<T = any>(
+  options: UseResourceOptions<T>
+): UseResourceReturn<T> {
   const { resourceName, operations } = options;
   const { resources } = useSuperAdmin();
-  
+
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,110 +54,125 @@ export function useResource<T = any>(options: UseResourceOptions<T>): UseResourc
     setLoading(false);
   }, []);
 
-  const list = useCallback(async (params?: ListParams): Promise<void> => {
-    if (!operations?.list) {
-      throw new Error('List operation not available');
-    }
+  const list = useCallback(
+    async (params?: ListParams): Promise<void> => {
+      if (!operations?.list) {
+        throw new Error('List operation not available');
+      }
 
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const listParams: ListParams = {
-        page,
-        limit,
-        search,
-        sort,
-        order,
-        filters,
-        ...params,
-      };
+      setLoading(true);
+      setError(null);
 
-      const result = await operations.list(listParams);
-      setData(result.data);
-      setTotal(result.total);
-      setPage(result.page);
-      setLimit(result.limit);
-      setLoading(false);
-    } catch (error) {
-      handleError(error);
-    }
-  }, [operations, page, limit, search, sort, order, filters, handleError]);
+      try {
+        const listParams: ListParams = {
+          page,
+          perPage: limit,
+          search,
+          sort,
+          order,
+          filters,
+          ...params,
+        };
+
+        const result = await operations.list(listParams);
+        setData(result.data);
+        setTotal(result.total);
+        setPage(result.page);
+        setLimit(result.perPage);
+        setLoading(false);
+      } catch (error) {
+        handleError(error);
+      }
+    },
+    [operations, page, limit, search, sort, order, filters, handleError]
+  );
 
   const refresh = useCallback(async (): Promise<void> => {
     await list();
   }, [list]);
 
-  const create = useCallback(async (data: Partial<T>): Promise<T> => {
-    if (!operations?.create) {
-      throw new Error('Create operation not available');
-    }
+  const create = useCallback(
+    async (data: Partial<T>): Promise<T> => {
+      if (!operations?.create) {
+        throw new Error('Create operation not available');
+      }
 
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const result = await operations.create(data);
-      await refresh();
-      return result;
-    } catch (error) {
-      handleError(error);
-      throw error;
-    }
-  }, [operations, refresh, handleError]);
+      setLoading(true);
+      setError(null);
 
-  const read = useCallback(async (id: string | number): Promise<T> => {
-    if (!operations?.read) {
-      throw new Error('Read operation not available');
-    }
+      try {
+        const result = await operations.create(data);
+        await refresh();
+        return result;
+      } catch (error) {
+        handleError(error);
+        throw error;
+      }
+    },
+    [operations, refresh, handleError]
+  );
 
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const result = await operations.read(id);
-      setLoading(false);
-      return result;
-    } catch (error) {
-      handleError(error);
-      throw error;
-    }
-  }, [operations, handleError]);
+  const read = useCallback(
+    async (id: string | number): Promise<T> => {
+      if (!operations?.read) {
+        throw new Error('Read operation not available');
+      }
 
-  const update = useCallback(async (id: string | number, data: Partial<T>): Promise<T> => {
-    if (!operations?.update) {
-      throw new Error('Update operation not available');
-    }
+      setLoading(true);
+      setError(null);
 
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const result = await operations.update(id, data);
-      await refresh();
-      return result;
-    } catch (error) {
-      handleError(error);
-      throw error;
-    }
-  }, [operations, refresh, handleError]);
+      try {
+        const result = await operations.read(id);
+        setLoading(false);
+        return result;
+      } catch (error) {
+        handleError(error);
+        throw error;
+      }
+    },
+    [operations, handleError]
+  );
 
-  const deleteItem = useCallback(async (id: string | number): Promise<void> => {
-    if (!operations?.delete) {
-      throw new Error('Delete operation not available');
-    }
+  const update = useCallback(
+    async (id: string | number, data: Partial<T>): Promise<T> => {
+      if (!operations?.update) {
+        throw new Error('Update operation not available');
+      }
 
-    setLoading(true);
-    setError(null);
-    
-    try {
-      await operations.delete(id);
-      await refresh();
-    } catch (error) {
-      handleError(error);
-      throw error;
-    }
-  }, [operations, refresh, handleError]);
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await operations.update(id, data);
+        await refresh();
+        return result;
+      } catch (error) {
+        handleError(error);
+        throw error;
+      }
+    },
+    [operations, refresh, handleError]
+  );
+
+  const deleteItem = useCallback(
+    async (id: string | number): Promise<void> => {
+      if (!operations?.delete) {
+        throw new Error('Delete operation not available');
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        await operations.delete(id);
+        await refresh();
+      } catch (error) {
+        handleError(error);
+        throw error;
+      }
+    },
+    [operations, refresh, handleError]
+  );
 
   const setPageHandler = useCallback((newPage: number) => {
     setPage(newPage);
@@ -171,10 +188,13 @@ export function useResource<T = any>(options: UseResourceOptions<T>): UseResourc
     setPage(1); // Reset to first page when searching
   }, []);
 
-  const setSortHandler = useCallback((newSort: string, newOrder: 'asc' | 'desc') => {
-    setSort(newSort);
-    setOrder(newOrder);
-  }, []);
+  const setSortHandler = useCallback(
+    (newSort: string, newOrder: 'asc' | 'desc') => {
+      setSort(newSort);
+      setOrder(newOrder);
+    },
+    []
+  );
 
   const setFiltersHandler = useCallback((newFilters: Record<string, any>) => {
     setFilters(newFilters);
