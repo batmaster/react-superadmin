@@ -1,0 +1,12 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="48" height="48" rx="12" fill="#3B82F6"/>
+  
+  <!-- Simple 'su' text - moved a bit lower -->
+  <text x="24" y="32" font-family="'SF Mono', 'Roboto Mono', 'Fira Code', 'JetBrains Mono', monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="white">su</text>
+  
+  <!-- macOS-style traffic light dots - moved more to the left -->
+  <circle cx="10" cy="12" r="2.5" fill="#EF4444"/>
+  <circle cx="16" cy="12" r="2.5" fill="#F59E0B"/>
+  <circle cx="22" cy="12" r="2.5" fill="#10B981"/>
+</svg>

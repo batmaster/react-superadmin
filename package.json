@@ -1,0 +1,79 @@
+{
+  "name": "react-superadmin",
+  "version": "1.0.0",
+  "description": "A powerful React framework for building CRUD admin interfaces with TypeScript support",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "dev": "pnpm --filter=@react-superadmin/web dev",
+    "docs": "pnpm --filter=react-superadmin-docs start",
+    "docs:dev": "pnpm --filter=react-superadmin-docs start",
+    "docs:build": "pnpm --filter=react-superadmin-docs build",
+    "docs:serve": "pnpm --filter=react-superadmin-docs serve",
+    "dev:all": "pnpm run --parallel dev docs",
+    "build": "pnpm --filter=@react-superadmin/core build && pnpm --filter=@react-superadmin/web build",
+    "build:core": "pnpm --filter=@react-superadmin/core build",
+    "build:web": "pnpm --filter=@react-superadmin/web build",
+    "test": "pnpm --filter=@react-superadmin/core test && pnpm --filter=@react-superadmin/web test",
+    "lint": "pnpm --filter=@react-superadmin/core lint && pnpm --filter=@react-superadmin/web lint",
+    "clean": "pnpm --filter=@react-superadmin/core clean && pnpm --filter=@react-superadmin/web clean",
+    "typecheck": "pnpm --filter=@react-superadmin/core typecheck && pnpm --filter=@react-superadmin/web typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "commit": "git-cz",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "react",
+    "admin",
+    "crud",
+    "typescript",
+    "framework",
+    "dashboard",
+    "superadmin"
+  ],
+  "author": "batmaster",
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
+    "@docusaurus/theme-live-codeblock": "^3.8.1",
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/prompt": "^18.4.3",
+    "commitizen": "^4.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
+  },
+  "dependencies": {
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/prompt"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  }
+}

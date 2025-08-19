@@ -1,0 +1,362 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-focused websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #1d4ed8;
+  --ifm-color-primary-darkest: #1e40af;
+  --ifm-color-primary-light: #60a5fa;
+  --ifm-color-primary-lighter: #93c5fd;
+  --ifm-color-primary-lightest: #dbeafe;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #dbeafe;
+  --ifm-color-primary-lightest: #eff6ff;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* React SuperAdmin specific styles */
+.navbar__title {
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+}
+
+/* Live code block enhancements */
+.prism-code {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Component showcase styles */
+.component-showcase {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: var(--ifm-background-color);
+}
+
+.component-showcase h3 {
+  margin-top: 0;
+  color: var(--ifm-color-primary);
+}
+
+/* Form component styles */
+.form-example {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.form-example .form-group {
+  margin-bottom: 1rem;
+}
+
+.form-example label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.form-example input,
+.form-example select,
+.form-example textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-example input:focus,
+.form-example select:focus,
+.form-example textarea:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button component styles */
+.button-showcase {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.button-showcase button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-showcase button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Table styles */
+.table-showcase {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.table-showcase table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-showcase th {
+  background: var(--ifm-color-emphasis-100);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.table-showcase td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  text-transform: capitalize;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--ifm-background-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .button-showcase {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .button-showcase button {
+    width: 100%;
+  }
+  
+  .modal-content {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+}
+
+/* Code block enhancements */
+.theme-code-block {
+  margin: 2rem 0;
+}
+
+.theme-code-block pre {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Live code block specific styles */
+.live-code-block {
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.live-code-block .live-code-block-header {
+  background: var(--ifm-color-emphasis-100);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.live-code-block .live-code-block-content {
+  padding: 1rem;
+  background: var(--ifm-background-color);
+}
+
+/* Navigation enhancements */
+.navbar__brand {
+  font-weight: 700;
+}
+
+.navbar__brand:hover {
+  text-decoration: none;
+}
+
+/* Footer enhancements */
+.footer {
+  background: var(--ifm-color-emphasis-900);
+  color: var(--ifm-color-emphasis-100);
+}
+
+.footer__links {
+  margin-bottom: 2rem;
+}
+
+.footer__link-item {
+  color: var(--ifm-color-emphasis-300);
+  text-decoration: none;
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-color-emphasis-100);
+  text-decoration: underline;
+}
+
+/* Sidebar enhancements */
+.theme-doc-sidebar-menu {
+  font-size: 0.9rem;
+}
+
+.theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-category-link {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+.theme-doc-sidebar-item-category-level-2 > .theme-doc-sidebar-item-category-link {
+  font-weight: 500;
+}
+
+/* Content area enhancements */
+.theme-doc-markdown {
+  max-width: 100%;
+}
+
+.theme-doc-markdown h1 {
+  color: var(--ifm-color-primary);
+  border-bottom: 2px solid var(--ifm-color-emphasis-300);
+  padding-bottom: 0.5rem;
+}
+
+.theme-doc-markdown h2 {
+  color: var(--ifm-color-emphasis-800);
+  margin-top: 2rem;
+}
+
+.theme-doc-markdown h3 {
+  color: var(--ifm-color-emphasis-700);
+  margin-top: 1.5rem;
+}
+
+/* API reference table styles */
+.api-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.api-table th,
+.api-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.api-table th {
+  background: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.api-table code {
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+/* Alert and notification styles */
+.alert {
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border-left: 4px solid;
+}
+
+.alert-info {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1e40af;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.alert-warning {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  color: #a16207;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #b91c1c;
+}
