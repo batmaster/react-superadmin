@@ -36,6 +36,12 @@ pnpm build
 
 Visit our [documentation](https://react-superadmin.web.app) for detailed guides and API references.
 
+### 📖 Local Documentation
+
+- [Contributing Guide](CONTRIBUTING.md) - How to contribute to the project
+- [Code Formatting Guide](docs/FORMATTING.md) - Prettier setup and usage
+- [Commit Guidelines](COMMIT_GUIDELINES.md) - Commit message format
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [contributing guide](CONTRIBUTING.md) for details.
