@@ -27,6 +27,8 @@
     "test:coverage": "pnpm --filter=@react-superadmin/core test:coverage && pnpm --filter=@react-superadmin/web test:coverage",
     "test:run": "./scripts/test.sh",
     "lint": "pnpm --filter=@react-superadmin/core lint && pnpm --filter=@react-superadmin/web lint",
+    "lint:ci": "pnpm --filter=@react-superadmin/core lint --max-warnings=150 && pnpm --filter=@react-superadmin/web lint --max-warnings=150",
+    "lint:strict": "pnpm --filter=@react-superadmin/core lint --max-warnings=0 && pnpm --filter=@react-superadmin/web lint --max-warnings=0",
     "clean": "pnpm --filter=@react-superadmin/core clean && pnpm --filter=@react-superadmin/web clean",
     "typecheck": "pnpm --filter=@react-superadmin/core typecheck && pnpm --filter=@react-superadmin/web typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,html,css,scss,less}\"",

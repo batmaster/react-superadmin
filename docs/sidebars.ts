@@ -16,7 +16,14 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Features',
-      items: ['features', 'features/data-providers'],
+      items: [
+        'features',
+        'features/data-providers',
+        'features/roadmap',
+        'features/components-reference',
+        'features/hooks-reference',
+        'features/implementation-checklist',
+      ],
     },
     {
       type: 'category',

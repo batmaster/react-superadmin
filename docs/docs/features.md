@@ -178,14 +178,46 @@ Extend functionality with plugins.
 - **Hooks**: Custom React hooks
 - **Components**: Reusable UI components
 
+## 🗺️ Features Roadmap
+
+React SuperAdmin follows a structured development approach with clear phases and
+priorities. Our roadmap is inspired by
+[React Admin](https://marmelab.com/react-admin/documentation.html) and adapted
+for modern development needs.
+
+### Development Phases
+
+- **🚀 Phase 1 (High Priority)**: Core framework, data management,
+  authentication, basic forms
+- **📋 Phase 2 (Medium Priority)**: Advanced data display, complex forms, CRUD
+  pages, navigation
+- **🎨 Phase 3 (Lower Priority)**: Data visualization, real-time features,
+  advanced theming, i18n
+
+### Current Status
+
+- **Completed**: Basic project structure, core package setup, initial components
+- **In Progress**: Enhanced form validation, advanced filtering, TypeScript
+  definitions
+- **Next Up**: Authentication system, role-based access control, advanced data
+  grid
+
+For detailed progress tracking and implementation details, see our
+[Implementation Checklist](./features/implementation-checklist).
+
 ## Getting Started with Features
 
 ### Quick Feature Tour
 
 1. **Start with Data Providers** - [Data Providers](./features/data-providers)
-2. **Explore Components** - [Components](./components/button)
-3. **Learn Hooks** - [Developer Guide: Hooks](./developer/hooks)
-4. **Check Examples** - [Examples](./examples/basic-usage)
+2. **View Implementation Roadmap** - [Features Roadmap](./features/roadmap)
+3. **Browse Components Reference** -
+   [Components Reference](./features/components-reference)
+4. **Explore Hooks Reference** - [Hooks Reference](./features/hooks-reference)
+5. **Track Progress** -
+   [Implementation Checklist](./features/implementation-checklist)
+6. **Learn Hooks** - [Developer Guide: Hooks](./developer/hooks)
+7. **Check Examples** - [Examples](./examples/basic-usage)
 
 ### Feature Configuration
 

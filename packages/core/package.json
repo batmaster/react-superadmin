@@ -19,7 +19,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src --ext .ts,.tsx --max-warnings=1000"
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=150"
   },
   "dependencies": {
     "react": "^18.0.0",
