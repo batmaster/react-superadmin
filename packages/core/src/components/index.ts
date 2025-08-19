@@ -6,3 +6,4 @@ export { AppBar, type AppBarProps } from "./AppBar";
 export { Sidebar, type SidebarProps } from "./Sidebar";
 export { Footer, type FooterProps } from "./Footer";
 export { AdminLayout, type AdminLayoutProps } from "./AdminLayout";
+export { ContainerLayout, type ContainerLayoutProps } from "./ContainerLayout";
