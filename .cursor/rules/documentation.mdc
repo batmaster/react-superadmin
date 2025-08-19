@@ -1,0 +1,47 @@
+# Documentation Development Guide
+
+## Docusaurus Setup
+The documentation uses Docusaurus 3.x with the following configuration:
+- **Config**: [docs/docusaurus.config.ts](mdc:docs/docusaurus.config.ts)
+- **Sidebar**: [docs/sidebars.ts](mdc:docs/sidebars.ts)
+- **Content**: Located in `docs/docs/` directory
+- **Custom CSS**: [docs/src/css/custom.css](mdc:docs/src/css/custom.css)
+
+## Search Functionality
+- **Plugin**: Uses `@easyops-cn/docusaurus-search-local` for local search
+- **Configuration**: Search bar positioned in top-right navbar
+- **Index**: Generated during build process (`pnpm docs:build`)
+- **Note**: Search only works in built version, not development mode
+
+## Content Structure
+- **Getting Started**: Introduction, Installation, Quick Start, Examples
+- **Components**: Button, Forms, DataTable, Modal, etc.
+- **Developer**: Architecture, Setup, API, Custom Components, Hooks, Utilities, Testing, Contributing
+- **Examples**: Basic usage with live code examples
+
+## Development Workflow
+1. **Content Editing**: Use `pnpm docs:dev` for live editing
+2. **Testing Search**: Use `pnpm docs:build` + `pnpm docs:serve` or `pnpm firebase:serve`
+3. **Deployment**: Use `pnpm firebase:deploy` to deploy to Firebase Hosting
+
+## Key Files
+- **Main Config**: [docs/docusaurus.config.ts](mdc:docs/docusaurus.config.ts)
+- **Package Config**: [docs/package.json](mdc:docs/package.json)
+- **Sidebar Config**: [docs/sidebars.ts](mdc:docs/sidebars.ts)
+- **Custom CSS**: [docs/src/css/custom.css](mdc:docs/src/css/custom.css)
+
+## Search Configuration
+The search plugin is configured in [docs/docusaurus.config.ts](mdc:docs/docusaurus.config.ts) with:
+- `hashed: true` - For production builds
+- `language: ['en']` - English only
+- `searchBarPosition: 'right'` - In navbar
+- Proper indexing settings for all documentation pages
+
+## Deployment
+- **Firebase Hosting**: Configured for `docs/build` directory
+- **Live URL**: https://react-superadmin.web.app
+- **Local Testing**: Use `pnpm firebase:serve --port 8080`
+description:
+globs:
+alwaysApply: false
+---

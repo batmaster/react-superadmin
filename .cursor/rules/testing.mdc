@@ -1,0 +1,68 @@
+# Testing Guidelines
+
+## Testing Setup
+Each package has its own Jest configuration:
+- **Core Package**: [packages/core/jest.config.js](mdc:packages/core/jest.config.js)
+- **Web Package**: [packages/web/jest.config.js](mdc:packages/web/jest.config.js)
+- **Test Scripts**: [scripts/test.sh](mdc:scripts/test.sh)
+
+## Testing Structure
+- **Test Files**: Located in `packages/*/src/__tests__/` directories
+- **Setup Files**: [packages/core/src/__tests__/setup.ts](mdc:packages/core/src/__tests__/setup.ts), [packages/web/src/__tests__/setup.ts](mdc:packages/web/src/__tests__/setup.ts)
+- **Test Utils**: [packages/web/src/__tests__/utils/test-utils.tsx](mdc:packages/web/src/__tests__/utils/test-utils.tsx)
+
+## Testing Patterns
+
+### Component Testing
+- Use React Testing Library for component tests
+- Test user behavior, not implementation details
+- Use `data-testid` attributes for element selection
+- Test edge cases: loading states, error states, empty data
+
+### Hook Testing
+- Use `@testing-library/react-hooks` for custom hook testing
+- Test initial state, state changes, and side effects
+- Mock external dependencies (API calls, localStorage, etc.)
+
+### Integration Testing
+- Test component interactions
+- Test context providers and consumers
+- Test form submissions and data flow
+
+### E2E Testing
+- Use Cypress or Playwright for end-to-end tests
+- Test complete user workflows
+- Test admin panel functionality (CRUD operations, navigation)
+
+## Testing Best Practices
+1. **Test Behavior, Not Implementation**: Focus on what users see and do
+2. **Meaningful Descriptions**: Use clear, descriptive test names
+3. **Edge Case Coverage**: Test error states, loading states, empty data
+4. **Mock External Dependencies**: API calls, browser APIs, third-party services
+5. **Keep Tests Simple**: Complex tests are hard to maintain
+
+## Running Tests
+- **All Tests**: `pnpm test` (runs tests for all packages)
+- **Core Tests**: `pnpm --filter=@react-superadmin/core test`
+- **Web Tests**: `pnpm --filter=@react-superadmin/web test`
+- **Watch Mode**: `pnpm test:watch`
+- **Coverage**: `pnpm test:coverage`
+
+## Test Configuration
+Jest is configured with:
+- `jsdom` environment for DOM testing
+- TypeScript support
+- Path mapping for clean imports
+- Coverage thresholds (80% for branches, functions, lines, statements)
+- Setup files for global mocks and configurations
+
+## Documentation
+Comprehensive testing documentation is available at [docs/docs/developer/testing.md](mdc:docs/docs/developer/testing.md) covering:
+- Testing strategies and pyramid
+- Unit, integration, and E2E testing examples
+- Best practices and common patterns
+- Configuration and setup instructions
+description:
+globs:
+alwaysApply: false
+---

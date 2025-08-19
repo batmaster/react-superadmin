@@ -1,0 +1,184 @@
+# Hook Development Patterns
+
+## Hook Structure
+- Use `use` prefix for custom hooks
+- Return objects with named properties
+- Use TypeScript for proper typing
+- Implement proper cleanup and error handling
+
+## Basic Hook Pattern
+```tsx
+export const useHookName = <T>(initialValue: T) => {
+  // State
+  const [value, setValue] = useState<T>(initialValue);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Actions
+  const updateValue = useCallback((newValue: T) => {
+    setValue(newValue);
+    setError(null);
+  }, []);
+  
+  const reset = useCallback(() => {
+    setValue(initialValue);
+    setError(null);
+    setLoading(false);
+  }, [initialValue]);
+  
+  // Return object
+  return {
+    value,
+    loading,
+    error,
+    updateValue,
+    reset,
+  };
+};
+```
+
+## Async Hook Pattern
+```tsx
+export const useAsyncHook = <T>() => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  const execute = useCallback(async (asyncFn: () => Promise<T>) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const result = await asyncFn();
+      setData(result);
+      return result;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError(errorMessage);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  
+  return {
+    data,
+    loading,
+    error,
+    execute,
+  };
+};
+```
+
+## Resource Hook Pattern
+```tsx
+export const useResource = <T>({ service }: UseResourceOptions<T>) => {
+  const [data, setData] = useState<T[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [total, setTotal] = useState(0);
+  
+  const list = useCallback(async (params?: ListParams) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const result = await service.list(params);
+      setData(result.data);
+      setTotal(result.total);
+      return result;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+      setError(errorMessage);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [service]);
+  
+  const create = useCallback(async (item: Partial<T>) => {
+    try {
+      const result = await service.create(item);
+      await list(); // Refresh data
+      return result;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to create item';
+      setError(errorMessage);
+      throw err;
+    }
+  }, [service, list]);
+  
+  return {
+    data,
+    loading,
+    error,
+    total,
+    list,
+    create,
+    // ... other CRUD operations
+  };
+};
+```
+
+## Form Hook Pattern
+```tsx
+export const useForm = <T extends Record<string, any>>(initialData: T) => {
+  const [data, setData] = useState<T>(initialData);
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [loading, setLoading] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  
+  const setFieldValue = useCallback((field: keyof T, value: T[keyof T]) => {
+    setData(prev => ({ ...prev, [field]: value }));
+    setIsDirty(true);
+    
+    // Clear field error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  }, [errors]);
+  
+  const setFieldError = useCallback((field: keyof T, error: string) => {
+    setErrors(prev => ({ ...prev, [field]: error }));
+  }, []);
+  
+  const validate = useCallback(() => {
+    // Implement validation logic
+    const newErrors: Partial<Record<keyof T, string>> = {};
+    // ... validation logic
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [data]);
+  
+  const reset = useCallback(() => {
+    setData(initialData);
+    setErrors({});
+    setLoading(false);
+    setIsDirty(false);
+  }, [initialData]);
+  
+  return {
+    data,
+    errors,
+    loading,
+    isDirty,
+    setFieldValue,
+    setFieldError,
+    validate,
+    reset,
+  };
+};
+```
+
+## Hook Best Practices
+1. **Use useCallback** for functions that are passed as props or dependencies
+2. **Use useMemo** for expensive calculations
+3. **Implement proper cleanup** in useEffect when needed
+4. **Handle errors gracefully** with try-catch blocks
+5. **Return consistent object structure** for better developer experience
+6. **Use TypeScript generics** for flexible typing
+7. **Test all hook behaviors** including edge cases and error states
+description:
+globs:
+alwaysApply: false
+---

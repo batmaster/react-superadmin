@@ -1,0 +1,229 @@
+# Utility Function Development Patterns
+
+## Function Structure
+- Use descriptive function names
+- Export functions as named exports
+- Use TypeScript for proper typing
+- Include JSDoc comments for complex functions
+- Handle edge cases and errors gracefully
+
+## Basic Utility Pattern
+```tsx
+export function utilityName<T>(input: T, options?: UtilityOptions): ReturnType {
+  // Input validation
+  if (!input) {
+    throw new Error('Input is required');
+  }
+  
+  // Default options
+  const defaultOptions: Required<UtilityOptions> = {
+    enabled: true,
+    maxLength: 100,
+    ...options,
+  };
+  
+  // Main logic
+  try {
+    const result = processInput(input, defaultOptions);
+    return result;
+  } catch (error) {
+    // Handle errors gracefully
+    console.error('Utility function error:', error);
+    return getDefaultResult();
+  }
+}
+```
+
+## Resource Creation Utility Pattern
+```tsx
+export interface CreateResourceOptions {
+  name: string;
+  label: string;
+  fields: FieldConfig[];
+  permissions?: Partial<ResourcePermissions>;
+  views?: Array<ResourceView>;
+}
+
+export function createResource(options: CreateResourceOptions): ResourceConfig {
+  // Validate required fields
+  if (!options.name || !options.label) {
+    throw new Error('Name and label are required');
+  }
+  
+  // Set defaults
+  const defaultPermissions: ResourcePermissions = {
+    create: true,
+    read: true,
+    update: true,
+    delete: true,
+    list: true,
+  };
+  
+  const defaultViews: ResourceView[] = [
+    { name: 'list', label: 'List', type: 'list', layout: 'table' },
+    { name: 'create', label: 'Create', type: 'form' },
+    { name: 'show', label: 'Show', type: 'show' },
+    { name: 'edit', label: 'Edit', type: 'form' },
+  ];
+  
+  // Return resource configuration
+  return {
+    name: options.name,
+    label: options.label,
+    fields: options.fields,
+    permissions: { ...defaultPermissions, ...options.permissions },
+    views: options.views || defaultViews,
+  };
+}
+```
+
+## Validation Utility Pattern
+```tsx
+export interface ValidationRule {
+  type: 'required' | 'minLength' | 'maxLength' | 'pattern' | 'custom';
+  value?: any;
+  message: string;
+}
+
+export function validateField(field: FieldConfig, value: any): string | null {
+  // Handle required fields
+  if (field.required && !value) {
+    return `${field.label} is required`;
+  }
+  
+  // Skip validation for empty non-required fields
+  if (!value) {
+    return null;
+  }
+  
+  // Apply validation rules
+  for (const rule of field.validation || []) {
+    const error = applyValidationRule(rule, value, field);
+    if (error) {
+      return error;
+    }
+  }
+  
+  return null;
+}
+
+export function validateForm<T extends Record<string, any>>(
+  fields: FieldConfig[],
+  data: T
+): Partial<Record<keyof T, string>> {
+  const errors: Partial<Record<keyof T, string>> = {};
+  
+  for (const field of fields) {
+    const error = validateField(field, data[field.name as keyof T]);
+    if (error) {
+      errors[field.name as keyof T] = error;
+    }
+  }
+  
+  return errors;
+}
+```
+
+## Formatting Utility Pattern
+```tsx
+export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions): string {
+  if (!date) {
+    return '-';
+  }
+  
+  try {
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    if (isNaN(dateObj.getTime())) {
+      return 'Invalid date';
+    }
+    
+    const defaultOptions: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      ...options,
+    };
+    
+    return new Intl.DateTimeFormat('en-US', defaultOptions).format(dateObj);
+  } catch (error) {
+    console.error('Date formatting error:', error);
+    return 'Invalid date';
+  }
+}
+
+export function formatCurrency(amount: number, currency = 'USD'): string {
+  if (typeof amount !== 'number' || isNaN(amount)) {
+    return '-';
+  }
+  
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+    }).format(amount);
+  } catch (error) {
+    console.error('Currency formatting error:', error);
+    return `$${amount.toFixed(2)}`;
+  }
+}
+```
+
+## Admin Configuration Utility Pattern
+```tsx
+export interface CreateAdminOptions {
+  title: string;
+  resources: ResourceConfig[];
+  theme?: Partial<ThemeConfig>;
+  layout?: Partial<LayoutConfig>;
+  auth?: Partial<AuthConfig>;
+}
+
+export function createAdmin(options: CreateAdminOptions): AdminConfig {
+  // Validate required fields
+  if (!options.title || !Array.isArray(options.resources)) {
+    throw new Error('Title and resources array are required');
+  }
+  
+  // Set defaults
+  const defaultTheme: ThemeConfig = {
+    primaryColor: '#3b82f6',
+    secondaryColor: '#6b7280',
+    darkMode: false,
+  };
+  
+  const defaultLayout: LayoutConfig = {
+    sidebar: true,
+    header: true,
+    footer: true,
+    sidebarWidth: 250,
+  };
+  
+  const defaultAuth: AuthConfig = {
+    enabled: false,
+  };
+  
+  // Return admin configuration
+  return {
+    title: options.title,
+    resources: options.resources,
+    theme: { ...defaultTheme, ...options.theme },
+    layout: { ...defaultLayout, ...options.layout },
+    auth: { ...defaultAuth, ...options.auth },
+  };
+}
+```
+
+## Utility Best Practices
+1. **Pure functions** - Avoid side effects when possible
+2. **Input validation** - Validate inputs and provide helpful error messages
+3. **Default values** - Provide sensible defaults for optional parameters
+4. **Error handling** - Handle errors gracefully and log them appropriately
+5. **Type safety** - Use TypeScript interfaces for all parameters and return values
+6. **Documentation** - Include JSDoc comments for complex functions
+7. **Testing** - Write comprehensive tests covering all edge cases
+8. **Performance** - Consider performance implications for frequently called functions
+description:
+globs:
+alwaysApply: false
+---

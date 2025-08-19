@@ -1,0 +1,247 @@
+# Component Development Patterns
+
+## Component Structure
+- Use functional components with TypeScript
+- Export components as named exports
+- Use PascalCase for component names
+- Include proper TypeScript interfaces for props
+- **Ensure that the main inner component or wrapper component always accepts a `className` prop. If additional parts of the component require specific styling, provide additional className props such as `inputClassName`, `wrapperClassName`, etc., to allow for flexible styling.**
+
+## Props Interface Pattern
+```tsx
+interface InputFieldProps {
+  // Required props
+  value: string;
+  onChange: (value: string) => void;
+  
+  // Optional props with defaults
+  label?: string;
+  placeholder?: string;
+  type?: 'text' | 'email' | 'password' | 'number';
+  required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  
+  // Children and className props for flexible styling
+  children?: React.ReactNode;
+  
+  // Additional className props for specific parts
+  wrapperClassName?: string;
+  inputClassName?: string;
+  labelClassName?: string;
+  errorClassName?: string;
+}
+```
+
+## Component Implementation Pattern
+```tsx
+export const InputField: React.FC<InputFieldProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = 'text',
+  required = false,
+  error,
+  disabled = false,
+  wrapperClassName,
+  inputClassName,
+  labelClassName,
+  errorClassName,
+}) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  }, [onChange]);
+
+  return (
+    <div className={cn('input-field-wrapper', wrapperClassName)}>
+      {label && (
+        <label className={cn('input-field-label', labelClassName)}>
+          {label}
+          {required && <span className="required-asterisk">*</span>}
+        </label>
+      )}
+      
+      <input
+        type={type}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        required={required}
+        disabled={disabled}
+        className={cn(
+          'input-field-base',
+          { 'input-field-error': error, 'input-field-disabled': disabled },
+          inputClassName
+        )}
+      />
+      
+      {error && (
+        <div className={cn('input-field-error-message', errorClassName)}>
+          {error}
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+## Usage Example
+```tsx
+// Basic usage
+<InputField
+  label="Email Address"
+  value={email}
+  onChange={setEmail}
+  placeholder="Enter your email"
+  type="email"
+  required
+/>
+
+// With custom styling
+<InputField
+  label="Username"
+  value={username}
+  onChange={setUsername}
+  placeholder="Enter username"
+  wrapperClassName="my-custom-wrapper"
+  inputClassName="my-custom-input"
+  labelClassName="my-custom-label"
+  errorClassName="my-custom-error"
+/>
+
+// With error state
+<InputField
+  label="Password"
+  value={password}
+  onChange={setPassword}
+  type="password"
+  error="Password must be at least 8 characters"
+  inputClassName="border-red-500"
+/>
+```
+
+## Form Components
+- Use controlled components with value/onChange pattern
+- Implement proper validation and error handling
+- Support different field types (text, select, textarea, etc.)
+- Use FormField wrapper for consistent styling
+- **Always provide className props for the main wrapper and individual form elements**
+
+```tsx
+interface FormFieldProps {
+  label: string;
+  name: string;
+  type: 'text' | 'email' | 'select' | 'textarea';
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+  required?: boolean;
+  
+  // Styling props
+  className?: string;
+  wrapperClassName?: string;
+  labelClassName?: string;
+  inputClassName?: string;
+  errorClassName?: string;
+}
+```
+
+## CRUD Components
+- ResourceList: Display data with search, pagination, and actions
+- ResourceForm: Handle create/edit operations
+- ResourceShow: Display detailed resource information
+- Use proper loading states and error handling
+- **Provide className props for list containers, form wrappers, and individual sections**
+
+```tsx
+interface ResourceListProps {
+  data: Resource[];
+  loading: boolean;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+  
+  // Styling props
+  className?: string;
+  tableClassName?: string;
+  headerClassName?: string;
+  rowClassName?: string;
+  actionClassName?: string;
+}
+```
+
+## Layout Components
+- AdminLayout: Main wrapper with sidebar, header, footer
+- Sidebar: Navigation with resource links
+- Header: Top bar with user info and actions
+- Footer: Bottom footer with links
+- **Provide className props for main layout sections and individual components**
+
+```tsx
+interface AdminLayoutProps {
+  children: React.ReactNode;
+  
+  // Styling props
+  className?: string;
+  sidebarClassName?: string;
+  headerClassName?: string;
+  mainClassName?: string;
+  footerClassName?: string;
+  contentClassName?: string;
+}
+```
+
+## UI Components
+- Button: Multiple variants, sizes, and loading states
+- Card: Content containers with consistent styling
+- Badge: Status indicators and labels
+- Modal: Overlay dialogs with backdrop
+- Form fields: Input, Select, Textarea, Checkbox, Date
+- **Always include className prop and additional className props for specific parts**
+
+```tsx
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  loading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  
+  // Styling props
+  className?: string;
+  wrapperClassName?: string;
+  iconClassName?: string;
+  textClassName?: string;
+}
+```
+
+## className Usage Best Practices
+
+### 1. Main Component Wrapper
+- Always accept `className` prop for the outermost element
+- Use `cn()` utility to merge default and custom classes
+- Apply base component styles first, then custom classes
+
+### 2. Component Parts
+- Provide specific className props for major sections that need styling flexibility
+- Use descriptive names: `wrapperClassName`, `inputClassName`, `labelClassName`
+- Focus on the most commonly styled parts rather than every possible element
+
+### 3. Form Elements
+- Provide className props for inputs, labels, and error messages
+- Use `inputClassName`, `labelClassName`, `errorClassName`
+- Allow custom styling for form validation states and user feedback
+
+### 4. Practical Examples
+- **InputField**: `wrapperClassName`, `inputClassName`, `labelClassName`, `errorClassName`
+- **Button**: `className`, `wrapperClassName`, `iconClassName`
+- **Card**: `className`, `headerClassName`, `contentClassName`, `footerClassName`
+- **Modal**: `className`, `overlayClassName`, `contentClassName`
+
+### 5. Utility Classes
+- Use `cn()` function for conditional class merging
+- Support both string and object-based class conditions
+- Maintain default styling while allowing customization
+- Keep the number of className props manageable and focused

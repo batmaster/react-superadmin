@@ -1,0 +1,225 @@
+# Development Workflow and Best Practices
+
+## Development Commands
+
+### Core Development
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Build packages
+pnpm build              # Build both packages
+pnpm build:core         # Build core package only
+pnpm build:web          # Build web package only
+
+# Type checking
+pnpm typecheck          # Check types for both packages
+```
+
+### Testing Workflow
+```bash
+# Run all tests
+pnpm test
+
+# Run specific package tests
+pnpm test:core         # Core package tests
+pnpm test:web          # Web package tests
+
+# Development testing
+pnpm test:watch        # Watch mode for development
+pnpm test:coverage     # Generate coverage reports
+
+# Use custom test script
+./scripts/test.sh      # Run all tests
+./scripts/test.sh core # Run core tests only
+./scripts/test.sh -w   # Watch mode
+./scripts/test.sh -c   # Coverage mode
+```
+
+### Code Quality
+```bash
+# Linting
+pnpm lint              # Lint both packages
+
+# Clean build artifacts
+pnpm clean             # Clean both packages
+```
+
+## Development Workflow
+
+### 1. Feature Development
+1. **Create feature branch** from main
+2. **Implement feature** following established patterns
+3. **Write tests** for new functionality
+4. **Update documentation** if needed
+5. **Run tests** to ensure everything works
+6. **Submit pull request** with clear description
+
+### 2. Testing Strategy
+- **Write tests first** (TDD approach) for complex logic
+- **Test all user interactions** and edge cases
+- **Maintain 90%+ coverage** for critical paths
+- **Use meaningful test descriptions** that explain behavior
+
+### 3. Code Organization
+- **Follow established patterns** for components, hooks, and utilities
+- **Use consistent naming conventions** (PascalCase for components, camelCase for functions)
+- **Group related functionality** in appropriate directories
+- **Export from index files** for clean imports
+
+### 4. TypeScript Usage
+- **Define interfaces** for all props and data structures
+- **Use generics** for flexible, reusable components
+- **Avoid `any` types** - use proper typing
+- **Leverage union types** for variant props
+
+## File Organization Standards
+
+### Component Files
+```
+src/components/
+├── ui/                 # Reusable UI components
+│   ├── Button.tsx
+│   ├── Card.tsx
+│   └── index.ts
+├── layout/             # Layout components
+│   ├── AdminLayout.tsx
+│   ├── Sidebar.tsx
+│   └── index.ts
+└── crud/               # CRUD-specific components
+    ├── ResourceList.tsx
+    ├── ResourceForm.tsx
+    └── index.ts
+```
+
+### Hook Files
+```
+src/hooks/
+├── useResource.ts      # Resource management
+├── useForm.ts          # Form handling
+├── useTable.ts         # Table operations
+└── index.ts            # Export all hooks
+```
+
+### Utility Files
+```
+src/utils/
+├── createResource.ts   # Resource creation
+├── createAdmin.ts      # Admin configuration
+├── validation.ts       # Validation logic
+├── formatting.ts       # Data formatting
+└── index.ts            # Export all utilities
+```
+
+### Test Files
+```
+src/__tests__/
+├── setup.ts            # Test configuration
+├── utils/              # Test utilities
+│   └── test-utils.tsx
+├── components/         # Component tests
+│   └── ui/
+│       └── Button.test.tsx
+├── hooks/              # Hook tests
+└── utils/              # Utility tests
+```
+
+## Code Style Guidelines
+
+### React Components
+- Use functional components with TypeScript
+- Implement proper prop interfaces
+- Use destructuring for props
+- Implement proper error boundaries
+- Handle loading and error states
+
+### Hooks
+- Use `use` prefix for custom hooks
+- Return objects with named properties
+- Use `useCallback` for functions passed as props
+- Use `useMemo` for expensive calculations
+- Implement proper cleanup in `useEffect`
+
+### Utilities
+- Write pure functions when possible
+- Validate inputs and provide helpful errors
+- Use TypeScript for all parameters and returns
+- Include JSDoc comments for complex functions
+- Handle edge cases gracefully
+
+### Testing
+- Test behavior, not implementation
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
+- Test error states and edge cases
+
+## Performance Considerations
+
+### React Optimization
+- Use `React.memo` for expensive components
+- Implement proper dependency arrays in hooks
+- Avoid unnecessary re-renders
+- Use `useCallback` and `useMemo` appropriately
+
+### Bundle Optimization
+- Tree-shake unused exports
+- Use dynamic imports for code splitting
+- Optimize images and assets
+- Minimize bundle size
+
+### Testing Performance
+- Mock expensive operations
+- Use test isolation
+- Clean up resources after tests
+- Avoid testing implementation details
+
+## Documentation Standards
+
+### Code Comments
+- Use JSDoc for public APIs
+- Explain complex business logic
+- Document non-obvious decisions
+- Keep comments up to date
+
+### README Files
+- Clear installation instructions
+- Usage examples
+- API documentation
+- Contributing guidelines
+
+### Testing Documentation
+- Test setup instructions
+- Coverage requirements
+- Testing patterns and examples
+- Troubleshooting guide
+
+## Quality Assurance
+
+### Pre-commit Checklist
+- [ ] All tests pass
+- [ ] TypeScript compilation successful
+- [ ] Linting passes
+- [ ] Code follows established patterns
+- [ ] Documentation updated if needed
+
+### Pull Request Requirements
+- Clear description of changes
+- Tests for new functionality
+- Updated documentation if needed
+- No breaking changes without migration guide
+- Performance impact considered
+
+### Release Process
+- Update version numbers
+- Generate changelog
+- Run full test suite
+- Build all packages
+- Publish to npm registry
+description:
+globs:
+alwaysApply: false
+---

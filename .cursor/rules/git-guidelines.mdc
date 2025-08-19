@@ -1,0 +1,166 @@
+# Git Workflow & Commit Guidelines
+
+## Branch Naming Convention
+Use descriptive branch names with prefixes:
+- **Feature**: `feat/feature-name` (e.g., `feat/user-management`, `feat/search-functionality`)
+- **Bug Fix**: `fix/bug-description` (e.g., `fix/search-index-generation`, `fix/button-styling`)
+- **Documentation**: `docs/documentation-update` (e.g., `docs/add-testing-guide`, `docs/update-api-reference`)
+- **Refactor**: `refactor/component-name` (e.g., `refactor/data-table`, `refactor/auth-hooks`)
+- **Test**: `test/test-coverage` (e.g., `test/add-component-tests`, `test/improve-coverage`)
+
+## Commit Message Standards
+Follow [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Commit Types
+- **feat**: New feature
+- **fix**: Bug fix
+- **docs**: Documentation changes
+- **style**: Code style changes (formatting, missing semicolons, etc.)
+- **refactor**: Code refactoring
+- **perf**: Performance improvements
+- **test**: Adding or updating tests
+- **build**: Build system or external dependencies
+- **ci**: CI/CD configuration changes
+- **chore**: Maintenance tasks
+
+### Examples
+```bash
+feat: add user management system
+feat(core): implement useResource hook
+fix(web): resolve search functionality issues
+docs: add comprehensive testing guide
+refactor(components): simplify DataTable implementation
+test(core): add unit tests for utility functions
+```
+
+## Pull Request Process
+1. **Create Feature Branch**: `git checkout -b feat/feature-name`
+2. **Make Changes**: Implement your feature/fix
+3. **Write Tests**: Add or update tests as needed
+4. **Update Documentation**: Update relevant docs if needed
+5. **Commit Changes**: Use conventional commit format
+6. **Push Branch**: `git push origin feat/feature-name`
+7. **Create PR**: Use descriptive title and description
+8. **Code Review**: Address feedback and make changes
+9. **Merge**: Squash and merge when approved
+
+## PR Description Template
+```markdown
+## Description
+Brief description of what this PR accomplishes.
+
+## Type of Change
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+
+## Testing
+- [ ] Unit tests pass
+- [ ] Integration tests pass
+- [ ] Manual testing completed
+- [ ] Documentation updated
+
+## Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Code commented where necessary
+- [ ] Documentation updated
+- [ ] No console errors or warnings
+```
+
+## Git Commands Reference
+```bash
+# Create and switch to new branch
+git checkout -b feat/feature-name
+
+# Stage all changes
+git add -A
+
+# Commit with conventional format
+git commit -m "feat: add new feature"
+
+# Push branch to remote
+git push origin feat/feature-name
+
+# Update local main branch
+git checkout main
+git pull origin main
+
+# Rebase feature branch on main
+git checkout feat/feature-name
+git rebase main
+
+# Squash commits (for clean history)
+git rebase -i HEAD~3
+```
+
+## Commitlint Configuration
+The project uses [commitlint](https://commitlint.js.org/) to enforce commit message standards. Configuration is in [commitlint.config.js](mdc:commitlint.config.js) with:
+- **Type Enum**: Enforces valid commit types
+- **Case Rules**: Ensures consistent formatting
+- **Length Limits**: Prevents overly long commit messages
+- **Subject Rules**: Ensures descriptive commit descriptions
+
+## Branch Protection Rules
+- **Main Branch**: Protected from direct pushes
+- **Required Reviews**: At least one approval required
+- **Status Checks**: Tests must pass before merge
+- **Up-to-date**: Branch must be up-to-date with main
+
+## Release Process
+1. **Version Bump**: Update version in package.json files
+2. **Changelog**: Generate changelog from conventional commits
+3. **Tag Release**: Create git tag for version
+4. **Deploy**: Deploy to production/staging
+5. **Documentation**: Update documentation if needed
+
+## Common Workflows
+
+### Feature Development
+```bash
+git checkout main
+git pull origin main
+git checkout -b feat/new-feature
+# Make changes
+git add -A
+git commit -m "feat: implement new feature"
+git push origin feat/new-feature
+# Create PR
+```
+
+### Hotfix Process
+```bash
+git checkout main
+git pull origin main
+git checkout -b fix/critical-bug
+# Fix the bug
+git add -A
+git commit -m "fix: resolve critical bug"
+git push origin fix/critical-bug
+# Create PR for immediate merge
+```
+
+### Documentation Updates
+```bash
+git checkout main
+git pull origin main
+git checkout -b docs/update-guide
+# Update documentation
+git add -A
+git commit -m "docs: update user guide with new features"
+git push origin docs/update-guide
+# Create PR
+```
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,37 @@
+# React SuperAdmin Project Structure & Development
+
+## Project Overview
+This is a monorepo with pnpm workspaces containing:
+- `packages/core`: Core framework with TypeScript, React hooks, contexts, and utilities
+- `packages/web`: Web admin interface using Vite, React, Tailwind CSS
+- `docs`: Docusaurus documentation site
+
+## Development Commands
+- Use `pnpm dev` to start development (runs web package)
+- Use `pnpm docs:dev` to start documentation development server
+- Use `pnpm docs:build` to build documentation
+- Use `pnpm docs:serve` to serve built documentation locally
+- Use `pnpm firebase:deploy` to deploy documentation to Firebase Hosting
+- Use `pnpm build` to build both packages
+- Use `pnpm build:core` or `pnpm build:web` for individual packages
+
+## Key Patterns
+- Components use PascalCase naming (e.g., DataTable, ResourceForm)
+- Hooks use camelCase with 'use' prefix (e.g., useAuth, useFilters)
+- Core package exports reusable framework code
+- Web package imports from core and provides admin interface
+- Both packages use TypeScript with strict mode
+
+## File Organization
+- Core package: `packages/core/src/components/`, `packages/core/src/contexts/`, `packages/core/src/hooks/`, `packages/core/src/types/`, `packages/core/src/utils/`
+- Web package: `packages/web/src/components/crud/`, `packages/web/src/components/forms/`, `packages/web/src/components/layout/`, `packages/web/src/components/ui/`
+- Documentation: `docs/docs/` for content, `docs/src/` for custom components
+- Use relative imports within packages, package imports between packages
+
+## Technology Stack
+- React 18+ with TypeScript
+- Tailwind CSS for styling
+- Vite for web package build tool
+- Docusaurus for documentation
+- pnpm as package manager with workspace support
+- Firebase Hosting for documentation deployment
