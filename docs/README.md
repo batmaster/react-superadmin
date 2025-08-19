@@ -19,6 +19,8 @@ React SuperAdmin is a powerful, modern React framework for building CRUD admin i
     - [Field Configuration](#field-configuration)
   - [Components](#components)
     - [Layout Components](#layout-components)
+  - [Development Tools](#development-tools)
+    - [Cursor Rules](#cursor-rules)
 
 ## Installation
 
@@ -188,6 +190,35 @@ const field = {
 - `
 
 ````
+
+## Development Tools
+
+### Cursor Rules
+
+Cursor Rules are AI-powered coding guidelines that automatically apply to your development workflow. They provide:
+
+- **Automatic context** based on file types and locations
+- **Project-specific patterns** and best practices
+- **Consistent architecture** enforcement
+- **Real-time guidance** while coding
+
+#### Why Use Cursor Editor?
+
+- **AI-powered development** with project context understanding
+- **Automatic rule application** for consistent code quality
+- **Intelligent suggestions** based on established patterns
+- **Framework-specific guidance** for React SuperAdmin
+
+#### Current Rules
+
+- **Project Structure** - Monorepo organization and development commands
+- **Testing Patterns** - Testing best practices and patterns
+- **Component Development** - React component patterns and className requirements
+- **Hook Development** - Custom hook patterns and best practices
+- **Utility Development** - Utility function patterns and error handling
+- **Development Workflow** - Development process and quality assurance
+
+For complete Cursor Rules documentation, see our [Cursor Rules Guide](./cursor-rules.md).
 
 ## Testing Guide
 

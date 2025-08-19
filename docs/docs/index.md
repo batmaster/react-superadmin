@@ -2,7 +2,8 @@
 id: index
 title: Welcome to React SuperAdmin
 sidebar_label: Welcome
-keywords: [react, admin, crud, typescript, framework, components, hooks, utilities]
+keywords:
+  [react, admin, crud, typescript, framework, components, hooks, utilities]
 ---
 
 # Welcome to React SuperAdmin
@@ -16,6 +17,7 @@ Build powerful admin interfaces with React and TypeScript.
 - [Quick Start](./quick-start) - Build your first admin panel
 - [Examples](./examples/basic-usage) - See working examples
 - [Components](./components/button) - Explore UI components
+- [Cursor Rules](./developer/cursor-rules) - AI-powered development guidelines
 
 ## What is React SuperAdmin?
 
@@ -40,7 +42,11 @@ pnpm add @react-superadmin/web
 ## Example
 
 ```tsx
-import { SuperAdminProvider, createAdmin, createResource } from '@react-superadmin/core';
+import {
+  SuperAdminProvider,
+  createAdmin,
+  createResource,
+} from '@react-superadmin/core';
 import { AdminLayout } from '@react-superadmin/web';
 
 const userResource = createResource({

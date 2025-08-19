@@ -29,6 +29,8 @@ const sidebars: SidebarsConfig = {
         'developer/hooks',
         'developer/utilities',
         'developer/testing',
+        'developer/cursor-rules',
+        'developer/cursor-rules-quick-reference',
         'developer/contributing',
       ],
     },
