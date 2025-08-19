@@ -51,6 +51,57 @@ react-superadmin/
 - Include JSDoc comments for public APIs
 - Write tests for new functionality
 
+## Code Formatting
+
+We use **Prettier** for automatic code formatting and **ESLint** for code quality checks. The formatting is automatically applied before each commit.
+
+### Formatting Commands
+
+```bash
+# Format all files
+pnpm format
+
+# Check formatting without changing files
+pnpm format:check
+
+# Format and fix ESLint issues
+pnpm format:fix
+```
+
+### Automatic Formatting
+
+- **On Save**: VS Code will automatically format files when you save (if you have the Prettier extension)
+- **Pre-commit**: All staged files are automatically formatted before commits
+- **CI/CD**: Formatting is checked in CI to ensure consistency
+
+### File Types Covered
+
+- **TypeScript/TSX**: `.ts`, `.tsx` files
+- **JavaScript/JSX**: `.js`, `.jsx` files  
+- **Markdown**: `.md` files
+- **Configuration**: `.json`, `.yml`, `.yaml` files
+- **Styles**: `.css`, `.scss`, `.less` files
+- **HTML**: `.html` files
+
+### Pre-commit Hooks
+
+The project uses Husky to run pre-commit hooks that:
+1. **Format code** with Prettier
+2. **Fix ESLint issues** automatically
+3. **Run tests** to ensure nothing is broken
+4. **Validate commit messages** follow conventional format
+
+### VS Code Setup
+
+For the best development experience, install these extensions:
+- **Prettier - Code formatter**
+- **ESLint**
+
+The project includes VS Code settings that automatically:
+- Set Prettier as the default formatter
+- Format on save
+- Run ESLint fixes on save
+
 ## Testing
 
 - Write unit tests for utilities and hooks

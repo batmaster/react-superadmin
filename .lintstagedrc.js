@@ -1,4 +1,26 @@
 module.exports = {
-  '*.{js,jsx,ts,tsx}': ['prettier --write'],
-  '*.{json,md,yml,yaml}': ['prettier --write'],
+  // TypeScript and JavaScript files
+  '*.{ts,tsx,js,jsx}': [
+    'prettier --write --ignore-unknown',
+    'eslint --fix --max-warnings=0',
+    'git add'
+  ],
+  
+  // JSON, Markdown, YAML, and other config files
+  '*.{json,jsonc,md,yml,yaml,html,css,scss,less}': [
+    'prettier --write --ignore-unknown',
+    'git add'
+  ],
+  
+  // Package files
+  'package.json': [
+    'prettier --write',
+    'git add'
+  ],
+  
+  // Config files
+  '*.{js,ts,json}': [
+    'prettier --write --ignore-unknown',
+    'git add'
+  ]
 };
