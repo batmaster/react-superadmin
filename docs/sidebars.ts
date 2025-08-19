@@ -31,6 +31,7 @@ const sidebars: SidebarsConfig = {
         'developer/testing',
         'developer/cursor-rules',
         'developer/cursor-rules-quick-reference',
+        'developer/ci-cd',
         'developer/contributing',
       ],
     },

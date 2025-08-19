@@ -14,6 +14,35 @@ Thank you for your interest in contributing to React SuperAdmin! This guide will
 
 React SuperAdmin was created to solve a fundamental problem in modern web development: **building powerful admin interfaces shouldn't be complicated**.
 
+## 🚧 Development Roadmap
+
+### **What We're Building Next**
+
+We're actively expanding the framework with more components and features. For inspiration and reference on mature admin frameworks, see [React Admin Documentation](https://marmelab.com/react-admin/documentation.html).
+
+#### **High Priority Components**
+
+- [ ] **Advanced Form Components** - Complex form layouts, validation, and field types
+- [ ] **Data Visualization** - Charts, graphs, and analytics components
+- [ ] **Advanced Tables** - Sortable, filterable, and paginated data tables
+- [ ] **File Management** - File upload, image handling, and document management
+- [ ] **Real-time Features** - Live updates, notifications, and collaborative editing
+
+#### **Animation & UX (Framer Motion)**
+
+- [ ] **Framer Motion Integration** - Smooth animations and transitions for better user experience
+- [ ] **Loading States** - Skeleton loaders, progress indicators, and smooth transitions
+- [ ] **Micro-interactions** - Hover effects, focus states, and feedback animations
+- [ ] **Page Transitions** - Smooth navigation between different admin sections
+- [ ] **Component Animations** - Entrance/exit animations for lists, forms, and modals
+
+#### **Advanced Features**
+
+- [ ] **Internationalization (i18n)** - Multi-language support
+- [ ] **Theme System** - Advanced theming with CSS variables and design tokens
+- [ ] **Accessibility** - ARIA labels, keyboard navigation, and screen reader support
+- [ ] **Performance** - Virtual scrolling, lazy loading, and optimization
+
 ### Our Mission
 
 - **Simplify Admin Development**: Reduce the time and complexity of building CRUD admin interfaces
@@ -463,6 +492,29 @@ Brief description of what this PR accomplishes.
 - **Core Package**: Minimum 90% test coverage
 - **Web Package**: Minimum 85% test coverage
 - **Documentation**: All examples must be tested
+
+## 🚧 Contributing to the Roadmap
+
+### **Working on Missing Components**
+
+- **Check the roadmap** above for high-priority items
+- **Reference React Admin** for mature implementations and best practices
+- **Focus on Framer Motion** for animations and smooth UX
+- **Follow established patterns** from existing components
+
+### **Animation & UX Guidelines**
+
+- **Use Framer Motion** for all animations and transitions
+- **Keep animations subtle** - enhance UX without being distracting
+- **Ensure accessibility** - respect `prefers-reduced-motion` settings
+- **Performance first** - optimize animations for smooth 60fps
+
+### **Component Development Standards**
+
+- **TypeScript interfaces** for all props and state
+- **Comprehensive testing** with React Testing Library
+- **Storybook stories** for component documentation
+- **Accessibility testing** with screen readers and keyboard navigation
 
 ### Testing Patterns
 

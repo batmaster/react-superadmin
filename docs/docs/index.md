@@ -85,3 +85,30 @@ function App() {
 - [Architecture](./developer/architecture) - Understand the framework architecture
 - [Setup](./developer/setup) - Development environment setup with Git hooks
 - [Contributing](./developer/contributing) - How to contribute with code quality tools
+
+## 🚧 Development Roadmap
+
+### **Missing Components & Features**
+
+We're actively working to add more components and features. For reference on what's available in mature admin frameworks, see [React Admin Documentation](https://marmelab.com/react-admin/documentation.html).
+
+#### **High Priority Components**
+
+- [ ] **Advanced Form Components** - Complex form layouts, validation, and field types
+- [ ] **Data Visualization** - Charts, graphs, and analytics components
+- [ ] **Advanced Tables** - Sortable, filterable, and paginated data tables
+- [ ] **File Management** - File upload, image handling, and document management
+- [ ] **Real-time Features** - Live updates, notifications, and collaborative editing
+
+#### **Animation & UX**
+
+- [ ] **Framer Motion Integration** - Smooth animations and transitions for better user experience
+- [ ] **Loading States** - Skeleton loaders, progress indicators, and smooth transitions
+- [ ] **Micro-interactions** - Hover effects, focus states, and feedback animations
+
+#### **Advanced Features**
+
+- [ ] **Internationalization (i18n)** - Multi-language support
+- [ ] **Theme System** - Advanced theming with CSS variables and design tokens
+- [ ] **Accessibility** - ARIA labels, keyboard navigation, and screen reader support
+- [ ] **Performance** - Virtual scrolling, lazy loading, and optimization
