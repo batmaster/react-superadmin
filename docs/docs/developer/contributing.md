@@ -109,7 +109,7 @@ We believe admin interfaces should be:
 
 ```bash
 # Clone the repository
-git clone https://gitlab.com/batmaster/react-superadmin.git
+git clone https://github.com/batmaster/react-superadmin.git
 cd react-superadmin
 
 # Install dependencies (this will also set up Git hooks)
@@ -123,14 +123,14 @@ pnpm install
 1. **Fork the Repository**
 
    ```bash
-   # Go to https://gitlab.com/batmaster/react-superadmin
+   # Go to https://github.com/batmaster/react-superadmin
    # Click "Fork" button
    ```
 
 2. **Clone Your Fork**
 
    ```bash
-   git clone https://gitlab.com/batmaster/react-superadmin.git
+   git clone https://github.com/batmaster/react-superadmin.git
    cd react-superadmin
    ```
 

@@ -23,7 +23,7 @@ Before you begin, make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://gitlab.com/batmaster/react-superadmin.git
+git clone https://github.com/batmaster/react-superadmin.git
 cd react-superadmin
 ```
 
@@ -376,10 +376,10 @@ pnpm --filter=@react-superadmin/web typecheck
 
 ### Getting Help
 
-- Check the [GitHub Issues](https://gitlab.com/batmaster/react-superadmin/issues)
+- Check the [GitHub Issues](https://github.com/batmaster/react-superadmin/issues)
 - Review the [API documentation](./api)
 - Look at [examples](../examples/basic-usage)
-- Ask questions in the [Discussions](https://gitlab.com/batmaster/react-superadmin/discussions)
+- Ask questions in the [Discussions](https://github.com/batmaster/react-superadmin/discussions)
 
 ## Next Steps
 

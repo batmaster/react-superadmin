@@ -26,7 +26,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://gitlab.com/batmaster/react-superadmin/edit/main/docs/',
+            'https://github.com/batmaster/react-superadmin/edit/main/docs/',
           routeBasePath: '/',
           // Enable MDX for component rendering
           remarkPlugins: [],
@@ -93,7 +93,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://gitlab.com/batmaster/react-superadmin',
+          href: 'https://github.com/batmaster/react-superadmin',
           label: 'GitHub',
           position: 'right',
         },
@@ -124,7 +124,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://gitlab.com/batmaster/react-superadmin',
+              href: 'https://github.com/batmaster/react-superadmin',
             },
           ],
         },
