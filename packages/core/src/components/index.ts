@@ -9,3 +9,4 @@ export { AdminLayout, type AdminLayoutProps } from "./AdminLayout";
 export { ContainerLayout, type ContainerLayoutProps } from "./ContainerLayout";
 export { PageLayout, type PageLayoutProps } from "./PageLayout";
 export { Card, type CardProps } from "./Card";
+export { Button, type ButtonProps } from "./Button";
