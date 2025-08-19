@@ -1,5 +1,5 @@
-import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
 
 const config: Config = {
   title: 'React SuperAdmin',
@@ -108,6 +108,10 @@ const config: Config = {
             {
               label: 'Getting Started',
               to: '/introduction',
+            },
+            {
+              label: 'Features',
+              to: '/features',
             },
             {
               label: 'Components',

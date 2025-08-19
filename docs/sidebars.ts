@@ -15,6 +15,11 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Features',
+      items: ['features', 'features/data-providers'],
+    },
+    {
+      type: 'category',
       label: 'Components',
       items: ['components/button', 'components/forms'],
     },

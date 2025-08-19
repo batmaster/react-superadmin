@@ -85,7 +85,7 @@ function App() {
 - [Architecture](./developer/architecture) - Understand the framework architecture
 - [Setup](./developer/setup) - Development environment setup with Git hooks
 - [Contributing](./developer/contributing) - How to contribute with code quality tools
-- [Code Formatting](../FORMATTING.md) - Prettier setup and formatting guidelines
+- [Code Formatting](./developer/contributing#code-formatting) - Prettier setup and formatting guidelines
 
 ## 🚧 Development Roadmap
 

@@ -8,47 +8,63 @@ keywords:
 
 # Contributing to React SuperAdmin
 
-Thank you for your interest in contributing to React SuperAdmin! This guide will help you understand our project's purpose, concept, and how to contribute effectively.
+Thank you for your interest in contributing to React SuperAdmin! This guide will
+help you understand our project's purpose, concept, and how to contribute
+effectively.
 
 ## 🎯 Purpose & Vision
 
-React SuperAdmin was created to solve a fundamental problem in modern web development: **building powerful admin interfaces shouldn't be complicated**.
+React SuperAdmin was created to solve a fundamental problem in modern web
+development: **building powerful admin interfaces shouldn't be complicated**.
 
 ## 🚧 Development Roadmap
 
 ### **What We're Building Next**
 
-We're actively expanding the framework with more components and features. For inspiration and reference on mature admin frameworks, see [React Admin Documentation](https://marmelab.com/react-admin/documentation.html).
+We're actively expanding the framework with more components and features. For
+inspiration and reference on mature admin frameworks, see
+[React Admin Documentation](https://marmelab.com/react-admin/documentation.html).
 
 #### **High Priority Components**
 
-- [ ] **Advanced Form Components** - Complex form layouts, validation, and field types
+- [ ] **Advanced Form Components** - Complex form layouts, validation, and field
+      types
 - [ ] **Data Visualization** - Charts, graphs, and analytics components
 - [ ] **Advanced Tables** - Sortable, filterable, and paginated data tables
 - [ ] **File Management** - File upload, image handling, and document management
-- [ ] **Real-time Features** - Live updates, notifications, and collaborative editing
+- [ ] **Real-time Features** - Live updates, notifications, and collaborative
+      editing
 
 #### **Animation & UX (Framer Motion)**
 
-- [ ] **Framer Motion Integration** - Smooth animations and transitions for better user experience
-- [ ] **Loading States** - Skeleton loaders, progress indicators, and smooth transitions
-- [ ] **Micro-interactions** - Hover effects, focus states, and feedback animations
+- [ ] **Framer Motion Integration** - Smooth animations and transitions for
+      better user experience
+- [ ] **Loading States** - Skeleton loaders, progress indicators, and smooth
+      transitions
+- [ ] **Micro-interactions** - Hover effects, focus states, and feedback
+      animations
 - [ ] **Page Transitions** - Smooth navigation between different admin sections
-- [ ] **Component Animations** - Entrance/exit animations for lists, forms, and modals
+- [ ] **Component Animations** - Entrance/exit animations for lists, forms, and
+      modals
 
 #### **Advanced Features**
 
 - [ ] **Internationalization (i18n)** - Multi-language support
 - [ ] **Theme System** - Advanced theming with CSS variables and design tokens
-- [ ] **Accessibility** - ARIA labels, keyboard navigation, and screen reader support
+- [ ] **Accessibility** - ARIA labels, keyboard navigation, and screen reader
+      support
 - [ ] **Performance** - Virtual scrolling, lazy loading, and optimization
 
 ### Our Mission
 
-- **Simplify Admin Development**: Reduce the time and complexity of building CRUD admin interfaces
-- **Developer Experience First**: Provide an intuitive, TypeScript-first development experience
-- **Performance by Default**: Build fast, scalable admin applications out of the box
-- **Open Source Excellence**: Create a community-driven framework that rivals commercial solutions
+- **Simplify Admin Development**: Reduce the time and complexity of building
+  CRUD admin interfaces
+- **Developer Experience First**: Provide an intuitive, TypeScript-first
+  development experience
+- **Performance by Default**: Build fast, scalable admin applications out of the
+  box
+- **Open Source Excellence**: Create a community-driven framework that rivals
+  commercial solutions
 
 ### What We're Building
 
@@ -68,14 +84,17 @@ We believe admin interfaces should be:
 
 1. **Super Fast** - Lightning-quick performance and responsiveness
 2. **Super Flexible** - Adaptable to any business logic or design system
-3. **Super Developer-Friendly** - Intuitive APIs and excellent developer experience
+3. **Super Developer-Friendly** - Intuitive APIs and excellent developer
+   experience
 4. **Super Maintainable** - Clean, well-tested code that's easy to extend
 
 ### Architecture Principles
 
-- **Component Composition**: Build complex interfaces from simple, composable components
+- **Component Composition**: Build complex interfaces from simple, composable
+  components
 - **Hook-Based Logic**: Separate business logic from UI using custom React hooks
-- **Type Safety**: Leverage TypeScript for better development experience and fewer bugs
+- **Type Safety**: Leverage TypeScript for better development experience and
+  fewer bugs
 - **Performance First**: Optimize for speed and efficiency from the ground up
 - **Accessibility**: Ensure admin interfaces work for all users
 
@@ -85,7 +104,8 @@ We believe admin interfaces should be:
 
 #### 1. **React Admin**
 
-- **Complex Setup**: Requires extensive configuration and understanding of data providers
+- **Complex Setup**: Requires extensive configuration and understanding of data
+  providers
 - **Learning Curve**: Steep learning curve for new developers
 - **Performance Issues**: Can be slow with large datasets
 - **Limited Customization**: Difficult to customize beyond the provided patterns
@@ -103,7 +123,8 @@ We believe admin interfaces should be:
 
 - **Google Material Design**: Limited to Material Design principles
 - **Component Overhead**: Heavy components with many unused features
-- **Customization Challenges**: Difficult to deviate from Material Design patterns
+- **Customization Challenges**: Difficult to deviate from Material Design
+  patterns
 - **Performance**: Can be slow due to complex component hierarchies
 - **Accessibility**: Not always following accessibility best practices
 
@@ -112,15 +133,18 @@ We believe admin interfaces should be:
 - **Development Time**: Months of development for basic admin functionality
 - **Maintenance Burden**: Ongoing maintenance and bug fixes
 - **Inconsistent UX**: Different patterns across different admin sections
-- **Security Risks**: Potential security vulnerabilities in custom implementations
+- **Security Risks**: Potential security vulnerabilities in custom
+  implementations
 - **Scalability Issues**: Difficult to scale as requirements grow
 
 ### How React SuperAdmin Addresses These Issues
 
 - **Simple Setup**: Get started in minutes with minimal configuration
-- **Gentle Learning Curve**: Intuitive APIs that feel natural to React developers
+- **Gentle Learning Curve**: Intuitive APIs that feel natural to React
+  developers
 - **Performance Optimized**: Built with performance in mind from day one
-- **Highly Customizable**: Easy to customize and extend without fighting the framework
+- **Highly Customizable**: Easy to customize and extend without fighting the
+  framework
 - **Lightweight**: Only include what you need, when you need it
 - **Mobile First**: Responsive design that works on all devices
 - **Accessibility Built-in**: Follows accessibility best practices by default
@@ -145,7 +169,8 @@ cd react-superadmin
 pnpm install
 ```
 
-**Important**: The `pnpm install` command automatically runs the `prepare` script which sets up Husky Git hooks for code quality enforcement.
+**Important**: The `pnpm install` command automatically runs the `prepare`
+script which sets up Husky Git hooks for code quality enforcement.
 
 ### Getting Started
 
@@ -187,7 +212,8 @@ pnpm install
 
 ## 🔒 Git Hooks & Code Quality
 
-The project uses **Husky** to automatically enforce code quality standards during development:
+The project uses **Husky** to automatically enforce code quality standards
+during development:
 
 ### **Pre-commit Hook**
 
@@ -293,7 +319,9 @@ git checkout -b refactor/web/optimize-component-rendering
 
 ### Commitlint Configuration
 
-We use [commitlint](https://commitlint.js.org/) to enforce consistent commit messages. The configuration follows the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+We use [commitlint](https://commitlint.js.org/) to enforce consistent commit
+messages. The configuration follows the
+[Conventional Commits](https://www.conventionalcommits.org/) specification.
 
 ### Commit Message Format
 
@@ -359,7 +387,8 @@ git commit -m "chore(ci): add automated testing workflow"
 
 ### Breaking Changes
 
-For breaking changes, add `!` after the type/scope and include a `BREAKING CHANGE:` footer:
+For breaking changes, add `!` after the type/scope and include a
+`BREAKING CHANGE:` footer:
 
 ```bash
 git commit -m "feat(core)!: change useResource API to use new data structure
@@ -447,7 +476,8 @@ Brief description of what this PR accomplishes.
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Breaking change (fix or feature that would cause existing functionality to
+      not work as expected)
 - [ ] Documentation update
 
 ## Testing
@@ -613,6 +643,23 @@ export const useResource = (
 - Use CSS custom properties for theming
 - Ensure responsive design
 
+### Code Formatting {#code-formatting}
+
+We use Prettier for consistent code formatting across the project:
+
+- **Prettier Configuration**: `.prettierrc` in the root directory
+- **Pre-commit Hooks**: Automatic formatting on commit via Husky
+- **Manual Formatting**: Run `pnpm format` to format all files
+- **IDE Integration**: Configure your editor to format on save
+
+**Formatting Rules:**
+
+- 2 spaces for indentation
+- Single quotes for strings
+- Semicolons at the end of statements
+- Trailing commas in objects and arrays
+- Line length: 80 characters
+
 ## 🚀 Release Process
 
 ### Version Management
@@ -717,4 +764,5 @@ refactor(web): optimize DataTable rendering
 4. **Start Small**: Begin with documentation or simple bug fixes
 5. **Build Something**: Create a small admin interface using the framework
 
-Thank you for contributing to React SuperAdmin! Your contributions help make admin development better for everyone. 🚀
+Thank you for contributing to React SuperAdmin! Your contributions help make
+admin development better for everyone. 🚀

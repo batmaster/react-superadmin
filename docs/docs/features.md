@@ -7,20 +7,22 @@ keywords: [features, data providers, crud, authentication, theming, components]
 
 # Features
 
-React SuperAdmin provides a comprehensive set of features to build powerful admin interfaces quickly and efficiently.
+React SuperAdmin provides a comprehensive set of features to build powerful
+admin interfaces quickly and efficiently.
 
 ## Core Features
 
 ### 🗄️ Data Providers
 
-Flexible data abstraction layer that works with any backend - from mock data to real databases.
+Flexible data abstraction layer that works with any backend - from mock data to
+real databases.
 
 - **Mock Provider**: Perfect for development and prototyping
 - **Prisma Provider**: Production-ready database integration
 - **Custom Providers**: Easy to implement for any data source
 - **Runtime Switching**: Change providers without restarting
 
-[Learn more about Data Providers](./data-providers)
+[Learn more about Data Providers](./features/data-providers)
 
 ### 🔐 Authentication & Authorization
 
@@ -180,10 +182,10 @@ Extend functionality with plugins.
 
 ### Quick Feature Tour
 
-1. **Start with Data Providers** - [Data Providers](./data-providers)
-2. **Explore Components** - [Components](../components/button)
-3. **Learn Hooks** - [Developer Guide: Hooks](../developer/hooks)
-4. **Check Examples** - [Examples](../examples/basic-usage)
+1. **Start with Data Providers** - [Data Providers](./features/data-providers)
+2. **Explore Components** - [Components](./components/button)
+3. **Learn Hooks** - [Developer Guide: Hooks](./developer/hooks)
+4. **Check Examples** - [Examples](./examples/basic-usage)
 
 ### Feature Configuration
 
@@ -208,7 +210,7 @@ const adminConfig = createAdmin({
 
 ### Next Steps
 
-- [Data Providers](./data-providers) - Deep dive into data management
-- [Components](../components/button) - Explore UI components
-- [Quick Start](../quick-start) - Build your first admin panel
-- [Examples](../examples/basic-usage) - See features in action
+- [Data Providers](./features/data-providers) - Deep dive into data management
+- [Components](./components/button) - Explore UI components
+- [Quick Start](./quick-start) - Build your first admin panel
+- [Examples](./examples/basic-usage) - See features in action
