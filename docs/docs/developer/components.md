@@ -162,7 +162,7 @@ export const CustomColumn: React.FC<CustomColumnProps> = ({
   rowIndex
 }) => {
   const value = data[column.key];
-  
+
   // Custom rendering logic
   if (column.key === 'status') {
     return (
@@ -171,7 +171,7 @@ export const CustomColumn: React.FC<CustomColumnProps> = ({
       </span>
     );
   }
-  
+
   if (column.key === 'actions') {
     return (
       <div className="flex space-x-2">
@@ -180,7 +180,7 @@ export const CustomColumn: React.FC<CustomColumnProps> = ({
       </div>
     );
   }
-  
+
   return <span>{value}</span>;
 };
 ```
@@ -390,7 +390,7 @@ export const Badge: React.FC<BadgeProps> = ({
     danger: 'bg-red-100 text-red-800',
     info: 'bg-blue-100 text-blue-800'
   };
-  
+
   const sizeClasses = {
     sm: 'px-2 py-0.5 text-xs',
     md: 'px-2.5 py-1 text-sm',
@@ -483,7 +483,7 @@ export const CustomForm: React.FC<CustomFormProps> = ({
   --custom-success: #10b981;
   --custom-warning: #f59e0b;
   --custom-danger: #ef4444;
-  
+
   --custom-spacing-xs: 0.25rem;
   --custom-spacing-sm: 0.5rem;
   --custom-spacing-md: 1rem;
@@ -559,7 +559,7 @@ describe('CustomComponent', () => {
         Test Content
       </CustomComponent>
     );
-    
+
     fireEvent.click(screen.getByText('Test Content'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
@@ -580,3 +580,10 @@ describe('CustomComponent', () => {
 ## Examples
 
 Check out the [Examples](../examples/basic-usage) section to see these patterns in action, or explore the [API Reference](./api) for detailed component documentation.
+
+## Related Documentation
+
+- [Features: Data Providers](../features/data-providers) - Learn how to integrate components with data providers
+- [Hooks](./hooks.md) - Custom React hooks for component state management
+- [API](./api.md) - API reference and examples
+- [Testing](./testing.md) - Testing strategies for custom components

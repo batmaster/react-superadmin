@@ -2,7 +2,8 @@
 id: contributing
 title: Contributing
 sidebar_label: Contributing
-keywords: [contributing, development, rules, guidelines, fork, branch, pr, commitlint]
+keywords:
+  [contributing, development, rules, guidelines, fork, branch, pr, commitlint]
 ---
 
 # Contributing to React SuperAdmin
@@ -23,6 +24,7 @@ React SuperAdmin was created to solve a fundamental problem in modern web develo
 ### What We're Building
 
 React SuperAdmin is a modern, component-based framework that provides:
+
 - **Pre-built Components**: Ready-to-use UI components for common admin tasks
 - **Smart Hooks**: Custom React hooks that handle complex state management
 - **Type Safety**: Full TypeScript support with excellent IntelliSense
@@ -34,6 +36,7 @@ React SuperAdmin is a modern, component-based framework that provides:
 ### The "SuperAdmin" Philosophy
 
 We believe admin interfaces should be:
+
 1. **Super Fast** - Lightning-quick performance and responsiveness
 2. **Super Flexible** - Adaptable to any business logic or design system
 3. **Super Developer-Friendly** - Intuitive APIs and excellent developer experience
@@ -52,6 +55,7 @@ We believe admin interfaces should be:
 ### Problems with Existing Solutions
 
 #### 1. **React Admin**
+
 - **Complex Setup**: Requires extensive configuration and understanding of data providers
 - **Learning Curve**: Steep learning curve for new developers
 - **Performance Issues**: Can be slow with large datasets
@@ -59,6 +63,7 @@ We believe admin interfaces should be:
 - **Bundle Size**: Large bundle size that impacts performance
 
 #### 2. **Ant Design Pro**
+
 - **Design System Lock-in**: Tightly coupled to Ant Design's visual language
 - **Internationalization Complexity**: Complex i18n setup and maintenance
 - **Theme Customization**: Difficult to create custom themes
@@ -66,6 +71,7 @@ We believe admin interfaces should be:
 - **Bundle Bloat**: Includes many unused components
 
 #### 3. **Material-UI Admin Templates**
+
 - **Google Material Design**: Limited to Material Design principles
 - **Component Overhead**: Heavy components with many unused features
 - **Customization Challenges**: Difficult to deviate from Material Design patterns
@@ -73,6 +79,7 @@ We believe admin interfaces should be:
 - **Accessibility**: Not always following accessibility best practices
 
 #### 4. **Custom Solutions**
+
 - **Development Time**: Months of development for basic admin functionality
 - **Maintenance Burden**: Ongoing maintenance and bug fixes
 - **Inconsistent UX**: Different patterns across different admin sections
@@ -98,38 +105,100 @@ We believe admin interfaces should be:
 - **Git** for version control
 - **TypeScript** knowledge (basic understanding)
 
+### Initial Setup
+
+```bash
+# Clone the repository
+git clone https://gitlab.com/batmaster/react-superadmin.git
+cd react-superadmin
+
+# Install dependencies (this will also set up Git hooks)
+pnpm install
+```
+
+**Important**: The `pnpm install` command automatically runs the `prepare` script which sets up Husky Git hooks for code quality enforcement.
+
 ### Getting Started
 
 1. **Fork the Repository**
+
    ```bash
    # Go to https://gitlab.com/batmaster/react-superadmin
    # Click "Fork" button
    ```
 
 2. **Clone Your Fork**
+
    ```bash
    git clone https://gitlab.com/batmaster/react-superadmin.git
    cd react-superadmin
    ```
 
 3. **Add Upstream Remote**
+
    ```bash
    git remote add upstream https://github.com/original-owner/react-superadmin.git
    ```
 
 4. **Install Dependencies**
+
    ```bash
    pnpm install
    ```
 
 5. **Start Development**
+
    ```bash
    # Start the web application
    pnpm dev
-   
+
    # Start the documentation
    pnpm docs
    ```
+
+## 🔒 Git Hooks & Code Quality
+
+The project uses **Husky** to automatically enforce code quality standards during development:
+
+### **Pre-commit Hook**
+
+- **Automatically formats** staged files with Prettier
+- **Runs ESLint** with auto-fix on TypeScript/TSX files
+- **Ensures consistent code style** across the project
+- **Prevents commits** with formatting or linting errors
+
+### **Commit-msg Hook**
+
+- **Validates commit messages** using commitlint
+- **Enforces conventional commit format** for consistent history
+- **Provides clear guidelines** for commit message structure
+
+### **Automatic Setup**
+
+```bash
+# Git hooks are automatically installed when you run:
+pnpm install
+
+# This runs the prepare script:
+# "prepare": "husky install"
+```
+
+### **What Gets Checked**
+
+- **TypeScript/TSX files**: ESLint + Prettier
+- **Markdown files**: Prettier formatting
+- **JSON files**: Prettier formatting
+- **Commit messages**: Conventional commit format
+
+### **Manual Hook Setup (if needed)**
+
+```bash
+# If hooks aren't working, manually run:
+pnpm run prepare
+
+# Or manually install Husky:
+npx husky install
+```
 
 ## 🌿 Branch Naming Convention
 
@@ -270,11 +339,53 @@ BREAKING CHANGE: useResource now returns data in a different format.
 Update your components to use the new structure."
 ```
 
+### Troubleshooting Commit Issues
+
+#### **Git Hooks Not Running**
+
+```bash
+# Check if Husky is installed
+ls -la .husky/
+
+# Reinstall hooks if needed
+pnpm run prepare
+
+# Or manually install
+npx husky install
+```
+
+#### **Pre-commit Hook Failing**
+
+```bash
+# Check lint-staged configuration
+cat package.json | grep -A 10 "lint-staged"
+
+# Run lint-staged manually to see errors
+npx lint-staged
+
+# Fix formatting issues
+pnpm format
+```
+
+#### **Commit Message Validation Failing**
+
+```bash
+# Check commitlint configuration
+cat package.json | grep -A 5 "commitlint"
+
+# Validate message manually
+echo "your commit message" | npx commitlint
+
+# Use commitizen for guided commits
+pnpm commit
+```
+
 ## 🔄 Pull Request Process
 
 ### Creating a Pull Request
 
 1. **Ensure Your Branch is Up to Date**
+
    ```bash
    git fetch upstream
    git checkout main
@@ -284,6 +395,7 @@ Update your components to use the new structure."
    ```
 
 2. **Push Your Changes**
+
    ```bash
    git push origin your-feature-branch
    ```
@@ -299,20 +411,24 @@ Update your components to use the new structure."
 
 ```markdown
 ## Description
+
 Brief description of what this PR accomplishes.
 
 ## Type of Change
+
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] I have tested this change locally
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] All tests pass
 
 ## Checklist
+
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
@@ -364,7 +480,7 @@ describe('Button', () => {
   it('handles click events', () => {
     const handleClick = jest.fn();
     render(<Button onClick={handleClick}>Click me</Button>);
-    
+
     fireEvent.click(screen.getByText('Click me'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
@@ -392,32 +508,35 @@ describe('useCustomHook', () => {
 
 ### Example JSDoc
 
-```typescript
+````typescript
 /**
  * Custom hook for managing resource data with CRUD operations.
- * 
+ *
  * @param resourceName - The name of the resource to manage
  * @param options - Configuration options for the hook
  * @returns Object containing resource data and CRUD operations
- * 
+ *
  * @example
  * ```tsx
  * const { data, loading, create, update, remove } = useResource('users');
- * 
+ *
  * // Create a new user
  * await create({ name: 'John Doe', email: 'john@example.com' });
- * 
+ *
  * // Update existing user
  * await update('123', { name: 'Jane Doe' });
- * 
+ *
  * // Delete user
  * await remove('123');
  * ```
  */
-export const useResource = (resourceName: string, options?: UseResourceOptions) => {
+export const useResource = (
+  resourceName: string,
+  options?: UseResourceOptions
+) => {
   // Implementation...
 };
-```
+````
 
 ## 🎨 Code Style Guidelines
 
@@ -447,6 +566,7 @@ export const useResource = (resourceName: string, options?: UseResourceOptions) 
 ### Version Management
 
 We use [semantic versioning](https://semver.org/):
+
 - **Major** (x.0.0): Breaking changes
 - **Minor** (0.x.0): New features, backward compatible
 - **Patch** (0.0.x): Bug fixes, backward compatible
@@ -454,11 +574,13 @@ We use [semantic versioning](https://semver.org/):
 ### Release Steps
 
 1. **Create Release Branch**
+
    ```bash
    git checkout -b release/v1.0.0
    ```
 
 2. **Update Version**
+
    ```bash
    pnpm version patch|minor|major
    ```

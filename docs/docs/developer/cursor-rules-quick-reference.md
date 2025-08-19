@@ -16,14 +16,15 @@ description: Quick overview of all Cursor Rules for React SuperAdmin
 
 ## 📋 **Current Rules Overview**
 
-| Rule                      | Applies To    | Purpose                                    |
-| ------------------------- | ------------- | ------------------------------------------ |
-| **Project Structure**     | All files     | Monorepo context, commands, patterns       |
-| **Testing Patterns**      | Test files    | Testing best practices and patterns        |
-| **Component Development** | React files   | Component patterns, className requirements |
-| **Hook Development**      | Hook files    | Hook patterns and best practices           |
-| **Utility Development**   | Utility files | Function patterns and error handling       |
-| **Development Workflow**  | All files     | Development process and quality            |
+| Rule                      | Applies To    | Purpose                                       |
+| ------------------------- | ------------- | --------------------------------------------- |
+| **Project Structure**     | All files     | Monorepo context, commands, patterns          |
+| **Testing Patterns**      | Test files    | Testing best practices and patterns           |
+| **Component Development** | React files   | Component patterns, className requirements    |
+| **Hook Development**      | Hook files    | Hook patterns and best practices              |
+| **Utility Development**   | Utility files | Function patterns and error handling          |
+| **Development Workflow**  | All files     | Development process and quality               |
+| **Documentation Sync**    | Code files    | Documentation consistency and JSDoc standards |
 
 ## 🎯 **Rule Application**
 
@@ -38,6 +39,7 @@ description: Quick overview of all Cursor Rules for React SuperAdmin
 - **`hooks/**/\*`\*\* → Hook Development
 - **`utils/**/\*`\*\* → Utility Development
 - **`.test.*`** → Testing Patterns
+- **`.ts`, `.tsx`, `.js`, `.jsx`** → Documentation Sync
 
 ## ✅ **Quick Start**
 

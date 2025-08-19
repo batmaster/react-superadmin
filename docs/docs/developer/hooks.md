@@ -34,7 +34,7 @@ export const useCustomHook = (
   options: UseCustomHookOptions = {}
 ): UseCustomHookReturn => {
   const { enabled = true, interval = 5000 } = options;
-  
+
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -87,10 +87,8 @@ export const useExtendedResource = (resourceName: string) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const toggleSelection = useCallback((id: string) => {
-    setSelectedItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setSelectedItems(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   }, []);
 
@@ -104,11 +102,9 @@ export const useExtendedResource = (resourceName: string) => {
 
   const bulkDelete = useCallback(async () => {
     if (selectedItems.length === 0) return;
-    
+
     try {
-      await Promise.all(
-        selectedItems.map(id => resource.remove(id))
-      );
+      await Promise.all(selectedItems.map(id => resource.remove(id)));
       setSelectedItems([]);
     } catch (error) {
       console.error('Bulk delete failed:', error);
@@ -123,7 +119,7 @@ export const useExtendedResource = (resourceName: string) => {
     clearSelection,
     bulkDelete,
     hasSelection: selectedItems.length > 0,
-    selectionCount: selectedItems.length
+    selectionCount: selectedItems.length,
   };
 };
 ```
@@ -168,7 +164,9 @@ export const useEnhancedTable = (resourceName: string) => {
   }, [table.data, selectedRows]);
 
   const isIndeterminate = useMemo(() => {
-    return selectedRows.size > 0 && selectedRows.size < (table.data?.length || 0);
+    return (
+      selectedRows.size > 0 && selectedRows.size < (table.data?.length || 0)
+    );
   }, [table.data, selectedRows]);
 
   return {
@@ -181,7 +179,7 @@ export const useEnhancedTable = (resourceName: string) => {
     isAllSelected,
     isIndeterminate,
     hasSelection: selectedRows.size > 0,
-    selectionCount: selectedRows.size
+    selectionCount: selectedRows.size,
   };
 };
 ```
@@ -205,11 +203,11 @@ export const useApiQuery = <T>(
   queryFn: () => Promise<T>,
   options: UseApiQueryOptions<T> = {}
 ) => {
-  const { 
-    enabled = true, 
-    refetchOnWindowFocus = false, 
-    retry = 3, 
-    retryDelay = 1000 
+  const {
+    enabled = true,
+    refetchOnWindowFocus = false,
+    retry = 3,
+    retryDelay = 1000,
   } = options;
 
   const [data, setData] = useState<T | null>(null);
@@ -226,7 +224,7 @@ export const useApiQuery = <T>(
       setRetryCount(0);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Unknown error'));
-      
+
       if (retryCount < retry) {
         setTimeout(() => {
           setRetryCount(prev => prev + 1);
@@ -275,22 +273,22 @@ export const useInfiniteScroll = <T>(
   options: UseInfiniteScrollOptions = {}
 ) => {
   const { threshold = 0.1, rootMargin = '100px' } = options;
-  
+
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  
+
   const observerRef = useRef<IntersectionObserver>();
   const lastElementRef = useRef<HTMLDivElement>(null);
 
   const loadNextPage = useCallback(async () => {
     if (loading || !hasMore) return;
-    
+
     try {
       setLoading(true);
       const newData = await fetchNextPage();
-      
+
       if (newData.length === 0) {
         setHasMore(false);
       } else {
@@ -306,7 +304,7 @@ export const useInfiniteScroll = <T>(
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         if (entries[0].isIntersecting && hasMore && !loading) {
           loadNextPage();
         }
@@ -341,7 +339,7 @@ export const useInfiniteScroll = <T>(
     page,
     loadNextPage,
     reset,
-    lastElementRef
+    lastElementRef,
   };
 };
 ```
@@ -373,32 +371,35 @@ export const useFormValidation = <T extends Record<string, any>>(
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
 
-  const validateField = useCallback((name: keyof T, value: any): string | null => {
-    const rule = validationRules[name as string];
-    if (!rule) return null;
+  const validateField = useCallback(
+    (name: keyof T, value: any): string | null => {
+      const rule = validationRules[name as string];
+      if (!rule) return null;
 
-    if (rule.required && !value) {
-      return 'This field is required';
-    }
+      if (rule.required && !value) {
+        return 'This field is required';
+      }
 
-    if (rule.minLength && value && value.length < rule.minLength) {
-      return `Minimum length is ${rule.minLength} characters`;
-    }
+      if (rule.minLength && value && value.length < rule.minLength) {
+        return `Minimum length is ${rule.minLength} characters`;
+      }
 
-    if (rule.maxLength && value && value.length > rule.maxLength) {
-      return `Maximum length is ${rule.maxLength} characters`;
-    }
+      if (rule.maxLength && value && value.length > rule.maxLength) {
+        return `Maximum length is ${rule.maxLength} characters`;
+      }
 
-    if (rule.pattern && value && !rule.pattern.test(value)) {
-      return 'Invalid format';
-    }
+      if (rule.pattern && value && !rule.pattern.test(value)) {
+        return 'Invalid format';
+      }
 
-    if (rule.custom) {
-      return rule.custom(value);
-    }
+      if (rule.custom) {
+        return rule.custom(value);
+      }
 
-    return null;
-  }, [validationRules]);
+      return null;
+    },
+    [validationRules]
+  );
 
   const validateForm = useCallback((): boolean => {
     const newErrors: Partial<Record<keyof T, string>> = {};
@@ -417,23 +418,29 @@ export const useFormValidation = <T extends Record<string, any>>(
     return isValid;
   }, [values, validationRules, validateField]);
 
-  const setFieldValue = useCallback((name: keyof T, value: any) => {
-    setValues(prev => ({ ...prev, [name]: value }));
-    
-    if (touched[name]) {
-      const error = validateField(name, value);
-      setErrors(prev => ({ ...prev, [name]: error || undefined }));
-    }
-  }, [touched, validateField]);
+  const setFieldValue = useCallback(
+    (name: keyof T, value: any) => {
+      setValues(prev => ({ ...prev, [name]: value }));
 
-  const setFieldTouched = useCallback((name: keyof T, isTouched = true) => {
-    setTouched(prev => ({ ...prev, [name]: isTouched }));
-    
-    if (isTouched) {
-      const error = validateField(name, values[name]);
-      setErrors(prev => ({ ...prev, [name]: error || undefined }));
-    }
-  }, [values, validateField]);
+      if (touched[name]) {
+        const error = validateField(name, value);
+        setErrors(prev => ({ ...prev, [name]: error || undefined }));
+      }
+    },
+    [touched, validateField]
+  );
+
+  const setFieldTouched = useCallback(
+    (name: keyof T, isTouched = true) => {
+      setTouched(prev => ({ ...prev, [name]: isTouched }));
+
+      if (isTouched) {
+        const error = validateField(name, values[name]);
+        setErrors(prev => ({ ...prev, [name]: error || undefined }));
+      }
+    },
+    [values, validateField]
+  );
 
   const resetForm = useCallback(() => {
     setValues(initialValues);
@@ -449,7 +456,7 @@ export const useFormValidation = <T extends Record<string, any>>(
     setFieldTouched,
     validateForm,
     resetForm,
-    isValid: Object.keys(errors).length === 0
+    isValid: Object.keys(errors).length === 0,
   };
 };
 ```
@@ -475,15 +482,19 @@ export const useLocalStorage = <T>(
     }
   });
 
-  const setValue = useCallback((value: T | ((prev: T) => T)) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
-    } catch (error) {
-      console.error(`Error setting localStorage key "${key}":`, error);
-    }
-  }, [key, storedValue]);
+  const setValue = useCallback(
+    (value: T | ((prev: T) => T)) => {
+      try {
+        const valueToStore =
+          value instanceof Function ? value(storedValue) : value;
+        setStoredValue(valueToStore);
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      } catch (error) {
+        console.error(`Error setting localStorage key "${key}":`, error);
+      }
+    },
+    [key, storedValue]
+  );
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
@@ -491,7 +502,10 @@ export const useLocalStorage = <T>(
         try {
           setStoredValue(JSON.parse(e.newValue));
         } catch (error) {
-          console.error(`Error parsing localStorage value for key "${key}":`, error);
+          console.error(
+            `Error parsing localStorage value for key "${key}":`,
+            error
+          );
         }
       }
     };
@@ -526,6 +540,261 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 ```
 
+## Data Provider Hooks
+
+React SuperAdmin provides specialized hooks for working with data providers, making it easy to integrate data operations into your components.
+
+### useDataProvider
+
+The main hook for accessing the current data provider and switching between providers.
+
+```typescript
+import { useDataProvider } from '@react-superadmin/web';
+
+function UserList() {
+  const { dataProvider, switchProvider, getConfig } = useDataProvider();
+
+  // Access current provider
+  const currentProvider = getConfig().type;
+
+  // Switch providers
+  const switchToMock = () => {
+    switchProvider({ type: 'mock', options: { enableLogging: true } });
+  };
+
+  const switchToPrisma = () => {
+    switchProvider({ type: 'prisma', options: { enableCaching: true } });
+  };
+
+  // Use the provider
+  const fetchUsers = async () => {
+    const result = await dataProvider.getList('users', {
+      pagination: { page: 1, perPage: 10 }
+    });
+    return result.data;
+  };
+
+  return (
+    <div>
+      <p>Current provider: {currentProvider}</p>
+      <button onClick={switchToMock}>Use Mock</button>
+      <button onClick={switchToPrisma}>Use Prisma</button>
+    </div>
+  );
+}
+```
+
+### useDataProviderInstance
+
+A convenience hook that provides direct access to the data provider instance.
+
+```typescript
+import { useDataProviderInstance } from '@react-superadmin/web';
+
+function UserForm() {
+  const dataProvider = useDataProviderInstance();
+
+  const createUser = async (userData: any) => {
+    try {
+      const result = await dataProvider.create('users', { data: userData });
+      return result.data;
+    } catch (error) {
+      console.error('Failed to create user:', error);
+      throw error;
+    }
+  };
+
+  const updateUser = async (id: string, userData: any) => {
+    try {
+      const result = await dataProvider.update('users', { id, data: userData });
+      return result.data;
+    } catch (error) {
+      console.error('Failed to update user:', error);
+      throw error;
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+    </form>
+  );
+}
+```
+
+### Custom Data Provider Hooks
+
+You can create custom hooks that wrap data provider operations for specific resources.
+
+```typescript
+import { useDataProviderInstance } from '@react-superadmin/web';
+import { useState, useCallback } from 'react';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+export const useUsers = () => {
+  const dataProvider = useDataProviderInstance();
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchUsers = useCallback(
+    async (params?: any) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await dataProvider.getList<User>('users', {
+          pagination: { page: 1, perPage: 20 },
+          sort: { field: 'name', order: 'ASC' },
+          ...params,
+        });
+
+        setUsers(result.data);
+        return result;
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dataProvider]
+  );
+
+  const createUser = useCallback(
+    async (userData: Partial<User>) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await dataProvider.create<User>('users', {
+          data: userData,
+        });
+        await fetchUsers(); // Refresh the list
+        return result.data;
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dataProvider, fetchUsers]
+  );
+
+  const updateUser = useCallback(
+    async (id: string, userData: Partial<User>) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await dataProvider.update<User>('users', {
+          id,
+          data: userData,
+        });
+        await fetchUsers(); // Refresh the list
+        return result.data;
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dataProvider, fetchUsers]
+  );
+
+  const deleteUser = useCallback(
+    async (id: string) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        await dataProvider.delete('users', { id });
+        await fetchUsers(); // Refresh the list
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dataProvider, fetchUsers]
+  );
+
+  return {
+    users,
+    loading,
+    error,
+    fetchUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+  };
+};
+```
+
+### Hook Usage in Components
+
+```typescript
+function UserManagement() {
+  const {
+    users,
+    loading,
+    error,
+    fetchUsers,
+    createUser,
+    updateUser,
+    deleteUser
+  } = useUsers();
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  const handleCreateUser = async (userData: any) => {
+    try {
+      await createUser(userData);
+      // Show success message
+    } catch (error) {
+      // Handle error
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <h2>Users ({users.length})</h2>
+      {users.map(user => (
+        <div key={user.id}>
+          {user.name} - {user.email}
+          <button onClick={() => updateUser(user.id, { role: 'admin' })}>
+            Make Admin
+          </button>
+          <button onClick={() => deleteUser(user.id)}>Delete</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
 ## Testing Custom Hooks
 
 ### Hook Testing
@@ -537,7 +806,7 @@ import { useCustomHook } from './useCustomHook';
 describe('useCustomHook', () => {
   it('should return initial state', () => {
     const { result } = renderHook(() => useCustomHook());
-    
+
     expect(result.current.data).toBe(null);
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe(null);
@@ -545,24 +814,24 @@ describe('useCustomHook', () => {
 
   it('should fetch data when enabled', async () => {
     const { result } = renderHook(() => useCustomHook({ enabled: true }));
-    
+
     expect(result.current.loading).toBe(true);
-    
+
     await act(async () => {
       // Wait for async operations
     });
-    
+
     expect(result.current.loading).toBe(false);
   });
 
   it('should handle errors', async () => {
     // Mock API to throw error
     const { result } = renderHook(() => useCustomHook());
-    
+
     await act(async () => {
       // Trigger error condition
     });
-    
+
     expect(result.current.error).toBeTruthy();
   });
 });
@@ -582,3 +851,10 @@ describe('useCustomHook', () => {
 ## Examples
 
 Check out the [Examples](../examples/basic-usage) section to see these hooks in action, or explore the [API Reference](./api) for detailed hook documentation.
+
+## Related Documentation
+
+- [Features: Data Providers](../features/data-providers) - Comprehensive guide to data providers and their hooks
+- [Components](./components.md) - How to use hooks in custom components
+- [API](./api.md) - API reference and examples
+- [Testing](./testing.md) - Testing strategies for custom hooks

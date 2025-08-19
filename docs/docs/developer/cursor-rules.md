@@ -87,6 +87,13 @@ Cursor Rules are AI-powered coding guidelines that help developers understand th
 - **Code organization standards** and file structure
 - **Quality assurance** and release process
 
+### **7. Documentation Sync Rule** (`.cursor/rules/documentation-sync.mdc`)
+
+- **Applied to code files** - Covers `.ts`, `.tsx`, `.js`, `.jsx` files
+- **Documentation consistency** - Ensures docs stay in sync with code changes
+- **JSDoc standards** - Guidelines for inline documentation
+- **Documentation workflow** - When and how to update documentation
+
 ## Rule Application Order
 
 Rules are applied in the following priority order:

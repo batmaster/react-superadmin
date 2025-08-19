@@ -15,9 +15,10 @@ Build powerful admin interfaces with React and TypeScript.
 - [Introduction](./introduction) - Learn about React SuperAdmin
 - [Installation](./installation) - Get started with setup
 - [Quick Start](./quick-start) - Build your first admin panel
+- [Features](./features) - Core features and capabilities
 - [Examples](./examples/basic-usage) - See working examples
 - [Components](./components/button) - Explore UI components
-- [Cursor Rules](./developer/cursor-rules) - AI-powered development guidelines
+- [Cursor Rules](./developer/cursor-rules) - AI-powered development guidelines including documentation sync
 
 ## What is React SuperAdmin?
 
@@ -80,4 +81,7 @@ function App() {
 
 - [Installation](./installation) - Complete setup guide
 - [Quick Start](./quick-start) - Build your first admin panel
+- [Features](./features) - Explore core features and data providers
 - [Architecture](./developer/architecture) - Understand the framework architecture
+- [Setup](./developer/setup) - Development environment setup with Git hooks
+- [Contributing](./developer/contributing) - How to contribute with code quality tools

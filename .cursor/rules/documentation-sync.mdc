@@ -1,0 +1,362 @@
+# Documentation Sync Rule
+
+## Keep Documentation in Sync with Code Changes
+
+Whenever you edit code, functions, components, or APIs, **always consider updating the corresponding documentation** to maintain consistency and help other developers.
+
+## What to Update
+
+### **Code Changes Requiring Documentation Updates**
+- **New functions or methods** - Add JSDoc comments and update API docs
+- **Modified function signatures** - Update parameter descriptions and return types
+- **New components** - Add to component documentation and examples
+- **Changed APIs** - Update usage examples and migration guides
+- **New features** - Document in README and relevant guides
+- **Breaking changes** - Update changelog and migration documentation
+- **New hooks** - Document parameters, return values, and usage examples
+- **Updated types/interfaces** - Document new properties and changes
+- **Configuration changes** - Update setup and configuration guides
+- **Testing changes** - Update testing documentation and examples
+
+### **Documentation Locations to Check**
+- **JSDoc comments** - Inline function and class documentation
+- **README files** - Project overview and quick start guides
+- **API documentation** - Function signatures and usage examples
+- **Component documentation** - Props, examples, and usage patterns
+- **Testing documentation** - Test coverage and testing patterns
+- **Contributing guides** - Development workflow and standards
+
+## Documentation Update Checklist
+
+### **Before Committing Code Changes**
+- [ ] **JSDoc comments** updated for new/modified functions
+- [ ] **Type definitions** documented with clear descriptions
+- [ ] **Usage examples** provided for new features
+- [ ] **Breaking changes** documented with migration steps
+- [ ] **README files** updated if project structure changes
+- [ ] **API documentation** reflects current implementation
+- [ ] **Component examples** show current usage patterns
+
+### **Specific Change Type Checklists**
+
+#### **When Adding New Functions/Hooks**
+- [ ] **JSDoc comment** with clear description
+- [ ] **Parameter documentation** with types and descriptions
+- [ ] **Return value documentation** with type and description
+- [ ] **Usage example** showing typical implementation
+- [ ] **Error handling** documented if applicable
+- [ ] **Related documentation** updated (API docs, README)
+
+#### **When Modifying Existing Functions**
+- [ ] **Parameter changes** documented in JSDoc
+- [ ] **Return value changes** documented
+- [ ] **Breaking changes** clearly marked
+- [ ] **Migration guide** created if needed
+- [ ] **Usage examples** updated
+- [ ] **API documentation** reflects changes
+
+#### **When Adding New Components**
+- [ ] **Props interface** documented with JSDoc
+- [ ] **Usage examples** in component documentation
+- [ ] **Storybook stories** created if applicable
+- [ ] **Component index** updated
+- [ ] **Testing examples** documented
+- [ ] **Accessibility notes** added if relevant
+
+#### **When Changing Configuration**
+- [ ] **Setup documentation** updated
+- [ ] **Configuration examples** updated
+- [ ] **Environment variables** documented
+- [ ] **Migration steps** for existing users
+- [ ] **README files** reflect new structure
+
+### **Documentation Standards**
+- **Clear descriptions** - Explain what the code does, not how
+- **Usage examples** - Show practical implementation
+- **Parameter details** - Document all parameters and their types
+- **Return values** - Explain what the function returns
+- **Error handling** - Document potential errors and how to handle them
+- **Migration notes** - Guide users through breaking changes
+
+## Examples
+
+### **Good Documentation Update**
+```tsx
+// Before: No documentation
+export const useResource = (config) => {
+  // ... implementation
+};
+
+// After: Comprehensive documentation
+/**
+ * Custom hook for managing CRUD operations on resources
+ * @param config - Configuration object for the resource
+ * @param config.service - Service instance for API calls
+ * @param config.defaultParams - Default parameters for list operations
+ * @returns Object containing data, loading state, and CRUD methods
+ * @example
+ * ```tsx
+ * const { data, loading, create, update, delete } = useResource({
+ *   service: userService,
+ *   defaultParams: { page: 1, limit: 10 }
+ * });
+ * ```
+ */
+export const useResource = (config: UseResourceConfig) => {
+  // ... implementation
+};
+```
+
+### **Component Documentation Update**
+```tsx
+// Before: Basic component
+export const Button = ({ children, onClick }) => (
+  <button onClick={onClick}>{children}</button>
+);
+
+// After: Well-documented component
+interface ButtonProps {
+  /** Button content */
+  children: React.ReactNode;
+  /** Click handler function */
+  onClick: () => void;
+  /** Button variant for styling */
+  variant?: 'primary' | 'secondary' | 'danger';
+  /** Button size */
+  size?: 'sm' | 'md' | 'lg';
+  /** Disabled state */
+  disabled?: boolean;
+}
+
+/**
+ * Versatile button component with multiple variants and sizes
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="lg" onClick={handleClick}>
+ *   Submit Form
+ * </Button>
+ * ```
+ */
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  onClick, 
+  variant = 'primary',
+  size = 'md',
+  disabled = false 
+}) => (
+  <button 
+    onClick={onClick}
+    disabled={disabled}
+    className={`btn btn-${variant} btn-${size}`}
+  >
+    {children}
+  </button>
+);
+```
+
+## Common Documentation Update Scenarios
+
+### **1. Adding New API Endpoints**
+```tsx
+// ✅ Good: Document the new endpoint
+/**
+ * Creates a new user in the system
+ * @param userData - User information to create
+ * @param userData.name - User's full name
+ * @param userData.email - User's email address
+ * @param userData.role - User's role in the system
+ * @returns Promise resolving to the created user
+ * @throws {ValidationError} When user data is invalid
+ * @throws {DuplicateEmailError} When email already exists
+ * 
+ * @example
+ * ```tsx
+ * const newUser = await createUser({
+ *   name: 'John Doe',
+ *   email: 'john@example.com',
+ *   role: 'user'
+ * });
+ * ```
+ */
+export const createUser = async (userData: CreateUserData): Promise<User> => {
+  // ... implementation
+};
+```
+
+### **2. Updating Existing Functions**
+```tsx
+// ✅ Good: Document breaking changes clearly
+/**
+ * Fetches user data with pagination support
+ * @param options - Query options
+ * @param options.page - Page number (1-based, default: 1)
+ * @param options.limit - Items per page (default: 10)
+ * @param options.search - Search term for filtering users
+ * @returns Promise resolving to paginated user results
+ * 
+ * @deprecated Use `getUsersPaginated` instead for better performance
+ * @example
+ * ```tsx
+ * // Old usage (deprecated)
+ * const users = await getUsers({ page: 1, limit: 20 });
+ * 
+ * // New usage (recommended)
+ * const users = await getUsersPaginated({ page: 1, limit: 20 });
+ * ```
+ */
+export const getUsers = async (options: GetUsersOptions): Promise<User[]> => {
+  // ... implementation
+};
+```
+
+### **3. Adding New Configuration Options**
+```tsx
+// ✅ Good: Document configuration with examples
+interface AdminConfig {
+  /** Application title displayed in the header */
+  title: string;
+  /** Available resources for the admin panel */
+  resources: ResourceConfig[];
+  /** Theme configuration */
+  theme?: ThemeConfig;
+  /** Layout configuration */
+  layout?: LayoutConfig;
+  /** Authentication configuration */
+  auth?: AuthConfig;
+}
+
+/**
+ * Creates an admin configuration with sensible defaults
+ * @param config - Admin configuration options
+ * @returns Complete admin configuration with defaults applied
+ * 
+ * @example
+ * ```tsx
+ * const adminConfig = createAdmin({
+ *   title: 'My Admin Panel',
+ *   resources: [userResource, postResource],
+ *   theme: { primaryColor: '#3b82f6', darkMode: true }
+ * });
+ * ```
+ */
+export const createAdmin = (config: AdminConfig): AdminConfig => {
+  // ... implementation
+};
+```
+
+### **Component Documentation Update**
+```tsx
+// Before: Basic component
+export const Button = ({ children, onClick }) => (
+  <button onClick={onClick}>{children}</button>
+);
+
+// After: Well-documented component
+interface ButtonProps {
+  /** Button content */
+  children: React.ReactNode;
+  /** Click handler function */
+  onClick: () => void;
+  /** Button variant for styling */
+  variant?: 'primary' | 'secondary' | 'danger';
+  /** Button size */
+  size?: 'sm' | 'md' | 'lg';
+  /** Disabled state */
+  disabled?: boolean;
+}
+
+/**
+ * Versatile button component with multiple variants and sizes
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="lg" onClick={handleClick}>
+ *   Submit Form
+ * </Button>
+ * ```
+ */
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  onClick, 
+  variant = 'primary',
+  size = 'md',
+  disabled = false 
+}) => (
+  <button 
+    onClick={onClick}
+    disabled={disabled}
+    className={`btn btn-${variant} btn-${size}`}
+  >
+    {children}
+  </button>
+);
+```
+
+## Documentation Update Workflow
+
+### **1. Code First, Docs Second**
+1. **Implement the feature** or fix the bug
+2. **Test thoroughly** to ensure it works correctly
+3. **Update documentation** to reflect the changes
+4. **Review both** code and documentation together
+
+### **2. Documentation Types to Update**
+- **Inline comments** - JSDoc for functions and classes
+- **Type definitions** - Interface and type documentation
+- **Usage examples** - Code examples in documentation
+- **API references** - Function signatures and parameters
+- **Migration guides** - Breaking change documentation
+
+### **3. Quality Checks**
+- **Accuracy** - Documentation matches actual implementation
+- **Completeness** - All parameters and return values documented
+- **Examples** - Practical usage examples provided
+- **Clarity** - Clear, understandable explanations
+- **Consistency** - Follows established documentation patterns
+
+## Benefits of Keeping Docs in Sync
+
+### **For Developers**
+- **Faster onboarding** - New team members understand the codebase
+- **Reduced confusion** - Clear understanding of APIs and usage
+- **Better debugging** - Documentation helps identify issues
+- **Easier maintenance** - Clear understanding of code purpose
+
+### **For the Project**
+- **Professional quality** - Well-documented codebases are more maintainable
+- **Community adoption** - Clear documentation encourages contributions
+- **Long-term sustainability** - Future developers can understand and extend
+- **Reduced support burden** - Self-service documentation reduces questions
+
+## Documentation Update Reminders
+
+### **Ask Yourself These Questions**
+- **What did I change?** - Function signature, component props, API response?
+- **Who will use this?** - Other developers, end users, future maintainers?
+- **What do they need to know?** - Parameters, return values, usage examples?
+- **Are there breaking changes?** - Do existing users need migration guidance?
+- **What examples would help?** - Common use cases, edge cases, error handling?
+
+### **Common Documentation Oversights**
+- **New parameters** added but not documented
+- **Return values** changed but examples not updated
+- **Error conditions** not documented
+- **Breaking changes** not clearly marked
+- **Usage examples** outdated or missing
+- **Related documentation** not updated
+
+## Remember
+
+**Documentation is not a one-time task** - it's an ongoing responsibility that should be part of every code change. Good documentation today saves development time tomorrow.
+
+**When in doubt, document more rather than less.** It's easier to remove unnecessary documentation than to add missing information later.
+
+### **Pro Tips**
+- **Document as you code** - Don't wait until the end
+- **Test your documentation** - Can someone else understand it?
+- **Update related docs** - Don't just update the function you changed
+- **Use consistent patterns** - Follow established documentation styles
+- **Include real examples** - Show actual usage, not just descriptions
+description:
+globs:
+alwaysApply: false
+---
