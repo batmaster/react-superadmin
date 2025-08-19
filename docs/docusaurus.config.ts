@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
@@ -10,7 +10,7 @@ const config: Config = {
   baseUrl: '/',
   organizationName: 'react-superadmin',
   projectName: 'react-superadmin',
-  
+
   // Search configuration
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -26,7 +26,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://gitlab.com/batmaster/react-superadmin/edit/main/docs/',
+          editUrl:
+            'https://gitlab.com/batmaster/react-superadmin/edit/main/docs/',
           routeBasePath: '/',
           // Enable MDX for component rendering
           remarkPlugins: [],
@@ -51,20 +52,9 @@ const config: Config = {
 
   // Enable live code examples
   themes: ['@docusaurus/theme-live-codeblock'],
-  
-  // Search configuration - using local search plugin
-  plugins: [
-    [
-      require.resolve('@easyops-cn/docusaurus-search-local'),
-      {
-        hashed: true,
-        language: ['en'],
-        highlightSearchTermsOnTargetPage: true,
-        explicitSearchResultPath: true,
-        searchBarPosition: 'right',
-      },
-    ],
-  ],
+
+  // Custom search implementation using Fuse.js
+  // No plugins needed for custom search
 
   themeConfig: {
     navbar: {
@@ -80,10 +70,7 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
-        {
-          type: 'search',
-          position: 'right',
-        },
+        // Search handled by custom navbar component
         {
           href: 'https://gitlab.com/batmaster/react-superadmin',
           label: 'GitHub',

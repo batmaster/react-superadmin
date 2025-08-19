@@ -1,0 +1,29 @@
+# React SuperAdmin Project Rules
+
+## Project Structure
+This is a monorepo with pnpm workspaces containing:
+- `packages/core`: Core framework with TypeScript, React hooks, contexts, and utilities
+- `packages/web`: Web admin interface using Vite, React, Tailwind CSS
+
+## Development Commands
+- Use `pnpm dev` to start development (runs web package)
+- Use `pnpm build` to build both packages
+- Use `pnpm build:core` or `pnpm build:web` for individual packages
+
+## Key Patterns
+- Components use PascalCase naming (e.g., DataTable, ResourceForm)
+- Hooks use camelCase with 'use' prefix (e.g., useAuth, useFilters)
+- Core package exports reusable framework code
+- Web package imports from core and provides admin interface
+- Both packages use TypeScript with strict mode
+
+## File Organization
+- Core package: components/, contexts/, hooks/, types/, utils/
+- Web package: components/crud/, components/forms/, components/layout/, components/ui/
+- Use relative imports within packages, package imports between packages
+
+## Technology Stack
+- React 18+ with TypeScript
+- Tailwind CSS for styling
+- Vite for web package build tool
+- pnpm as package manager with workspace support
