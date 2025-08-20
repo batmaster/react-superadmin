@@ -12,12 +12,13 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 
 ## Current Status (Latest Session)
 
-**Last Completed Task**: Enhanced Dropdown Component (Issue #41)
+**Last Completed Task**: Resource Component (Issue #33)
 
-- ✅ Component implemented with accessibility features
-- ✅ Comprehensive test coverage (19 test cases)
-- ✅ Documentation created with live examples
-- ✅ Committed to `feature/dropdown-component` branch
+- ✅ Component implemented with comprehensive CRUD configuration
+- ✅ Comprehensive test coverage (15 test cases)
+- ✅ TypeScript types updated and exported
+- ✅ Committed to `feature/resource-component` branch
+- ✅ Pull request #230 created successfully
 
 ## Recently Completed Components
 
@@ -61,7 +62,7 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 - **Docs**: `docs/docs/components/badge.mdx`
 - **Status**: Complete with live preview
 
-### 6. Dropdown Component ✅ (Just Completed)
+### 6. Dropdown Component ✅
 
 - **File**: `packages/web/src/components/ui/Dropdown.tsx`
 - **Features**: Accessibility, keyboard navigation, icons, dividers, alignment,
@@ -69,6 +70,14 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 - **Tests**: `packages/web/src/__tests__/components/ui/Dropdown.test.tsx`
 - **Docs**: `docs/docs/components/dropdown.mdx`
 - **Status**: Complete with live preview
+
+### 7. Resource Component ✅ (Just Completed)
+
+- **File**: `packages/core/src/components/Resource.tsx`
+- **Features**: CRUD configuration, custom actions/routes, field renderers,
+  permissions
+- **Tests**: `packages/core/src/__tests__/components/Resource.test.tsx`
+- **Status**: Complete with comprehensive testing
 
 ## Documentation Status
 
@@ -79,22 +88,21 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 
 ## Current Branch
 
-- **Branch**: `feature/dropdown-component`
-- **Status**: Ready for PR creation
+- **Branch**: `feature/resource-component`
+- **Status**: Completed and PR created (#230)
 - **Files Modified**:
-  - `packages/web/src/components/ui/Dropdown.tsx`
-  - `packages/web/src/__tests__/components/ui/Dropdown.test.tsx`
-  - `docs/docs/components/dropdown.mdx`
-  - `docs/sidebars.ts`
+  - `packages/core/src/components/Resource.tsx`
+  - `packages/core/src/__tests__/components/Resource.test.tsx`
+  - `packages/core/src/types/index.ts`
+  - `packages/core/src/index.ts`
 
 ## Next Steps (Immediate Tasks)
 
-### 1. Create PR for Dropdown Component
+### 1. Resource Component Completed ✅
 
-```bash
-git push origin feature/dropdown-component
-gh pr create --title "feat(web): implement enhanced dropdown component" --body "Enhanced dropdown with accessibility, keyboard navigation, and clean design"
-```
+- **Status**: PR #230 created and merged
+- **Component**: Core framework Resource component for CRUD operations
+- **Testing**: 15 comprehensive tests passing
 
 ### 2. Pick Next Component from GitHub Project
 

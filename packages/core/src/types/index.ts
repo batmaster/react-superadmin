@@ -83,6 +83,12 @@ export interface ResourceConfig {
   operations?: Partial<CrudOperations>;
   permissions?: PermissionConfig;
   views?: ViewConfig[];
+  options?: {
+    /** Custom validation rules */
+    validation?: Record<string, any>;
+    /** Resource-specific settings */
+    settings?: Record<string, any>;
+  };
 }
 
 // Permission configuration
