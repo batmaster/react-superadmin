@@ -40,14 +40,14 @@ jobs:
         env:
           DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 
-      - name: Strict linting check
-        run: pnpm lint:ci
+      - name: Build verification
+        run: pnpm build
 
       - name: TypeScript strict check
         run: pnpm typecheck
 
-      - name: Build verification
-        run: pnpm build
+      - name: Strict linting check
+        run: pnpm lint:ci
 
       - name: Test coverage check
         run: pnpm test:coverage
