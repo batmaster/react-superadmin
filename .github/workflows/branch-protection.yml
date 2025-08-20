@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate Prisma Client
+        run: pnpm --filter=@react-superadmin/web db:generate
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+
       - name: Strict linting check
         run: pnpm lint:ci
 
