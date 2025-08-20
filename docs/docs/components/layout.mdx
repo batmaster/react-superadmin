@@ -1,0 +1,188 @@
+---
+title: Layout Component
+description: Main layout wrapper providing basic structure for admin interfaces
+---
+
+# Layout Component
+
+The `<Layout>` component provides a flexible, responsive layout structure for admin interfaces. It creates a basic layout with configurable header, sidebar, main content, and footer sections.
+
+## Overview
+
+The Layout component serves as a structural foundation that:
+
+- Provides consistent layout structure across admin pages
+- Supports responsive design with mobile-friendly layouts
+- Allows customization of each layout section
+- Maintains consistent spacing and positioning
+
+## Basic Usage
+
+```tsx
+import { Layout } from '@react-superadmin/core';
+
+function AdminPage() {
+  return (
+    <Layout
+      header={<Header title='Dashboard' />}
+      sidebar={<Sidebar navigation={navItems} />}
+      footer={<Footer copyright='2024' />}
+    >
+      <main>
+        <h1>Welcome to Admin Panel</h1>
+        <p>This is the main content area.</p>
+      </main>
+    </Layout>
+  );
+}
+```
+
+## Props
+
+| Prop               | Type        | Required | Default | Description                                     |
+| ------------------ | ----------- | -------- | ------- | ----------------------------------------------- |
+| `header`           | `ReactNode` | ❌       | -       | Header component to render at the top           |
+| `sidebar`          | `ReactNode` | ❌       | -       | Sidebar component to render on the left         |
+| `footer`           | `ReactNode` | ❌       | -       | Footer component to render at the bottom        |
+| `children`         | `ReactNode` | ✅       | -       | Main content area                               |
+| `className`        | `string`    | ❌       | -       | Additional CSS classes for the layout container |
+| `headerClassName`  | `string`    | ❌       | -       | Additional CSS classes for the header           |
+| `sidebarClassName` | `string`    | ❌       | -       | Additional CSS classes for the sidebar          |
+| `mainClassName`    | `string`    | ❌       | -       | Additional CSS classes for the main content     |
+| `footerClassName`  | `string`    | ❌       | -       | Additional CSS classes for the footer           |
+| `showSidebar`      | `boolean`   | ❌       | `true`  | Whether to show the sidebar                     |
+| `showHeader`       | `boolean`   | ❌       | `true`  | Whether to show the header                      |
+| `showFooter`       | `boolean`   | ❌       | `true`  | Whether to show the footer                      |
+
+## Layout Structure
+
+The component creates a responsive grid layout:
+
+```
+┌─────────────────────────────────────┐
+│              Header                 │
+├─────────────┬───────────────────────┤
+│             │                       │
+│   Sidebar   │      Main Content     │
+│             │                       │
+│             │                       │
+├─────────────┴───────────────────────┤
+│              Footer                 │
+└─────────────────────────────────────┘
+```
+
+## CSS Classes
+
+The component uses a consistent CSS class structure:
+
+- `.rs-layout` - Main layout container
+- `.rs-layout__header` - Header section
+- `.rs-layout__sidebar` - Sidebar section
+- `.rs-layout__main` - Main content area
+- `.rs-layout__footer` - Footer section
+
+## Examples
+
+### Basic Layout
+
+```tsx
+<Layout>
+  <div>Simple content without header/sidebar/footer</div>
+</Layout>
+```
+
+### With Header Only
+
+```tsx
+<Layout header={<AppBar title='My App' />}>
+  <div>Content with header</div>
+</Layout>
+```
+
+### With Sidebar Only
+
+```tsx
+<Layout sidebar={<NavigationMenu />}>
+  <div>Content with sidebar navigation</div>
+</Layout>
+```
+
+### Complete Layout
+
+```tsx
+<Layout
+  header={<AppBar title='Admin Panel' />}
+  sidebar={<Sidebar items={menuItems} />}
+  footer={<Footer links={footerLinks} />}
+  headerClassName='custom-header'
+  sidebarClassName='custom-sidebar'
+  mainClassName='custom-main'
+  footerClassName='custom-footer'
+>
+  <div className='dashboard-content'>
+    <h1>Dashboard</h1>
+    <p>Welcome to your admin panel</p>
+  </div>
+</Layout>
+```
+
+### Responsive Layout
+
+```tsx
+<Layout
+  showSidebar={window.innerWidth > 768}
+  showHeader={true}
+  showFooter={false}
+>
+  <div>Responsive content</div>
+</Layout>
+```
+
+## Responsive Behavior
+
+The Layout component automatically adapts to different screen sizes:
+
+- **Desktop**: Full layout with sidebar visible
+- **Tablet**: Sidebar can be toggled
+- **Mobile**: Sidebar hidden by default, can be shown via toggle
+
+## Customization
+
+### Custom CSS Classes
+
+```tsx
+<Layout
+  className='my-custom-layout'
+  headerClassName='my-header'
+  sidebarClassName='my-sidebar'
+  mainClassName='my-main'
+  footerClassName='my-footer'
+>
+  {/* Content */}
+</Layout>
+```
+
+### Conditional Rendering
+
+```tsx
+<Layout
+  header={isAuthenticated ? <UserHeader /> : <GuestHeader />}
+  sidebar={hasPermissions ? <AdminSidebar /> : <UserSidebar />}
+  footer={showFooter ? <Footer /> : null}
+>
+  {/* Content */}
+</Layout>
+```
+
+## Best Practices
+
+1. **Use semantic HTML** - Wrap content in appropriate tags
+2. **Provide fallbacks** - Handle cases where sections might be empty
+3. **Consider accessibility** - Ensure proper ARIA labels and navigation
+4. **Test responsiveness** - Verify layout works on all screen sizes
+5. **Keep content focused** - Main content should be the primary focus
+
+## Related Components
+
+- [`<Admin>`](./admin) - Main application wrapper
+- [`<AppBar>`](./appbar) - Top navigation bar

@@ -1,0 +1,238 @@
+---
+title: Form Component
+description: Form container for managing form state and validation
+---
+
+# Form Component
+
+The `<Form>` component provides a comprehensive form container with built-in support for form submission, reset, validation, and styling. It serves as the foundation for all form-based interfaces in React SuperAdmin.
+
+## Overview
+
+The Form component provides a robust form wrapper that:
+
+- Manages form submission and reset handling
+- Supports validation modes and error display
+- Provides consistent styling and layout structure
+- Handles loading and disabled states
+- Offers flexible customization options
+
+## Basic Usage
+
+```tsx
+import { Form } from '@react-superadmin/core';
+
+function UserForm() {
+  const handleSubmit = event => {
+    event.preventDefault();
+    // Handle form submission
+  };
+
+  const handleReset = event => {
+    // Handle form reset
+  };
+
+  return (
+    <Form onSubmit={handleSubmit} onReset={handleReset}>
+      <input type='text' name='name' placeholder='Name' />
+      <input type='email' name='email' placeholder='Email' />
+      <button type='submit'>Submit</button>
+      <button type='reset'>Reset</button>
+    </Form>
+  );
+}
+```
+
+## Props
+
+| Prop               | Type                                                                           | Required | Default                               | Description                                      |
+| ------------------ | ------------------------------------------------------------------------------ | -------- | ------------------------------------- | ------------------------------------------------ |
+| `onSubmit`         | `(event: FormEvent<HTMLFormElement>) => void`                                  | ❌       | -                                     | Form submission handler                          |
+| `onReset`          | `(event: FormEvent<HTMLFormElement>) => void`                                  | ❌       | -                                     | Form reset handler                               |
+| `children`         | `ReactNode`                                                                    | ✅       | -                                     | Form content                                     |
+| `className`        | `string`                                                                       | ❌       | -                                     | Additional CSS classes for the form container    |
+| `method`           | `'GET' \| 'POST' \| 'PUT' \| 'PATCH' \| 'DELETE'`                              | ❌       | `'POST'`                              | Form method                                      |
+| `action`           | `string`                                                                       | ❌       | -                                     | Form action URL                                  |
+| `encType`          | `'application/x-www-form-urlencoded' \| 'multipart/form-data' \| 'text/plain'` | ❌       | `'application/x-www-form-urlencoded'` | Form encoding type                               |
+| `disabled`         | `boolean`                                                                      | ❌       | `false`                               | Whether the form is disabled                     |
+| `loading`          | `boolean`                                                                      | ❌       | `false`                               | Whether to show loading state                    |
+| `validateOn`       | `'blur' \| 'change' \| 'submit' \| 'never'`                                    | ❌       | `'submit'`                            | Form validation mode                             |
+| `showErrors`       | `boolean`                                                                      | ❌       | `true`                                | Whether to show validation errors                |
+| `formClassName`    | `string`                                                                       | ❌       | -                                     | Additional CSS classes for the form element      |
+| `fieldClassName`   | `string`                                                                       | ❌       | -                                     | Additional CSS classes for the fields container  |
+| `actionsClassName` | `string`                                                                       | -        | -                                     | Additional CSS classes for the actions container |
+
+## Form Structure
+
+The component creates a structured form layout:
+
+```
+┌─────────────────────────────────────┐
+│           Form Container            │
+├─────────────────────────────────────┤
+│         Fields Container            │
+│  ┌─────────────────────────────┐   │
+│  │        Form Fields          │   │
+│  └─────────────────────────────┘   │
+├─────────────────────────────────────┤
+│         Actions Container           │
+│  ┌─────────────────────────────┐   │
+│  │      Submit/Reset Buttons   │   │
+│  └─────────────────────────────┘   │
+├─────────────────────────────────────┤
+│         Loading Indicator          │
+│        (when loading=true)         │
+└─────────────────────────────────────┘
+```
+
+## CSS Classes
+
+The component uses a consistent CSS class structure:
+
+- `.rs-form` - Main form container
+- `.rs-form--loading` - Loading state
+- `.rs-form--disabled` - Disabled state
+- `.rs-form__fields` - Fields container
+- `.rs-form__actions` - Actions container
+- `.rs-form__loading` - Loading indicator
+
+## Examples
+
+### Basic Form
+
+```tsx
+<Form>
+  <input type='text' name='name' placeholder='Name' />
+  <button type='submit'>Submit</button>
+</Form>
+```
+
+### Form with Handlers
+
+```tsx
+<Form
+  onSubmit={handleSubmit}
+  onReset={handleReset}
+  method='POST'
+  action='/api/users'
+>
+  <input type='text' name='name' required />
+  <input type='email' name='email' required />
+  <div className='form-actions'>
+    <button type='submit'>Create User</button>
+    <button type='reset'>Reset</button>
+  </div>
+</Form>
+```
+
+### Loading State
+
+```tsx
+<Form loading={isSubmitting} onSubmit={handleSubmit}>
+  <input type='text' name='title' />
+  <textarea name='description' />
+  <button type='submit' disabled={isSubmitting}>
+    {isSubmitting ? 'Saving...' : 'Save'}
+  </button>
+</Form>
+```
+
+### Disabled Form
+
+```tsx
+<Form disabled={!canEdit} onSubmit={handleSubmit}>
+  <input type='text' name='name' />
+  <button type='submit'>Update</button>
+</Form>
+```
+
+### Custom Validation Mode
+
+```tsx
+<Form validateOn='blur' onSubmit={handleSubmit} showErrors={true}>
+  <input type='text' name='username' />
+  <input type='email' name='email' />
+  <button type='submit'>Submit</button>
+</Form>
+```
+
+### File Upload Form
+
+```tsx
+<Form
+  method='POST'
+  encType='multipart/form-data'
+  action='/api/upload'
+  onSubmit={handleUpload}
+>
+  <input type='file' name='file' />
+  <button type='submit'>Upload</button>
+</Form>
+```
+
+### Custom Styling
+
+```tsx
+<Form
+  className='custom-form'
+  fieldClassName='custom-fields'
+  actionsClassName='custom-actions'
+  onSubmit={handleSubmit}
+>
+  <input type='text' name='name' />
+  <button type='submit'>Submit</button>
+</Form>
+```
+
+## Validation Modes
+
+### `'submit'` (Default)
+
+Validation occurs only when the form is submitted.
+
+### `'blur'`
+
+Validation occurs when form fields lose focus.
+
+### `'change'`
+
+Validation occurs on every input change.
+
+### `'never'`
+
+No validation is performed (sets `noValidate` attribute).
+
+## Form States
+
+### Normal State
+
+Form is fully functional and interactive.
+
+### Loading State
+
+Form shows loading indicator and prevents submission.
+
+### Disabled State
+
+Form is non-interactive and prevents all actions.
+
+## Error Handling
+
+The component provides built-in error handling:
+
+- Prevents submission when disabled or loading
+- Shows loading indicator during submission
+- Supports custom error display
+- Maintains form state during errors
+
+## Best Practices
+
+1. **Use semantic HTML** - Use proper input types and labels
+2. **Handle all states** - Consider loading, disabled, and error states
+3. **Provide feedback** - Show loading indicators and success/error messages
+4. **Validate appropriately** - Choose validation mode based on user experience needs
+5. **Accessibility** - Ensure proper ARIA labels and error associations
+
+## Related Components
+
+- [`<Button>`](./button) - Action buttons

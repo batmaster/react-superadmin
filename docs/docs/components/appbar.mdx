@@ -1,0 +1,207 @@
+---
+title: AppBar Component
+description: Top navigation bar for branding and user actions
+---
+
+# AppBar Component
+
+The `<AppBar>` component provides a top navigation bar for admin interfaces. It's designed to display branding, navigation controls, and user actions in a consistent, accessible manner.
+
+## Overview
+
+The AppBar component serves as the primary navigation element that:
+
+- Displays application branding and title
+- Provides navigation controls and user actions
+- Supports responsive design and mobile layouts
+- Offers flexible content organization with left, center, and right sections
+
+## Basic Usage
+
+```tsx
+import { AppBar } from '@react-superadmin/core';
+
+function Header() {
+  return (
+    <AppBar
+      title='My Admin Panel'
+      logo={<img src='/logo.png' alt='Logo' />}
+      leftActions={<MenuButton />}
+      rightActions={<UserMenu />}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop              | Type                                              | Required | Default     | Description                                         |
+| ----------------- | ------------------------------------------------- | -------- | ----------- | --------------------------------------------------- |
+| `title`           | `ReactNode`                                       | ❌       | -           | Title to display in the app bar                     |
+| `logo`            | `ReactNode`                                       | ❌       | -           | Logo or brand element                               |
+| `leftActions`     | `ReactNode`                                       | ❌       | -           | Left side actions (e.g., menu toggle, breadcrumbs)  |
+| `rightActions`    | `ReactNode`                                       | ❌       | -           | Right side actions (e.g., user menu, notifications) |
+| `elevated`        | `boolean`                                         | ❌       | `false`     | Whether the app bar is elevated (has shadow)        |
+| `transparent`     | `boolean`                                         | ❌       | `false`     | Whether the app bar is transparent                  |
+| `variant`         | `'default' \| 'primary' \| 'secondary' \| 'dark'` | ❌       | `'default'` | Background color variant                            |
+| `fixed`           | `boolean`                                         | ❌       | `false`     | Whether the app bar is fixed to the top             |
+| `sticky`          | `boolean`                                         | ❌       | `false`     | Whether the app bar sticks to the top on scroll     |
+| `className`       | `string`                                          | ❌       | -           | Additional CSS classes for the app bar container    |
+| `leftClassName`   | `string`                                          | ❌       | -           | Additional CSS classes for the left section         |
+| `centerClassName` | `string`                                          | ❌       | -           | Additional CSS classes for the center section       |
+| `rightClassName`  | `string`                                          | ❌       | -           | Additional CSS classes for the right section        |
+| `show`            | `boolean`                                         | ❌       | `true`      | Whether to show the app bar                         |
+
+## Layout Structure
+
+The AppBar uses a three-section layout:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ [Left Actions]    [Logo + Title]    [Right Actions]   │
+└─────────────────────────────────────────────────────────┘
+```
+
+## CSS Classes
+
+The component uses a consistent CSS class structure:
+
+- `.rs-appbar` - Main app bar container
+- `.rs-appbar__left` - Left actions section
+- `.rs-appbar__center` - Center section (logo + title)
+- `.rs-appbar__right` - Right actions section
+- `.rs-appbar--elevated` - Elevated variant
+- `.rs-appbar--transparent` - Transparent variant
+- `.rs-appbar--primary` - Primary color variant
+- `.rs-appbar--secondary` - Secondary color variant
+- `.rs-appbar--dark` - Dark variant
+- `.rs-appbar--fixed` - Fixed positioning
+- `.rs-appbar--sticky` - Sticky positioning
+
+## Examples
+
+### Basic AppBar
+
+```tsx
+<AppBar title='Dashboard' />
+```
+
+### With Logo and Title
+
+```tsx
+<AppBar
+  title='React SuperAdmin'
+  logo={<img src='/logo.svg' alt='Logo' className='h-8 w-8' />}
+/>
+```
+
+### With Navigation Actions
+
+```tsx
+<AppBar
+  title='Admin Panel'
+  leftActions={
+    <button onClick={toggleSidebar}>
+      <MenuIcon />
+    </button>
+  }
+  rightActions={
+    <div className='flex items-center gap-4'>
+      <NotificationBell />
+      <UserAvatar />
+    </div>
+  }
+/>
+```
+
+### Elevated AppBar
+
+```tsx
+<AppBar title='My App' elevated={true} variant='primary' />
+```
+
+### Transparent AppBar
+
+```tsx
+<AppBar title='Hero Section' transparent={true} variant='dark' />
+```
+
+### Fixed AppBar
+
+```tsx
+<AppBar title='Always Visible' fixed={true} elevated={true} />
+```
+
+### Custom Styling
+
+```tsx
+<AppBar
+  title='Custom Styled'
+  className='bg-gradient-to-r from-blue-500 to-purple-600'
+  leftClassName='text-white'
+  centerClassName='text-white font-bold'
+  rightClassName='text-white'
+/>
+```
+
+## Variants
+
+### Default
+
+Standard app bar with default background color.
+
+### Primary
+
+Uses the primary theme color for background.
+
+### Secondary
+
+Uses the secondary theme color for background.
+
+### Dark
+
+Dark theme variant with light text.
+
+## Positioning
+
+### Static (Default)
+
+App bar flows with the document content.
+
+### Fixed
+
+App bar stays at the top of the viewport, content flows underneath.
+
+### Sticky
+
+App bar sticks to the top when scrolling, then scrolls with content.
+
+## Responsive Behavior
+
+The AppBar automatically adapts to different screen sizes:
+
+- **Desktop**: Full layout with all sections visible
+- **Tablet**: May collapse some actions into a menu
+- **Mobile**: Title may truncate, actions may move to overflow menu
+
+## Accessibility
+
+The component includes proper accessibility features:
+
+- Semantic HTML structure
+- ARIA labels for interactive elements
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Best Practices
+
+1. **Keep titles concise** - Long titles may not fit on mobile
+2. **Use meaningful icons** - Icons should clearly represent their function
+3. **Consider mobile layout** - Ensure actions are accessible on small screens
+4. **Maintain consistency** - Use consistent styling across your app
+5. **Test accessibility** - Verify keyboard navigation and screen reader support
+
+## Related Components
+
+- [`<Layout>`](./layout) - Layout wrapper
+- [`<Button>`](./button) - Action buttons

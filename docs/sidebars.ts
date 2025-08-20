@@ -28,7 +28,14 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Components',
-      items: ['components/button', 'components/forms'],
+      items: [
+        'components/button',
+        'components/forms',
+        'components/admin',
+        'components/layout',
+        'components/appbar',
+        'components/form',
+      ],
     },
     {
       type: 'category',
