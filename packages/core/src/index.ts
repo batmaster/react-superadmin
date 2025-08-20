@@ -16,3 +16,4 @@ export { createResource } from "./utils/createResource";
 export { Admin } from "./components/Admin";
 export { Layout } from "./components/Layout";
 export { AppBar } from "./components/AppBar";
+export { Form } from "./components/Form";
