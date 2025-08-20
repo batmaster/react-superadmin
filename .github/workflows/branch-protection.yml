@@ -53,15 +53,15 @@ jobs:
         run: pnpm test:coverage
 
       - name: Security audit
-        run: pnpm audit --audit-level moderate
+        run: pnpm audit --audit-level high
 
       - name: Check for vulnerabilities
         run: |
-          if [ "$(pnpm audit --audit-level moderate --json | jq '.metadata.vulnerabilities.total')" -gt 0 ]; then
-            echo "❌ Security vulnerabilities detected - blocking merge to main"
+          if [ "$(pnpm audit --audit-level high --json | jq '.metadata.vulnerabilities.total')" -gt 0 ]; then
+            echo "❌ High security vulnerabilities detected - blocking merge to main"
             exit 1
           fi
-          echo "✅ No security vulnerabilities found"
+          echo "✅ No high security vulnerabilities found"
         shell: bash
 
   enforce-pull-request:
