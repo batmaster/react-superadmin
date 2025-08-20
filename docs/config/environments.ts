@@ -3,7 +3,7 @@ export interface EnvironmentConfig {
   name: string;
   url: string;
   firebaseProjectId: string;
-  firebaseSiteId: string; // Changed from firebaseChannelId
+  firebaseChannelId: string; // Changed back to firebaseChannelId
   isProduction: boolean;
   isPreview: boolean;
   isLocal: boolean;
@@ -16,31 +16,31 @@ const isPreview =
 const isProduction = process.env.GITHUB_REF === 'refs/heads/main';
 const isLocal = !isCI && !isPreview && !isProduction;
 
-// Environment configurations - Using single Firebase project with different sites
+// Environment configurations - Using single Firebase project with different channels
 export const environments: Record<string, EnvironmentConfig> = {
   production: {
     name: 'Production',
     url: 'https://react-superadmin.web.app',
     firebaseProjectId: 'react-superadmin',
-    firebaseSiteId: 'react-superadmin', // Main site
+    firebaseChannelId: 'live', // Main production channel
     isProduction: true,
     isPreview: false,
     isLocal: false,
   },
   preview: {
     name: 'Preview',
-    url: 'https://react-superadmin-preview.web.app', // Separate preview URL
+    url: 'https://react-superadmin.web.app', // Same domain, different channel
     firebaseProjectId: 'react-superadmin',
-    firebaseSiteId: 'react-superadmin-preview', // Preview site
+    firebaseChannelId: 'preview', // Preview channel
     isProduction: false,
     isPreview: true,
     isLocal: false,
   },
   staging: {
     name: 'Staging',
-    url: 'https://react-superadmin-staging.web.app', // Separate staging URL
+    url: 'https://react-superadmin.web.app', // Same domain, different channel
     firebaseProjectId: 'react-superadmin',
-    firebaseSiteId: 'react-superadmin-staging', // Staging site
+    firebaseChannelId: 'staging', // Staging channel
     isProduction: false,
     isPreview: false,
     isLocal: false,
@@ -49,7 +49,7 @@ export const environments: Record<string, EnvironmentConfig> = {
     name: 'Local Development',
     url: 'http://localhost:3000',
     firebaseProjectId: 'react-superadmin',
-    firebaseSiteId: 'react-superadmin', // Use main site for local
+    firebaseChannelId: 'local', // Local development channel
     isProduction: false,
     isPreview: false,
     isLocal: true,
@@ -72,9 +72,9 @@ export const getFirebaseProjectId = (): string => {
   return getCurrentEnvironment().firebaseProjectId;
 };
 
-// Get environment-specific Firebase site ID
-export const getFirebaseSiteId = (): string => {
-  return getCurrentEnvironment().firebaseSiteId;
+// Get environment-specific Firebase channel ID
+export const getFirebaseChannelId = (): string => {
+  return getCurrentEnvironment().firebaseChannelId;
 };
 
 // Get environment-specific URL
