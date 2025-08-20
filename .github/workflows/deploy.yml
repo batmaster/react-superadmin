@@ -7,28 +7,32 @@ on:
       - 'docs/**'
       - 'packages/**'
       - '.github/workflows/deploy.yml'
-  pull_request: # Added pull_request trigger
+      - 'firebase.json'
+      - '.firebaserc'
+  pull_request:
     branches: [main]
     paths:
       - 'docs/**'
       - 'packages/**'
       - '.github/workflows/deploy.yml'
+      - 'firebase.json'
+      - '.firebaserc'
 
-env: # Added environment variables
+env:
   NODE_VERSION: '20.x'
   PNPM_VERSION: '8'
 
 jobs:
-  deploy-docs-production: # Renamed from deploy-docs
+  deploy-docs-production:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: # Updated environment definition
+    environment:
       name: production
       url: https://react-superadmin.web.app
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ env.NODE_VERSION }} # Used env var
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -46,22 +50,23 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
-      - name: Deploy to Firebase Production Channel # Updated step name
+          ls -la build/
+      - name: Deploy to Firebase Production Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin # Single project for all environments
-          channelId: live # Deploy to live channel
+          projectId: react-superadmin
+          channelId: live
 
-  deploy-docs-preview: # Added new job for preview deployments
+  deploy-docs-preview:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     environment:
       name: preview
-      url: https://react-superadmin.web.app # Same domain, different channel
+      url: https://react-superadmin.web.app
 
     steps:
       - uses: actions/checkout@v4
@@ -83,22 +88,23 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
-      - name: Deploy to Firebase Preview Channel # Updated step name
+          ls -la build/
+      - name: Deploy to Firebase Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin # Single project for all environments
-          channelId: pr-${{ github.event.number }} # Dynamic channel ID for PR
+          projectId: react-superadmin
+          channelId: pr-${{ github.event.number }}
 
-  deploy-docs-staging: # Added new job for staging deployments
+  deploy-docs-staging:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.labels.*.name == 'staging'
     environment:
       name: staging
-      url: https://react-superadmin.web.app # Same domain, different channel
+      url: https://react-superadmin.web.app
 
     steps:
       - uses: actions/checkout@v4
@@ -109,19 +115,24 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: ${{ env.NODE_VERSION }}
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
+          ls -la build/
       - name: Deploy to Firebase Staging Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin # Single project for all environments
-          channelId: staging # Staging channel
+          projectId: react-superadmin
+          channelId: staging
