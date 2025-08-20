@@ -1,0 +1,448 @@
+---
+title: Dropdown
+description: A fully accessible dropdown menu component with keyboard navigation and customizable styling
+---
+
+import { Dropdown } from '@site/src/components/ui/Dropdown';
+import { Badge } from '@site/src/components/ui/Badge';
+
+# Dropdown
+
+A clean, accessible dropdown menu component that follows Headless UI design principles. Features keyboard navigation, proper ARIA attributes, and flexible customization options.
+
+## Basic Usage
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-blue-600 text-white rounded-md'>
+      Click me
+    </button>
+  }
+  items={[
+    { label: 'Edit', value: 'edit', onClick: () => alert('Edit clicked') },
+    {
+      label: 'Delete',
+      value: 'delete',
+      onClick: () => alert('Delete clicked'),
+    },
+    { label: 'View', value: 'view', onClick: () => alert('View clicked') },
+  ]}
+/>
+```
+
+## With Icons
+
+Add icons to your dropdown items for better visual communication:
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-gray-600 text-white rounded-md'>
+      Actions
+    </button>
+  }
+  items={[
+    {
+      label: 'Edit Profile',
+      value: 'edit',
+      onClick: () => alert('Edit Profile clicked'),
+      icon: <span>✏️</span>,
+    },
+    {
+      label: 'Settings',
+      value: 'settings',
+      onClick: () => alert('Settings clicked'),
+      icon: <span>⚙️</span>,
+    },
+    {
+      label: 'Logout',
+      value: 'logout',
+      onClick: () => alert('Logout clicked'),
+      icon: <span>🚪</span>,
+    },
+  ]}
+/>
+```
+
+## With Dividers
+
+Use dividers to group related items:
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-green-600 text-white rounded-md'>
+      More Options
+    </button>
+  }
+  items={[
+    { label: 'Save', value: 'save', onClick: () => alert('Save clicked') },
+    {
+      label: 'Export',
+      value: 'export',
+      onClick: () => alert('Export clicked'),
+    },
+    { divider: true },
+    {
+      label: 'Delete',
+      value: 'delete',
+      onClick: () => alert('Delete clicked'),
+    },
+  ]}
+/>
+```
+
+## Disabled Items
+
+Disable specific items when they're not applicable:
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-purple-600 text-white rounded-md'>
+      User Actions
+    </button>
+  }
+  items={[
+    { label: 'Edit', value: 'edit', onClick: () => alert('Edit clicked') },
+    {
+      label: 'Delete',
+      value: 'delete',
+      onClick: () => alert('Delete clicked'),
+      disabled: true,
+    },
+    { label: 'View', value: 'view', onClick: () => alert('View clicked') },
+  ]}
+/>
+```
+
+## Alignment Options
+
+Control how the dropdown menu aligns with the trigger:
+
+```jsx live
+<div className='flex gap-4'>
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-blue-600 text-white rounded-md'>
+        Left
+      </button>
+    }
+    items={[
+      { label: 'Option 1', value: '1', onClick: () => alert('Option 1') },
+      { label: 'Option 2', value: '2', onClick: () => alert('Option 2') },
+    ]}
+    align='left'
+  />
+
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-green-600 text-white rounded-md'>
+        Center
+      </button>
+    }
+    items={[
+      { label: 'Option 1', value: '1', onClick: () => alert('Option 1') },
+      { label: 'Option 2', value: '2', onClick: () => alert('Option 2') },
+    ]}
+    align='center'
+  />
+
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-purple-600 text-white rounded-md'>
+        Right
+      </button>
+    }
+    items={[
+      { label: 'Option 1', value: '1', onClick: () => alert('Option 1') },
+      { label: 'Option 2', value: '2', onClick: () => alert('Option 2') },
+    ]}
+    align='right'
+  />
+</div>
+```
+
+## Size Variants
+
+Choose from different menu widths:
+
+```jsx live
+<div className='flex gap-4'>
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-blue-600 text-white rounded-md'>
+        Small
+      </button>
+    }
+    items={[
+      { label: 'Short', value: 'short', onClick: () => alert('Short') },
+      { label: 'Text', value: 'text', onClick: () => alert('Text') },
+    ]}
+    size='sm'
+  />
+
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-green-600 text-white rounded-md'>
+        Medium
+      </button>
+    }
+    items={[
+      {
+        label: 'Medium length text',
+        value: 'medium',
+        onClick: () => alert('Medium'),
+      },
+      {
+        label: 'Another option',
+        value: 'option',
+        onClick: () => alert('Option'),
+      },
+    ]}
+    size='md'
+  />
+
+  <Dropdown
+    trigger={
+      <button className='px-4 py-2 bg-purple-600 text-white rounded-md'>
+        Large
+      </button>
+    }
+    items={[
+      {
+        label: 'Very long dropdown item text that needs more space',
+        value: 'long',
+        onClick: () => alert('Long'),
+      },
+      {
+        label: 'Another very long option text',
+        value: 'another',
+        onClick: () => alert('Another'),
+      },
+    ]}
+    size='lg'
+  />
+</div>
+```
+
+## Custom Styling
+
+Apply custom classes to different parts of the dropdown:
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-md'>
+      Custom Styled
+    </button>
+  }
+  items={[
+    { label: 'Custom Item 1', value: '1', onClick: () => alert('Custom 1') },
+    { label: 'Custom Item 2', value: '2', onClick: () => alert('Custom 2') },
+  ]}
+  className='custom-dropdown'
+  triggerClassName='custom-trigger'
+  menuClassName='custom-menu'
+/>
+```
+
+## Advanced Configuration
+
+Control dropdown behavior with advanced options:
+
+```jsx live
+<Dropdown
+  trigger={
+    <button className='px-4 py-2 bg-orange-600 text-white rounded-md'>
+      Advanced
+    </button>
+  }
+  items={[
+    {
+      label: 'Keep Open',
+      value: 'keep',
+      onClick: () => alert('This keeps the menu open'),
+    },
+    {
+      label: 'Close After',
+      value: 'close',
+      onClick: () => alert('This closes the menu'),
+    },
+  ]}
+  closeOnSelect={false}
+  closeOnClickOutside={false}
+/>
+```
+
+## Real-world Examples
+
+### User Profile Menu
+
+```jsx live
+<Dropdown
+  trigger={
+    <div className='flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200'>
+      <div className='w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold'>
+        JD
+      </div>
+      <span className='text-gray-700'>John Doe</span>
+      <span className='text-gray-400'>▼</span>
+    </div>
+  }
+  items={[
+    {
+      label: 'Profile',
+      value: 'profile',
+      onClick: () => alert('Profile'),
+      icon: <span>👤</span>,
+    },
+    {
+      label: 'Settings',
+      value: 'settings',
+      onClick: () => alert('Settings'),
+      icon: <span>⚙️</span>,
+    },
+    { divider: true },
+    {
+      label: 'Help',
+      value: 'help',
+      onClick: () => alert('Help'),
+      icon: <span>❓</span>,
+    },
+    {
+      label: 'Logout',
+      value: 'logout',
+      onClick: () => alert('Logout'),
+      icon: <span>🚪</span>,
+    },
+  ]}
+  align='right'
+/>
+```
+
+### Data Table Actions
+
+```jsx live
+<div className='flex gap-2'>
+  <Dropdown
+    trigger={
+      <button className='px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700'>
+        Actions
+      </button>
+    }
+    items={[
+      {
+        label: 'View Details',
+        value: 'view',
+        onClick: () => alert('View Details'),
+      },
+      {
+        label: 'Edit Record',
+        value: 'edit',
+        onClick: () => alert('Edit Record'),
+      },
+      { divider: true },
+      {
+        label: 'Duplicate',
+        value: 'duplicate',
+        onClick: () => alert('Duplicate'),
+      },
+      { label: 'Archive', value: 'archive', onClick: () => alert('Archive') },
+      { divider: true },
+      {
+        label: 'Delete',
+        value: 'delete',
+        onClick: () => alert('Delete'),
+        disabled: true,
+      },
+    ]}
+    size='sm'
+  />
+
+  <Badge variant='success'>Active</Badge>
+</div>
+```
+
+## API Reference
+
+### Props
+
+| Prop                  | Type                            | Default  | Description                                       |
+| --------------------- | ------------------------------- | -------- | ------------------------------------------------- |
+| `trigger`             | `ReactNode`                     | -        | The element that triggers the dropdown            |
+| `items`               | `DropdownItem[]`                | -        | Array of dropdown items                           |
+| `align`               | `'left' \| 'right' \| 'center'` | `'left'` | Menu alignment relative to trigger                |
+| `size`                | `'sm' \| 'md' \| 'lg'`          | `'md'`   | Menu width size                                   |
+| `className`           | `string`                        | -        | Additional CSS classes for the dropdown container |
+| `triggerClassName`    | `string`                        | -        | Additional CSS classes for the trigger element    |
+| `menuClassName`       | `string`                        | -        | Additional CSS classes for the menu               |
+| `closeOnSelect`       | `boolean`                       | `true`   | Whether to close menu after item selection        |
+| `closeOnClickOutside` | `boolean`                       | `true`   | Whether to close menu when clicking outside       |
+
+### DropdownItem Interface
+
+| Property   | Type         | Description                               |
+| ---------- | ------------ | ----------------------------------------- |
+| `label`    | `string`     | Display text for the item                 |
+| `value`    | `any`        | Value associated with the item            |
+| `onClick`  | `() => void` | Function called when item is clicked      |
+| `disabled` | `boolean`    | Whether the item is disabled              |
+| `divider`  | `boolean`    | Whether to render a divider line          |
+| `icon`     | `ReactNode`  | Optional icon to display before the label |
+
+### Alignment Options
+
+- **left**: Menu aligns to the left edge of the trigger (default)
+- **right**: Menu aligns to the right edge of the trigger
+- **center**: Menu centers horizontally on the trigger
+
+### Size Options
+
+- **sm**: Small width (`w-40` - 160px)
+- **md**: Medium width (`w-48` - 192px) - default
+- **lg**: Large width (`w-56` - 224px)
+
+## Accessibility
+
+The Dropdown component is fully accessible and follows ARIA best practices:
+
+- **Keyboard Navigation**:
+  - `Enter` or `Space` to open/close
+  - `Arrow Down` to open
+  - `Escape` to close
+  - Tab navigation through menu items
+- **Screen Reader Support**: Proper ARIA attributes and roles
+- **Focus Management**: Automatic focus handling and restoration
+- **Semantic Structure**: Uses appropriate HTML elements and roles
+
+## Design Principles
+
+The Dropdown component follows these design principles:
+
+- **Minimal**: Clean, simple design without unnecessary visual noise
+- **Consistent**: Uniform spacing and sizing across all variants
+- **Accessible**: High contrast and proper focus states
+- **Flexible**: Easy to customize and extend with custom classes
+- **Semantic**: Uses appropriate colors and spacing for visual hierarchy
+
+## Best Practices
+
+- Use dividers to group related actions logically
+- Keep item labels concise and descriptive
+- Use icons sparingly to enhance visual communication
+- Consider the alignment based on available space
+- Test keyboard navigation thoroughly
+- Use disabled states for unavailable actions
+- Keep the number of items reasonable (5-10 max)
+
+## Keyboard Shortcuts
+
+| Key          | Action                             |
+| ------------ | ---------------------------------- |
+| `Enter`      | Open/close dropdown or select item |
+| `Space`      | Open/close dropdown or select item |
+| `Arrow Down` | Open dropdown                      |
+| `Escape`     | Close dropdown                     |
+| `Tab`        | Navigate through menu items        |
