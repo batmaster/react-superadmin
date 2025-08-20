@@ -41,6 +41,8 @@ const config: Config = {
     ],
   ],
 
+  themes: ['@docusaurus/theme-live-codeblock'],
+
   // Add MDX support for component rendering
   markdown: {
     mdx1Compat: {
@@ -73,6 +75,13 @@ const config: Config = {
   ],
 
   themeConfig: {
+    liveCodeBlock: {
+      /**
+       * The position of the live playground, above or under the editor
+       * Possible values: "top" | "bottom"
+       */
+      playgroundPosition: 'bottom',
+    },
     navbar: {
       title: 'React SuperAdmin',
       logo: {

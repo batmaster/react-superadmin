@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -80,7 +84,9 @@
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-example input:focus,
@@ -196,11 +202,11 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .button-showcase button {
     width: 100%;
   }
-  
+
   .modal-content {
     margin: 1rem;
     width: calc(100% - 2rem);
@@ -272,12 +278,14 @@
   font-size: 0.9rem;
 }
 
-.theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-category-link {
+.theme-doc-sidebar-item-category-level-1
+  > .theme-doc-sidebar-item-category-link {
   font-weight: 600;
   color: var(--ifm-color-primary);
 }
 
-.theme-doc-sidebar-item-category-level-2 > .theme-doc-sidebar-item-category-link {
+.theme-doc-sidebar-item-category-level-2
+  > .theme-doc-sidebar-item-category-link {
   font-weight: 500;
 }
 
