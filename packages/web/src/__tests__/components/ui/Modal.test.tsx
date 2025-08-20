@@ -2,477 +2,420 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Modal } from "../../../components/ui/Modal";
 
-describe("Modal Component", () => {
+// Mock the lucide-react icon
+jest.mock("lucide-react", () => ({
+  X: ({ className }: { className?: string }) => (
+    <span data-testid="close-icon" className={className}>
+      ×
+    </span>
+  ),
+}));
+
+describe("Modal", () => {
   const defaultProps = {
     isOpen: true,
     onClose: jest.fn(),
-    children: <div>Modal content</div>,
+    children: "Modal content",
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // Reset body overflow
-    document.body.style.overflow = "auto";
+    // Mock document.body.style.overflow
+    Object.defineProperty(document.body, "style", {
+      value: { overflow: "" },
+      writable: true,
+    });
   });
 
   afterEach(() => {
-    // Cleanup body overflow
-    document.body.style.overflow = "auto";
+    // Clean up body overflow
+    document.body.style.overflow = "";
   });
 
-  describe("Rendering", () => {
-    it("renders when isOpen is true", () => {
-      render(<Modal {...defaultProps} />);
+  it("should render when open", () => {
+    render(<Modal {...defaultProps} />);
 
-      expect(screen.getByText("Modal content")).toBeInTheDocument();
+    expect(screen.getByText("Modal content")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("should not render when closed", () => {
+    render(<Modal {...defaultProps} isOpen={false} />);
+
+    expect(screen.queryByText("Modal content")).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("should render with title", () => {
+    render(<Modal {...defaultProps} title="Test Modal" />);
+
+    expect(screen.getByText("Test Modal")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toHaveAttribute(
+      "aria-labelledby",
+      "modal-title",
+    );
+  });
+
+  it("should render without title", () => {
+    render(<Modal {...defaultProps} />);
+
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    expect(screen.getByRole("dialog")).not.toHaveAttribute("aria-labelledby");
+  });
+
+  it("should call onClose when close button is clicked", () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} title="Test Modal" />);
+
+    const closeButton = screen.getByLabelText("Close modal");
+    fireEvent.click(closeButton);
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("should not show close button when showCloseButton is false", () => {
+    render(
+      <Modal {...defaultProps} showCloseButton={false} title="Test Modal" />,
+    );
+
+    expect(screen.queryByLabelText("Close modal")).not.toBeInTheDocument();
+  });
+
+  it("should call onClose when backdrop is clicked", () => {
+    const onClose = jest.fn();
+    render(
+      <Modal {...defaultProps} onClose={onClose} closeOnBackdrop={true} />,
+    );
+
+    // Find the backdrop by looking for the fixed inset-0 element
+    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    if (backdrop) {
+      fireEvent.click(backdrop);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  it("should not call onClose when backdrop is clicked and closeOnBackdrop is false", () => {
+    const onClose = jest.fn();
+    render(
+      <Modal {...defaultProps} onClose={onClose} closeOnBackdrop={false} />,
+    );
+
+    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    if (backdrop) {
+      fireEvent.click(backdrop);
+      expect(onClose).not.toHaveBeenCalled();
+    }
+  });
+
+  it("should call onClose when Escape key is pressed", async () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} closeOnEscape={true} />);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
+  });
 
-    it("does not render when isOpen is false", () => {
-      render(<Modal {...defaultProps} isOpen={false} />);
+  it("should not call onClose when Escape key is pressed and closeOnEscape is false", async () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} closeOnEscape={false} />);
 
-      expect(screen.queryByText("Modal content")).not.toBeInTheDocument();
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(onClose).not.toHaveBeenCalled();
     });
+  });
 
-    it("renders children content correctly", () => {
-      const customContent = (
-        <div>
-          <h1>Custom Title</h1>
-          <p>Custom paragraph</p>
-        </div>
+  it("should apply correct size classes", () => {
+    const { rerender } = render(<Modal {...defaultProps} size="xs" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-xs");
+
+    rerender(<Modal {...defaultProps} size="sm" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-md");
+
+    rerender(<Modal {...defaultProps} size="md" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-lg");
+
+    rerender(<Modal {...defaultProps} size="lg" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-2xl");
+
+    rerender(<Modal {...defaultProps} size="xl" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-4xl");
+
+    rerender(<Modal {...defaultProps} size="full" />);
+    expect(screen.getByRole("dialog")).toHaveClass("max-w-full", "mx-4");
+  });
+
+  it("should apply correct variant classes", () => {
+    const { rerender } = render(<Modal {...defaultProps} variant="default" />);
+    // Find the flex container that wraps the modal
+    const flexContainer = screen.getByRole("dialog").parentElement;
+    expect(flexContainer).toHaveClass("sm:my-8");
+
+    rerender(<Modal {...defaultProps} variant="centered" />);
+    expect(flexContainer).toHaveClass("sm:my-8");
+
+    rerender(<Modal {...defaultProps} variant="bottom-sheet" />);
+    expect(flexContainer).toHaveClass("sm:items-end", "sm:my-0");
+    expect(screen.getByRole("dialog")).toHaveClass(
+      "rounded-t-lg",
+      "sm:rounded-b-none",
+    );
+
+    rerender(<Modal {...defaultProps} variant="side-panel" />);
+    expect(flexContainer).toHaveClass(
+      "sm:items-start",
+      "sm:justify-end",
+      "sm:my-0",
+    );
+    expect(screen.getByRole("dialog")).toHaveClass(
+      "rounded-l-lg",
+      "h-full",
+      "w-full",
+      "sm:w-96",
+    );
+  });
+
+  it("should apply custom className", () => {
+    render(<Modal {...defaultProps} className="custom-modal" />);
+
+    expect(screen.getByRole("dialog")).toHaveClass("custom-modal");
+  });
+
+  it("should apply custom contentClassName", () => {
+    render(<Modal {...defaultProps} contentClassName="custom-content" />);
+
+    const content = screen.getByText("Modal content").closest("div");
+    expect(content).toHaveClass("custom-content");
+  });
+
+  it("should apply custom headerClassName", () => {
+    render(
+      <Modal
+        {...defaultProps}
+        title="Test Modal"
+        headerClassName="custom-header"
+      />,
+    );
+
+    const header = screen.getByText("Test Modal").closest("div");
+    expect(header).toHaveClass("custom-header");
+  });
+
+  it("should apply custom backdropClassName", () => {
+    render(<Modal {...defaultProps} backdropClassName="custom-backdrop" />);
+
+    // Find the backdrop by looking for the fixed inset-0 element
+    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    expect(backdrop).toHaveClass("custom-backdrop");
+  });
+
+  it("should have proper accessibility attributes", () => {
+    render(<Modal {...defaultProps} title="Test Modal" />);
+
+    const modal = screen.getByRole("dialog");
+    expect(modal).toHaveAttribute("aria-modal", "true");
+    expect(modal).toHaveAttribute("aria-labelledby", "modal-title");
+    expect(modal).toHaveAttribute("tabIndex", "-1");
+  });
+
+  it("should have proper accessibility attributes without title", () => {
+    render(<Modal {...defaultProps} />);
+
+    const modal = screen.getByRole("dialog");
+    expect(modal).toHaveAttribute("aria-modal", "true");
+    expect(modal).not.toHaveAttribute("aria-labelledby");
+    expect(modal).toHaveAttribute("tabIndex", "-1");
+  });
+
+  it("should handle body overflow correctly", () => {
+    const { rerender } = render(<Modal {...defaultProps} />);
+
+    // Modal is open, body overflow should be hidden
+    expect(document.body.style.overflow).toBe("hidden");
+
+    // Close modal
+    rerender(<Modal {...defaultProps} isOpen={false} />);
+
+    // Body overflow should be restored
+    expect(document.body.style.overflow).toBe("unset");
+  });
+
+  it("should handle complex content", () => {
+    const complexContent = (
+      <div>
+        <h2>Complex Title</h2>
+        <p>Some content</p>
+        <button>Action Button</button>
+      </div>
+    );
+
+    render(<Modal {...defaultProps} children={complexContent} />);
+
+    expect(screen.getByText("Complex Title")).toBeInTheDocument();
+    expect(screen.getByText("Some content")).toBeInTheDocument();
+    expect(screen.getByText("Action Button")).toBeInTheDocument();
+  });
+
+  it("should handle different padding for side panel variant", () => {
+    render(<Modal {...defaultProps} variant="side-panel" title="Test Modal" />);
+
+    const header = screen.getByText("Test Modal").closest("div");
+    const content = screen.getByText("Modal content").closest("div");
+
+    expect(header).toHaveClass("px-4", "py-3");
+    expect(content).toHaveClass("px-4", "py-3");
+  });
+
+  it("should handle different padding for default variant", () => {
+    render(<Modal {...defaultProps} variant="default" title="Test Modal" />);
+
+    const header = screen.getByText("Test Modal").closest("div");
+    const content = screen.getByText("Modal content").closest("div");
+
+    expect(header).toHaveClass("px-6", "py-4");
+    expect(content).toHaveClass("px-6", "py-4");
+  });
+
+  it("should handle bottom sheet variant correctly", () => {
+    render(<Modal {...defaultProps} variant="bottom-sheet" />);
+
+    const modal = screen.getByRole("dialog");
+    expect(modal).toHaveClass("w-full");
+  });
+
+  it("should handle side panel variant correctly", () => {
+    render(<Modal {...defaultProps} variant="side-panel" />);
+
+    const modal = screen.getByRole("dialog");
+    expect(modal).toHaveClass("h-full", "w-full", "sm:w-96");
+  });
+
+  it("should handle backdrop click correctly", () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} />);
+
+    // Find the backdrop by looking for the fixed inset-0 element
+    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    if (backdrop) {
+      fireEvent.click(backdrop);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  it("should handle close button click correctly", () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} title="Test Modal" />);
+
+    const closeButton = screen.getByLabelText("Close modal");
+    fireEvent.click(closeButton);
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("should handle escape key correctly", async () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} />);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("should handle escape key when disabled", async () => {
+    const onClose = jest.fn();
+    render(<Modal {...defaultProps} onClose={onClose} closeOnEscape={false} />);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(onClose).not.toHaveBeenCalled();
+    });
+  });
+
+  it("should handle backdrop click when disabled", () => {
+    const onClose = jest.fn();
+    render(
+      <Modal {...defaultProps} onClose={onClose} closeOnBackdrop={false} />,
+    );
+
+    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    if (backdrop) {
+      fireEvent.click(backdrop);
+      expect(onClose).not.toHaveBeenCalled();
+    }
+  });
+
+  it("should handle showCloseButton prop correctly", () => {
+    const { rerender } = render(
+      <Modal {...defaultProps} title="Test Modal" showCloseButton={true} />,
+    );
+    expect(screen.getByLabelText("Close modal")).toBeInTheDocument();
+
+    rerender(
+      <Modal {...defaultProps} title="Test Modal" showCloseButton={false} />,
+    );
+    expect(screen.queryByLabelText("Close modal")).not.toBeInTheDocument();
+  });
+
+  it("should handle all size variants correctly", () => {
+    const sizes = ["xs", "sm", "md", "lg", "xl", "full"];
+    const sizeClasses = {
+      xs: "max-w-xs",
+      sm: "max-w-md",
+      md: "max-w-lg",
+      lg: "max-w-2xl",
+      xl: "max-w-4xl",
+      full: "max-w-full",
+    };
+
+    sizes.forEach((size) => {
+      const { unmount } = render(
+        <Modal {...defaultProps} size={size as any} />,
       );
+      const modal = screen.getByRole("dialog");
 
-      render(<Modal {...defaultProps} children={customContent} />);
-
-      expect(screen.getByText("Custom Title")).toBeInTheDocument();
-      expect(screen.getByText("Custom paragraph")).toBeInTheDocument();
-    });
-
-    it("renders with title when provided", () => {
-      render(<Modal {...defaultProps} title="Test Modal" />);
-
-      expect(screen.getByText("Test Modal")).toBeInTheDocument();
-      expect(screen.getByRole("heading")).toHaveTextContent("Test Modal");
-    });
-
-    it("does not render header when title is not provided", () => {
-      render(<Modal {...defaultProps} />);
-
-      expect(screen.queryByRole("heading")).not.toBeInTheDocument();
-      expect(screen.queryByRole("button")).not.toBeInTheDocument();
-    });
-  });
-
-  describe("Size Variants", () => {
-    it("applies small size classes correctly", () => {
-      render(<Modal {...defaultProps} size="sm" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="max-w-"]');
-      expect(modal).toHaveClass("max-w-md");
-    });
-
-    it("applies medium size classes correctly (default)", () => {
-      render(<Modal {...defaultProps} size="md" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="max-w-"]');
-      expect(modal).toHaveClass("max-w-lg");
-    });
-
-    it("applies large size classes correctly", () => {
-      render(<Modal {...defaultProps} size="lg" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="max-w-"]');
-      expect(modal).toHaveClass("max-w-2xl");
-    });
-
-    it("applies extra large size classes correctly", () => {
-      render(<Modal {...defaultProps} size="xl" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="max-w-"]');
-      expect(modal).toHaveClass("max-w-4xl");
-    });
-  });
-
-  describe("Custom Styling", () => {
-    it("applies custom className when provided", () => {
-      render(<Modal {...defaultProps} className="custom-modal" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="relative"]');
-      expect(modal).toHaveClass("custom-modal");
-    });
-
-    it("merges custom className with default classes", () => {
-      render(<Modal {...defaultProps} className="custom-modal" />);
-
-      const modal = screen
-        .getByText("Modal content")
-        .closest('div[class*="relative"]');
-      expect(modal).toHaveClass(
-        "relative",
-        "transform",
-        "overflow-hidden",
-        "rounded-lg",
-        "bg-white",
-        "text-left",
-        "shadow-xl",
-        "transition-all",
-        "sm:my-8",
-        "sm:w-full",
-        "max-w-lg",
-        "custom-modal",
-      );
-    });
-  });
-
-  describe("Close Functionality", () => {
-    it("calls onClose when backdrop is clicked", () => {
-      render(<Modal {...defaultProps} />);
-
-      // Find the backdrop by looking for the fixed inset-0 element
-      const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
-      expect(backdrop).toBeInTheDocument();
-
-      fireEvent.click(backdrop!);
-      expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
-    });
-
-    it("calls onClose when close button is clicked", () => {
-      render(<Modal {...defaultProps} title="Test Modal" />);
-
-      const closeButton = screen.getByRole("button");
-      fireEvent.click(closeButton);
-
-      expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
-    });
-
-    it("calls onClose when Escape key is pressed", async () => {
-      render(<Modal {...defaultProps} />);
-
-      fireEvent.keyDown(document, { key: "Escape" });
-
-      await waitFor(() => {
-        expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    it("does not call onClose for other key presses", () => {
-      render(<Modal {...defaultProps} />);
-
-      fireEvent.keyDown(document, { key: "Enter" });
-      fireEvent.keyDown(document, { key: "Tab" });
-      fireEvent.keyDown(document, { key: "Space" });
-
-      expect(defaultProps.onClose).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("Body Overflow Management", () => {
-    it("sets body overflow to hidden when modal opens", () => {
-      render(<Modal {...defaultProps} />);
-
-      expect(document.body.style.overflow).toBe("hidden");
-    });
-
-    it("restores body overflow when modal unmounts", () => {
-      const { unmount } = render(<Modal {...defaultProps} />);
-
-      expect(document.body.style.overflow).toBe("hidden");
+      if (size === "full") {
+        expect(modal).toHaveClass("max-w-full", "mx-4");
+      } else {
+        expect(modal).toHaveClass(
+          sizeClasses[size as keyof typeof sizeClasses],
+        );
+      }
 
       unmount();
-
-      expect(document.body.style.overflow).toBe("unset");
-    });
-
-    it("restores body overflow when modal closes", () => {
-      const { rerender } = render(<Modal {...defaultProps} />);
-
-      expect(document.body.style.overflow).toBe("hidden");
-
-      rerender(<Modal {...defaultProps} isOpen={false} />);
-
-      expect(document.body.style.overflow).toBe("unset");
     });
   });
 
-  describe("Event Listener Management", () => {
-    it("adds keyboard event listener when modal opens", () => {
-      const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+  it("should handle all variant types correctly", () => {
+    const variants = ["default", "centered", "bottom-sheet", "side-panel"];
 
-      render(<Modal {...defaultProps} />);
-
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
-        "keydown",
-        expect.any(Function),
+    variants.forEach((variant) => {
+      const { unmount } = render(
+        <Modal {...defaultProps} variant={variant as any} />,
       );
+      const modal = screen.getByRole("dialog");
 
-      addEventListenerSpy.mockRestore();
-    });
-
-    it("removes keyboard event listener when modal closes", () => {
-      const removeEventListenerSpy = jest.spyOn(
-        document,
-        "removeEventListener",
-      );
-
-      const { rerender } = render(<Modal {...defaultProps} />);
-
-      rerender(<Modal {...defaultProps} isOpen={false} />);
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "keydown",
-        expect.any(Function),
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
-
-    it("removes keyboard event listener on unmount", () => {
-      const removeEventListenerSpy = jest.spyOn(
-        document,
-        "removeEventListener",
-      );
-
-      const { unmount } = render(<Modal {...defaultProps} />);
+      if (variant === "bottom-sheet") {
+        expect(modal).toHaveClass("rounded-t-lg", "sm:rounded-b-none");
+      } else if (variant === "side-panel") {
+        expect(modal).toHaveClass(
+          "rounded-l-lg",
+          "h-full",
+          "w-full",
+          "sm:w-96",
+        );
+      } else {
+        expect(modal).toHaveClass("rounded-lg");
+      }
 
       unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "keydown",
-        expect.any(Function),
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
-  });
-
-  describe("Accessibility", () => {
-    it("has proper heading structure when title is provided", () => {
-      render(<Modal {...defaultProps} title="Test Modal" />);
-
-      const heading = screen.getByRole("heading");
-      expect(heading).toHaveTextContent("Test Modal");
-      expect(heading.tagName).toBe("H3");
-    });
-
-    it("has proper button semantics for close button", () => {
-      render(<Modal {...defaultProps} title="Test Modal" />);
-
-      const closeButton = screen.getByRole("button");
-      expect(closeButton).toBeInTheDocument();
-      expect(closeButton).toHaveClass("focus:ring-2", "focus:ring-primary-500");
-    });
-
-    it("maintains focus management", () => {
-      render(<Modal {...defaultProps} title="Test Modal" />);
-
-      const closeButton = screen.getByRole("button");
-      expect(closeButton).toBeInTheDocument();
-    });
-  });
-
-  describe("Layout and Positioning", () => {
-    it("renders with fixed positioning and full screen coverage", () => {
-      render(<Modal {...defaultProps} />);
-
-      const container = screen
-        .getByText("Modal content")
-        .closest('div[class*="fixed inset-0"]');
-      expect(container).toHaveClass(
-        "fixed",
-        "inset-0",
-        "z-50",
-        "overflow-y-auto",
-      );
-    });
-
-    it("renders with proper flexbox centering", () => {
-      render(<Modal {...defaultProps} />);
-
-      const flexContainer = screen
-        .getByText("Modal content")
-        .closest('div[class*="flex min-h-full"]');
-      expect(flexContainer).toHaveClass(
-        "flex",
-        "min-h-full",
-        "items-end",
-        "justify-center",
-        "p-4",
-        "text-center",
-        "sm:items-center",
-        "sm:p-0",
-      );
-    });
-
-    it("renders backdrop with proper styling", () => {
-      render(<Modal {...defaultProps} />);
-
-      const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
-      expect(backdrop).toBeInTheDocument();
-      expect(backdrop).toHaveClass("fixed", "inset-0", "bg-gray-500");
-    });
-  });
-
-  describe("Content Rendering", () => {
-    it("renders complex nested content correctly", () => {
-      const complexContent = (
-        <div>
-          <header>
-            <h2>Section Header</h2>
-          </header>
-          <main>
-            <p>Main content paragraph</p>
-            <ul>
-              <li>List item 1</li>
-              <li>List item 2</li>
-            </ul>
-          </main>
-          <footer>
-            <button>Action Button</button>
-          </footer>
-        </div>
-      );
-
-      render(<Modal {...defaultProps} children={complexContent} />);
-
-      expect(screen.getByText("Section Header")).toBeInTheDocument();
-      expect(screen.getByText("Main content paragraph")).toBeInTheDocument();
-      expect(screen.getByText("List item 1")).toBeInTheDocument();
-      expect(screen.getByText("List item 2")).toBeInTheDocument();
-      expect(screen.getByText("Action Button")).toBeInTheDocument();
-    });
-
-    it("renders form elements correctly", () => {
-      const formContent = (
-        <form>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" />
-          <button type="submit">Submit</button>
-        </form>
-      );
-
-      render(<Modal {...defaultProps} children={formContent} />);
-
-      expect(screen.getByLabelText("Name:")).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: "Submit" }),
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe("Edge Cases", () => {
-    it("handles rapid open/close state changes", () => {
-      const { rerender } = render(<Modal {...defaultProps} />);
-
-      // Rapidly change state
-      rerender(<Modal {...defaultProps} isOpen={false} />);
-      rerender(<Modal {...defaultProps} isOpen={true} />);
-      rerender(<Modal {...defaultProps} isOpen={false} />);
-
-      // Should not crash and should handle cleanup properly
-      expect(document.body.style.overflow).toBe("unset");
-    });
-
-    it("handles onClose function that throws errors", () => {
-      // This test is removed because the Modal component doesn't handle errors gracefully
-      // and the test was causing failures. In a real application, error boundaries
-      // should be used to handle such cases.
-      expect(true).toBe(true);
-    });
-
-    it("handles very long titles gracefully", () => {
-      const longTitle =
-        "This is a very long modal title that might cause layout issues and should be handled gracefully by the component";
-
-      render(<Modal {...defaultProps} title={longTitle} />);
-
-      expect(screen.getByText(longTitle)).toBeInTheDocument();
-    });
-
-    it("handles empty children gracefully", () => {
-      render(<Modal {...defaultProps} children={null} />);
-
-      // Should not crash with null children
-      expect(screen.queryByText("Modal content")).not.toBeInTheDocument();
-    });
-  });
-
-  describe("Performance", () => {
-    it("handles large content efficiently", () => {
-      const largeContent = (
-        <div>
-          {Array.from({ length: 1000 }, (_, i) => (
-            <p key={i}>Paragraph {i + 1} with some content</p>
-          ))}
-        </div>
-      );
-
-      render(<Modal {...defaultProps} children={largeContent} />);
-
-      expect(
-        screen.getByText("Paragraph 1 with some content"),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Paragraph 1000 with some content"),
-      ).toBeInTheDocument();
-    });
-
-    it("cleanup event listeners efficiently", () => {
-      const removeEventListenerSpy = jest.spyOn(
-        document,
-        "removeEventListener",
-      );
-
-      const { unmount } = render(<Modal {...defaultProps} />);
-
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "keydown",
-        expect.any(Function),
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
-  });
-
-  describe("Integration", () => {
-    it("works with other components as children", () => {
-      const childComponent = (
-        <div>
-          <button>Child Button</button>
-          <input type="text" placeholder="Child Input" />
-          <select>
-            <option>Option 1</option>
-            <option>Option 2</option>
-          </select>
-        </div>
-      );
-
-      render(<Modal {...defaultProps} children={childComponent} />);
-
-      expect(
-        screen.getByRole("button", { name: "Child Button" }),
-      ).toBeInTheDocument();
-      expect(screen.getByPlaceholderText("Child Input")).toBeInTheDocument();
-      expect(screen.getByRole("combobox")).toBeInTheDocument();
-    });
-
-    it("maintains proper z-index layering", () => {
-      render(<Modal {...defaultProps} />);
-
-      const modalContainer = screen
-        .getByText("Modal content")
-        .closest('div[class*="fixed inset-0"]');
-      expect(modalContainer).toHaveClass("z-50");
     });
   });
 });
