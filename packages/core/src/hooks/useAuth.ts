@@ -71,7 +71,7 @@ export function useAuth(): UseAuthReturn {
     }
   }, []);
 
-  const resetPassword = useCallback(async (token: string, password: string) => {
+  const resetPassword = useCallback(async (token: string, _password: string) => {
     try {
       // This would typically make an API call to reset password
       console.log('Reset password with token:', token);
