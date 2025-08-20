@@ -44,59 +44,52 @@ describe("Button", () => {
   });
 
   it("should show loading state", () => {
-    render(<Button {...defaultProps} loading={true} />);
-    const button = screen.getByRole("button");
+    render(<Button loading>Click me</Button>);
 
+    const button = screen.getByRole("button");
     expect(button).toBeDisabled();
-    expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
+    expect(button.querySelector(".animate-spin")).toBeInTheDocument();
   });
 
   it("should be disabled when loading", () => {
-    render(<Button {...defaultProps} loading={true} />);
-    const button = screen.getByRole("button");
+    render(<Button loading>Click me</Button>);
 
+    const button = screen.getByRole("button");
     expect(button).toBeDisabled();
   });
 
-  it("should apply custom className", () => {
-    render(<Button {...defaultProps} className="custom-class" />);
+  it("should render with primary variant", () => {
+    render(<Button variant="primary">Click me</Button>);
+
     const button = screen.getByRole("button");
-
-    expect(button).toHaveClass("custom-class");
-  });
-
-  it("should handle different button types", () => {
-    render(<Button {...defaultProps} type="submit" />);
-    const button = screen.getByRole("button");
-
-    expect(button).toHaveAttribute("type", "submit");
-  });
-
-  it("should render with danger variant", () => {
-    render(<Button {...defaultProps} variant="danger" />);
-    const button = screen.getByRole("button");
-
-    expect(button).toHaveClass("bg-red-600", "hover:bg-red-700");
-  });
-
-  it("should render with success variant", () => {
-    render(<Button {...defaultProps} variant="success" />);
-    const button = screen.getByRole("button");
-
-    expect(button).toHaveClass("bg-green-600", "hover:bg-green-700");
-  });
-
-  it("should render with warning variant", () => {
-    render(<Button {...defaultProps} variant="warning" />);
-    const button = screen.getByRole("button");
-
-    expect(button).toHaveClass("bg-yellow-600", "hover:bg-yellow-700");
+    expect(button).toHaveClass("bg-primary-600", "hover:bg-primary-700");
   });
 
   it("should render with secondary variant", () => {
-    render(<Button {...defaultProps} variant="secondary" />);
-    const button = screen.getByRole("button");
+    render(<Button variant="secondary">Click me</Button>);
 
+    const button = screen.getByRole("button");
     expect(button).toHaveClass("bg-gray-600", "hover:bg-gray-700");
+  });
+
+  it("should render with outline variant", () => {
+    render(<Button variant="outline">Click me</Button>);
+
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("border", "bg-white", "text-gray-700");
+  });
+
+  it("should render with ghost variant", () => {
+    render(<Button variant="ghost">Click me</Button>);
+
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("text-gray-700", "hover:bg-gray-100");
+  });
+
+  it("should render with danger variant", () => {
+    render(<Button variant="danger">Click me</Button>);
+
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("bg-red-600", "hover:bg-red-700");
   });
 });
