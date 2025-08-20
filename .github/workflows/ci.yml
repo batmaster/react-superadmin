@@ -36,14 +36,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate Prisma Client
+        run: pnpm --filter=@react-superadmin/web db:generate
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+
+      - name: Build packages
+        run: pnpm build
+
       - name: Run linting
         run: pnpm lint:ci
 
       - name: Run tests
         run: pnpm test
-
-      - name: Build packages
-        run: pnpm build
 
   code-quality:
     runs-on: ubuntu-latest
@@ -69,6 +74,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Generate Prisma Client
+        run: pnpm --filter=@react-superadmin/web db:generate
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+
+      - name: Build packages
+        run: pnpm build
 
       - name: Run TypeScript check
         run: pnpm typecheck
