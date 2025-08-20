@@ -22,7 +22,7 @@ export interface UseFormReturn<T = any> {
 }
 
 export function useForm<T = any>(options: UseFormOptions<T>): UseFormReturn<T> {
-  const { initialData = {}, fields, onSubmit, onCancel } = options;
+  const { initialData = {}, fields, onSubmit } = options;
   
   const [data, setData] = useState<Partial<T>>(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});

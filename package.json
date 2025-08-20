@@ -35,6 +35,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,html,css,scss,less}\"",
     "format:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,html,css,scss,less}\" && eslint --fix \"**/*.{ts,tsx,js,jsx}\"",
     "format:script": "./scripts/format.sh",
+    "pkg:check": "pnpm exec pnpm-workspace-check",
     "commit": "git-cz",
     "prepare": "husky install"
   },
