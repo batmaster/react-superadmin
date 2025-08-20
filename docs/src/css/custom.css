@@ -10,260 +10,175 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #0969da;
-  --ifm-color-primary-dark: #0858b9;
-  --ifm-color-primary-darker: #0752a8;
-  --ifm-color-primary-darkest: #06438a;
-  --ifm-color-primary-light: #2a7ad2;
-  --ifm-color-primary-lighter: #3a82d5;
-  --ifm-color-primary-lightest: #5a9bdd;
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #1d4ed8;
+  --ifm-color-primary-darkest: #1e40af;
+  --ifm-color-primary-light: #60a5fa;
+  --ifm-color-primary-lighter: #93c5fd;
+  --ifm-color-primary-lightest: #dbeafe;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #58a6ff;
-  --ifm-color-primary-dark: #388bfd;
-  --ifm-color-primary-darker: #1f6feb;
-  --ifm-color-primary-darkest: #0969da;
-  --ifm-color-primary-light: #79c0ff;
-  --ifm-color-primary-lighter: #a371f7;
-  --ifm-color-primary-lightest: #bc8cff;
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #dbeafe;
+  --ifm-color-primary-lightest: #eff6ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-/* GitHub Actions inspired modern styling using Tailwind classes */
+/* Clean, minimal styling like Headless UI */
 .navbar {
-  @apply bg-gradient-to-r from-blue-600 via-green-500 to-blue-600 shadow-lg border-none;
+  @apply bg-white border-b border-gray-200 shadow-sm;
 }
 
 .navbar__title {
-  @apply font-semibold text-white;
+  @apply font-semibold text-gray-900;
 }
 
 .navbar__brand {
-  @apply text-white;
+  @apply text-gray-900;
 }
 
 .navbar__link {
-  @apply text-white/90 font-medium transition-all duration-200 hover:text-white hover:-translate-y-0.5;
+  @apply text-gray-600 font-medium transition-colors duration-200 hover:text-gray-900;
 }
 
-/* Modern card styling */
+/* Clean card styling */
 .card {
-  @apply bg-white rounded-xl shadow-md border border-black/5 transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+  @apply bg-white rounded-lg border border-gray-200 shadow-sm;
 }
 
 [data-theme='dark'] .card {
-  @apply bg-gray-800 border-white/10;
+  @apply bg-gray-800 border-gray-700;
 }
 
-/* Modern button styling */
+/* Clean button styling */
 .button {
-  @apply rounded-lg font-medium transition-all duration-200 shadow-sm hover:-translate-y-1 hover:shadow-md;
+  @apply rounded-md font-medium transition-colors duration-200;
 }
 
-/* GitHub Actions style buttons */
-.button--primary {
-  @apply bg-gradient-to-r from-blue-600 to-green-500 border-none text-white;
-}
-
-.button--success {
-  @apply bg-gradient-to-r from-green-500 to-green-600 border-none text-white;
-}
-
-.button--info {
-  @apply bg-gradient-to-r from-blue-600 to-blue-700 border-none text-white;
-}
-
-.button--warning {
-  @apply bg-gradient-to-r from-orange-500 to-orange-600 border-none text-white;
-}
-
-.button--danger {
-  @apply bg-gradient-to-r from-red-600 to-red-700 border-none text-white;
-}
-
-/* Modern sidebar styling */
+/* Clean sidebar styling */
 .theme-doc-sidebar-container {
-  @apply bg-gray-50 border-r border-black/5;
+  @apply bg-gray-50 border-r border-gray-200;
 }
 
 [data-theme='dark'] .theme-doc-sidebar-container {
-  @apply bg-gray-900 border-white/10;
+  @apply bg-gray-900 border-gray-700;
 }
 
-/* Modern table styling */
+/* Clean table styling */
 table {
-  @apply rounded-lg overflow-hidden shadow-sm;
+  @apply rounded-lg border border-gray-200;
 }
 
 thead {
-  @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white;
+  @apply bg-gray-50;
 }
 
-/* Modern form styling */
-input, select, textarea {
-  @apply rounded-lg border border-black/10 transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10;
+/* Clean form styling */
+input,
+select,
+textarea {
+  @apply rounded-md border border-gray-300 transition-colors duration-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
 }
 
-/* GitHub Actions style badges */
+/* Clean badge styling */
 .badge {
   @apply rounded-md font-medium px-2 py-1 text-xs;
 }
 
 .badge--primary {
-  @apply bg-gradient-to-r from-blue-600 to-green-500 text-white;
+  @apply bg-blue-100 text-blue-800;
 }
 
 .badge--success {
-  @apply bg-gradient-to-r from-green-500 to-green-600 text-white;
+  @apply bg-green-100 text-green-800;
 }
 
 .badge--warning {
-  @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white;
+  @apply bg-yellow-100 text-yellow-800;
 }
 
 .badge--danger {
-  @apply bg-gradient-to-r from-red-600 to-red-700 text-white;
+  @apply bg-red-100 text-red-800;
 }
 
-/* Modern alert styling */
+/* Clean alert styling */
 .alert {
-  @apply rounded-lg border-none shadow-sm;
+  @apply rounded-md border;
 }
 
 .alert--info {
-  @apply bg-gradient-to-r from-blue-50 to-blue-100 text-blue-900 border-l-4 border-blue-600;
+  @apply bg-blue-50 border-blue-200 text-blue-800;
 }
 
 .alert--success {
-  @apply bg-gradient-to-r from-green-50 to-green-100 text-green-900 border-l-4 border-green-600;
+  @apply bg-green-50 border-green-200 text-green-800;
 }
 
 .alert--warning {
-  @apply bg-gradient-to-r from-orange-50 to-orange-100 text-orange-900 border-l-4 border-orange-600;
+  @apply bg-yellow-50 border-yellow-200 text-yellow-800;
 }
 
 .alert--danger {
-  @apply bg-gradient-to-r from-red-50 to-red-100 text-red-900 border-l-4 border-red-600;
+  @apply bg-red-50 border-red-200 text-red-800;
 }
 
-/* Modern code block styling */
+/* Clean code block styling */
 .prism-code {
-  @apply rounded-lg shadow-md;
+  @apply rounded-md border border-gray-200;
 }
 
-/* GitHub Actions style navigation */
+/* Clean navigation styling */
 .pagination-nav__link {
-  @apply rounded-lg border border-black/5 transition-all duration-200 hover:shadow-md hover:-translate-y-1;
+  @apply rounded-md border border-gray-200 transition-colors duration-200 hover:border-gray-300;
 }
 
-/* Modern footer styling */
+/* Clean footer styling */
 .footer {
-  @apply bg-gray-50 border-t border-black/5;
+  @apply bg-gray-50 border-t border-gray-200;
 }
 
 [data-theme='dark'] .footer {
-  @apply bg-gray-900 border-white/10;
+  @apply bg-gray-900 border-gray-700;
 }
 
-/* GitHub Actions style progress indicators */
-.progress {
-  @apply bg-black/5 rounded-md overflow-hidden;
-}
-
-.progress-bar {
-  @apply bg-gradient-to-r from-green-500 to-green-600 transition-all duration-300;
-}
-
-/* Modern modal styling */
+/* Clean modal styling */
 .modal {
-  @apply rounded-xl shadow-2xl;
+  @apply rounded-lg border border-gray-200 shadow-lg;
 }
 
 .modal-header {
-  @apply bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-t-xl;
+  @apply bg-gray-50 border-b border-gray-200;
 }
 
-/* GitHub Actions style tooltips */
-.tooltip {
-  @apply bg-gray-900 text-white rounded-md shadow-lg text-sm;
-}
-
-/* Modern dropdown styling */
+/* Clean dropdown styling */
 .dropdown {
-  @apply rounded-lg shadow-lg border border-black/5;
+  @apply rounded-md border border-gray-200 shadow-lg;
 }
 
-/* GitHub Actions style breadcrumbs */
+/* Clean breadcrumbs styling */
 .breadcrumbs {
-  @apply bg-black/5 rounded-md p-2;
+  @apply bg-gray-50 rounded-md p-2;
 }
 
 [data-theme='dark'] .breadcrumbs {
-  @apply bg-white/5;
+  @apply bg-gray-800;
 }
 
-/* Modern search styling */
+/* Clean search styling */
 .search-input {
-  @apply rounded-lg border border-black/10 transition-all duration-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10;
+  @apply rounded-md border border-gray-300 transition-colors duration-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
 }
 
-/* GitHub Actions style status indicators */
-.status-indicator {
-  @apply w-2 h-2 rounded-full inline-block mr-2;
-}
-
-.status-indicator--success {
-  @apply bg-green-500 shadow-[0_0_0_2px_rgba(34,197,94,0.2)];
-}
-
-.status-indicator--warning {
-  @apply bg-orange-500 shadow-[0_0_0_2px_rgba(249,115,22,0.2)];
-}
-
-.status-indicator--danger {
-  @apply bg-red-500 shadow-[0_0_0_2px_rgba(239,68,68,0.2)];
-}
-
-/* Modern spacing utilities */
-.section-spacing {
-  @apply py-8;
-}
-
-.card-spacing {
-  @apply my-4;
-}
-
-/* GitHub Actions style responsive design */
-@media (max-width: 768px) {
-  .navbar {
-    @apply px-4 py-2;
-  }
-  
-  .card {
-    @apply mx-2 rounded-lg;
-  }
-  
-  .button {
-    @apply px-4 py-2 text-sm;
-  }
-}
-
-/* Modern focus states for accessibility */
+/* Clean focus states */
 *:focus {
-  @apply outline-2 outline-blue-600 outline-offset-2;
-}
-
-/* GitHub Actions style loading states */
-.loading {
-  @apply bg-gradient-to-r from-blue-600 via-green-500 to-blue-600 bg-[length:200%_200%] animate-[gradient-shift_2s_ease-infinite];
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
 }
