@@ -11,79 +11,53 @@ The Card component provides a flexible container for organizing content with var
 
 ## Basic Usage
 
-```tsx live
-import React from 'react';
+```jsx live
+<Card>
+  <p>This is a basic card with default styling.</p>
+</Card>
+```
+
+**Code:**
+```tsx
 import { Card } from '@react-superadmin/web';
 
-function BasicCard() {
-  return (
-    <Card>
-      <p>This is a basic card with default styling.</p>
-    </Card>
-  );
-}
+<Card>
+  <p>This is a basic card with default styling.</p>
+</Card>
 ```
 
 ## Card Variants
 
 ### Default Variant
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function DefaultCard() {
-  return (
-    <Card>
-      <p>Default card with subtle border and shadow.</p>
-    </Card>
-  );
-}
+```jsx live
+<Card>
+  <p>Default card with subtle border and shadow.</p>
+</Card>
 ```
 
 ### Outlined Variant
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function OutlinedCard() {
-  return (
-    <Card variant='outlined'>
-      <p>Outlined card with visible border and no shadow.</p>
-    </Card>
-  );
-}
+```jsx live
+<Card variant='outlined'>
+  <p>Outlined card with visible border and no shadow.</p>
+</Card>
 ```
 
 ### Elevated Variant
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function ElevatedCard() {
-  return (
-    <Card variant='elevated'>
-      <p>Elevated card with prominent shadow and no border.</p>
-    </Card>
-  );
-}
+```jsx live
+<Card variant='elevated'>
+  <p>Elevated card with prominent shadow and no border.</p>
+</Card>
 ```
 
 ### Flat Variant
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function FlatCard() {
-  return (
-    <Card variant='flat'>
-      <p>Flat card with subtle background and no shadow.</p>
-    </Card>
-  );
-}
+```jsx live
+<Card variant='flat'>
+  <p>Flat card with subtle background and no shadow.</p>
+</Card>
 ```
 
 ## Padding Options
@@ -148,6 +122,44 @@ function HoverCard() {
     </Card>
   );
 }
+```
+
+## Interactive Demo
+
+Try different card variants and see how they look:
+
+```jsx live
+<div className="space-y-4">
+  <Card>
+    <CardHeader>
+      <h3 className="text-lg font-semibold">Default Card</h3>
+      <p className="text-sm text-gray-600">This is the default variant</p>
+    </CardHeader>
+    <CardContent>
+      <p>Default cards have subtle borders and shadows for a clean look.</p>
+    </CardContent>
+  </Card>
+  
+  <Card variant="outlined">
+    <CardHeader>
+      <h3 className="text-lg font-semibold">Outlined Card</h3>
+      <p className="text-sm text-gray-600">This is the outlined variant</p>
+    </CardHeader>
+    <CardContent>
+      <p>Outlined cards have visible borders and no shadows.</p>
+    </CardContent>
+  </Card>
+  
+  <Card variant="elevated">
+    <CardHeader>
+      <h3 className="text-lg font-semibold">Elevated Card</h3>
+      <p className="text-sm text-gray-600">This is the elevated variant</p>
+    </CardHeader>
+    <CardContent>
+      <p>Elevated cards have prominent shadows and no borders.</p>
+    </CardContent>
+  </Card>
+</div>
 ```
 
 ## Card Subcomponents

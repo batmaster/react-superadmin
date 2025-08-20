@@ -1,133 +1,280 @@
 ---
 id: installation
-title: Installation
+title: Installation & Setup
 sidebar_label: Installation
+description:
+  Learn how to install and set up React SuperAdmin CRUD admin framework in your
+  project
 ---
 
-# Installation
+# Installation & Setup
 
-Get React SuperAdmin up and running in your project quickly and easily.
+React SuperAdmin is a **CRUD admin framework** that helps you build complete
+admin webapps quickly. It provides pre-built admin interfaces, data management,
+and CRUD operations - not just UI components.
 
-## Prerequisites
+## 🎯 **What You Get**
 
-- Node.js 18+ 
-- React 18+
-- TypeScript 5+ (recommended)
+- **Complete Admin Interface**: Pre-built layouts, navigation, and dashboards
+- **CRUD Operations**: Create, Read, Update, Delete for any data model
+- **Data Providers**: Connect to APIs, databases, or use mock data
+- **Resource Management**: Define Users, Products, Orders, etc. with automatic
+  CRUD
+- **Admin Components**: Tables, forms, filters, pagination - all pre-built
 
-## Package Installation
+## 📦 **Installation**
 
-### Core Package
-
-Install the core package which contains all the essential functionality:
+### **1. Install the Framework**
 
 ```bash
+# Core framework (required)
 pnpm add @react-superadmin/core
-```
 
-### Web Components
-
-Install the web components for the UI:
-
-```bash
+# Web admin interface (required)
 pnpm add @react-superadmin/web
+
+# Using npm
+npm install @react-superadmin/core @react-superadmin/web
+
+# Using yarn
+yarn add @react-superadmin/core @react-superadmin/web
 ```
 
-### Peer Dependencies
+### **2. Install Tailwind CSS (Required)**
 
-Make sure you have these peer dependencies installed:
+The admin interface uses Tailwind CSS for styling:
 
 ```bash
-pnpm add react react-dom
-pnpm add -D @types/react @types/react-dom
+pnpm add -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
 ```
 
-## Quick Setup
+### **3. Configure Tailwind CSS**
 
-After installation, you can start using React SuperAdmin immediately:
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}',
+  ],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+### **4. Import Tailwind CSS**
+
+```css
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## 🚀 **Quick Start - Build Your First Admin**
+
+### **1. Define Your Resources**
 
 ```tsx
+// src/resources/users.ts
+import { createResource } from '@react-superadmin/core';
+
+export const usersResource = createResource({
+  name: 'users',
+  label: 'Users',
+  fields: [
+    { name: 'id', type: 'id', label: 'ID' },
+    { name: 'name', type: 'string', label: 'Name', required: true },
+    { name: 'email', type: 'email', label: 'Email', required: true },
+    { name: 'role', type: 'select', label: 'Role', options: ['admin', 'user'] },
+    { name: 'createdAt', type: 'datetime', label: 'Created At' },
+  ],
+});
+```
+
+### **2. Create Your Admin App**
+
+```tsx
+// src/App.tsx
+import React from 'react';
 import { SuperAdminProvider, createAdmin } from '@react-superadmin/core';
 import { AdminLayout } from '@react-superadmin/web';
+import { usersResource } from './resources/users';
 
 const adminConfig = createAdmin({
   title: 'My Admin Panel',
-  resources: [],
+  resources: [usersResource],
 });
 
 function App() {
   return (
     <SuperAdminProvider config={adminConfig}>
-      <AdminLayout>
-        <div className="p-6">
-          <h1>Welcome to React SuperAdmin!</h1>
-        </div>
-      </AdminLayout>
+      <AdminLayout />
     </SuperAdminProvider>
+  );
+}
+
+export default App;
+```
+
+### **3. That's It! You Now Have:**
+
+✅ **Complete User Management Interface**  
+✅ **List View** with search, filters, pagination  
+✅ **Create/Edit Forms** with validation  
+✅ **Delete Operations** with confirmation  
+✅ **Responsive Admin Layout**  
+✅ **Navigation and Breadcrumbs**
+
+## 🔧 **Data Provider Setup**
+
+### **Mock Data (Development)**
+
+```tsx
+import { mockDataProvider } from '@react-superadmin/core';
+
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource],
+  dataProvider: mockDataProvider, // Uses mock data
+});
+```
+
+### **API Data (Production)**
+
+```tsx
+import { apiDataProvider } from '@react-superadmin/core';
+
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource],
+  dataProvider: apiDataProvider({
+    apiUrl: 'https://api.myapp.com',
+    headers: { Authorization: 'Bearer token' },
+  }),
+});
+```
+
+### **Custom Data Provider**
+
+```tsx
+import { DataProvider } from '@react-superadmin/core';
+
+const customDataProvider: DataProvider = {
+  getList: async (resource, params) => {
+    // Your custom logic
+    const response = await fetch(`/api/${resource}`);
+    return { data: response.data, total: response.total };
+  },
+  // ... other methods
+};
+```
+
+## 📊 **Adding More Resources**
+
+```tsx
+// src/resources/products.ts
+export const productsResource = createResource({
+  name: 'products',
+  label: 'Products',
+  fields: [
+    { name: 'id', type: 'id' },
+    { name: 'name', type: 'string', required: true },
+    { name: 'price', type: 'number', required: true },
+    { name: 'category', type: 'select', options: ['electronics', 'clothing'] },
+    { name: 'inStock', type: 'boolean' },
+  ],
+});
+
+// Add to admin config
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource, productsResource], // Multiple resources
+});
+```
+
+## 🎨 **Customizing the Admin Interface**
+
+### **Custom Layout**
+
+```tsx
+import { AdminLayout } from '@react-superadmin/web';
+
+function CustomAdminLayout() {
+  return (
+    <AdminLayout
+      sidebar={<CustomSidebar />}
+      header={<CustomHeader />}
+      footer={<CustomFooter />}
+    />
   );
 }
 ```
 
-## Project Structure
+### **Custom Fields**
 
-After installation, your project structure should look like this:
+```tsx
+import { CustomField } from '@react-superadmin/web';
 
-```
-my-admin-app/
-├── src/
-│   ├── App.tsx
-│   └── main.tsx
-├── package.json
-└── tsconfig.json
-```
-
-## Configuration Files
-
-### TypeScript Configuration
-
-Make sure your `tsconfig.json` includes React types:
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
-```
-
-### Vite Configuration (if using Vite)
-
-```ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': '/src',
+export const usersResource = createResource({
+  name: 'users',
+  fields: [
+    // ... standard fields
+    {
+      name: 'avatar',
+      type: 'custom',
+      component: CustomAvatarField,
     },
-  },
-})
+  ],
+});
 ```
 
-## Next Steps
+## 🚨 **Common Issues**
 
-- [Quick Start](./quick-start) - Build your first admin panel
-- [Architecture](./developer/architecture) - Understand the framework architecture
-- [Examples](./examples/basic-usage) - See working examples
-- [API Reference](./developer/api) - Detailed API documentation
+### **Admin Not Rendering**
+
+**Problem**: Admin interface shows blank page.
+
+**Solution**: Ensure you have both packages installed:
+
+```bash
+pnpm add @react-superadmin/core @react-superadmin/web
+```
+
+### **Resources Not Showing**
+
+**Problem**: Resources don't appear in navigation.
+
+**Solution**: Check resource configuration and ensure they're added to admin
+config.
+
+### **Styling Issues**
+
+**Problem**: Admin looks unstyled.
+
+**Solution**: Verify Tailwind CSS is properly configured and imported.
+
+## 📚 **Next Steps**
+
+1. **Build Your First Resource**: Start with a simple resource like Users
+2. **Connect Real Data**: Set up API data provider
+3. **Customize Fields**: Add custom field types for your needs
+4. **Extend Admin**: Add custom layouts, components, and logic
+
+## 🎯 **Remember**
+
+This is **NOT** a UI component library. It's a **complete admin framework** that
+gives you:
+
+- **Ready-to-use admin interfaces**
+- **Automatic CRUD operations**
+- **Data management tools**
+- **Admin layouts and navigation**
+
+Focus on building your **business logic and data models** - the admin interface
+is already built for you!
+
+---
+
+**Goal**: Get from 0 to a working admin panel in minutes, not hours.
