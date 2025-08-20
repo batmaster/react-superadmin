@@ -2,410 +2,358 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Dropdown } from "../../../components/ui/Dropdown";
 
-describe("Dropdown Component", () => {
-  const mockItems = [
-    { label: "Option 1", value: "option1", onClick: jest.fn() },
-    { label: "Option 2", value: "option2", onClick: jest.fn() },
-    { label: "Option 3", value: "option3", onClick: jest.fn() },
-  ];
+// Mock icon component
+const MockIcon = () => <span data-testid="icon">🔽</span>;
 
-  const defaultProps = {
-    trigger: <button>Click me</button>,
-    items: mockItems,
-  };
+const mockItems = [
+  { label: "Edit", value: "edit", onClick: jest.fn() },
+  { label: "Delete", value: "delete", onClick: jest.fn() },
+  { label: "View", value: "view", onClick: jest.fn() },
+];
 
+const mockItemsWithIcons = [
+  { label: "Edit", value: "edit", onClick: jest.fn(), icon: <MockIcon /> },
+  { label: "Delete", value: "delete", onClick: jest.fn(), icon: <MockIcon /> },
+  { label: "View", value: "view", onClick: jest.fn(), icon: <MockIcon /> },
+];
+
+const mockItemsWithDivider = [
+  { label: "Edit", value: "edit", onClick: jest.fn() },
+  { divider: true },
+  { label: "Delete", value: "delete", onClick: jest.fn() },
+];
+
+const mockItemsWithDisabled = [
+  { label: "Edit", value: "edit", onClick: jest.fn() },
+  { label: "Delete", value: "delete", onClick: jest.fn(), disabled: true },
+  { label: "View", value: "view", onClick: jest.fn() },
+];
+
+describe("Dropdown", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("Rendering", () => {
-    it("renders with default props", () => {
-      render(<Dropdown {...defaultProps} />);
+  it("renders trigger without opening menu", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      expect(screen.getByText("Click me")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Click me")).toBeInTheDocument();
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
 
-    it("renders trigger element correctly", () => {
-      const customTrigger = (
-        <span data-testid="custom-trigger">Custom Trigger</span>
-      );
-      render(<Dropdown {...defaultProps} trigger={customTrigger} />);
+  it("opens menu when trigger is clicked", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      expect(screen.getByTestId("custom-trigger")).toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByText("Click me"));
 
-    it("renders all dropdown items when open", () => {
-      render(<Dropdown {...defaultProps} />);
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+    expect(screen.getByText("Edit")).toBeInTheDocument();
+    expect(screen.getByText("Delete")).toBeInTheDocument();
+    expect(screen.getByText("View")).toBeInTheDocument();
+  });
 
-      // Click to open dropdown
-      fireEvent.click(screen.getByText("Click me"));
+  it("closes menu when item is clicked", async () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
-      expect(screen.getByText("Option 2")).toBeInTheDocument();
-      expect(screen.getByText("Option 3")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Click me"));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("Edit"));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     });
   });
 
-  describe("State Management", () => {
-    it("starts in closed state", () => {
-      render(<Dropdown {...defaultProps} />);
+  it("calls onClick when item is clicked", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByText("Click me"));
+    fireEvent.click(screen.getByText("Edit"));
 
-    it("opens when trigger is clicked", () => {
-      render(<Dropdown {...defaultProps} />);
+    expect(mockItems[0].onClick).toHaveBeenCalledTimes(1);
+  });
 
-      fireEvent.click(screen.getByText("Click me"));
+  it("does not close menu when closeOnSelect is false", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        closeOnSelect={false}
+      />,
+    );
 
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByText("Click me"));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
 
-    it("closes when trigger is clicked again", () => {
-      render(<Dropdown {...defaultProps} />);
+    fireEvent.click(screen.getByText("Edit"));
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
 
-      // Close dropdown
-      fireEvent.click(screen.getByText("Click me"));
-      expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
-    });
+  it("closes menu when clicking outside", async () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-    it("closes when clicking outside", async () => {
-      render(<Dropdown {...defaultProps} />);
+    fireEvent.click(screen.getByText("Click me"));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
 
-      // Click outside
-      fireEvent.mouseDown(document.body);
-
-      await waitFor(() => {
-        expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     });
   });
 
-  describe("Item Interaction", () => {
-    it("calls onClick when item is clicked", () => {
-      render(<Dropdown {...defaultProps} />);
+  it("does not close menu when closeOnClickOutside is false", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        closeOnClickOutside={false}
+      />,
+    );
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
+    fireEvent.click(screen.getByText("Click me"));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
 
-      // Click first option
-      fireEvent.click(screen.getByText("Option 1"));
+    fireEvent.mouseDown(document.body);
 
-      expect(mockItems[0].onClick).toHaveBeenCalledTimes(1);
-    });
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
 
-    it("closes dropdown after item click", () => {
-      render(<Dropdown {...defaultProps} />);
+  it("closes menu when Escape key is pressed", async () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Click me"));
+    expect(screen.getByRole("menu")).toBeInTheDocument();
 
-      // Click first option
-      fireEvent.click(screen.getByText("Option 1"));
+    fireEvent.keyDown(document, { key: "Escape" });
 
-      expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
-    });
-
-    it("handles items without onClick gracefully", () => {
-      const itemsWithoutOnClick = [
-        { label: "No Click", value: "no-click" },
-        { label: "Has Click", value: "has-click", onClick: jest.fn() },
-      ];
-
-      render(<Dropdown {...defaultProps} items={itemsWithoutOnClick} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      // Click item without onClick
-      fireEvent.click(screen.getByText("No Click"));
-
-      // Should not throw error and should close dropdown
-      expect(screen.queryByText("No Click")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     });
   });
 
-  describe("Alignment", () => {
-    it("aligns to left by default", () => {
-      render(<Dropdown {...defaultProps} />);
+  it("opens menu when ArrowDown key is pressed on trigger", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
+    const trigger = screen.getByText("Click me");
+    fireEvent.keyDown(trigger, { key: "ArrowDown" });
 
-      const dropdown = screen
-        .getByText("Option 1")
-        .closest('div[class*="absolute"]');
-      expect(dropdown).toHaveClass("left-0");
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
+
+  it("opens menu when Enter key is pressed on trigger", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
+
+    const trigger = screen.getByText("Click me");
+    fireEvent.keyDown(trigger, { key: "Enter" });
+
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
+
+  it("opens menu when Space key is pressed on trigger", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
+
+    const trigger = screen.getByText("Click me");
+    fireEvent.keyDown(trigger, { key: " " });
+
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
+
+  it("handles disabled items correctly", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItemsWithDisabled}
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Click me"));
+
+    const disabledItem = screen.getByText("Delete");
+    expect(disabledItem).toBeDisabled();
+
+    fireEvent.click(disabledItem);
+    expect(mockItemsWithDisabled[1].onClick).not.toHaveBeenCalled();
+  });
+
+  it("renders dividers correctly", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItemsWithDivider}
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Click me"));
+
+    expect(screen.getByText("Edit")).toBeInTheDocument();
+    expect(screen.getByText("Delete")).toBeInTheDocument();
+
+    // Check for divider (border element)
+    const menu = screen.getByRole("menu");
+    const dividers = menu.querySelectorAll(".border-t");
+    expect(dividers).toHaveLength(1);
+  });
+
+  it("renders icons when provided", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItemsWithIcons}
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Click me"));
+
+    const icons = screen.getAllByTestId("icon");
+    expect(icons).toHaveLength(3);
+  });
+
+  it("applies correct alignment classes", () => {
+    const { rerender } = render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        align="left"
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Click me"));
+    let menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("left-0");
+
+    // Close menu before rerendering
+    fireEvent.click(screen.getByText("Click me"));
+
+    rerender(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        align="right"
+      />,
+    );
+    fireEvent.click(screen.getByText("Click me"));
+    menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("right-0");
+
+    // Close menu before rerendering
+    fireEvent.click(screen.getByText("Click me"));
+
+    rerender(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        align="center"
+      />,
+    );
+    fireEvent.click(screen.getByText("Click me"));
+    menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("left-1/2", "transform", "-translate-x-1/2");
+  });
+
+  it("applies correct size classes", () => {
+    const { rerender } = render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        size="sm"
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Click me"));
+    let menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("w-40");
+
+    // Close menu before rerendering
+    fireEvent.click(screen.getByText("Click me"));
+
+    rerender(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        size="md"
+      />,
+    );
+    fireEvent.click(screen.getByText("Click me"));
+    menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("w-48");
+
+    // Close menu before rerendering
+    fireEvent.click(screen.getByText("Click me"));
+
+    rerender(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        size="lg"
+      />,
+    );
+    fireEvent.click(screen.getByText("Click me"));
+    menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("w-56");
+  });
+
+  it("applies custom classes correctly", () => {
+    render(
+      <Dropdown
+        trigger={<button>Click me</button>}
+        items={mockItems}
+        className="custom-dropdown"
+        triggerClassName="custom-trigger"
+        menuClassName="custom-menu"
+      />,
+    );
+
+    const dropdown = screen.getByText("Click me").closest(".relative");
+    expect(dropdown).toHaveClass("custom-dropdown");
+
+    const trigger = screen.getByRole("button", {
+      name: "Toggle dropdown menu",
     });
+    expect(trigger).toHaveClass("custom-trigger");
 
-    it("aligns to right when specified", () => {
-      render(<Dropdown {...defaultProps} align="right" />);
+    fireEvent.click(screen.getByText("Click me"));
+    const menu = screen.getByRole("menu");
+    expect(menu).toHaveClass("custom-menu");
+  });
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
+  it("has proper accessibility attributes", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      const dropdown = screen
-        .getByText("Option 1")
-        .closest('div[class*="absolute"]');
-      expect(dropdown).toHaveClass("right-0");
+    const trigger = screen.getByRole("button", {
+      name: "Toggle dropdown menu",
+    });
+    expect(trigger).toHaveAttribute("role", "button");
+    expect(trigger).toHaveAttribute("aria-haspopup", "true");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).toHaveAttribute("aria-label", "Toggle dropdown menu");
+    expect(trigger).toHaveAttribute("tabIndex", "0");
+
+    fireEvent.click(trigger);
+
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+
+    const menu = screen.getByRole("menu");
+    expect(menu).toHaveAttribute("role", "menu");
+    expect(menu).toHaveAttribute("aria-orientation", "vertical");
+
+    const menuItems = screen.getAllByRole("menuitem");
+    expect(menuItems).toHaveLength(3);
+    menuItems.forEach((item) => {
+      expect(item).toHaveAttribute("tabIndex", "-1");
     });
   });
 
-  describe("Custom Styling", () => {
-    it("applies custom className when provided", () => {
-      render(<Dropdown {...defaultProps} className="custom-dropdown" />);
+  it("handles keyboard navigation for menu items", () => {
+    render(<Dropdown trigger={<button>Click me</button>} items={mockItems} />);
 
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
+    fireEvent.click(screen.getByText("Click me"));
 
-      const dropdown = screen
-        .getByText("Option 1")
-        .closest('div[class*="absolute"]');
-      expect(dropdown).toHaveClass("custom-dropdown");
-    });
+    const editItem = screen.getByText("Edit");
+    fireEvent.keyDown(editItem, { key: "Enter" });
 
-    it("merges custom className with default classes", () => {
-      render(<Dropdown {...defaultProps} className="custom-dropdown" />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      const dropdown = screen
-        .getByText("Option 1")
-        .closest('div[class*="absolute"]');
-      expect(dropdown).toHaveClass(
-        "absolute",
-        "z-50",
-        "mt-2",
-        "w-48",
-        "rounded-md",
-        "bg-white",
-        "shadow-lg",
-        "ring-1",
-        "ring-black",
-        "ring-opacity-5",
-        "focus:outline-none",
-        "left-0",
-        "custom-dropdown",
-      );
-    });
-  });
-
-  describe("Special Item Types", () => {
-    it("renders disabled items correctly", () => {
-      const itemsWithDisabled = [
-        { label: "Enabled", value: "enabled", onClick: jest.fn() },
-        {
-          label: "Disabled",
-          value: "disabled",
-          onClick: jest.fn(),
-          disabled: true,
-        },
-      ];
-
-      render(<Dropdown {...defaultProps} items={itemsWithDisabled} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      const disabledItem = screen.getByText("Disabled");
-      expect(disabledItem).toHaveClass(
-        "disabled:opacity-50",
-        "disabled:cursor-not-allowed",
-      );
-      expect(disabledItem).toBeDisabled();
-    });
-
-    it("renders divider items correctly", () => {
-      const itemsWithDivider = [
-        { label: "Option 1", value: "option1", onClick: jest.fn() },
-        { label: "", value: "", divider: true } as any,
-        { label: "Option 2", value: "option2", onClick: jest.fn() },
-      ];
-
-      render(<Dropdown {...defaultProps} items={itemsWithDivider} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      // Check that divider is present by looking for the divider class
-      const dividers = document.querySelectorAll(
-        ".border-t.border-gray-100.my-1",
-      );
-      expect(dividers).toHaveLength(1);
-    });
-
-    it("handles mixed item types correctly", () => {
-      const mixedItems = [
-        { label: "Option 1", value: "option1", onClick: jest.fn() },
-        { label: "", value: "", divider: true } as any,
-        {
-          label: "Disabled",
-          value: "disabled",
-          onClick: jest.fn(),
-          disabled: true,
-        },
-        { label: "Option 2", value: "option2", onClick: jest.fn() },
-      ];
-
-      render(<Dropdown {...defaultProps} items={mixedItems} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
-      expect(screen.getByText("Disabled")).toBeInTheDocument();
-      expect(screen.getByText("Option 2")).toBeInTheDocument();
-
-      // Check divider is present
-      const dividers = document.querySelectorAll(
-        ".border-t.border-gray-100.my-1",
-      );
-      expect(dividers).toHaveLength(1);
-    });
-  });
-
-  describe("Accessibility", () => {
-    it("has proper button semantics for items", () => {
-      render(<Dropdown {...defaultProps} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      // Count only the actual dropdown items (excluding the trigger button)
-      const items = screen.getAllByRole("button").slice(1); // Remove trigger button
-      expect(items).toHaveLength(3);
-      expect(items[0]).toHaveTextContent("Option 1");
-    });
-
-    it("maintains focus management", () => {
-      render(<Dropdown {...defaultProps} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      const firstItem = screen.getByText("Option 1");
-      expect(firstItem).toBeInTheDocument();
-    });
-  });
-
-  describe("Event Handling", () => {
-    it("prevents event bubbling on item click", () => {
-      const onTriggerClick = jest.fn();
-      const trigger = <button onClick={onTriggerClick}>Click me</button>;
-
-      render(<Dropdown {...defaultProps} trigger={trigger} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-      expect(onTriggerClick).toHaveBeenCalledTimes(1);
-
-      // Click item
-      fireEvent.click(screen.getByText("Option 1"));
-
-      // Should not trigger the trigger click again
-      expect(onTriggerClick).toHaveBeenCalledTimes(1);
-    });
-
-    it("handles multiple rapid clicks correctly", () => {
-      render(<Dropdown {...defaultProps} />);
-
-      // Rapid clicks
-      fireEvent.click(screen.getByText("Click me"));
-      fireEvent.click(screen.getByText("Click me"));
-      fireEvent.click(screen.getByText("Click me"));
-
-      // Should be in a consistent state
-      const isOpen = screen.queryByText("Option 1") !== null;
-      expect(typeof isOpen).toBe("boolean");
-    });
-  });
-
-  describe("Edge Cases", () => {
-    it("handles empty items array", () => {
-      render(<Dropdown {...defaultProps} items={[]} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      // Should not crash and should show empty dropdown
-      const dropdown = document.querySelector('div[class*="absolute"]');
-      expect(dropdown).toBeInTheDocument();
-    });
-
-    it("handles items with null/undefined values", () => {
-      const itemsWithNullValues = [
-        { label: "Null Value", value: null, onClick: jest.fn() },
-        { label: "Undefined Value", value: undefined, onClick: jest.fn() },
-      ];
-
-      render(<Dropdown {...defaultProps} items={itemsWithNullValues} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      expect(screen.getByText("Null Value")).toBeInTheDocument();
-      expect(screen.getByText("Undefined Value")).toBeInTheDocument();
-    });
-
-    it("handles very long item labels", () => {
-      const longLabel =
-        "This is a very long dropdown item label that might cause layout issues";
-      const itemsWithLongLabel = [
-        { label: longLabel, value: "long", onClick: jest.fn() },
-      ];
-
-      render(<Dropdown {...defaultProps} items={itemsWithLongLabel} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      expect(screen.getByText(longLabel)).toBeInTheDocument();
-    });
-  });
-
-  describe("Performance", () => {
-    it("handles large number of items efficiently", () => {
-      const manyItems = Array.from({ length: 100 }, (_, i) => ({
-        label: `Option ${i + 1}`,
-        value: `option${i + 1}`,
-        onClick: jest.fn(),
-      }));
-
-      render(<Dropdown {...defaultProps} items={manyItems} />);
-
-      // Open dropdown
-      fireEvent.click(screen.getByText("Click me"));
-
-      expect(screen.getByText("Option 1")).toBeInTheDocument();
-      expect(screen.getByText("Option 100")).toBeInTheDocument();
-    });
-
-    it("cleanup event listeners on unmount", () => {
-      const removeEventListenerSpy = jest.spyOn(
-        document,
-        "removeEventListener",
-      );
-
-      const { unmount } = render(<Dropdown {...defaultProps} />);
-
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "mousedown",
-        expect.any(Function),
-      );
-
-      removeEventListenerSpy.mockRestore();
-    });
+    expect(mockItems[0].onClick).toHaveBeenCalledTimes(1);
   });
 });
