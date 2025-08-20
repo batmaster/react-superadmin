@@ -197,7 +197,7 @@ describe("Card Component", () => {
     it("handles empty children gracefully", () => {
       render(<Card></Card>);
 
-      const card = screen.getByRole("generic");
+      const card = screen.getByText("").closest("div");
       expect(card).toBeInTheDocument();
       expect(card).toHaveClass(
         "bg-white",
@@ -211,21 +211,21 @@ describe("Card Component", () => {
     it("handles null children gracefully", () => {
       render(<Card>{null}</Card>);
 
-      const card = screen.getByRole("generic");
+      const card = screen.getByText("").closest("div");
       expect(card).toBeInTheDocument();
     });
 
     it("handles undefined children gracefully", () => {
       render(<Card>{undefined}</Card>);
 
-      const card = screen.getByRole("generic");
+      const card = screen.getByText("").closest("div");
       expect(card).toBeInTheDocument();
     });
 
     it("handles boolean children gracefully", () => {
       render(<Card>{true}</Card>);
 
-      const card = screen.getByRole("generic");
+      const card = screen.getByText("true").closest("div");
       expect(card).toBeInTheDocument();
     });
   });

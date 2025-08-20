@@ -413,7 +413,7 @@ describe("Modal Component", () => {
       render(<Modal {...defaultProps} children={null} />);
 
       // Should not crash with null children
-      expect(screen.getByText("Modal content")).not.toBeInTheDocument();
+      expect(screen.queryByText("Modal content")).not.toBeInTheDocument();
     });
   });
 
