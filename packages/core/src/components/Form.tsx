@@ -24,10 +24,6 @@ export interface FormProps {
   loading?: boolean;
   /** Form validation mode */
   validateOn?: "blur" | "change" | "submit" | "never";
-  /** Whether to show validation errors */
-  showErrors?: boolean;
-  /** Additional CSS classes for form elements */
-  formClassName?: string;
   /** Additional CSS classes for form fields */
   fieldClassName?: string;
   /** Additional CSS classes for form actions */
@@ -71,8 +67,6 @@ export const Form: React.FC<FormProps> = ({
   disabled = false,
   loading = false,
   validateOn = "submit",
-  showErrors = true,
-  formClassName = "",
   fieldClassName = "",
   actionsClassName = "",
 }) => {
@@ -116,6 +110,7 @@ export const Form: React.FC<FormProps> = ({
       onSubmit={handleSubmit}
       onReset={handleReset}
       noValidate={validateOn === "never"}
+      data-testid="form"
     >
       <div className={`rs-form__fields ${fieldClassName}`.trim()}>
         {children}

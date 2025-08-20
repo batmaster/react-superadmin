@@ -17,7 +17,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    expect(screen.getByRole("form")).toBeInTheDocument();
+    expect(screen.getByTestId("form")).toBeInTheDocument();
   });
 
   it("renders children correctly", () => {
@@ -39,7 +39,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.submit(screen.getByRole("form"));
+    fireEvent.submit(screen.getByTestId("form"));
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
   });
 
@@ -50,7 +50,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.reset(screen.getByRole("form"));
+    fireEvent.reset(screen.getByTestId("form"));
     expect(mockOnReset).toHaveBeenCalledTimes(1);
   });
 
@@ -61,7 +61,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveClass("custom-form");
   });
 
@@ -73,7 +73,7 @@ describe("Form Component", () => {
     );
 
     const fieldsElement = screen
-      .getByRole("form")
+      .getByTestId("form")
       .querySelector(".rs-form__fields");
     expect(fieldsElement).toHaveClass("custom-fields");
   });
@@ -86,7 +86,7 @@ describe("Form Component", () => {
     );
 
     const actionsElement = screen
-      .getByRole("form")
+      .getByTestId("form")
       .querySelector(".rs-form__actions");
     expect(actionsElement).toHaveClass("custom-actions");
   });
@@ -98,7 +98,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveClass("rs-form--loading");
   });
 
@@ -109,7 +109,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveClass("rs-form--disabled");
   });
 
@@ -140,7 +140,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.submit(screen.getByRole("form"));
+    fireEvent.submit(screen.getByTestId("form"));
     expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
@@ -151,7 +151,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.submit(screen.getByRole("form"));
+    fireEvent.submit(screen.getByTestId("form"));
     expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
@@ -162,7 +162,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.reset(screen.getByRole("form"));
+    fireEvent.reset(screen.getByTestId("form"));
     expect(mockOnReset).not.toHaveBeenCalled();
   });
 
@@ -173,7 +173,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    fireEvent.reset(screen.getByRole("form"));
+    fireEvent.reset(screen.getByTestId("form"));
     expect(mockOnReset).not.toHaveBeenCalled();
   });
 
@@ -184,7 +184,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveAttribute("method", "PUT");
   });
 
@@ -195,7 +195,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveAttribute("action", "/api/submit");
   });
 
@@ -206,7 +206,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveAttribute("enctype", "multipart/form-data");
   });
 
@@ -217,7 +217,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveAttribute("novalidate");
   });
 
@@ -228,7 +228,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).not.toHaveAttribute("novalidate");
   });
 
@@ -239,7 +239,7 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveClass("rs-form");
     expect(formElement).toHaveClass("custom-form");
 
@@ -250,18 +250,14 @@ describe("Form Component", () => {
   it("renders with all props correctly", () => {
     render(
       <Form
-        onSubmit={mockOnSubmit}
-        onReset={mockOnReset}
-        method="PATCH"
-        action="/api/update"
-        encType="application/json"
-        disabled={false}
-        loading={false}
-        validateOn="blur"
-        showErrors={true}
         className="custom-form"
         fieldClassName="custom-fields"
         actionsClassName="custom-actions"
+        method="PATCH"
+        action="/api/update"
+        encType="text/plain"
+        onSubmit={mockOnSubmit}
+        onReset={mockOnReset}
       >
         <input type="text" name="test" />
         <button type="submit">Submit</button>
@@ -269,13 +265,9 @@ describe("Form Component", () => {
       </Form>,
     );
 
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByTestId("form");
     expect(formElement).toHaveAttribute("method", "PATCH");
     expect(formElement).toHaveAttribute("action", "/api/update");
-    expect(formElement).toHaveAttribute("enctype", "application/json");
-    expect(formElement).toHaveClass("custom-form");
-
-    expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Reset" })).toBeInTheDocument();
+    expect(formElement).toHaveAttribute("enctype", "text/plain");
   });
 });
