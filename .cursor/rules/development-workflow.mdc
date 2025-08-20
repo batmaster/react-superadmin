@@ -3,6 +3,7 @@
 ## Development Commands
 
 ### Core Development
+
 ```bash
 # Install dependencies
 pnpm install
@@ -20,6 +21,7 @@ pnpm typecheck          # Check types for both packages
 ```
 
 ### Testing Workflow
+
 ```bash
 # Run all tests
 pnpm test
@@ -40,6 +42,7 @@ pnpm test:coverage     # Generate coverage reports
 ```
 
 ### Code Quality
+
 ```bash
 # Linting
 pnpm lint              # Lint both packages
@@ -51,6 +54,7 @@ pnpm clean             # Clean both packages
 ## Development Workflow
 
 ### 1. Feature Development
+
 1. **Create feature branch** from main
 2. **Implement feature** following established patterns
 3. **Write tests** for new functionality
@@ -59,18 +63,21 @@ pnpm clean             # Clean both packages
 6. **Submit pull request** with clear description
 
 ### 2. Testing Strategy
+
 - **Write tests first** (TDD approach) for complex logic
 - **Test all user interactions** and edge cases
 - **Maintain 90%+ coverage** for critical paths
 - **Use meaningful test descriptions** that explain behavior
 
 ### 3. Code Organization
+
 - **Follow established patterns** for components, hooks, and utilities
 - **Use consistent naming conventions** (PascalCase for components, camelCase for functions)
 - **Group related functionality** in appropriate directories
 - **Export from index files** for clean imports
 
 ### 4. TypeScript Usage
+
 - **Define interfaces** for all props and data structures
 - **Use generics** for flexible, reusable components
 - **Avoid `any` types** - use proper typing
@@ -79,6 +86,7 @@ pnpm clean             # Clean both packages
 ## File Organization Standards
 
 ### Component Files
+
 ```
 src/components/
 ├── ui/                 # Reusable UI components
@@ -96,6 +104,7 @@ src/components/
 ```
 
 ### Hook Files
+
 ```
 src/hooks/
 ├── useResource.ts      # Resource management
@@ -105,6 +114,7 @@ src/hooks/
 ```
 
 ### Utility Files
+
 ```
 src/utils/
 ├── createResource.ts   # Resource creation
@@ -115,6 +125,7 @@ src/utils/
 ```
 
 ### Test Files
+
 ```
 src/__tests__/
 ├── setup.ts            # Test configuration
@@ -130,6 +141,7 @@ src/__tests__/
 ## Code Style Guidelines
 
 ### React Components
+
 - Use functional components with TypeScript
 - Implement proper prop interfaces
 - Use destructuring for props
@@ -137,6 +149,7 @@ src/__tests__/
 - Handle loading and error states
 
 ### Hooks
+
 - Use `use` prefix for custom hooks
 - Return objects with named properties
 - Use `useCallback` for functions passed as props
@@ -144,6 +157,7 @@ src/__tests__/
 - Implement proper cleanup in `useEffect`
 
 ### Utilities
+
 - Write pure functions when possible
 - Validate inputs and provide helpful errors
 - Use TypeScript for all parameters and returns
@@ -151,6 +165,7 @@ src/__tests__/
 - Handle edge cases gracefully
 
 ### Testing
+
 - Test behavior, not implementation
 - Use descriptive test names
 - Follow AAA pattern (Arrange, Act, Assert)
@@ -160,18 +175,21 @@ src/__tests__/
 ## Performance Considerations
 
 ### React Optimization
+
 - Use `React.memo` for expensive components
 - Implement proper dependency arrays in hooks
 - Avoid unnecessary re-renders
 - Use `useCallback` and `useMemo` appropriately
 
 ### Bundle Optimization
+
 - Tree-shake unused exports
 - Use dynamic imports for code splitting
 - Optimize images and assets
 - Minimize bundle size
 
 ### Testing Performance
+
 - Mock expensive operations
 - Use test isolation
 - Clean up resources after tests
@@ -180,18 +198,21 @@ src/__tests__/
 ## Documentation Standards
 
 ### Code Comments
+
 - Use JSDoc for public APIs
 - Explain complex business logic
 - Document non-obvious decisions
 - Keep comments up to date
 
 ### README Files
+
 - Clear installation instructions
 - Usage examples
 - API documentation
 - Contributing guidelines
 
 ### Testing Documentation
+
 - Test setup instructions
 - Coverage requirements
 - Testing patterns and examples
@@ -200,6 +221,7 @@ src/__tests__/
 ## Quality Assurance
 
 ### Pre-commit Checklist
+
 - [ ] All tests pass
 - [ ] TypeScript compilation successful
 - [ ] Linting passes
@@ -207,6 +229,7 @@ src/__tests__/
 - [ ] Documentation updated if needed
 
 ### Pull Request Requirements
+
 - Clear description of changes
 - Tests for new functionality
 - Updated documentation if needed
@@ -214,12 +237,93 @@ src/__tests__/
 - Performance impact considered
 
 ### Release Process
+
 - Update version numbers
 - Generate changelog
 - Run full test suite
 - Build all packages
 - Publish to npm registry
-description:
-globs:
-alwaysApply: false
+  description:
+  globs:
+  alwaysApply: false
+
 ---
+
+# Development Workflow Rules
+
+## Git Commit Strategy
+
+### Component Implementation Commits
+
+- **Commit each component separately** - One component per commit for better tracking
+- **Use detailed commit messages** with bullet points describing what was implemented
+- **Follow conventional commit format** - `feat(component): add ComponentName with features`
+- **Include implementation details** in commit body as bullet points
+
+### Commit Message Format
+
+```
+feat(component): add ComponentName with features
+
+• Implemented ComponentName component with TypeScript support
+• Added props: prop1, prop2, prop3 for customization
+• Included variants: variant1, variant2 for different styles
+• Added accessibility features: aria-labels, keyboard navigation
+• Implemented responsive design with Tailwind CSS
+• Added comprehensive unit tests with Jest and React Testing Library
+• Created detailed documentation with examples and API reference
+• Added to component library and exported from index
+```
+
+### Testing Requirements
+
+- **Unit tests required** for all components using Jest + React Testing Library
+- **Test coverage minimum** 80% for critical components
+- **Test all props and variants** to ensure functionality
+- **Test accessibility features** and keyboard navigation
+- **Test responsive behavior** on different screen sizes
+
+### Documentation Requirements
+
+- **Component API documentation** with all props and types
+- **Usage examples** with live code demos
+- **Accessibility guidelines** and best practices
+- **Integration examples** showing how to use with other components
+- **Performance considerations** and optimization tips
+
+## Component Development Process
+
+### 1. Implementation Phase
+
+- Create component with TypeScript interfaces
+- Implement core functionality and variants
+- Add accessibility features (ARIA labels, keyboard nav)
+- Style with Tailwind CSS following design system
+
+### 2. Testing Phase
+
+- Write comprehensive unit tests
+- Test all props, variants, and edge cases
+- Ensure accessibility compliance
+- Verify responsive behavior
+
+### 3. Documentation Phase
+
+- Create component documentation page
+- Add usage examples and live demos
+- Document all props and types
+- Include integration examples
+
+### 4. Integration Phase
+
+- Add to component library exports
+- Update main index files
+- Add to navigation and sidebar
+- Update component overview pages
+
+### 5. Commit Phase
+
+- Commit component implementation
+- Commit tests separately if large
+- Commit documentation separately if large
+- Use detailed commit messages with bullet points
