@@ -58,10 +58,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   readOnly = false,
   className,
   id,
+  value: controlledValue,
+  defaultValue,
   ...props
 }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState(props.value || props.defaultValue || '');
+  const [internalValue, setInternalValue] = useState(defaultValue ?? '');
+  
+  // Use controlled value if provided, otherwise use internal state
+  const value = controlledValue !== undefined ? controlledValue : internalValue;
+  
+  // Ensure value is never null or undefined for the input element
+  const inputValue = value ?? '';
   
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   const hasError = !!error;
@@ -87,7 +95,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   );
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    // Only update internal state if not controlled
+    if (controlledValue === undefined) {
+      setInternalValue(e.target.value);
+    }
     props.onChange?.(e);
   };
   
@@ -132,7 +143,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           ref={ref}
           id={inputId}
           type={type}
-          value={value}
+          value={inputValue}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -163,7 +174,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
         {/* Loading Spinner */}
         {loading && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary-500 border-t-transparent"></div>
+            <div 
+              data-testid="loading-spinner"
+              className="animate-spin rounded-full h-4 w-4 border-2 border-primary-500 border-t-transparent"
+            ></div>
           </div>
         )}
       </div>
