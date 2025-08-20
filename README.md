@@ -34,6 +34,16 @@ pnpm dev
 pnpm build
 ```
 
+## 📋 Task Management
+
+We use **GitHub Projects** to track all development tasks and progress:
+
+- **Core Components Project**: Core framework components, hooks, and utilities
+- **Web Components Project**: UI components, forms, and web interface elements
+
+All tasks, status updates, and progress tracking are managed through these
+project boards.
+
 ## 📚 Documentation
 
 Visit our [documentation](https://react-superadmin.web.app) for detailed guides
@@ -55,4 +65,5 @@ for details.
 MIT License - see [LICENSE](LICENSE) file for details.
 
 # Test comment
+
 # Updated at Wed Aug 20 14:33:21 +07 2025
