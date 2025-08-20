@@ -1,15 +1,15 @@
 import {
+  CreateParams,
   DataProvider,
   DataProviderParams,
-  GetOneParams,
+  DeleteManyParams,
+  DeleteParams,
   GetManyParams,
   GetManyReferenceParams,
-  CreateParams,
-  UpdateParams,
-  UpdateManyParams,
-  DeleteParams,
-  DeleteManyParams,
+  GetOneParams,
   ListResponse,
+  UpdateManyParams,
+  UpdateParams,
 } from '../types';
 
 // Mock data storage
