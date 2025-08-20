@@ -7,7 +7,7 @@ export type BooleanInputVariant = "checkbox" | "switch" | "toggle";
 export interface BooleanInputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    "onChange" | "type"
+    "onChange" | "type" | "size"
   > {
   /** Current boolean value */
   checked?: boolean;
@@ -100,7 +100,7 @@ export const BooleanInput = forwardRef<HTMLInputElement, BooleanInputProps>(
       required = false,
       disabled = false,
       size = "md",
-      indeterminate = false,
+
       className,
       inputClassName,
       labelClassName,
@@ -111,8 +111,6 @@ export const BooleanInput = forwardRef<HTMLInputElement, BooleanInputProps>(
     },
     ref,
   ) => {
-    const [isFocused, setIsFocused] = useState(false);
-
     const inputId = id || `boolean-${Math.random().toString(36).substr(2, 9)}`;
     const hasError = !!error;
 
@@ -175,12 +173,10 @@ export const BooleanInput = forwardRef<HTMLInputElement, BooleanInputProps>(
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(true);
       props.onFocus?.(event);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(false);
       props.onBlur?.(event);
     };
 
@@ -267,8 +263,16 @@ export const BooleanInput = forwardRef<HTMLInputElement, BooleanInputProps>(
             {...props}
           />
           <span
+            role="button"
+            tabIndex={disabled ? -1 : 0}
             className={switchClasses}
             onClick={() => !disabled && onChange(!checked)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                !disabled && onChange(!checked);
+              }
+            }}
           >
             <span
               className={cn(
@@ -318,8 +322,16 @@ export const BooleanInput = forwardRef<HTMLInputElement, BooleanInputProps>(
             {...props}
           />
           <span
+            role="button"
+            tabIndex={disabled ? -1 : 0}
             className={toggleClasses}
             onClick={() => !disabled && onChange(!checked)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                !disabled && onChange(!checked);
+              }
+            }}
           >
             {checked && (
               <Check
