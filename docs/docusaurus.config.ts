@@ -5,7 +5,7 @@ const config: Config = {
   title: 'React SuperAdmin',
   tagline: 'Powerful React framework for building CRUD admin interfaces',
   favicon: 'img/favicon.ico',
-  url: 'https://your-domain.com',
+  url: 'https://react-superadmin.web.app',
   baseUrl: '/',
   organizationName: 'react-superadmin',
   projectName: 'react-superadmin',
@@ -48,9 +48,6 @@ const config: Config = {
       headingIds: true,
     },
   },
-
-  // Enable live code examples
-  themes: ['@docusaurus/theme-live-codeblock'],
 
   // Search configuration - using local search plugin with proper settings
   plugins: [

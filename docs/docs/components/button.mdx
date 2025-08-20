@@ -2,254 +2,174 @@
 id: button
 title: Button Component
 sidebar_label: Button
-keywords: [button, component, ui, form, input, react, typescript, admin]
+description: A versatile button component with multiple variants, sizes, and states
 ---
 
 # Button Component
 
-The Button component provides various button styles and sizes for your admin interface with built-in loading states and accessibility features.
+The Button component is a versatile, accessible button that supports multiple variants, sizes, and states.
 
 ## Basic Usage
 
-```tsx live
-import React from 'react';
+```tsx
 import { Button } from '@react-superadmin/web';
 
-function ButtonExample() {
-  return (
-    <div className='space-y-4'>
-      <Button variant='primary'>Primary Button</Button>
-      <Button variant='secondary'>Secondary Button</Button>
-      <Button variant='outline'>Outline Button</Button>
-      <Button variant='ghost'>Ghost Button</Button>
-      <Button variant='danger'>Danger Button</Button>
-    </div>
-  );
-}
+<Button>Click me</Button>;
+```
+
+## Variants
+
+### Primary (Default)
+
+```tsx
+<Button variant='primary'>Primary Button</Button>
+```
+
+### Secondary
+
+```tsx
+<Button variant='secondary'>Secondary Button</Button>
+```
+
+### Success
+
+```tsx
+<Button variant='success'>Success Button</Button>
+```
+
+### Warning
+
+```tsx
+<Button variant='warning'>Warning Button</Button>
+```
+
+### Danger
+
+```tsx
+<Button variant='danger'>Danger Button</Button>
+```
+
+### Ghost
+
+```tsx
+<Button variant='ghost'>Ghost Button</Button>
 ```
 
 ## Sizes
 
-```tsx live
-import React from 'react';
-import { Button } from '@react-superadmin/web';
+### Extra Small
 
-function ButtonSizes() {
-  return (
-    <div className='space-x-2'>
-      <Button size='sm'>Small</Button>
-      <Button size='md'>Medium</Button>
-      <Button size='lg'>Large</Button>
-    </div>
-  );
-}
+```tsx
+<Button size='xs'>Extra Small</Button>
+```
+
+### Small
+
+```tsx
+<Button size='sm'>Small</Button>
+```
+
+### Medium (Default)
+
+```tsx
+<Button size='md'>Medium</Button>
+```
+
+### Large
+
+```tsx
+<Button size='lg'>Large</Button>
+```
+
+### Extra Large
+
+```tsx
+<Button size='xl'>Extra Large</Button>
+```
+
+## States
+
+### Loading State
+
+```tsx
+<Button loading>Loading...</Button>
+```
+
+### Disabled State
+
+```tsx
+<Button disabled>Disabled</Button>
 ```
 
 ## With Icons
 
-```tsx live
-import React from 'react';
-import { Button } from '@react-superadmin/web';
+### Left Icon
 
-function ButtonWithIcons() {
-  return (
-    <div className='space-x-2'>
-      <Button variant='primary' className='flex items-center'>
-        <svg
-          className='w-4 h-4 mr-2'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M12 4v16m8-8H4'
-          />
-        </svg>
-        Add New
-      </Button>
-      <Button variant='outline' className='flex items-center'>
-        <svg
-          className='w-4 h-4 mr-2'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12'
-          />
-        </svg>
-        Download
-      </Button>
-    </div>
-  );
-}
+```tsx
+<Button leftIcon='🚀'>Launch</Button>
 ```
 
-## Disabled State
+### Right Icon
 
-```tsx live
-import React from 'react';
-import { Button } from '@react-superadmin/web';
-
-function DisabledButtons() {
-  return (
-    <div className='space-x-2'>
-      <Button disabled>Disabled Primary</Button>
-      <Button variant='outline' disabled>
-        Disabled Outline
-      </Button>
-    </div>
-  );
-}
+```tsx
+<Button rightIcon='→'>Continue</Button>
 ```
 
-## Loading State
+## Full Width
 
-```tsx live
-import React, { useState } from 'react';
-import { Button } from '@react-superadmin/web';
-
-function LoadingButtons() {
-  const [loading, setLoading] = useState(false);
-
-  const handleClick = () => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
-  };
-
-  return (
-    <div className='space-x-2'>
-      <Button onClick={handleClick} loading={loading}>
-        {loading ? 'Loading...' : 'Click Me'}
-      </Button>
-    </div>
-  );
-}
+```tsx
+<Button fullWidth>Full Width Button</Button>
 ```
 
-## All Variants
+## Rounded Variant
 
-```tsx live
-import React from 'react';
-import { Button } from '@react-superadmin/web';
-
-function AllVariants() {
-  return (
-    <div className='space-y-4'>
-      <div className='space-x-2'>
-        <Button variant='primary'>Primary</Button>
-        <Button variant='secondary'>Secondary</Button>
-        <Button variant='outline'>Outline</Button>
-        <Button variant='ghost'>Ghost</Button>
-        <Button variant='danger'>Danger</Button>
-      </div>
-      <div className='space-x-2'>
-        <Button variant='primary' size='sm'>
-          Small
-        </Button>
-        <Button variant='secondary' size='sm'>
-          Small
-        </Button>
-        <Button variant='outline' size='sm'>
-          Small
-        </Button>
-        <Button variant='ghost' size='sm'>
-          Small
-        </Button>
-        <Button variant='danger' size='sm'>
-          Small
-        </Button>
-      </div>
-    </div>
-  );
-}
+```tsx
+<Button rounded>Rounded Button</Button>
 ```
 
 ## API Reference
 
-| Prop        | Type                                                           | Default     | Description                               |
-| ----------- | -------------------------------------------------------------- | ----------- | ----------------------------------------- |
-| `variant`   | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` | Button style variant                      |
-| `size`      | `'sm' \| 'md' \| 'lg'`                                         | `'md'`      | Button size                               |
-| `loading`   | `boolean`                                                      | `false`     | Shows loading spinner and disables button |
-| `disabled`  | `boolean`                                                      | `false`     | Whether button is disabled                |
-| `onClick`   | `function`                                                     | -           | Click handler                             |
-| `className` | `string`                                                       | -           | Additional CSS classes                    |
-| `children`  | `ReactNode`                                                    | -           | Button content                            |
+### Props
+
+| Prop        | Type                                                                        | Default     | Description                  |
+| ----------- | --------------------------------------------------------------------------- | ----------- | ---------------------------- |
+| `children`  | `ReactNode`                                                                 | -           | Button content               |
+| `variant`   | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'ghost'` | `'primary'` | Button style variant         |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                      | `'md'`      | Button size                  |
+| `loading`   | `boolean`                                                                   | `false`     | Shows loading spinner        |
+| `disabled`  | `boolean`                                                                   | `false`     | Disables the button          |
+| `leftIcon`  | `string`                                                                    | -           | Icon to display on the left  |
+| `rightIcon` | `string`                                                                    | -           | Icon to display on the right |
+| `fullWidth` | `boolean`                                                                   | `false`     | Makes button full width      |
+| `rounded`   | `boolean`                                                                   | `false`     | Applies rounded corners      |
+| `onClick`   | `(event: MouseEvent) => void`                                               | -           | Click handler                |
+| `type`      | `'button' \| 'submit' \| 'reset'`                                           | `'button'`  | HTML button type             |
+| `className` | `string`                                                                    | -           | Additional CSS classes       |
 
 ## CSS Classes
 
-The Button component uses Tailwind CSS classes for styling:
+The Button component uses the following CSS classes:
 
-- **Primary**: `bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500`
-- **Secondary**: `bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500`
-- **Outline**: `border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-primary-500`
-- **Ghost**: `text-gray-700 hover:bg-gray-100 focus:ring-gray-500`
-- **Danger**: `bg-red-600 text-white hover:bg-red-700 focus:ring-red-500`
+- `.btn` - Base button class
+- `.btn--{variant}` - Variant-specific classes (e.g., `.btn--primary`)
+- `.btn--{size}` - Size-specific classes (e.g., `.btn--lg`)
+- `.btn--loading` - Loading state class
+- `.btn--disabled` - Disabled state class
+- `.btn--full-width` - Full width class
+- `.btn--rounded` - Rounded variant class
 
 ## Accessibility
 
-Buttons include proper accessibility features:
-
-- Semantic HTML (`<button>` element)
-- Proper ARIA labels when needed
+- Proper ARIA labels and roles
 - Keyboard navigation support
-- Focus indicators with `focus:ring-2 focus:ring-offset-2`
-- Screen reader support
-- Loading state management
-- Disabled state handling
+- Focus management
+- Screen reader compatibility
+- Loading state announcements
 
-## Usage Examples
+## Best Practices
 
-### Form Submission
-
-```tsx
-import { Button } from '@react-superadmin/web';
-
-function SubmitForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    try {
-      await submitData();
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <Button type='submit' loading={isSubmitting} disabled={isSubmitting}>
-      {isSubmitting ? 'Saving...' : 'Save Changes'}
-    </Button>
-  );
-}
-```
-
-### Action Buttons
-
-```tsx
-import { Button } from '@react-superadmin/web';
-
-function ActionButtons() {
-  return (
-    <div className='space-x-2'>
-      <Button variant='outline' onClick={handleCancel}>
-        Cancel
-      </Button>
-      <Button variant='danger' onClick={handleDelete}>
-        Delete
-      </Button>
-      <Button variant='primary' onClick={handleSave}>
-        Save
-      </Button>
-    </div>
-  );
-}
-```
+1. **Use semantic variants**: Choose variants that match the button's purpose
+2. **Provide clear labels**: Button text should clearly indicate the action
+3. **Handle loading states**: Show loading indicators for async operations
+4. **Consider button hierarchy**: Use primary variants for main actions
+5. **Test keyboard navigation**: Ensure all buttons are accessible via keyboard
