@@ -295,6 +295,63 @@ globs: **/*.tsx
 - **Train team members** on rule usage
 - **Gather feedback** on rule effectiveness
 
+## Parallel Development Rules
+
+### **Selective Committing for Parallel Sessions**
+
+When multiple development sessions are working on different components
+simultaneously:
+
+#### **✅ DO: Commit Only Modified Files**
+
+```bash
+# Commit only the specific files you modified
+git add packages/web/src/components/ui/Button.tsx
+git add packages/web/src/__tests__/components/ui/Button.test.tsx
+git commit -m "feat(web): enhance button component"
+```
+
+#### **❌ DON'T: Commit All Files**
+
+```bash
+# Avoid this - can cause conflicts with other sessions
+git add .
+git commit -m "update everything"
+```
+
+#### **Why Selective Committing Matters**
+
+- **Prevents conflicts** between parallel development sessions
+- **Maintains clean git history** with focused commits
+- **Easier code review** when changes are isolated
+- **Reduces merge conflicts** when multiple branches are active
+- **Better tracking** of which changes belong to which feature
+
+#### **Best Practices for Parallel Development**
+
+1. **Always check git status** before committing
+2. **Use specific file paths** in git add commands
+3. **Commit related changes together** but keep commits focused
+4. **Use descriptive commit messages** that explain the specific change
+5. **Avoid committing unrelated files** even if they have changes
+
+#### **Example Workflow**
+
+```bash
+# Check what files you've modified
+git status
+
+# Add only the files you intentionally changed
+git add packages/web/src/components/ui/Button.tsx
+git add packages/web/src/__tests__/components/ui/Button.test.tsx
+
+# Verify what's staged
+git diff --cached
+
+# Commit with focused message
+git commit -m "feat(web): add icon support to Button component"
+```
+
 ## Troubleshooting Rules
 
 ### **Rule Not Applying**
