@@ -14,7 +14,7 @@ The Button component is a versatile, accessible button that supports multiple va
 ```tsx
 import { Button } from '@react-superadmin/web';
 
-<Button>Click me</Button>;
+<Button>Click me</Button>
 ```
 
 ## Variants
@@ -127,44 +127,48 @@ import { Button } from '@react-superadmin/web';
 <Button rounded>Rounded Button</Button>
 ```
 
+## Interactive Demo
+
+> **Note**: Live component preview is coming soon! For now, you can copy the code examples above and test them in your own React application.
+
 ## API Reference
 
 ### Props
 
-| Prop        | Type                                                                        | Default     | Description                  |
-| ----------- | --------------------------------------------------------------------------- | ----------- | ---------------------------- |
-| `children`  | `ReactNode`                                                                 | -           | Button content               |
-| `variant`   | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'ghost'` | `'primary'` | Button style variant         |
-| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                      | `'md'`      | Button size                  |
-| `loading`   | `boolean`                                                                   | `false`     | Shows loading spinner        |
-| `disabled`  | `boolean`                                                                   | `false`     | Disables the button          |
-| `leftIcon`  | `string`                                                                    | -           | Icon to display on the left  |
-| `rightIcon` | `string`                                                                    | -           | Icon to display on the right |
-| `fullWidth` | `boolean`                                                                   | `false`     | Makes button full width      |
-| `rounded`   | `boolean`                                                                   | `false`     | Applies rounded corners      |
-| `onClick`   | `(event: MouseEvent) => void`                                               | -           | Click handler                |
-| `type`      | `'button' \| 'submit' \| 'reset'`                                           | `'button'`  | HTML button type             |
-| `className` | `string`                                                                    | -           | Additional CSS classes       |
+| Prop      | Type                        | Default   | Description                  |
+| --------- | --------------------------- | --------- | ---------------------------- |
+| children  | ReactNode                   | -         | Button content               |
+| variant   | 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'ghost' | 'primary' | Button style variant |
+| size      | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' | 'md' | Button size |
+| loading   | boolean                     | false     | Shows loading spinner        |
+| disabled  | boolean                     | false     | Disables the button          |
+| leftIcon  | string                      | -         | Icon to display on the left  |
+| rightIcon | string                      | -         | Icon to display on the right |
+| fullWidth | boolean                     | false     | Makes button full width      |
+| rounded   | boolean                     | false     | Applies rounded corners      |
+| onClick   | (event: MouseEvent) => void | -         | Click handler                |
+| type      | 'button' \| 'submit' \| 'reset' | 'button' | HTML button type |
+| className | string                      | -         | Additional CSS classes       |
 
 ## CSS Classes
 
 The Button component uses the following CSS classes:
 
-- `.btn` - Base button class
-- `.btn--{variant}` - Variant-specific classes (e.g., `.btn--primary`)
-- `.btn--{size}` - Size-specific classes (e.g., `.btn--lg`)
-- `.btn--loading` - Loading state class
-- `.btn--disabled` - Disabled state class
-- `.btn--full-width` - Full width class
-- `.btn--rounded` - Rounded variant class
+* `.btn` - Base button class
+* `.btn--{variant}` - Variant-specific classes (e.g., `.btn--primary`)
+* `.btn--{size}` - Size-specific classes (e.g., `.btn--lg`)
+* `.btn--loading` - Loading state class
+* `.btn--disabled` - Disabled state class
+* `.btn--full-width` - Full width class
+* `.btn--rounded` - Rounded variant class
 
 ## Accessibility
 
-- Proper ARIA labels and roles
-- Keyboard navigation support
-- Focus management
-- Screen reader compatibility
-- Loading state announcements
+* Proper ARIA labels and roles
+* Keyboard navigation support
+* Focus management
+* Screen reader compatibility
+* Loading state announcements
 
 ## Best Practices
 
@@ -173,3 +177,13 @@ The Button component uses the following CSS classes:
 3. **Handle loading states**: Show loading indicators for async operations
 4. **Consider button hierarchy**: Use primary variants for main actions
 5. **Test keyboard navigation**: Ensure all buttons are accessible via keyboard
+
+## Next Steps
+
+To enable live component preview in this documentation:
+
+1. **Install the package**: `pnpm add @react-superadmin/web`
+2. **Import components**: Add component imports to your MDX files
+3. **Test interactivity**: Verify components render and function correctly
+
+The live components will be available in a future update!
