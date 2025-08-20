@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { X } from "lucide-react";
 import { cn } from "../../utils/cn";
 
 interface ModalProps {
@@ -12,7 +11,6 @@ interface ModalProps {
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;
   showCloseButton?: boolean;
-  className?: string;
   contentClassName?: string;
   headerClassName?: string;
   backdropClassName?: string;
@@ -28,56 +26,40 @@ export const Modal: React.FC<ModalProps> = ({
   closeOnBackdrop = true,
   closeOnEscape = true,
   showCloseButton = true,
-  className,
   contentClassName,
   headerClassName,
   backdropClassName,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleEscape = (e: KeyboardEvent) => {
-      if (closeOnEscape && e.key === "Escape") {
+      if (e.key === "Escape" && closeOnEscape) {
         onClose();
       }
     };
 
-    if (isOpen) {
-      // Store the currently focused element
-      previousActiveElement.current = document.activeElement as HTMLElement;
-
-      // Add event listeners
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-
-      // Focus the modal for accessibility
-      if (modalRef.current) {
-        modalRef.current.focus();
-      }
-    }
+    document.addEventListener("keydown", handleEscape);
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "unset";
-
-      // Restore focus to the previous element
-      if (previousActiveElement.current) {
-        previousActiveElement.current.focus();
-      }
     };
   }, [isOpen, onClose, closeOnEscape]);
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (closeOnBackdrop && e.target === e.currentTarget) {
-      onClose();
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.focus();
     }
-  };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const sizeClasses = {
-    xs: "max-w-xs",
+    xs: "max-w-sm",
     sm: "max-w-md",
     md: "max-w-lg",
     lg: "max-w-2xl",
@@ -86,93 +68,88 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   const variantClasses = {
-    default: "sm:my-8",
-    centered: "sm:my-8",
-    "bottom-sheet": "sm:items-end sm:my-0",
-    "side-panel": "sm:items-start sm:justify-end sm:my-0",
+    default: "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
+    centered: "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
+    "bottom-sheet": "bottom-0 left-0 right-0 transform translate-y-0",
+    "side-panel": "top-0 right-0 bottom-0 transform translate-x-0",
   };
 
-  const variantModalClasses = {
-    default: "rounded-lg",
-    centered: "rounded-lg",
-    "bottom-sheet": "rounded-t-lg sm:rounded-b-none",
-    "side-panel": "rounded-l-lg h-full",
+  const variantSizeClasses = {
+    default: sizeClasses[size],
+    centered: sizeClasses[size],
+    "bottom-sheet": "w-full max-h-[90vh]",
+    "side-panel": "w-96 h-full",
   };
-
-  const isSidePanel = variant === "side-panel";
-  const isBottomSheet = variant === "bottom-sheet";
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <div
+      className={cn(
+        "fixed inset-0 z-50 flex items-center justify-center",
+        variant === "bottom-sheet" && "items-end",
+        variant === "side-panel" && "items-stretch justify-end",
+        backdropClassName,
+      )}
+    >
       <div
         className={cn(
-          "flex min-h-full items-center justify-center p-4 text-center",
-          variantClasses[variant],
+          "fixed inset-0 bg-black bg-opacity-50 transition-opacity",
         )}
-      >
-        {/* Backdrop */}
-        <div
-          className={cn(
-            "fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity",
-            backdropClassName,
-          )}
-          onClick={handleBackdropClick}
-          aria-hidden="true"
+        aria-hidden="true"
+      />
+      {closeOnBackdrop && (
+        <button
+          className="fixed inset-0 z-10 cursor-pointer"
+          onClick={onClose}
+          aria-label="Close modal"
         />
-
-        {/* Modal */}
-        <div
-          ref={modalRef}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={title ? "modal-title" : undefined}
-          tabIndex={-1}
-          className={cn(
-            "relative transform overflow-hidden bg-white text-left shadow-xl transition-all sm:w-full",
-            sizeClasses[size],
-            variantModalClasses[variant],
-            isSidePanel && "h-full w-full sm:w-96",
-            isBottomSheet && "w-full",
-            className,
-          )}
-        >
-          {/* Header */}
-          {title && (
-            <div
-              className={cn(
-                "flex items-center justify-between border-b border-gray-200",
-                isSidePanel ? "px-4 py-3" : "px-6 py-4",
-                headerClassName,
-              )}
-            >
-              <h3
-                id="modal-title"
-                className="text-lg font-medium text-gray-900"
-              >
-                {title}
-              </h3>
-              {showCloseButton && (
-                <button
-                  onClick={onClose}
-                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
-                  aria-label="Close modal"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* Content */}
+      )}
+      <div
+        ref={modalRef}
+        className={cn(
+          "relative bg-white rounded-lg shadow-lg focus:outline-none z-20",
+          variantClasses[variant],
+          variantSizeClasses[variant],
+          contentClassName,
+        )}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? "modal-title" : undefined}
+      >
+        {title && (
           <div
             className={cn(
-              isSidePanel ? "px-4 py-3" : "px-6 py-4",
-              contentClassName,
+              "flex items-center justify-between border-b border-gray-200 px-6 py-4",
+              headerClassName,
             )}
           >
-            {children}
+            <h2 id="modal-title" className="text-lg font-medium text-gray-900">
+              {title}
+            </h2>
+            {showCloseButton && (
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                aria-label="Close modal"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
-        </div>
+        )}
+        <div className="px-6 py-4">{children}</div>
       </div>
     </div>
   );
