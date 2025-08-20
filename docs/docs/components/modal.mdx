@@ -1,0 +1,863 @@
+---
+id: modal
+title: Modal Component
+sidebar_label: Modal
+keywords:
+  [modal, component, ui, dialog, overlay, popup, react, typescript, admin]
+---
+
+# Modal Component
+
+The Modal component provides a flexible overlay dialog system with multiple variants, sizes, and accessibility features for creating interactive dialogs, confirmations, and content overlays.
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function BasicModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title='Basic Modal'
+      >
+        <p>This is a basic modal with a title and content.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Modal Sizes
+
+### Extra Small (xs)
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function ExtraSmallModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Extra Small Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='xs'
+        title='Extra Small Modal'
+      >
+        <p>This modal has extra small width (max-w-xs).</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Small (sm)
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function SmallModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Small Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='sm'
+        title='Small Modal'
+      >
+        <p>This modal has small width (max-w-md).</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Medium (md) - Default
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function MediumModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Medium Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='md'
+        title='Medium Modal'
+      >
+        <p>
+          This modal has medium width (max-w-lg) - this is the default size.
+        </p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Large (lg)
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function LargeModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Large Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='lg'
+        title='Large Modal'
+      >
+        <p>This modal has large width (max-w-2xl) for more content.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Extra Large (xl)
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function ExtraLargeModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Extra Large Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='xl'
+        title='Extra Large Modal'
+      >
+        <p>
+          This modal has extra large width (max-w-4xl) for extensive content.
+        </p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Full Width
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function FullWidthModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Full Width Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='full'
+        title='Full Width Modal'
+      >
+        <p>This modal takes the full width of the screen with margins.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Modal Variants
+
+### Default Variant
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function DefaultVariantModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Default Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        variant='default'
+        title='Default Variant'
+      >
+        <p>This modal uses the default variant with centered positioning.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Centered Variant
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function CenteredVariantModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Centered Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        variant='centered'
+        title='Centered Variant'
+      >
+        <p>
+          This modal uses the centered variant for perfect center alignment.
+        </p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Bottom Sheet Variant
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function BottomSheetModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Bottom Sheet</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        variant='bottom-sheet'
+        title='Bottom Sheet'
+      >
+        <p>This modal slides up from the bottom like a mobile bottom sheet.</p>
+        <div className='mt-4 space-y-2'>
+          <Button onClick={() => setIsOpen(false)} className='w-full'>
+            Option 1
+          </Button>
+          <Button
+            variant='outline'
+            onClick={() => setIsOpen(false)}
+            className='w-full'
+          >
+            Option 2
+          </Button>
+          <Button
+            variant='outline'
+            onClick={() => setIsOpen(false)}
+            className='w-full'
+          >
+            Cancel
+          </Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Side Panel Variant
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function SidePanelModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Side Panel</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        variant='side-panel'
+        title='Side Panel'
+      >
+        <div className='space-y-4'>
+          <p>This modal slides in from the right side like a drawer.</p>
+          <div className='space-y-2'>
+            <Button onClick={() => setIsOpen(false)} className='w-full'>
+              Save
+            </Button>
+            <Button
+              variant='outline'
+              onClick={() => setIsOpen(false)}
+              className='w-full'
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Interaction Controls
+
+### Close on Backdrop
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function BackdropControlModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>
+        Open Modal (No Backdrop Close)
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        closeOnBackdrop={false}
+        title='Backdrop Control'
+      >
+        <p>This modal cannot be closed by clicking the backdrop.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Close on Escape
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function EscapeControlModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>
+        Open Modal (No Escape Close)
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        closeOnEscape={false}
+        title='Escape Control'
+      >
+        <p>This modal cannot be closed by pressing the Escape key.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Hide Close Button
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function NoCloseButtonModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>
+        Open Modal (No Close Button)
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        showCloseButton={false}
+        title='No Close Button'
+      >
+        <p>This modal has no close button in the header.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Custom Styling
+
+### Custom Class Names
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function CustomStyledModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Custom Styled Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title='Custom Styled Modal'
+        className='border-4 border-blue-500'
+        headerClassName='bg-blue-50 text-blue-900'
+        contentClassName='bg-blue-50'
+        backdropClassName='bg-blue-900 bg-opacity-50'
+      >
+        <p>This modal has custom styling applied to different sections.</p>
+        <div className='mt-4'>
+          <Button onClick={() => setIsOpen(false)}>Close</Button>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Complex Content Examples
+
+### Form Modal
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button, TextInput, SelectInput } from '@react-superadmin/web';
+
+function FormModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', role: '' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    setIsOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Form Modal</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='lg'
+        title='User Registration'
+      >
+        <form onSubmit={handleSubmit} className='space-y-4'>
+          <div>
+            <label className='block text-sm font-medium mb-1'>Name</label>
+            <TextInput
+              value={formData.name}
+              onChange={e => setFormData({ ...formData, name: e.target.value })}
+              placeholder='Enter your name'
+              required
+            />
+          </div>
+
+          <div>
+            <label className='block text-sm font-medium mb-1'>Email</label>
+            <TextInput
+              type='email'
+              value={formData.email}
+              onChange={e =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              placeholder='Enter your email'
+              required
+            />
+          </div>
+
+          <div>
+            <label className='block text-sm font-medium mb-1'>Role</label>
+            <SelectInput
+              value={formData.role}
+              onChange={e => setFormData({ ...formData, role: e.target.value })}
+              options={[
+                { value: '', label: 'Select a role' },
+                { value: 'admin', label: 'Administrator' },
+                { value: 'user', label: 'User' },
+                { value: 'guest', label: 'Guest' },
+              ]}
+              required
+            />
+          </div>
+
+          <div className='flex justify-end space-x-2 pt-4'>
+            <Button
+              variant='outline'
+              onClick={() => setIsOpen(false)}
+              type='button'
+            >
+              Cancel
+            </Button>
+            <Button type='submit'>Register</Button>
+          </div>
+        </form>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Confirmation Modal
+
+```tsx live
+import React, { useState } from 'react';
+import { Modal, Button } from '@react-superadmin/web';
+
+function ConfirmationModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [action, setAction] = useState('');
+
+  const handleConfirm = () => {
+    console.log(`Confirmed action: ${action}`);
+    setIsOpen(false);
+    setAction('');
+  };
+
+  const openDeleteModal = () => {
+    setAction('delete');
+    setIsOpen(true);
+  };
+
+  const openUpdateModal = () => {
+    setAction('update');
+    setIsOpen(true);
+  };
+
+  return (
+    <>
+      <div className='space-x-2'>
+        <Button variant='danger' onClick={openDeleteModal}>
+          Delete Item
+        </Button>
+        <Button variant='warning' onClick={openUpdateModal}>
+          Update Item
+        </Button>
+      </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='sm'
+        title='Confirm Action'
+      >
+        <div className='text-center'>
+          <p className='mb-4'>
+            Are you sure you want to {action} this item? This action cannot be
+            undone.
+          </p>
+          <div className='flex justify-center space-x-2'>
+            <Button variant='outline' onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant={action === 'delete' ? 'danger' : 'warning'}
+              onClick={handleConfirm}
+            >
+              Confirm {action}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+## API Reference
+
+### Modal Props
+
+| Prop                | Type                                                        | Default     | Description                                    |
+| ------------------- | ----------------------------------------------------------- | ----------- | ---------------------------------------------- |
+| `isOpen`            | `boolean`                                                   | -           | Controls whether the modal is visible          |
+| `onClose`           | `() => void`                                                | -           | Function called when the modal should close    |
+| `title`             | `string`                                                    | -           | Optional title displayed in the modal header   |
+| `children`          | `ReactNode`                                                 | -           | Content to display in the modal                |
+| `size`              | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'`            | `'md'`      | Modal size variant                             |
+| `variant`           | `'default' \| 'centered' \| 'bottom-sheet' \| 'side-panel'` | `'default'` | Modal positioning variant                      |
+| `closeOnBackdrop`   | `boolean`                                                   | `true`      | Whether clicking the backdrop closes the modal |
+| `closeOnEscape`     | `boolean`                                                   | `true`      | Whether pressing Escape closes the modal       |
+| `showCloseButton`   | `boolean`                                                   | `true`      | Whether to show the close button in the header |
+| `className`         | `string`                                                    | -           | Additional CSS classes for the modal           |
+| `contentClassName`  | `string`                                                    | -           | Additional CSS classes for the modal content   |
+| `headerClassName`   | `string`                                                    | -           | Additional CSS classes for the modal header    |
+| `backdropClassName` | `string`                                                    | -           | Additional CSS classes for the modal backdrop  |
+
+## CSS Classes
+
+The Modal component uses Tailwind CSS classes for styling:
+
+### Size Classes
+
+- **xs**: `max-w-xs`
+- **sm**: `max-w-md`
+- **md**: `max-w-lg`
+- **lg**: `max-w-2xl`
+- **xl**: `max-w-4xl`
+- **full**: `max-w-full mx-4`
+
+### Variant Classes
+
+- **Default/Centered**: `sm:my-8`
+- **Bottom Sheet**: `sm:items-end sm:my-0`
+- **Side Panel**: `sm:items-start sm:justify-end sm:my-0`
+
+### Modal Classes
+
+- **Default**: `rounded-lg`
+- **Bottom Sheet**: `rounded-t-lg sm:rounded-b-none`
+- **Side Panel**: `rounded-l-lg h-full w-full sm:w-96`
+
+## Accessibility
+
+The Modal component includes comprehensive accessibility features:
+
+- **ARIA Attributes**: `role="dialog"`, `aria-modal="true"`, `aria-labelledby`
+- **Focus Management**: Automatically focuses the modal when opened
+- **Focus Restoration**: Returns focus to the previous element when closed
+- **Keyboard Support**: Escape key to close (configurable)
+- **Screen Reader Support**: Proper semantic structure and labels
+
+## Best Practices
+
+### Content Organization
+
+- Use appropriate sizes for your content
+- Keep titles concise and descriptive
+- Provide clear action buttons
+
+### Variant Selection
+
+- **Default/Centered**: General purpose dialogs
+- **Bottom Sheet**: Mobile-friendly action sheets
+- **Side Panel**: Settings panels or detailed forms
+
+### Interaction Design
+
+- Consider whether users should be able to close via backdrop
+- Use `closeOnEscape={false}` for critical confirmations
+- Provide clear close actions for modals without close buttons
+
+### Performance
+
+- Modals automatically manage body overflow
+- Event listeners are properly cleaned up
+- Focus management is optimized
+
+## Examples
+
+### Dashboard Widget Modal
+
+```tsx
+import {
+  Modal,
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+} from '@react-superadmin/web';
+
+function DashboardWidgetModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>View Details</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size='lg'
+        title='Widget Details'
+      >
+        <div className='space-y-4'>
+          <Card>
+            <CardHeader>
+              <h3 className='text-lg font-semibold'>Performance Metrics</h3>
+            </CardHeader>
+            <CardContent>
+              <div className='grid grid-cols-3 gap-4'>
+                <div className='text-center'>
+                  <div className='text-2xl font-bold text-green-600'>98%</div>
+                  <div className='text-sm text-gray-600'>Uptime</div>
+                </div>
+                <div className='text-center'>
+                  <div className='text-2xl font-bold text-blue-600'>1.2s</div>
+                  <div className='text-sm text-gray-600'>Response Time</div>
+                </div>
+                <div className='text-center'>
+                  <div className='text-2xl font-bold text-purple-600'>2.5k</div>
+                  <div className='text-sm text-gray-600'>Requests/min</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className='flex justify-end'>
+            <Button onClick={() => setIsOpen(false)}>Close</Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```
+
+### Multi-Step Modal
+
+```tsx
+import { Modal, Button } from '@react-superadmin/web';
+
+function MultiStepModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState(1);
+
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
+  const closeModal = () => {
+    setIsOpen(false);
+    setStep(1);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Start Multi-Step Process</Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        size='lg'
+        title={`Step ${step} of 3`}
+      >
+        <div className='space-y-4'>
+          {step === 1 && (
+            <div>
+              <h3 className='text-lg font-semibold mb-2'>
+                Step 1: Information
+              </h3>
+              <p>This is the first step of the process.</p>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div>
+              <h3 className='text-lg font-semibold mb-2'>
+                Step 2: Confirmation
+              </h3>
+              <p>This is the second step of the process.</p>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div>
+              <h3 className='text-lg font-semibold mb-2'>Step 3: Completion</h3>
+              <p>This is the final step of the process.</p>
+            </div>
+          )}
+
+          <div className='flex justify-between pt-4'>
+            {step > 1 && (
+              <Button variant='outline' onClick={prevStep}>
+                Previous
+              </Button>
+            )}
+
+            <div className='flex space-x-2'>
+              {step < 3 ? (
+                <Button onClick={nextStep}>Next</Button>
+              ) : (
+                <Button onClick={closeModal}>Complete</Button>
+              )}
+
+              <Button variant='outline' onClick={closeModal}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}
+```

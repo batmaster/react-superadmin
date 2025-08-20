@@ -31,6 +31,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'components/button',
         'components/card',
+        'components/modal',
         'components/input',
         'components/forms',
         'components/admin',
