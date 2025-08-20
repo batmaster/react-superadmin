@@ -299,7 +299,7 @@ export const mockDataProvider: DataProvider = {
     return { data: newItem };
   },
 
-  update: async <T = any>(
+  update: async <T = any>( // eslint-disable-line @typescript-eslint/no-unused-vars
     resource: string,
     params: UpdateParams<T>
   ): Promise<{ data: T }> => {
@@ -343,7 +343,7 @@ export const mockDataProvider: DataProvider = {
     return { data: updatedIds };
   },
 
-  delete: async <T = any>(
+  delete: async <T = any>( // eslint-disable-line @typescript-eslint/no-unused-vars
     resource: string,
     params: DeleteParams
   ): Promise<{ data: T }> => {

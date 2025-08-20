@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useSuperAdmin } from '../contexts/SuperAdminContext';
-import { Resource, CrudOperations, ListParams, ListResponse } from '../types';
+import { CrudOperations, ListParams } from '../types';
 
 export interface UseResourceOptions<T = any> {
   resourceName: string;
@@ -31,8 +31,8 @@ export interface UseResourceReturn<T = any> {
 export function useResource<T = any>(
   options: UseResourceOptions<T>
 ): UseResourceReturn<T> {
-  const { resourceName, operations } = options;
-  const { resources } = useSuperAdmin();
+  const { resourceName, operations } = options; // eslint-disable-line @typescript-eslint/no-unused-vars
+  const { resources } = useSuperAdmin(); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,6 @@ export function useResource<T = any>(
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [filters, setFilters] = useState<Record<string, any>>({});
 
-  const resource = resources[resourceName];
   const totalPages = Math.ceil(total / limit);
 
   const handleError = useCallback((error: any) => {
