@@ -1,10 +1,10 @@
-import React from 'react';
-import { FieldConfig } from '@react-superadmin/core';
-import { TextInput } from './TextInput';
-import { SelectInput } from './SelectInput';
-import { TextareaInput } from './TextareaInput';
-import { CheckboxInput } from './CheckboxInput';
-import { DateInput } from './DateInput';
+import React from "react";
+import { FieldConfig } from "@react-superadmin/core";
+import { TextInput } from "./TextInput";
+import { SelectInput } from "./SelectInput";
+import { TextareaInput } from "./TextareaInput";
+import { CheckboxInput } from "./CheckboxInput";
+import { DateInput } from "./DateInput";
 
 interface FormFieldProps {
   field: FieldConfig;
@@ -23,13 +23,13 @@ export const FormField: React.FC<FormFieldProps> = ({
 }) => {
   const renderField = () => {
     switch (field.type) {
-      case 'text':
-      case 'email':
-      case 'password':
+      case "text":
+      case "email":
+      case "password":
         return (
           <TextInput
             type={field.type}
-            value={value || ''}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder={field.placeholder}
             disabled={disabled}
@@ -37,11 +37,11 @@ export const FormField: React.FC<FormFieldProps> = ({
           />
         );
 
-      case 'number':
+      case "number":
         return (
           <TextInput
             type="number"
-            value={value || ''}
+            value={value || ""}
             onChange={(e) => onChange(Number(e.target.value))}
             placeholder={field.placeholder}
             disabled={disabled}
@@ -49,10 +49,10 @@ export const FormField: React.FC<FormFieldProps> = ({
           />
         );
 
-      case 'select':
+      case "select":
         return (
           <SelectInput
-            value={value || ''}
+            value={value || ""}
             onChange={onChange}
             options={field.options || []}
             placeholder={field.placeholder}
@@ -61,10 +61,10 @@ export const FormField: React.FC<FormFieldProps> = ({
           />
         );
 
-      case 'textarea':
+      case "textarea":
         return (
           <TextareaInput
-            value={value || ''}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder={field.placeholder}
             disabled={disabled}
@@ -72,20 +72,20 @@ export const FormField: React.FC<FormFieldProps> = ({
           />
         );
 
-      case 'boolean':
+      case "boolean":
         return (
           <CheckboxInput
             checked={Boolean(value)}
-            onChange={(e) => onChange(e.target.checked)}
+            onChange={(checked) => onChange(checked)}
             disabled={disabled}
             error={error}
           />
         );
 
-      case 'date':
+      case "date":
         return (
           <DateInput
-            value={value || ''}
+            value={value || ""}
             onChange={onChange}
             disabled={disabled}
             error={error}
@@ -96,7 +96,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         return (
           <TextInput
             type="text"
-            value={value || ''}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder={field.placeholder}
             disabled={disabled}
@@ -112,16 +112,14 @@ export const FormField: React.FC<FormFieldProps> = ({
         {field.label}
         {field.required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      
+
       {renderField()}
-      
+
       {field.helpText && (
         <p className="text-sm text-gray-500">{field.helpText}</p>
       )}
-      
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
+
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 };
