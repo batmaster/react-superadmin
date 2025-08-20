@@ -60,6 +60,7 @@ export const Alert: React.FC<AlertProps> = ({
           <div className="ml-auto pl-3">
             <button
               onClick={onClose}
+              aria-label="Close alert"
               className={cn(
                 "inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2",
                 type === "success" && "focus:ring-green-500",
