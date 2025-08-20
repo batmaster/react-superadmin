@@ -2,18 +2,22 @@
 id: cursor-rules
 title: Cursor Rules
 sidebar_label: Cursor Rules
-description: AI-powered coding guidelines and development patterns for React SuperAdmin
+description:
+  AI-powered coding guidelines and development patterns for React SuperAdmin
 ---
 
 # Cursor Rules for React SuperAdmin
 
 ## Overview
 
-This document explains the Cursor Rules system used in the React SuperAdmin project and why Cursor editor is recommended for development.
+This document explains the Cursor Rules system used in the React SuperAdmin
+project and why Cursor editor is recommended for development.
 
 ## What are Cursor Rules?
 
-Cursor Rules are AI-powered coding guidelines that help developers understand the project structure, coding patterns, and best practices. They act as intelligent documentation that:
+Cursor Rules are AI-powered coding guidelines that help developers understand
+the project structure, coding patterns, and best practices. They act as
+intelligent documentation that:
 
 - **Automatically applies** to relevant files based on file patterns
 - **Provides context** about the codebase structure and conventions
@@ -54,7 +58,8 @@ Cursor Rules are AI-powered coding guidelines that help developers understand th
 
 ### **2. Testing Patterns Rule** (`.cursor/rules/testing-patterns.mdc`)
 
-- **Applied to test files** - Covers `.test.ts`, `.test.tsx`, `.spec.ts`, `.spec.tsx`
+- **Applied to test files** - Covers `.test.ts`, `.test.tsx`, `.spec.ts`,
+  `.spec.tsx`
 - **Component testing patterns** with React Testing Library
 - **Hook testing patterns** with renderHook
 - **Testing principles** and best practices
@@ -93,6 +98,15 @@ Cursor Rules are AI-powered coding guidelines that help developers understand th
 - **Documentation consistency** - Ensures docs stay in sync with code changes
 - **JSDoc standards** - Guidelines for inline documentation
 - **Documentation workflow** - When and how to update documentation
+
+### **8. Project Management Rule** (`.cursor/rules/project-management.mdc`)
+
+- **Applied to project management tasks** - Covers task creation and project
+  workflow
+- **GitHub CLI usage** - Use `gh` commands for project management
+- **Task creation workflow** - Create GitHub issues then add to projects
+- **Project structure understanding** - Know available projects and their
+  purposes
 
 ## Rule Application Order
 
@@ -335,20 +349,26 @@ globs: **/*.tsx
 
 ## Auto-Generating Rules
 
-Cursor provides powerful tools to automatically generate rules from your conversations and development decisions:
+Cursor provides powerful tools to automatically generate rules from your
+conversations and development decisions:
 
 ### **Using the Generate Command**
 
-- **`/Generate Cursor Rules`** - Use this command in any Cursor chat to automatically create rules
-- **AI-powered generation** - Cursor analyzes your conversation and suggests appropriate rules
-- **Automatic scoping** - Rules are automatically configured with proper file patterns and descriptions
+- **`/Generate Cursor Rules`** - Use this command in any Cursor chat to
+  automatically create rules
+- **AI-powered generation** - Cursor analyzes your conversation and suggests
+  appropriate rules
+- **Automatic scoping** - Rules are automatically configured with proper file
+  patterns and descriptions
 
 ### **When to Auto-Generate Rules**
 
-- **After making architectural decisions** - Convert decisions into reusable rules
+- **After making architectural decisions** - Convert decisions into reusable
+  rules
 - **When establishing patterns** - Turn repeated guidance into automatic rules
 - **During code reviews** - Generate rules from feedback and suggestions
-- **When onboarding team members** - Create rules from common questions and patterns
+- **When onboarding team members** - Create rules from common questions and
+  patterns
 
 ### **Example Auto-Generation**
 
@@ -363,11 +383,13 @@ Cursor provides powerful tools to automatically generate rules from your convers
 # - Description for manual application
 ```
 
-For detailed information on auto-generating rules, see the [Official Cursor Documentation on Generating Rules](https://docs.cursor.com/en/context/rules#generating-rules).
+For detailed information on auto-generating rules, see the
+[Official Cursor Documentation on Generating Rules](https://docs.cursor.com/en/context/rules#generating-rules).
 
 ## Quick Reference
 
-For a quick overview of all rules, see our [Cursor Rules Quick Reference](./cursor-rules-quick-reference.md).
+For a quick overview of all rules, see our
+[Cursor Rules Quick Reference](./cursor-rules-quick-reference.md).
 
 ## Resources
 
@@ -379,4 +401,5 @@ For a quick overview of all rules, see our [Cursor Rules Quick Reference](./curs
 
 ---
 
-_Cursor Rules are a powerful way to maintain code quality and consistency. Use them wisely to enhance your development experience!_
+_Cursor Rules are a powerful way to maintain code quality and consistency. Use
+them wisely to enhance your development experience!_
