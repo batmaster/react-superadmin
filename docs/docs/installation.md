@@ -2,316 +2,270 @@
 id: installation
 title: Installation & Setup
 sidebar_label: Installation
-description: Learn how to install and set up React SuperAdmin components in your project
+description:
+  Learn how to install and set up React SuperAdmin CRUD admin framework in your project
 ---
 
 # Installation & Setup
 
-React SuperAdmin provides a comprehensive set of React components that require Tailwind CSS for proper styling. Follow this guide to get started quickly.
+React SuperAdmin is a **CRUD admin framework** that helps you build complete admin webapps quickly. It provides pre-built admin interfaces, data management, and CRUD operations - not just UI components.
+
+## 🎯 **What You Get**
+
+- **Complete Admin Interface**: Pre-built layouts, navigation, and dashboards
+- **CRUD Operations**: Create, Read, Update, Delete for any data model
+- **Data Providers**: Connect to APIs, databases, or use mock data
+- **Resource Management**: Define Users, Products, Orders, etc. with automatic CRUD
+- **Admin Components**: Tables, forms, filters, pagination - all pre-built
 
 ## 📦 **Installation**
 
-### **1. Install the Package**
+### **1. Install the Framework**
 
 ```bash
-# Using npm
-npm install @react-superadmin/web
+# Core framework (required)
+pnpm add @react-superadmin/core
 
-# Using yarn
-yarn add @react-superadmin/web
-
-# Using pnpm (recommended)
+# Web admin interface (required)
 pnpm add @react-superadmin/web
-```
 
-### **2. Install Tailwind CSS Dependencies**
-
-**Required**: React SuperAdmin components use Tailwind CSS for styling. You must install Tailwind CSS in your project.
-
-```bash
 # Using npm
-npm install -D tailwindcss postcss autoprefixer
+npm install @react-superadmin/core @react-superadmin/web
 
 # Using yarn
-yarn add -D tailwindcss postcss autoprefixer
-
-# Using pnpm
-pnpm add -D tailwindcss postcss autoprefixer
+yarn add @react-superadmin/core @react-superadmin/web
 ```
 
-### **3. Initialize Tailwind CSS**
+### **2. Install Tailwind CSS (Required)**
+
+The admin interface uses Tailwind CSS for styling:
 
 ```bash
+pnpm add -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 ```
 
-This creates:
-- `tailwind.config.js` - Tailwind configuration
-- `postcss.config.js` - PostCSS configuration
-
-### **4. Configure Tailwind CSS**
-
-Update your `tailwind.config.js`:
+### **3. Configure Tailwind CSS**
 
 ```js
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./index.html",
-    // Include React SuperAdmin components
     "./node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}",
   ],
-  theme: {
-    extend: {},
-  },
+  theme: { extend: {} },
   plugins: [],
 }
 ```
 
-### **5. Import Tailwind CSS**
-
-Add Tailwind directives to your main CSS file (usually `src/index.css` or `src/App.css`):
+### **4. Import Tailwind CSS**
 
 ```css
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Your custom CSS here */
 ```
 
-## 🚀 **Quick Start**
+## 🚀 **Quick Start - Build Your First Admin**
 
-### **Basic Setup**
+### **1. Define Your Resources**
 
 ```tsx
+// src/resources/users.ts
+import { createResource } from '@react-superadmin/core';
+
+export const usersResource = createResource({
+  name: 'users',
+  label: 'Users',
+  fields: [
+    { name: 'id', type: 'id', label: 'ID' },
+    { name: 'name', type: 'string', label: 'Name', required: true },
+    { name: 'email', type: 'email', label: 'Email', required: true },
+    { name: 'role', type: 'select', label: 'Role', options: ['admin', 'user'] },
+    { name: 'createdAt', type: 'datetime', label: 'Created At' },
+  ],
+});
+```
+
+### **2. Create Your Admin App**
+
+```tsx
+// src/App.tsx
 import React from 'react';
-import { Button, Card } from '@react-superadmin/web';
+import { SuperAdminProvider, createAdmin } from '@react-superadmin/core';
+import { AdminLayout } from '@react-superadmin/web';
+import { usersResource } from './resources/users';
+
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource],
+});
 
 function App() {
   return (
-    <div className="p-6">
-      <Card>
-        <h1 className="text-2xl font-bold mb-4">Welcome!</h1>
-        <Button variant="primary">Get Started</Button>
-      </Card>
-    </div>
+    <SuperAdminProvider config={adminConfig}>
+      <AdminLayout />
+    </SuperAdminProvider>
   );
 }
 
 export default App;
 ```
 
-### **Available Components**
+### **3. That's It! You Now Have:**
+
+✅ **Complete User Management Interface**  
+✅ **List View** with search, filters, pagination  
+✅ **Create/Edit Forms** with validation  
+✅ **Delete Operations** with confirmation  
+✅ **Responsive Admin Layout**  
+✅ **Navigation and Breadcrumbs**  
+
+## 🔧 **Data Provider Setup**
+
+### **Mock Data (Development)**
 
 ```tsx
-import {
-  Button,
-  Card,
-  Modal,
-  Alert,
-  Badge,
-  Dropdown,
-  // Form components
-  TextInput,
-  SelectInput,
-  CheckboxInput,
-  DateInput,
-  TextareaInput,
-} from '@react-superadmin/web';
+import { mockDataProvider } from '@react-superadmin/core';
+
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource],
+  dataProvider: mockDataProvider, // Uses mock data
+});
 ```
 
-## ⚙️ **Configuration Options**
+### **API Data (Production)**
 
-### **Tailwind CSS Customization**
+```tsx
+import { apiDataProvider } from '@react-superadmin/core';
 
-You can extend Tailwind's default theme in your `tailwind.config.js`:
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource],
+  dataProvider: apiDataProvider({
+    apiUrl: 'https://api.myapp.com',
+    headers: { Authorization: 'Bearer token' },
+  }),
+});
+```
 
-```js
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}",
+### **Custom Data Provider**
+
+```tsx
+import { DataProvider } from '@react-superadmin/core';
+
+const customDataProvider: DataProvider = {
+  getList: async (resource, params) => {
+    // Your custom logic
+    const response = await fetch(`/api/${resource}`);
+    return { data: response.data, total: response.total };
+  },
+  // ... other methods
+};
+```
+
+## 📊 **Adding More Resources**
+
+```tsx
+// src/resources/products.ts
+export const productsResource = createResource({
+  name: 'products',
+  label: 'Products',
+  fields: [
+    { name: 'id', type: 'id' },
+    { name: 'name', type: 'string', required: true },
+    { name: 'price', type: 'number', required: true },
+    { name: 'category', type: 'select', options: ['electronics', 'clothing'] },
+    { name: 'inStock', type: 'boolean' },
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#eff6ff',
-          500: '#3b82f6',
-          900: '#1e3a8a',
-        },
-      },
-      spacing: {
-        '18': '4.5rem',
-      },
+});
+
+// Add to admin config
+const adminConfig = createAdmin({
+  title: 'My Admin Panel',
+  resources: [usersResource, productsResource], // Multiple resources
+});
+```
+
+## 🎨 **Customizing the Admin Interface**
+
+### **Custom Layout**
+
+```tsx
+import { AdminLayout } from '@react-superadmin/web';
+
+function CustomAdminLayout() {
+  return (
+    <AdminLayout
+      sidebar={<CustomSidebar />}
+      header={<CustomHeader />}
+      footer={<CustomFooter />}
+    />
+  );
+}
+```
+
+### **Custom Fields**
+
+```tsx
+import { CustomField } from '@react-superadmin/web';
+
+export const usersResource = createResource({
+  name: 'users',
+  fields: [
+    // ... standard fields
+    { 
+      name: 'avatar', 
+      type: 'custom',
+      component: CustomAvatarField,
     },
-  },
-  plugins: [],
-}
-```
-
-### **PostCSS Configuration**
-
-The `postcss.config.js` file is automatically created and configured:
-
-```js
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-```
-
-## 🔧 **Framework Integration**
-
-### **Create React App**
-
-```bash
-# Install dependencies
-npm install @react-superadmin/web
-npm install -D tailwindcss postcss autoprefixer
-
-# Initialize Tailwind
-npx tailwindcss init -p
-
-# Update src/index.css
-```
-
-### **Vite**
-
-```bash
-# Install dependencies
-pnpm add @react-superadmin/web
-pnpm add -D tailwindcss postcss autoprefixer
-
-# Initialize Tailwind
-npx tailwindcss init -p
-
-# Update src/index.css
-```
-
-### **Next.js**
-
-```bash
-# Install dependencies
-npm install @react-superadmin/web
-npm install -D tailwindcss postcss autoprefixer
-
-# Initialize Tailwind
-npx tailwindcss init -p
-
-# Update tailwind.config.js to include app directory
-```
-
-### **Gatsby**
-
-```bash
-# Install dependencies
-npm install @react-superadmin/web
-npm install -D tailwindcss postcss autoprefixer gatsby-plugin-postcss
-
-# Initialize Tailwind
-npx tailwindcss init -p
-
-# Configure gatsby-config.js
-```
-
-## 🎨 **Styling System**
-
-### **Component Variants**
-
-All components support multiple variants that use Tailwind CSS classes:
-
-```tsx
-// Button variants
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="success">Success</Button>
-<Button variant="warning">Warning</Button>
-<Button variant="danger">Danger</Button>
-<Button variant="ghost">Ghost</Button>
-
-// Card variants
-<Card variant="default">Default</Card>
-<Card variant="outlined">Outlined</Card>
-<Card variant="elevated">Elevated</Card>
-<Card variant="flat">Flat</Card>
-```
-
-### **Responsive Design**
-
-Components automatically use Tailwind's responsive prefixes:
-
-```tsx
-// Responsive sizing
-<Button size="sm" className="md:size-md lg:size-lg">
-  Responsive Button
-</Button>
-
-// Responsive spacing
-<Card className="p-4 md:p-6 lg:p-8">
-  Responsive Card
-</Card>
+  ],
+});
 ```
 
 ## 🚨 **Common Issues**
 
-### **Components Not Styled**
+### **Admin Not Rendering**
 
-**Problem**: Components render but look unstyled or broken.
+**Problem**: Admin interface shows blank page.
 
-**Solution**: Ensure Tailwind CSS is properly imported and configured.
-
-```css
-/* Check your CSS file has these imports */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+**Solution**: Ensure you have both packages installed:
+```bash
+pnpm add @react-superadmin/core @react-superadmin/web
 ```
 
-### **Build Errors**
+### **Resources Not Showing**
 
-**Problem**: Build fails with Tailwind-related errors.
+**Problem**: Resources don't appear in navigation.
 
-**Solution**: Verify your `tailwind.config.js` includes the right content paths.
+**Solution**: Check resource configuration and ensure they're added to admin config.
 
-```js
-content: [
-  "./src/**/*.{js,jsx,ts,tsx}",
-  "./node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}",
-],
-```
+### **Styling Issues**
 
-### **TypeScript Errors**
+**Problem**: Admin looks unstyled.
 
-**Problem**: TypeScript can't find component types.
-
-**Solution**: Ensure you're importing from the correct path.
-
-```tsx
-// ✅ Correct
-import { Button } from '@react-superadmin/web';
-
-// ❌ Incorrect
-import { Button } from '@react-superadmin/web/components/ui/Button';
-```
+**Solution**: Verify Tailwind CSS is properly configured and imported.
 
 ## 📚 **Next Steps**
 
-1. **Explore Components**: Check out the [Components](/components/button) section
-2. **View Examples**: See [Examples](/examples/basic-usage) for usage patterns
-3. **Customize**: Learn about [Theming](/developer/theming) and customization
-4. **Build**: Start building your admin interface with our components!
+1. **Build Your First Resource**: Start with a simple resource like Users
+2. **Connect Real Data**: Set up API data provider
+3. **Customize Fields**: Add custom field types for your needs
+4. **Extend Admin**: Add custom layouts, components, and logic
 
-## 🆘 **Need Help?**
+## 🎯 **Remember**
 
-- **Documentation**: Browse our comprehensive guides
-- **GitHub Issues**: Report bugs or request features
-- **Discussions**: Join the community for help and ideas
+This is **NOT** a UI component library. It's a **complete admin framework** that gives you:
+- **Ready-to-use admin interfaces**
+- **Automatic CRUD operations**
+- **Data management tools**
+- **Admin layouts and navigation**
+
+Focus on building your **business logic and data models** - the admin interface is already built for you!
 
 ---
 
-**Note**: React SuperAdmin components are designed to work seamlessly with Tailwind CSS. If you prefer a different styling solution, you may need to override the default styles or create custom variants.
+**Goal**: Get from 0 to a working admin panel in minutes, not hours.
