@@ -45,11 +45,10 @@ const sidebars: SidebarsConfig = {
       label: 'Developer',
       items: [
         'developer/architecture',
-        'developer/setup',
-        'developer/api',
         'developer/components',
         'developer/hooks',
         'developer/utilities',
+        'developer/environments',
         'developer/testing',
         'developer/cursor-rules',
         'developer/cursor-rules-quick-reference',

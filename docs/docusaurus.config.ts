@@ -1,11 +1,12 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
+import { getEnvironmentUrl } from './config/environments';
 
 const config: Config = {
   title: 'React SuperAdmin',
   tagline: 'Powerful React framework for building CRUD admin interfaces',
   favicon: 'img/favicon.ico',
-  url: 'https://react-superadmin.web.app',
+  url: getEnvironmentUrl(),
   baseUrl: '/',
   organizationName: 'react-superadmin',
   projectName: 'react-superadmin',

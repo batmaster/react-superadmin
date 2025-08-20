@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Documentation
 
 on:
   push:
@@ -7,90 +7,125 @@ on:
       - 'docs/**'
       - 'packages/**'
       - '.github/workflows/deploy.yml'
+  pull_request: # Added pull_request trigger
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'packages/**'
+      - '.github/workflows/deploy.yml'
+
+env: # Added environment variables
+  NODE_VERSION: '20.x'
+  PNPM_VERSION: '8'
 
 jobs:
-  deploy-docs:
+  deploy-docs-production: # Renamed from deploy-docs
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    environment: # Updated environment definition
+      name: production
+      url: https://react-superadmin.web.app
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Use Node.js 20.x
+      - name: Use Node.js ${{ env.NODE_VERSION }} # Used env var
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-
+          node-version: ${{ env.NODE_VERSION }}
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
-
+          version: ${{ env.PNPM_VERSION }}
       - name: Setup pnpm cache
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
-
       - name: Install dependencies
         run: pnpm install
-
       - name: Build documentation
         run: |
           cd docs
           pnpm install
           pnpm build
-
-      # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./docs/build
-      #     cname: react-superadmin.dev
-
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Production Site # Updated step name
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin-eb776 # Check this manually
-          channelId: live
+          projectId: react-superadmin # Single project for all environments
+          siteId: react-superadmin # Deploy to main production site
 
-  # publish-packages:
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   needs: deploy-docs
+  deploy-docs-preview: # Added new job for preview deployments
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    environment:
+      name: preview
+      url: https://react-superadmin-preview.web.app # Updated to preview site URL
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build documentation
+        run: |
+          cd docs
+          pnpm install
+          pnpm build
+      - name: Deploy to Firebase Preview Site # Updated step name
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: react-superadmin # Single project for all environments
+          siteId: react-superadmin-preview # Deploy to preview site
 
-  #     - name: Use Node.js 20.x
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20.x'
-  #         registry-url: 'https://npm.pkg.github.com'
+  deploy-docs-staging: # Added new job for staging deployments
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.labels.*.name == 'staging'
+    environment:
+      name: staging
+      url: https://react-superadmin-staging.web.app # Staging site URL
 
-  #     - name: Install pnpm
-  #       uses: pnpm/action-setup@v2
-  #       with:
-  #         version: 8
-
-  #     - name: Setup pnpm cache
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20.x'
-  #         cache: 'pnpm'
-
-  #     - name: Install dependencies
-  #       run: pnpm install
-
-  #     - name: Build packages
-  #       run: pnpm build
-
-  #     - name: Publish to GitHub Packages
-  #       run: |
-  #         echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-  #         echo "@batmaster:registry=https://npm.pkg.github.com" >> ~/.npmrc
-  #         pnpm publish --access public --no-git-checks
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build documentation
+        run: |
+          cd docs
+          pnpm install
+          pnpm build
+      - name: Deploy to Firebase Staging Site
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: react-superadmin # Single project for all environments
+          siteId: react-superadmin-staging # Deploy to staging site
