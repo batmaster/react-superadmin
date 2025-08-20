@@ -32,7 +32,6 @@ const sidebars: SidebarsConfig = {
         'components/button',
         'components/card',
         'components/modal',
-        'components/alert',
         'components/badge',
         'components/form',
         'components/forms',

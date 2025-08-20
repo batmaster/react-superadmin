@@ -21,6 +21,12 @@ describe("Badge", () => {
       "text-blue-800",
     );
 
+    rerender(<Badge variant="secondary">Secondary</Badge>);
+    expect(screen.getByText("Secondary")).toHaveClass(
+      "bg-gray-100",
+      "text-gray-800",
+    );
+
     rerender(<Badge variant="success">Success</Badge>);
     expect(screen.getByText("Success")).toHaveClass(
       "bg-green-100",
@@ -41,6 +47,12 @@ describe("Badge", () => {
 
     rerender(<Badge variant="info">Info</Badge>);
     expect(screen.getByText("Info")).toHaveClass("bg-sky-100", "text-sky-800");
+
+    rerender(<Badge variant="outline">Outline</Badge>);
+    expect(screen.getByText("Outline")).toHaveClass(
+      "bg-white",
+      "text-gray-700",
+    );
   });
 
   it("renders with different sizes", () => {
@@ -87,10 +99,12 @@ describe("Badge", () => {
     const variants = [
       "default",
       "primary",
+      "secondary",
       "success",
       "warning",
       "danger",
       "info",
+      "outline",
     ] as const;
     const sizes = ["sm", "md", "lg"] as const;
 

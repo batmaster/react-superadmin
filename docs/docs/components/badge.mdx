@@ -23,10 +23,12 @@ The Badge component supports different visual variants to convey different meani
 <div className='flex flex-wrap gap-2'>
   <Badge variant='default'>Default</Badge>
   <Badge variant='primary'>Primary</Badge>
+  <Badge variant='secondary'>Secondary</Badge>
   <Badge variant='success'>Success</Badge>
   <Badge variant='warning'>Warning</Badge>
   <Badge variant='danger'>Danger</Badge>
   <Badge variant='info'>Info</Badge>
+  <Badge variant='outline'>Outline</Badge>
 </div>
 ```
 
@@ -120,22 +122,24 @@ Apply custom classes and HTML attributes:
 
 ### Props
 
-| Prop        | Type                                                                     | Default     | Description                    |
-| ----------- | ------------------------------------------------------------------------ | ----------- | ------------------------------ |
-| `variant`   | `'default' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'default'` | Visual style variant           |
-| `size`      | `'sm' \| 'md' \| 'lg'`                                                   | `'md'`      | Size of the badge              |
-| `rounded`   | `boolean`                                                                | `false`     | Whether to use rounded corners |
-| `className` | `string`                                                                 | -           | Additional CSS classes         |
-| `children`  | `ReactNode`                                                              | -           | Badge content                  |
+| Prop        | Type                                                                                                 | Default     | Description                    |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ----------- | ------------------------------ |
+| `variant`   | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'outline'` | `'default'` | Visual style variant           |
+| `size`      | `'sm' \| 'md' \| 'lg'`                                                                               | `'md'`      | Size of the badge              |
+| `rounded`   | `boolean`                                                                                            | `false`     | Whether to use rounded corners |
+| `className` | `string`                                                                                             | -           | Additional CSS classes         |
+| `children`  | `ReactNode`                                                                                          | -           | Badge content                  |
 
 ### Variants
 
 - **default**: Neutral gray styling for general use
 - **primary**: Blue styling for primary actions
+- **secondary**: Gray styling for secondary actions
 - **success**: Green styling for success states
 - **warning**: Yellow styling for warning states
 - **danger**: Red styling for error or danger states
 - **info**: Sky blue styling for informational content
+- **outline**: White background with gray border for subtle emphasis
 
 ### Sizes
 
