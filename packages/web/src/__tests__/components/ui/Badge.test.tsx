@@ -1,5 +1,5 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import { Badge } from "../../../components/ui/Badge";
 
 describe("Badge Component", () => {
@@ -278,9 +278,9 @@ describe("Badge Component", () => {
 
   describe("Edge Cases", () => {
     it("handles empty children gracefully", () => {
-      render(<Badge></Badge>);
+      const { container } = render(<Badge></Badge>);
 
-      const badge = screen.getByText("");
+      const badge = container.querySelector('[class*="inline-flex"]');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass(
         "inline-flex",
@@ -291,16 +291,16 @@ describe("Badge Component", () => {
     });
 
     it("handles null children gracefully", () => {
-      render(<Badge>{null}</Badge>);
+      const { container } = render(<Badge>{null}</Badge>);
 
-      const badge = screen.getByText("");
+      const badge = container.querySelector('[class*="inline-flex"]');
       expect(badge).toBeInTheDocument();
     });
 
     it("handles undefined children gracefully", () => {
-      render(<Badge>{undefined}</Badge>);
+      const { container } = render(<Badge>{undefined}</Badge>);
 
-      const badge = screen.getByText("");
+      const badge = container.querySelector('[class*="inline-flex"]');
       expect(badge).toBeInTheDocument();
     });
   });

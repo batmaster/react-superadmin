@@ -9,7 +9,7 @@ module.exports = {
     "**/?(*.)+(spec|test).tsx",
   ],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\\\.(ts|tsx)$": "ts-jest",
   },
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
@@ -21,5 +21,9 @@ module.exports = {
   coverageReporters: ["text", "lcov", "html"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testTimeout: 10000,
+  testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
   transformIgnorePatterns: ["node_modules/(?!(@react-superadmin/core)/)"],
+  moduleNameMapper: {
+    "^@react-superadmin/core$": "<rootDir>/../core/src",
+  },
 };
