@@ -28,6 +28,62 @@ This project uses three GitHub Projects for task organization:
   2. `[Component Name] - Testing` (Status: Todo)
   3. `[Component Name] - Documentation` (Status: Todo)
 
+#### Auto-Create Missing Sibling Tasks:
+
+**When you see a single overview/implementation task (like #38, #39, #40), automatically create the missing sibling tasks:**
+
+1. **If only "Code Implementation" exists:**
+   - Create `[Component Name] - Testing` task
+   - Create `[Component Name] - Documentation` task
+   - Link all three tasks together
+
+2. **If only "Testing" exists:**
+   - Create `[Component Name] - Code Implementation` task
+   - Create `[Component Name] - Documentation` task
+   - Link all three tasks together
+
+3. **If only "Documentation" exists:**
+   - Create `[Component Name] - Code Implementation` task
+   - Create `[Component Name] - Testing` task
+   - Link all three tasks together
+
+**IMPORTANT: Create project tasks directly - NO need to create GitHub issues first!**
+
+**Task Creation Commands:**
+
+```bash
+# Create Testing task directly in project
+gh project item-create 2 --owner batmaster \
+  --title "[Component Name] - Testing" \
+  --body "Testing task for [Component Name]. Links to implementation task #[NUMBER]"
+
+# Create Documentation task directly in project
+gh project item-create 2 --owner batmaster \
+  --title "[Component Name] - Documentation" \
+  --body "Documentation task for [Component Name]. Links to implementation task #[NUMBER]"
+```
+
+**Skip GitHub issue creation - go straight to project task creation!**
+**Always ensure all 3 phases exist before starting implementation!**
+
+#### Task Linking and Cross-Referencing:
+
+**Every set of 3 sibling tasks must be linked together:**
+
+1. **In each task body, include links to the other 2 tasks:**
+
+   ```
+   Testing task for Button component.
+
+   Related tasks:
+   - Code Implementation: #[NUMBER]
+   - Documentation: #[NUMBER]
+   ```
+
+2. **Use GitHub issue references (#NUMBER) for automatic linking**
+3. **Update task descriptions when moving between phases**
+4. **Mark main overview task as "Done" only after all 3 phases complete**
+
 - **Workflow for each component:**
   1. Start with Code Implementation issue (move to "In Progress")
   2. Complete code implementation and commit
