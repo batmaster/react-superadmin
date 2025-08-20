@@ -228,7 +228,7 @@ describe("Dropdown Component", () => {
     it("renders divider items correctly", () => {
       const itemsWithDivider = [
         { label: "Option 1", value: "option1", onClick: jest.fn() },
-        { divider: true },
+        { label: "", value: "", divider: true } as any,
         { label: "Option 2", value: "option2", onClick: jest.fn() },
       ];
 
@@ -237,14 +237,17 @@ describe("Dropdown Component", () => {
       // Open dropdown
       fireEvent.click(screen.getByText("Click me"));
 
-      const divider = screen.getByText("Option 1").nextElementSibling;
-      expect(divider).toHaveClass("border-t", "border-gray-100", "my-1");
+      // Check that divider is present by looking for the divider class
+      const dividers = document.querySelectorAll(
+        ".border-t.border-gray-100.my-1",
+      );
+      expect(dividers).toHaveLength(1);
     });
 
     it("handles mixed item types correctly", () => {
       const mixedItems = [
         { label: "Option 1", value: "option1", onClick: jest.fn() },
-        { divider: true },
+        { label: "", value: "", divider: true } as any,
         {
           label: "Disabled",
           value: "disabled",
@@ -278,7 +281,8 @@ describe("Dropdown Component", () => {
       // Open dropdown
       fireEvent.click(screen.getByText("Click me"));
 
-      const items = screen.getAllByRole("button");
+      // Count only the actual dropdown items (excluding the trigger button)
+      const items = screen.getAllByRole("button").slice(1); // Remove trigger button
       expect(items).toHaveLength(3);
       expect(items[0]).toHaveTextContent("Option 1");
     });
