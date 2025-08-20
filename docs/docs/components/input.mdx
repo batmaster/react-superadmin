@@ -1,0 +1,361 @@
+# Input Component
+
+A comprehensive input component that supports multiple input types, validation, accessibility features, and follows React Admin patterns.
+
+## Overview
+
+The Input component is a versatile form input that provides a consistent API across different input types while maintaining accessibility and supporting both controlled and uncontrolled usage patterns.
+
+## Features
+
+- **Multiple Input Types**: Support for text, email, password, number, tel, url, search, date, time, and datetime-local
+- **Validation States**: Built-in error handling and validation display
+- **Accessibility**: Full ARIA support with screen reader compatibility
+- **Responsive Design**: Works seamlessly across different screen sizes
+- **Icon Support**: Left and right icon placement
+- **Loading States**: Visual feedback for async operations
+- **Character Count**: Optional character counting and limits
+- **Size Variants**: Small, medium, and large size options
+
+## Basic Usage
+
+```tsx
+import { Input } from '@react-superadmin/web';
+
+function BasicExample() {
+  return (
+    <Input
+      label='Email Address'
+      type='email'
+      placeholder='Enter your email'
+      required
+    />
+  );
+}
+```
+
+## Input Types
+
+### Text Input
+
+```tsx
+<Input label='Full Name' type='text' placeholder='Enter your full name' />
+```
+
+### Email Input
+
+```tsx
+<Input label='Email' type='email' placeholder='user@example.com' />
+```
+
+### Password Input
+
+```tsx
+<Input label='Password' type='password' placeholder='Enter password' />
+```
+
+### Number Input
+
+```tsx
+<Input label='Age' type='number' placeholder='25' min={0} max={120} />
+```
+
+## Validation and Error Handling
+
+### Basic Validation
+
+```tsx
+const [email, setEmail] = useState('');
+const [error, setError] = useState('');
+
+const validateEmail = (value: string) => {
+  if (!value.includes('@')) {
+    setError('Please enter a valid email address');
+  } else {
+    setError('');
+  }
+};
+
+return (
+  <Input
+    label='Email'
+    type='email'
+    value={email}
+    onChange={e => {
+      setEmail(e.target.value);
+      validateEmail(e.target.value);
+    }}
+    error={error}
+    required
+  />
+);
+```
+
+### Helper Text
+
+```tsx
+<Input
+  label='Username'
+  type='text'
+  helperText='Username must be 3-20 characters long'
+/>
+```
+
+## Size Variants
+
+```tsx
+{
+  /* Small */
+}
+<Input label='Small' size='sm' />;
+
+{
+  /* Medium (default) */
+}
+<Input label='Medium' size='md' />;
+
+{
+  /* Large */
+}
+<Input label='Large' size='lg' />;
+```
+
+## Icons and Visual Elements
+
+### Left Icon
+
+```tsx
+import { Search } from 'lucide-react';
+
+<Input
+  label='Search'
+  type='search'
+  leftIcon={<Search size={16} />}
+  placeholder='Search...'
+/>;
+```
+
+### Right Icon
+
+```tsx
+import { Check } from 'lucide-react';
+
+<Input
+  label='Verified Email'
+  type='email'
+  rightIcon={<Check size={16} />}
+  value='user@example.com'
+  readOnly
+/>;
+```
+
+### Loading State
+
+```tsx
+<Input
+  label='Submitting'
+  type='text'
+  loading={true}
+  value='Processing...'
+  disabled
+/>
+```
+
+## Character Count
+
+```tsx
+<Input
+  label='Bio'
+  type='text'
+  showCharacterCount
+  maxLength={160}
+  helperText='Brief description about yourself'
+/>
+```
+
+## Accessibility Features
+
+The Input component includes comprehensive accessibility support:
+
+- **ARIA Labels**: Automatic association between labels and inputs
+- **ARIA Descriptions**: Links helper text, errors, and character counts
+- **ARIA Invalid**: Indicates validation state to screen readers
+- **Keyboard Navigation**: Full keyboard support
+- **Focus Management**: Proper focus indication and management
+
+### Accessibility Example
+
+```tsx
+<Input
+  label='Phone Number'
+  type='tel'
+  required
+  aria-describedby='phone-help'
+  helperText='Include country code (e.g., +1 555-123-4567)'
+/>
+```
+
+## Form Integration
+
+### Controlled Component
+
+```tsx
+const [formData, setFormData] = useState({
+  firstName: '',
+  lastName: '',
+  email: '',
+});
+
+return (
+  <form>
+    <Input
+      label='First Name'
+      value={formData.firstName}
+      onChange={e =>
+        setFormData({
+          ...formData,
+          firstName: e.target.value,
+        })
+      }
+    />
+
+    <Input
+      label='Last Name'
+      value={formData.lastName}
+      onChange={e =>
+        setFormData({
+          ...formData,
+          lastName: e.target.value,
+        })
+      }
+    />
+
+    <Input
+      label='Email'
+      type='email'
+      value={formData.email}
+      onChange={e =>
+        setFormData({
+          ...formData,
+          email: e.target.value,
+        })
+      }
+    />
+  </form>
+);
+```
+
+### Uncontrolled Component
+
+```tsx
+const formRef = useRef<HTMLFormElement>(null);
+
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  const formData = new FormData(formRef.current!);
+  console.log(Object.fromEntries(formData));
+};
+
+return (
+  <form ref={formRef} onSubmit={handleSubmit}>
+    <Input label='Name' name='name' defaultValue='' required />
+
+    <button type='submit'>Submit</button>
+  </form>
+);
+```
+
+## Props API
+
+| Prop                 | Type                   | Default  | Description                                                                                   |
+| -------------------- | ---------------------- | -------- | --------------------------------------------------------------------------------------------- |
+| `type`               | `string`               | `'text'` | HTML input type (text, email, password, number, tel, url, search, date, time, datetime-local) |
+| `label`              | `string`               | -        | Label text for the input                                                                      |
+| `helperText`         | `string`               | -        | Helper text displayed below the input                                                         |
+| `error`              | `string`               | -        | Error message to display                                                                      |
+| `required`           | `boolean`              | `false`  | Whether the field is required                                                                 |
+| `size`               | `'sm' \| 'md' \| 'lg'` | `'md'`   | Input size variant                                                                            |
+| `loading`            | `boolean`              | `false`  | Whether to show loading state                                                                 |
+| `leftIcon`           | `ReactNode`            | -        | Icon to display on the left side                                                              |
+| `rightIcon`          | `ReactNode`            | -        | Icon to display on the right side                                                             |
+| `showCharacterCount` | `boolean`              | `false`  | Whether to show character count                                                               |
+| `maxLength`          | `number`               | -        | Maximum character limit                                                                       |
+| `disabled`           | `boolean`              | `false`  | Whether the input is disabled                                                                 |
+| `readOnly`           | `boolean`              | `false`  | Whether the input is read-only                                                                |
+| `value`              | `string`               | -        | Controlled value                                                                              |
+| `defaultValue`       | `string`               | -        | Default value for uncontrolled usage                                                          |
+| `onChange`           | `function`             | -        | Change event handler                                                                          |
+| `onFocus`            | `function`             | -        | Focus event handler                                                                           |
+| `onBlur`             | `function`             | -        | Blur event handler                                                                            |
+
+The component also accepts all standard HTML input attributes.
+
+## Styling and Theming
+
+The Input component uses Tailwind CSS classes and follows the design system patterns:
+
+### Default Colors
+
+- Border: `border-gray-300`
+- Focus: `focus:ring-primary-500 focus:border-primary-500`
+- Error: `border-red-300 focus:ring-red-500 focus:border-red-500`
+- Disabled: `bg-gray-50 text-gray-500`
+
+### Custom Styling
+
+```tsx
+<Input label='Custom Styled' className='border-blue-300 focus:ring-blue-500' />
+```
+
+## Best Practices
+
+### Do's ✅
+
+- Always provide descriptive labels
+- Use appropriate input types for better UX
+- Include helper text for complex requirements
+- Validate input and show clear error messages
+- Use character limits for appropriate fields
+- Implement proper form submission handling
+
+### Don'ts ❌
+
+- Don't use placeholder text as the primary label
+- Don't forget to handle both controlled and uncontrolled states
+- Don't ignore accessibility requirements
+- Don't use input types inappropriately (e.g., text for emails)
+- Don't provide unclear or technical error messages
+
+## Related Components
+
+- TextareaInput - For multi-line text input
+- SelectInput - For dropdown selections
+- DateInput - For date selection
+- FormField - For complex form layouts
+
+## Browser Support
+
+The Input component is compatible with all modern browsers that support:
+
+- HTML5 input types
+- CSS3 features
+- ES6+ JavaScript features
+
+## Troubleshooting
+
+### Common Issues
+
+**Input value not updating**
+
+- Ensure you're using either controlled or uncontrolled pattern consistently
+- For controlled inputs, make sure `onChange` updates the `value` prop
+
+**Accessibility warnings**
+
+- Ensure all inputs have associated labels
+- Use `aria-describedby` for complex descriptions
+
+**Styling issues**
+
+- Check Tailwind CSS is properly configured
+- Verify custom classes don't conflict with component styles

@@ -30,6 +30,8 @@ const sidebars: SidebarsConfig = {
       label: 'Components',
       items: [
         'components/button',
+        'components/card',
+        'components/input',
         'components/forms',
         'components/admin',
         'components/layout',

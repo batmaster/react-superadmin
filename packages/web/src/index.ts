@@ -15,6 +15,7 @@ export { Pagination } from './components/crud/Pagination';
 // Form components
 export { FormField } from './components/forms/FormField';
 export { TextInput } from './components/forms/TextInput';
+export { Input } from './components/forms/Input';
 export { SelectInput } from './components/forms/SelectInput';
 export { TextareaInput } from './components/forms/TextareaInput';
 export { CheckboxInput } from './components/forms/CheckboxInput';
@@ -22,7 +23,7 @@ export { DateInput } from './components/forms/DateInput';
 
 // UI components
 export { Button } from './components/ui/Button';
-export { Card } from './components/ui/Card';
+export { Card, CardHeader, CardContent, CardFooter } from './components/ui/Card';
 export { Badge } from './components/ui/Badge';
 export { Modal } from './components/ui/Modal';
 export { Dropdown } from './components/ui/Dropdown';
