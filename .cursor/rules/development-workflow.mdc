@@ -251,7 +251,14 @@ src/__tests__/
 
 # Development Workflow Rules
 
-## Git Commit Strategy
+## Git Branch Strategy
+
+### Feature Branch Workflow
+
+- **Always create feature branches** from main for new development
+- **Use descriptive branch names** - `feature/component-name` or `feature/component-tests`
+- **Never commit directly to main** - all changes go through feature branches
+- **Create pull requests** to merge feature branches back to main
 
 ### Component Implementation Commits
 
@@ -265,14 +272,14 @@ src/__tests__/
 ```
 feat(component): add ComponentName with features
 
-• Implemented ComponentName component with TypeScript support
-• Added props: prop1, prop2, prop3 for customization
-• Included variants: variant1, variant2 for different styles
-• Added accessibility features: aria-labels, keyboard navigation
-• Implemented responsive design with Tailwind CSS
-• Added comprehensive unit tests with Jest and React Testing Library
-• Created detailed documentation with examples and API reference
-• Added to component library and exported from index
+- Implemented ComponentName component with TypeScript support
+- Added props: prop1, prop2, prop3 for customization
+- Included variants: variant1, variant2 for different styles
+- Added accessibility features: aria-labels, keyboard navigation
+- Implemented responsive design with Tailwind CSS
+- Added comprehensive unit tests with Jest and React Testing Library
+- Created detailed documentation with examples and API reference
+- Added to component library and exported from index
 ```
 
 ### Testing Requirements
