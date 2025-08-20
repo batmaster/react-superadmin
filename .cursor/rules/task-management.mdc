@@ -1,0 +1,191 @@
+# Task Management Rules
+
+## GitHub Projects Structure
+
+This project uses three GitHub Projects for task organization:
+
+- **🏗️ Core Components Project**: Core framework components, data providers, authentication, and advanced features
+- **🎨 Web Components Project**: UI components, forms, CRUD pages, and user interface elements
+- **⚙️ Repository Infrastructure Project**: CI/CD, testing, documentation, deployment, and maintenance
+
+## Task Creation Guidelines
+
+### 1. Create Tasks Directly in Projects (Recommended)
+
+### 0. Task Breakdown Strategy (IMPORTANT)
+
+**Every component implementation follows a strict 3-phase approach:**
+
+1. **Code Implementation** → 2. **Testing** → 3. **Documentation**
+
+**Each phase is a separate GitHub issue that must be completed sequentially.**
+**Never mix phases in the same commit or work session.**
+
+#### Task Separation and Workflow:
+
+- **Each component task should be broken down into 3 separate GitHub issues:**
+  1. `[Component Name] - Code Implementation` (Status: Todo)
+  2. `[Component Name] - Testing` (Status: Todo)
+  3. `[Component Name] - Documentation` (Status: Todo)
+
+- **Workflow for each component:**
+  1. Start with Code Implementation issue (move to "In Progress")
+  2. Complete code implementation and commit
+  3. Move Code Implementation to "Done"
+  4. Start Testing issue (move to "In Progress")
+  5. Complete testing and commit
+  6. Move Testing to "Done"
+  7. Start Documentation issue (move to "In Progress")
+  8. Complete documentation and commit
+  9. Move Documentation to "Done"
+  10. Mark main component task as "Done" only after all 3 phases complete
+
+- **Never mix phases in the same commit or work session**
+- **Each phase must be completed and committed separately**
+- **Testing cannot begin until code implementation is complete**
+- **Documentation cannot begin until testing is complete**
+
+#### Phase Requirements:
+
+**PHASE 1: Component Code Implementation** (Priority: High)
+
+- Create/update the component file in appropriate package directory
+- Implement TypeScript interfaces and types with strict typing
+- Add proper error handling, loading states, and accessibility features
+- Follow React best practices (hooks, functional components, proper dependencies)
+- Export component from package index file
+- Ensure component compiles without TypeScript errors
+
+**PHASE 2: Testing** (Priority: High)
+
+- Create comprehensive test file with Jest + React Testing Library
+- Test component rendering, user interactions, and edge cases
+- Test both success and error scenarios
+- Test accessibility features (ARIA labels, keyboard navigation)
+- Test responsive behavior and different prop combinations
+- Ensure minimum 80% test coverage
+- All tests must pass before moving to next phase
+
+**PHASE 3: Documentation** (Priority: Medium)
+
+- Add JSDoc comments for all public APIs and props
+- Create/update MDX documentation in docs folder
+- Include usage examples with code snippets
+- Add props table with types, descriptions, and default values
+- Add to appropriate sidebar navigation
+- Include screenshots or demos for UI components
+- Link to related components and features
+
+- **USE** `gh project item-create` to create tasks directly in projects
+- **DO NOT** create GitHub issues first unless specifically needed
+- This approach is more efficient and keeps tasks organized
+- Example: `gh project item-create 1 --owner batmaster --title "Task Title" --body "Task description"`
+
+### 2. Create Granular, Individual Tasks
+
+- **DO NOT** create comprehensive tasks that include everything
+- **DO** create individual cards for each specific component/feature
+- Each task should be completable independently
+- Example: Instead of "Implement all UI components", create separate cards for "Button", "Card", "Modal", etc.
+
+### 3. Task Granularity Examples
+
+- **Data Hooks**: Create separate cards for `useGetList`, `useCreate`, `useUpdate`, `useDelete`
+- **UI Components**: Create separate cards for `Button`, `Card`, `Modal`, `Dropdown`, `Alert`, `Badge`
+- **Form Components**: Create separate cards for `SimpleForm`, `TabbedForm`, `WizardForm`
+- **CRUD Pages**: Create separate cards for `List`, `Create`, `Edit`, `Show`
+- **Field Components**: Create separate cards for `TextField`, `DateField`, `ReferenceField`
+
+### 4. Task Structure
+
+Each task should include:
+
+- Clear, specific title
+- Detailed requirements
+- Implementation steps
+- Testing requirements
+- Priority level
+- Category/component type
+- Estimated effort (in hours)
+- Dependencies (if any)
+
+### 5. Historical Preservation
+
+- **NEVER** force delete historical issues
+- **DO** close or soft delete issues when appropriate
+- Preserve project history and tracking
+- Use issue status updates instead of deletion
+
+### 6. Project Assignment
+
+- **Core Components**: Framework, data providers, authentication, hooks, advanced features
+- **Web Components**: UI components, forms, CRUD pages, fields, layout
+- **Repository Infrastructure**: CI/CD, testing, documentation, deployment, maintenance
+
+### 7. Kanban Board Usage
+
+- Use status columns: To Do → In Progress → Done
+- Move individual cards as components are completed
+- Track progress at the granular level
+- Update status when specific functionality is implemented
+
+## Task Creation Commands
+
+### Direct Project Task Creation (Recommended)
+
+```bash
+gh project item-create 1 --owner batmaster \
+  --title "Implement Button component" \
+  --body "Implement Button component with variants, sizes, loading states, and accessibility. Priority: High, Category: UI Components, Status: To Do, Estimated Effort: 2-3 hours"
+```
+
+### GitHub Issue Creation (if needed)
+
+```bash
+gh issue create --title "Implement Button component" \
+  --body "Implement Button component with variants, sizes, loading states, and accessibility. Priority: High, Category: UI Components, Status: To Do, Estimated Effort: 2-3 hours" \
+  --label "enhancement,help wanted"
+```
+
+## Commit Strategy for Phases
+
+### When to Commit:
+
+- **Phase 1 (Code)**: Commit after component implementation is complete and compiles
+- **Phase 2 (Testing)**: Commit after all tests pass and coverage requirements met
+- **Phase 3 (Documentation)**: Commit after documentation is complete and linked
+- **Never commit incomplete features or mixed phases**
+- **Each phase gets its own commit with appropriate scope**
+
+### Commit Message Format:
+
+```
+feat(scope): brief description
+
+- Detailed change 1
+- Detailed change 2
+- Related issue: #123
+```
+
+### Commit Scope Examples:
+
+- `feat(core): add CRUD hooks`
+- `feat(web): implement Button component`
+- `test(core): add tests for useGetList hook`
+- `docs(web): add Button component documentation`
+
+## Remember
+
+- One component = One task card
+- Keep tasks focused and completable
+- **NEVER mix phases in the same commit**
+- **Complete each phase before moving to the next**
+- Preserve project history
+- Use proper project categorization
+- Estimate effort realistically
+- Prefer direct project task creation over GitHub issues
+  description:
+  globs:
+  alwaysApply: false
+
+---

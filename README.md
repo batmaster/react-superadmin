@@ -38,11 +38,15 @@ pnpm build
 
 We use **GitHub Projects** to track all development tasks and progress:
 
-- **Core Components Project**: Core framework components, hooks, and utilities
-- **Web Components Project**: UI components, forms, and web interface elements
+- **🏗️ Core Components Project**: Core framework components, data providers,
+  authentication, and advanced features
+- **🎨 Web Components Project**: UI components, forms, CRUD pages, and user
+  interface elements
+- **⚙️ Repository Infrastructure Project**: CI/CD, testing, documentation,
+  deployment, and maintenance
 
 All tasks, status updates, and progress tracking are managed through these
-project boards.
+project boards with comprehensive task lists for efficient development.
 
 ## 📚 Documentation
 

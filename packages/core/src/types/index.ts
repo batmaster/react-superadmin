@@ -137,6 +137,7 @@ export interface SuperAdminContextValue {
   user?: any;
   setUser: (user: any) => void;
   logout: () => void;
+  dataProvider?: DataProvider;
 }
 
 // Component props

@@ -5,11 +5,21 @@ export interface DataProviderParams {
   };
   sort?: {
     field: string;
-    order: 'ASC' | 'DESC';
+    order: "ASC" | "DESC";
   };
   filter?: Record<string, any>;
   search?: string;
   signal?: AbortSignal;
+}
+
+export interface GetListParams extends DataProviderParams {}
+
+export interface GetListResult<T = any> {
+  data: T[];
+  total: number;
+  page: number;
+  perPage: number;
+  totalPages: number;
 }
 
 export interface ListResponse<T = any> {
@@ -62,38 +72,38 @@ export interface DeleteManyParams {
 export interface DataProvider {
   getList: <T = any>(
     resource: string,
-    params: DataProviderParams
+    params: DataProviderParams,
   ) => Promise<ListResponse<T>>;
   getOne: <T = any>(
     resource: string,
-    params: GetOneParams
+    params: GetOneParams,
   ) => Promise<{ data: T }>;
   getMany: <T = any>(
     resource: string,
-    params: GetManyParams
+    params: GetManyParams,
   ) => Promise<{ data: T[] }>;
   getManyReference: <T = any>(
     resource: string,
-    params: GetManyReferenceParams
+    params: GetManyReferenceParams,
   ) => Promise<ListResponse<T>>;
   create: <T = any>(
     resource: string,
-    params: CreateParams<T>
+    params: CreateParams<T>,
   ) => Promise<{ data: T }>;
   update: <T = any>(
     resource: string,
-    params: UpdateParams<T>
+    params: UpdateParams<T>,
   ) => Promise<{ data: T }>;
   updateMany: <T = any>(
     resource: string,
-    params: UpdateManyParams<T>
+    params: UpdateManyParams<T>,
   ) => Promise<{ data: (string | number)[] }>;
   delete: <T = any>(
     resource: string,
-    params: DeleteParams
+    params: DeleteParams,
   ) => Promise<{ data: T }>;
   deleteMany: <T = any>(
     resource: string,
-    params: DeleteManyParams
+    params: DeleteManyParams,
   ) => Promise<{ data: (string | number)[] }>;
 }
