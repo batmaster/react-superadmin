@@ -50,7 +50,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
           ls -la build/
       - name: Deploy to Firebase Production Channel
@@ -88,7 +88,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
           ls -la build/
       - name: Deploy to Firebase Preview Channel
@@ -126,7 +126,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
           ls -la build/
       - name: Deploy to Firebase Staging Channel
