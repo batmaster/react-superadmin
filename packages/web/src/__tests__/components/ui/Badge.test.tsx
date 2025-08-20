@@ -280,7 +280,7 @@ describe("Badge Component", () => {
     it("handles empty children gracefully", () => {
       render(<Badge></Badge>);
 
-      const badge = screen.getByRole("generic");
+      const badge = screen.getByText("");
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass(
         "inline-flex",
@@ -293,14 +293,14 @@ describe("Badge Component", () => {
     it("handles null children gracefully", () => {
       render(<Badge>{null}</Badge>);
 
-      const badge = screen.getByRole("generic");
+      const badge = screen.getByText("");
       expect(badge).toBeInTheDocument();
     });
 
     it("handles undefined children gracefully", () => {
       render(<Badge>{undefined}</Badge>);
 
-      const badge = screen.getByRole("generic");
+      const badge = screen.getByText("");
       expect(badge).toBeInTheDocument();
     });
   });

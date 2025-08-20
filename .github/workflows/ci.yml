@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, 'hotfix/**']
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, 'hotfix/**']
 
 jobs:
   test:
@@ -35,6 +35,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Generate Prisma Client
+        run: pnpm --filter=@react-superadmin/web db:generate
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 
       - name: Build packages
         run: pnpm build
@@ -69,6 +74,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Generate Prisma Client
+        run: pnpm --filter=@react-superadmin/web db:generate
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 
       - name: Build packages
         run: pnpm build
