@@ -3,19 +3,23 @@ id: installation
 title: Installation & Setup
 sidebar_label: Installation
 description:
-  Learn how to install and set up React SuperAdmin CRUD admin framework in your project
+  Learn how to install and set up React SuperAdmin CRUD admin framework in your
+  project
 ---
 
 # Installation & Setup
 
-React SuperAdmin is a **CRUD admin framework** that helps you build complete admin webapps quickly. It provides pre-built admin interfaces, data management, and CRUD operations - not just UI components.
+React SuperAdmin is a **CRUD admin framework** that helps you build complete
+admin webapps quickly. It provides pre-built admin interfaces, data management,
+and CRUD operations - not just UI components.
 
 ## 🎯 **What You Get**
 
 - **Complete Admin Interface**: Pre-built layouts, navigation, and dashboards
 - **CRUD Operations**: Create, Read, Update, Delete for any data model
 - **Data Providers**: Connect to APIs, databases, or use mock data
-- **Resource Management**: Define Users, Products, Orders, etc. with automatic CRUD
+- **Resource Management**: Define Users, Products, Orders, etc. with automatic
+  CRUD
 - **Admin Components**: Tables, forms, filters, pagination - all pre-built
 
 ## 📦 **Installation**
@@ -51,12 +55,12 @@ npx tailwindcss init -p
 // tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}",
+    './src/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@react-superadmin/web/**/*.{js,jsx,ts,tsx}',
   ],
   theme: { extend: {} },
   plugins: [],
-}
+};
 ```
 
 ### **4. Import Tailwind CSS**
@@ -121,7 +125,7 @@ export default App;
 ✅ **Create/Edit Forms** with validation  
 ✅ **Delete Operations** with confirmation  
 ✅ **Responsive Admin Layout**  
-✅ **Navigation and Breadcrumbs**  
+✅ **Navigation and Breadcrumbs**
 
 ## 🔧 **Data Provider Setup**
 
@@ -217,8 +221,8 @@ export const usersResource = createResource({
   name: 'users',
   fields: [
     // ... standard fields
-    { 
-      name: 'avatar', 
+    {
+      name: 'avatar',
       type: 'custom',
       component: CustomAvatarField,
     },
@@ -233,6 +237,7 @@ export const usersResource = createResource({
 **Problem**: Admin interface shows blank page.
 
 **Solution**: Ensure you have both packages installed:
+
 ```bash
 pnpm add @react-superadmin/core @react-superadmin/web
 ```
@@ -241,7 +246,8 @@ pnpm add @react-superadmin/core @react-superadmin/web
 
 **Problem**: Resources don't appear in navigation.
 
-**Solution**: Check resource configuration and ensure they're added to admin config.
+**Solution**: Check resource configuration and ensure they're added to admin
+config.
 
 ### **Styling Issues**
 
@@ -258,13 +264,16 @@ pnpm add @react-superadmin/core @react-superadmin/web
 
 ## 🎯 **Remember**
 
-This is **NOT** a UI component library. It's a **complete admin framework** that gives you:
+This is **NOT** a UI component library. It's a **complete admin framework** that
+gives you:
+
 - **Ready-to-use admin interfaces**
 - **Automatic CRUD operations**
 - **Data management tools**
 - **Admin layouts and navigation**
 
-Focus on building your **business logic and data models** - the admin interface is already built for you!
+Focus on building your **business logic and data models** - the admin interface
+is already built for you!
 
 ---
 
