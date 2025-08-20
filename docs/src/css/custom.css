@@ -33,152 +33,136 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-/* Clean, minimal styling like Headless UI */
+/* Minimal customizations to preserve classic Docusaurus feel */
 .navbar {
-  @apply bg-white border-b border-gray-200 shadow-sm;
+  /* Keep default navbar styling */
 }
 
 .navbar__title {
-  @apply font-semibold text-gray-900;
+  /* Keep default title styling */
 }
 
 .navbar__brand {
-  @apply text-gray-900;
+  /* Keep default brand styling */
 }
 
 .navbar__link {
-  @apply text-gray-600 font-medium transition-colors duration-200 hover:text-gray-900;
+  /* Keep default link styling */
 }
 
-/* Clean card styling */
+/* Preserve classic Docusaurus card styling */
 .card {
-  @apply bg-white rounded-lg border border-gray-200 shadow-sm;
+  /* Use default Infima card styling */
 }
 
-[data-theme='dark'] .card {
-  @apply bg-gray-800 border-gray-700;
-}
-
-/* Clean button styling */
+/* Preserve classic button styling */
 .button {
-  @apply rounded-md font-medium transition-colors duration-200;
+  /* Use default Infima button styling */
 }
 
-/* Clean sidebar styling */
+/* Preserve classic sidebar styling */
 .theme-doc-sidebar-container {
-  @apply bg-gray-50 border-r border-gray-200;
+  /* Use default Infima sidebar styling */
 }
 
-[data-theme='dark'] .theme-doc-sidebar-container {
-  @apply bg-gray-900 border-gray-700;
-}
-
-/* Clean table styling */
+/* Preserve classic table styling */
 table {
-  @apply rounded-lg border border-gray-200;
+  /* Use default Infima table styling */
 }
 
 thead {
-  @apply bg-gray-50;
+  /* Use default Infima thead styling */
 }
 
-/* Clean form styling */
+/* Preserve classic form styling */
 input,
 select,
 textarea {
-  @apply rounded-md border border-gray-300 transition-colors duration-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
+  /* Use default Infima form styling */
 }
 
-/* Clean badge styling */
+/* Preserve classic badge styling */
 .badge {
-  @apply rounded-md font-medium px-2 py-1 text-xs;
+  /* Use default Infima badge styling */
 }
 
 .badge--primary {
-  @apply bg-blue-100 text-blue-800;
+  /* Use default Infima primary badge styling */
 }
 
 .badge--success {
-  @apply bg-green-100 text-green-800;
+  /* Use default Infima success badge styling */
 }
 
 .badge--warning {
-  @apply bg-yellow-100 text-yellow-800;
+  /* Use default Infima warning badge styling */
 }
 
 .badge--danger {
-  @apply bg-red-100 text-red-800;
+  /* Use default Infima danger badge styling */
 }
 
-/* Clean alert styling */
+/* Preserve classic alert styling */
 .alert {
-  @apply rounded-md border;
+  /* Use default Infima alert styling */
 }
 
 .alert--info {
-  @apply bg-blue-50 border-blue-200 text-blue-800;
+  /* Use default Infima info alert styling */
 }
 
 .alert--success {
-  @apply bg-green-50 border-green-200 text-green-800;
+  /* Use default Infima success alert styling */
 }
 
 .alert--warning {
-  @apply bg-yellow-50 border-yellow-200 text-yellow-800;
+  /* Use default Infima warning alert styling */
 }
 
 .alert--danger {
-  @apply bg-red-50 border-red-200 text-red-800;
+  /* Use default Infima danger alert styling */
 }
 
-/* Clean code block styling */
+/* Preserve classic code block styling */
 .prism-code {
-  @apply rounded-md border border-gray-200;
+  /* Use default Infima code block styling */
 }
 
-/* Clean navigation styling */
+/* Preserve classic navigation styling */
 .pagination-nav__link {
-  @apply rounded-md border border-gray-200 transition-colors duration-200 hover:border-gray-300;
+  /* Use default Infima pagination styling */
 }
 
-/* Clean footer styling */
+/* Preserve classic footer styling */
 .footer {
-  @apply bg-gray-50 border-t border-gray-200;
+  /* Use default Infima footer styling */
 }
 
-[data-theme='dark'] .footer {
-  @apply bg-gray-900 border-gray-700;
-}
-
-/* Clean modal styling */
+/* Preserve classic modal styling */
 .modal {
-  @apply rounded-lg border border-gray-200 shadow-lg;
+  /* Use default Infima modal styling */
 }
 
 .modal-header {
-  @apply bg-gray-50 border-b border-gray-200;
+  /* Use default Infima modal header styling */
 }
 
-/* Clean dropdown styling */
+/* Preserve classic dropdown styling */
 .dropdown {
-  @apply rounded-md border border-gray-200 shadow-lg;
+  /* Use default Infima dropdown styling */
 }
 
-/* Clean breadcrumbs styling */
+/* Preserve classic breadcrumbs styling */
 .breadcrumbs {
-  @apply bg-gray-50 rounded-md p-2;
+  /* Use default Infima breadcrumbs styling */
 }
 
-[data-theme='dark'] .breadcrumbs {
-  @apply bg-gray-800;
-}
-
-/* Clean search styling */
+/* Preserve classic search styling */
 .search-input {
-  @apply rounded-md border border-gray-300 transition-colors duration-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
+  /* Use default Infima search styling */
 }
 
-/* Clean focus states */
+/* Preserve classic focus states */
 *:focus {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  /* Use default Infima focus styling */
 }
