@@ -1,4 +1,4 @@
-import React, { ReactNode, FormEvent } from "react";
+import React, { FormEvent, ReactNode } from "react";
 
 export interface FormProps {
   /** Form submission handler */
