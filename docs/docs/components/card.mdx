@@ -1,0 +1,516 @@
+---
+id: card
+title: Card Component
+sidebar_label: Card
+keywords: [card, component, ui, layout, container, react, typescript, admin]
+---
+
+# Card Component
+
+The Card component provides a flexible container for organizing content with various styling options and subcomponents for structured layouts.
+
+## Basic Usage
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function BasicCard() {
+  return (
+    <Card>
+      <p>This is a basic card with default styling.</p>
+    </Card>
+  );
+}
+```
+
+## Card Variants
+
+### Default Variant
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function DefaultCard() {
+  return (
+    <Card>
+      <p>Default card with subtle border and shadow.</p>
+    </Card>
+  );
+}
+```
+
+### Outlined Variant
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function OutlinedCard() {
+  return (
+    <Card variant='outlined'>
+      <p>Outlined card with visible border and no shadow.</p>
+    </Card>
+  );
+}
+```
+
+### Elevated Variant
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function ElevatedCard() {
+  return (
+    <Card variant='elevated'>
+      <p>Elevated card with prominent shadow and no border.</p>
+    </Card>
+  );
+}
+```
+
+### Flat Variant
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function FlatCard() {
+  return (
+    <Card variant='flat'>
+      <p>Flat card with subtle background and no shadow.</p>
+    </Card>
+  );
+}
+```
+
+## Padding Options
+
+### No Padding
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function NoPaddingCard() {
+  return (
+    <Card padding='none'>
+      <div className='p-4 bg-gray-50'>
+        <p>Content with custom padding applied.</p>
+      </div>
+    </Card>
+  );
+}
+```
+
+### Small Padding
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function SmallPaddingCard() {
+  return (
+    <Card padding='sm'>
+      <p>Card with small padding (12px).</p>
+    </Card>
+  );
+}
+```
+
+### Large Padding
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function LargePaddingCard() {
+  return (
+    <Card padding='lg'>
+      <p>Card with large padding (24px).</p>
+    </Card>
+  );
+}
+```
+
+## Hover Effects
+
+```tsx live
+import React from 'react';
+import { Card } from '@react-superadmin/web';
+
+function HoverCard() {
+  return (
+    <Card hover>
+      <p>Hover over this card to see the elevation effect.</p>
+    </Card>
+  );
+}
+```
+
+## Card Subcomponents
+
+### CardHeader
+
+```tsx live
+import React from 'react';
+import { Card, CardHeader, CardContent } from '@react-superadmin/web';
+
+function CardWithHeader() {
+  return (
+    <Card>
+      <CardHeader>
+        <h3 className='text-lg font-semibold'>Card Title</h3>
+      </CardHeader>
+      <CardContent>
+        <p>This card has a header section with a title.</p>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### CardHeader with Action
+
+```tsx live
+import React from 'react';
+import { Card, CardHeader, CardContent, Button } from '@react-superadmin/web';
+
+function CardWithHeaderAction() {
+  return (
+    <Card>
+      <CardHeader action={<Button size='sm'>Edit</Button>}>
+        <h3 className='text-lg font-semibold'>User Profile</h3>
+      </CardHeader>
+      <CardContent>
+        <p>This card header includes an action button.</p>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### CardContent
+
+```tsx live
+import React from 'react';
+import { Card, CardHeader, CardContent } from '@react-superadmin/web';
+
+function CardWithContent() {
+  return (
+    <Card>
+      <CardHeader>
+        <h3 className='text-lg font-semibold'>Content Section</h3>
+      </CardHeader>
+      <CardContent>
+        <div className='space-y-2'>
+          <p>This is the main content area of the card.</p>
+          <p>It can contain any React components or HTML elements.</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### CardFooter
+
+```tsx live
+import React from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Button,
+} from '@react-superadmin/web';
+
+function CardWithFooter() {
+  return (
+    <Card>
+      <CardHeader>
+        <h3 className='text-lg font-semibold'>Form Card</h3>
+      </CardHeader>
+      <CardContent>
+        <p>This card has a footer with action buttons.</p>
+      </CardContent>
+      <CardFooter>
+        <Button variant='outline' className='mr-2'>
+          Cancel
+        </Button>
+        <Button>Save</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+### Footer Alignment
+
+```tsx live
+import React from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Button,
+} from '@react-superadmin/web';
+
+function CardWithAlignedFooter() {
+  return (
+    <div className='space-y-4'>
+      <Card>
+        <CardHeader>
+          <h3 className='text-lg font-semibold'>Left Aligned</h3>
+        </CardHeader>
+        <CardContent>
+          <p>Footer content aligned to the left.</p>
+        </CardContent>
+        <CardFooter align='left'>
+          <Button>Action</Button>
+        </CardFooter>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <h3 className='text-lg font-semibold'>Center Aligned</h3>
+        </CardHeader>
+        <CardContent>
+          <p>Footer content aligned to the center.</p>
+        </CardContent>
+        <CardFooter align='center'>
+          <Button>Action</Button>
+        </CardFooter>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <h3 className='text-lg font-semibold'>Right Aligned</h3>
+        </CardHeader>
+        <CardContent>
+          <p>Footer content aligned to the right.</p>
+        </CardContent>
+        <CardFooter align='right'>
+          <Button>Action</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
+```
+
+## Complete Card Example
+
+```tsx live
+import React from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Button,
+  Badge,
+} from '@react-superadmin/web';
+
+function CompleteCard() {
+  return (
+    <Card variant='elevated' padding='lg' hover>
+      <CardHeader action={<Button size='sm'>Edit</Button>}>
+        <div className='flex items-center space-x-2'>
+          <h3 className='text-lg font-semibold'>User Profile</h3>
+          <Badge variant='success'>Active</Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className='space-y-3'>
+          <div className='flex justify-between'>
+            <span className='font-medium'>Name:</span>
+            <span>John Doe</span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='font-medium'>Email:</span>
+            <span>john.doe@example.com</span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='font-medium'>Role:</span>
+            <span>Administrator</span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='font-medium'>Status:</span>
+            <span>Online</span>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter align='right'>
+        <Button variant='outline' className='mr-2'>
+          Cancel
+        </Button>
+        <Button>Save Changes</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+## API Reference
+
+### Card Props
+
+| Prop        | Type                                              | Default     | Description            |
+| ----------- | ------------------------------------------------- | ----------- | ---------------------- |
+| `variant`   | `'default' \| 'outlined' \| 'elevated' \| 'flat'` | `'default'` | Card styling variant   |
+| `padding`   | `'none' \| 'sm' \| 'md' \| 'lg'`                  | `'md'`      | Card padding size      |
+| `hover`     | `boolean`                                         | `false`     | Enable hover effects   |
+| `children`  | `ReactNode`                                       | -           | Card content           |
+| `className` | `string`                                          | -           | Additional CSS classes |
+
+### CardHeader Props
+
+| Prop        | Type        | Default | Description                   |
+| ----------- | ----------- | ------- | ----------------------------- |
+| `children`  | `ReactNode` | -       | Header content                |
+| `action`    | `ReactNode` | -       | Action element (e.g., button) |
+| `className` | `string`    | -       | Additional CSS classes        |
+
+### CardContent Props
+
+| Prop        | Type        | Default | Description            |
+| ----------- | ----------- | ------- | ---------------------- |
+| `children`  | `ReactNode` | -       | Content area           |
+| `className` | `string`    | -       | Additional CSS classes |
+
+### CardFooter Props
+
+| Prop        | Type                            | Default  | Description            |
+| ----------- | ------------------------------- | -------- | ---------------------- |
+| `children`  | `ReactNode`                     | -        | Footer content         |
+| `align`     | `'left' \| 'center' \| 'right'` | `'left'` | Content alignment      |
+| `className` | `string`                        | -        | Additional CSS classes |
+
+## CSS Classes
+
+The Card component uses Tailwind CSS classes for styling:
+
+### Base Classes
+
+- **Default**: `bg-white rounded-lg border border-gray-200 shadow-sm`
+- **Outlined**: `border-gray-300 shadow-none`
+- **Elevated**: `border-transparent shadow-lg`
+- **Flat**: `border-gray-100 shadow-none bg-gray-50`
+
+### Padding Classes
+
+- **None**: No padding
+- **Small**: `p-3` (12px)
+- **Medium**: `p-4` (16px)
+- **Large**: `p-6` (24px)
+
+### Interactive Classes
+
+- **Hover**: `hover:shadow-md hover:-translate-y-1`
+- **Focus**: `focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2`
+- **Transitions**: `transition-all duration-200`
+
+## Accessibility
+
+Cards include proper accessibility features:
+
+- **Semantic structure** with proper HTML elements
+- **Focus indicators** with ring styles
+- **Keyboard navigation** support
+- **Screen reader** compatibility
+- **ARIA attributes** when needed
+
+## Best Practices
+
+### Content Organization
+
+- Use `CardHeader` for titles and actions
+- Use `CardContent` for main content
+- Use `CardFooter` for actions and metadata
+
+### Variant Selection
+
+- **Default**: General purpose content
+- **Outlined**: Clean, minimal appearance
+- **Elevated**: Important or featured content
+- **Flat**: Subtle background content
+
+### Responsive Design
+
+- Cards automatically adapt to container width
+- Use appropriate padding for different screen sizes
+- Consider mobile-first design principles
+
+## Examples
+
+### Dashboard Widget
+
+```tsx
+import { Card, CardHeader, CardContent } from '@react-superadmin/web';
+
+function DashboardWidget() {
+  return (
+    <Card variant='elevated' hover>
+      <CardHeader>
+        <h3 className='text-lg font-semibold'>Recent Activity</h3>
+      </CardHeader>
+      <CardContent>
+        <div className='space-y-2'>
+          <div className='flex justify-between text-sm'>
+            <span>New user registered</span>
+            <span className='text-gray-500'>2 min ago</span>
+          </div>
+          <div className='flex justify-between text-sm'>
+            <span>Order completed</span>
+            <span className='text-gray-500'>5 min ago</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### Form Container
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Button,
+} from '@react-superadmin/web';
+
+function FormCard() {
+  return (
+    <Card variant='outlined' padding='lg'>
+      <CardHeader>
+        <h2 className='text-xl font-bold'>User Registration</h2>
+      </CardHeader>
+      <CardContent>
+        <form className='space-y-4'>
+          <div>
+            <label className='block text-sm font-medium mb-1'>Name</label>
+            <input type='text' className='w-full p-2 border rounded' />
+          </div>
+          <div>
+            <label className='block text-sm font-medium mb-1'>Email</label>
+            <input type='email' className='w-full p-2 border rounded' />
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter align='right'>
+        <Button variant='outline' className='mr-2'>
+          Cancel
+        </Button>
+        <Button>Register</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
