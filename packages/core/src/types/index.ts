@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
+import { DataProvider } from "./dataProvider";
 
 // Base resource interface
 export interface Resource<T = any> {
@@ -21,7 +22,7 @@ export interface ListParams {
   perPage?: number;
   search?: string;
   sort?: string;
-  order?: 'asc' | 'desc';
+  order?: "asc" | "desc";
   filters?: Record<string, any>;
 }
 
@@ -39,15 +40,15 @@ export interface FieldConfig {
   name: string;
   label: string;
   type:
-    | 'text'
-    | 'email'
-    | 'password'
-    | 'number'
-    | 'select'
-    | 'textarea'
-    | 'date'
-    | 'boolean'
-    | 'file';
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "select"
+    | "textarea"
+    | "date"
+    | "boolean"
+    | "file";
   required?: boolean;
   options?: Array<{ value: any; label: string }>;
   validation?: ValidationRule[];
@@ -57,7 +58,7 @@ export interface FieldConfig {
 
 // Validation rules
 export interface ValidationRule {
-  type: 'required' | 'min' | 'max' | 'pattern' | 'custom';
+  type: "required" | "min" | "max" | "pattern" | "custom";
   value?: any;
   message: string;
 }
@@ -69,6 +70,9 @@ export interface AdminConfig {
   theme?: ThemeConfig;
   layout?: LayoutConfig;
   auth?: AuthConfig;
+  dataProvider?: DataProvider;
+  authProvider?: any;
+  i18nProvider?: any;
 }
 
 // Resource configuration
@@ -94,9 +98,9 @@ export interface PermissionConfig {
 export interface ViewConfig {
   name: string;
   label: string;
-  type: 'list' | 'form' | 'show' | 'custom';
+  type: "list" | "form" | "show" | "custom";
   fields?: string[];
-  layout?: 'table' | 'grid' | 'cards';
+  layout?: "table" | "grid" | "cards";
 }
 
 // Theme configuration
@@ -170,4 +174,4 @@ export interface ColumnConfig<T = any> {
   width?: number | string;
 }
 
-export * from './dataProvider';
+export * from "./dataProvider";
