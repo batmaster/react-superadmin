@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface CheckboxOption {
@@ -102,7 +102,7 @@ export const CheckboxGroupInput = forwardRef<
   (
     {
       options,
-      value = [],
+      value,
       onChange,
       label,
       helperText,
@@ -139,9 +139,6 @@ export const CheckboxGroupInput = forwardRef<
 
     // Use controlled value if provided, otherwise use internal state
     const selectedValues = value !== undefined ? value : internalValue;
-    
-    // Debug logging
-    console.log('CheckboxGroupInput render:', { value, internalValue, selectedValues });
 
     const inputId =
       id || `checkbox-group-${Math.random().toString(36).substr(2, 9)}`;
@@ -166,45 +163,32 @@ export const CheckboxGroupInput = forwardRef<
       optionValue: string | number,
       checked: boolean,
     ) => {
-      console.log('handleCheckboxChange called:', { optionValue, checked, isDisabled });
       if (isDisabled) return;
 
       let newValue: (string | number)[];
       if (checked) {
-        console.log('Adding value:', { optionValue, selectedValues, maxSelections });
         // Add value if not already selected
         if (!selectedValues.includes(optionValue)) {
           // Check max selections limit
           if (maxSelections && selectedValues.length >= maxSelections) {
-            console.log('Max selections limit reached');
             return; // Don't add if at limit
           }
           newValue = [...selectedValues, optionValue];
-          console.log('New value after adding:', newValue);
         } else {
-          console.log('Value already selected, no change');
-          newValue = selectedValues; // Already selected, no change
           return; // Don't call onChange if no change
         }
       } else {
-        console.log('Removing value:', { optionValue, selectedValues });
         // Remove value
         newValue = selectedValues.filter((v) => v !== optionValue);
-        console.log('New value after removing:', newValue);
       }
 
-      console.log('About to update state:', { value, newValue });
-      
-      // Update internal state if not controlled
-      if (value === undefined || (Array.isArray(value) && value.length === 0 && !onChange)) {
-        console.log('Setting internal value:', newValue);
+      // Update internal state if not controlled (no value prop provided)
+      if (value === undefined) {
         setInternalValue(newValue);
       }
 
       // Call onChange with the new value if provided
-      if (onChange) {
-        onChange(newValue);
-      }
+      onChange?.(newValue);
     };
 
     // Handle select all
@@ -248,11 +232,7 @@ export const CheckboxGroupInput = forwardRef<
     const anySelected = selectedValues.length > 0;
 
     return (
-      <div
-        ref={ref}
-        className={cn("w-full", className)}
-        {...props}
-      >
+      <div ref={ref} className={cn("w-full", className)} {...props}>
         {/* Label */}
         {label && (
           <label
@@ -327,15 +307,6 @@ export const CheckboxGroupInput = forwardRef<
               maxSelections &&
               selectedValues.length >= maxSelections &&
               !isSelected;
-            
-            console.log('Checkbox option:', { 
-              option: option.value, 
-              isSelected, 
-              isOptionDisabled, 
-              isAtLimit, 
-              maxSelections, 
-              selectedValuesLength: selectedValues.length 
-            });
 
             return (
               <div
