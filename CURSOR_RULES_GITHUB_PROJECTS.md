@@ -57,7 +57,43 @@ For each completed task, ensure:
 - **Consolidate if needed**: If duplicate tasks exist, consider consolidating
   them or clearly marking their relationship
 
-### 5. GitHub Project Commands Reference
+### 5. GitHub API Rate Limit Management
+
+**CRITICAL RULE**: When calling ANY GitHub SDK command (`gh`), you MUST:
+
+- **Before starting work**: Check current rate limit status
+- **Command**:
+  `gh api rate_limit | jq -r '.resources | to_entries[] | select(.value.used > 0) | "\(.key): \(.value.used)/\(.value.limit) (\(.value.remaining) left) - Reset: \(.value.reset | todate)"'`
+- **Always show**: Current usage, remaining requests, and human-readable reset
+  times
+- **Monitor during work**: If approaching limits, pause and wait for reset
+- **Prevent failures**: Never exhaust API limits during critical operations
+
+#### Rate Limit Check Commands
+
+```bash
+# Check only used APIs with human-readable reset times
+gh api rate_limit | jq -r '.resources | to_entries[] | select(.value.used > 0) | "\(.key): \(.value.used)/\(.value.limit) (\(.value.remaining) left) - Reset: \(.value.reset | todate)"'
+
+# Check specific API (e.g., GraphQL)
+gh api rate_limit | jq -r '.resources.graphql | "GraphQL: \(.used)/\(.limit) (\(.remaining) left) - Reset: \(.reset | todate)"'
+```
+
+#### Rate Limit Status Categories
+
+- **🟢 SAFE**: >80% remaining requests
+- **🟡 WARNING**: 20-80% remaining requests
+- **🔴 CRITICAL**: <20% remaining requests
+- **🚨 EXHAUSTED**: 0 remaining requests
+
+#### When Rate Limited
+
+- **Stop all GitHub operations** immediately
+- **Show reset time** to user
+- **Wait for reset** before continuing
+- **Use alternative methods** if available (web interface, etc.)
+
+### 6. GitHub Project Commands Reference
 
 ```bash
 # List all project items
