@@ -1,0 +1,599 @@
+---
+id: boolean-input
+title: BooleanInput Component
+sidebar_label: BooleanInput
+---
+
+# BooleanInput Component
+
+A versatile boolean input component that supports multiple variants including checkbox, switch, and toggle with comprehensive styling, accessibility features, and form validation integration.
+
+## Overview
+
+The `BooleanInput` component provides a modern, accessible boolean input interface that supports:
+
+- Multiple visual variants (checkbox, switch, toggle)
+- Comprehensive accessibility features (ARIA, keyboard navigation)
+- Flexible styling and theming with color schemes
+- Form validation integration
+- Support for indeterminate state (checkbox only)
+- Customizable label positioning and sizing
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function BasicBooleanExample() {
+  const [accepted, setAccepted] = useState(false);
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <BooleanInput
+        label='Accept terms and conditions'
+        checked={accepted}
+        onChange={setAccepted}
+        helperText='You must accept the terms to continue'
+        required
+      />
+
+      {accepted && (
+        <div className='p-3 bg-green-50 border border-green-200 rounded-md'>
+          <p className='text-sm text-green-700'>
+            ✓ Terms accepted successfully
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Different Variants
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function VariantsExample() {
+  const [checkboxValue, setCheckboxValue] = useState(false);
+  const [switchValue, setSwitchValue] = useState(false);
+  const [toggleValue, setToggleValue] = useState(false);
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <BooleanInput
+        label='Checkbox Variant (Default)'
+        variant='checkbox'
+        checked={checkboxValue}
+        onChange={setCheckboxValue}
+        helperText='Traditional checkbox input'
+      />
+
+      <BooleanInput
+        label='Switch Variant'
+        variant='switch'
+        checked={switchValue}
+        onChange={setSwitchValue}
+        helperText='iOS-style switch toggle'
+        colorScheme='success'
+      />
+
+      <BooleanInput
+        label='Toggle Variant'
+        variant='toggle'
+        checked={toggleValue}
+        onChange={setToggleValue}
+        helperText='Custom toggle button style'
+        colorScheme='primary'
+      />
+    </div>
+  );
+}
+```
+
+## Color Schemes
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function ColorSchemesExample() {
+  const [primaryValue, setPrimaryValue] = useState(false);
+  const [successValue, setSuccessValue] = useState(false);
+  const [warningValue, setWarningValue] = useState(false);
+  const [dangerValue, setDangerValue] = useState(false);
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <BooleanInput
+        label='Primary Color'
+        variant='switch'
+        checked={primaryValue}
+        onChange={setPrimaryValue}
+        colorScheme='primary'
+        helperText='Default primary color scheme'
+      />
+
+      <BooleanInput
+        label='Success Color'
+        variant='switch'
+        checked={successValue}
+        onChange={setSuccessValue}
+        colorScheme='success'
+        helperText='Green success color scheme'
+      />
+
+      <BooleanInput
+        label='Warning Color'
+        variant='switch'
+        checked={warningValue}
+        onChange={setWarningValue}
+        colorScheme='warning'
+        helperText='Orange warning color scheme'
+      />
+
+      <BooleanInput
+        label='Danger Color'
+        variant='switch'
+        checked={dangerValue}
+        onChange={setDangerValue}
+        colorScheme='danger'
+        helperText='Red danger color scheme'
+      />
+    </div>
+  );
+}
+```
+
+## Different Sizes
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function SizeVariantsExample() {
+  const [smallValue, setSmallValue] = useState(false);
+  const [mediumValue, setMediumValue] = useState(false);
+  const [largeValue, setLargeValue] = useState(false);
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <BooleanInput
+        label='Small Size'
+        size='sm'
+        checked={smallValue}
+        onChange={setSmallValue}
+        variant='switch'
+        helperText='Compact small size'
+      />
+
+      <BooleanInput
+        label='Medium Size (Default)'
+        size='md'
+        checked={mediumValue}
+        onChange={setMediumValue}
+        variant='switch'
+        helperText='Standard medium size'
+      />
+
+      <BooleanInput
+        label='Large Size'
+        size='lg'
+        checked={largeValue}
+        onChange={setLargeValue}
+        variant='switch'
+        helperText='Prominent large size'
+      />
+    </div>
+  );
+}
+```
+
+## Label Positioning
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function LabelPositionExample() {
+  const [leftLabelValue, setLeftLabelValue] = useState(false);
+  const [rightLabelValue, setRightLabelValue] = useState(false);
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <BooleanInput
+        label='Label on Left'
+        labelPosition='left'
+        checked={leftLabelValue}
+        onChange={setLeftLabelValue}
+        variant='switch'
+        helperText='Label appears to the left of the input'
+      />
+
+      <BooleanInput
+        label='Label on Right'
+        labelPosition='right'
+        checked={rightLabelValue}
+        onChange={setRightLabelValue}
+        variant='switch'
+        helperText='Label appears to the right of the input'
+      />
+    </div>
+  );
+}
+```
+
+## With Validation and Errors
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function ValidationExample() {
+  const [notifications, setNotifications] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  const hasError = touched && !notifications;
+  const errorMessage = hasError
+    ? 'You must enable notifications to receive updates'
+    : '';
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <BooleanInput
+        label='Enable Notifications'
+        variant='switch'
+        checked={notifications}
+        onChange={value => {
+          setNotifications(value);
+          setTouched(true);
+        }}
+        error={errorMessage}
+        helperText='Receive important updates and alerts'
+        colorScheme='success'
+        required
+      />
+
+      <button
+        onClick={() => setTouched(true)}
+        className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+      >
+        Validate
+      </button>
+    </div>
+  );
+}
+```
+
+## Indeterminate State (Checkbox Only)
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function IndeterminateExample() {
+  const [items, setItems] = useState([
+    { id: 1, name: 'Item 1', checked: false },
+    { id: 2, name: 'Item 2', checked: false },
+    { id: 3, name: 'Item 3', checked: false },
+  ]);
+
+  const allChecked = items.every(item => item.checked);
+  const someChecked = items.some(item => item.checked);
+  const indeterminate = someChecked && !allChecked;
+
+  const handleSelectAll = (checked: boolean) => {
+    setItems(items.map(item => ({ ...item, checked })));
+  };
+
+  const handleItemChange = (id: number, checked: boolean) => {
+    setItems(items.map(item => (item.id === id ? { ...item, checked } : item)));
+  };
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <BooleanInput
+        label='Select All Items'
+        variant='checkbox'
+        checked={allChecked}
+        onChange={handleSelectAll}
+        indeterminate={indeterminate}
+        helperText='Select or deselect all items'
+      />
+
+      <div className='space-y-2'>
+        {items.map(item => (
+          <BooleanInput
+            key={item.id}
+            label={item.name}
+            variant='checkbox'
+            checked={item.checked}
+            onChange={checked => handleItemChange(item.id, checked)}
+            size='sm'
+          />
+        ))}
+      </div>
+
+      <div className='p-3 bg-gray-50 rounded-md'>
+        <p className='text-sm text-gray-600'>
+          Selected: {items.filter(item => item.checked).length} of{' '}
+          {items.length}
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+## Form Integration Example
+
+```tsx live
+import React, { useState } from 'react';
+import { BooleanInput } from '@react-superadmin/web';
+
+function FormIntegrationExample() {
+  const [formData, setFormData] = useState({
+    notifications: false,
+    marketing: false,
+    autoSave: false,
+    darkMode: false,
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  const updateField = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className='max-w-md space-y-4'>
+      <BooleanInput
+        label='Email Notifications'
+        variant='switch'
+        checked={formData.notifications}
+        onChange={value => updateField('notifications', value)}
+        colorScheme='success'
+        helperText='Receive email notifications for important updates'
+      />
+
+      <BooleanInput
+        label='Marketing Communications'
+        variant='checkbox'
+        checked={formData.marketing}
+        onChange={value => updateField('marketing', value)}
+        helperText='Receive promotional emails and offers'
+      />
+
+      <BooleanInput
+        label='Auto-save Documents'
+        variant='toggle'
+        checked={formData.autoSave}
+        onChange={value => updateField('autoSave', value)}
+        colorScheme='primary'
+        helperText='Automatically save your work every 5 minutes'
+      />
+
+      <BooleanInput
+        label='Dark Mode'
+        variant='switch'
+        checked={formData.darkMode}
+        onChange={value => updateField('darkMode', value)}
+        colorScheme='secondary'
+        helperText='Use dark theme for better eye comfort'
+      />
+
+      <button
+        type='submit'
+        className='w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+      >
+        Save Preferences
+      </button>
+    </form>
+  );
+}
+```
+
+## Props Reference
+
+### BooleanInputProps
+
+| Prop             | Type                                                             | Default      | Description                                         |
+| ---------------- | ---------------------------------------------------------------- | ------------ | --------------------------------------------------- |
+| `checked`        | `boolean`                                                        | `false`      | Current boolean value                               |
+| `onChange`       | `(checked: boolean) => void`                                     | **Required** | Callback when value changes                         |
+| `variant`        | `"checkbox" \| "switch" \| "toggle"`                             | `"checkbox"` | Visual variant of the input                         |
+| `label`          | `string`                                                         | `undefined`  | Label text for the input                            |
+| `helperText`     | `string`                                                         | `undefined`  | Helper text below the input                         |
+| `error`          | `string`                                                         | `undefined`  | Error message to display                            |
+| `required`       | `boolean`                                                        | `false`      | Whether the field is required                       |
+| `disabled`       | `boolean`                                                        | `false`      | Whether the input is disabled                       |
+| `size`           | `"sm" \| "md" \| "lg"`                                           | `"md"`       | Input size variant                                  |
+| `indeterminate`  | `boolean`                                                        | `false`      | Whether to show indeterminate state (checkbox only) |
+| `className`      | `string`                                                         | `undefined`  | Custom class names for the container                |
+| `inputClassName` | `string`                                                         | `undefined`  | Custom class names for the input element            |
+| `labelClassName` | `string`                                                         | `undefined`  | Custom class names for the label                    |
+| `colorScheme`    | `"primary" \| "secondary" \| "success" \| "warning" \| "danger"` | `"primary"`  | Color scheme for the input                          |
+| `labelPosition`  | `"left" \| "right"`                                              | `"right"`    | Position of the label relative to the input         |
+
+## Variant Details
+
+### Checkbox Variant (`variant="checkbox"`)
+
+- Traditional checkbox input
+- Supports indeterminate state
+- Accessible with proper ARIA attributes
+- Ideal for multiple choice selections
+- Works well in forms and lists
+
+### Switch Variant (`variant="switch"`)
+
+- iOS-style toggle switch
+- Smooth sliding animation
+- Color scheme support
+- Perfect for on/off settings
+- Modern, intuitive design
+
+### Toggle Variant (`variant="toggle"`)
+
+- Custom toggle button style
+- Button-like appearance
+- Color scheme support
+- Great for feature toggles
+- Distinct visual feedback
+
+## Accessibility Features
+
+The BooleanInput component follows accessibility best practices:
+
+- **ARIA Support**: Proper labeling and state attributes
+- **Keyboard Navigation**: Full keyboard support for all variants
+- **Screen Reader Support**: Clear labels and descriptions
+- **Focus Management**: Visible focus indicators
+- **Error States**: ARIA invalid attributes for form validation
+- **Indeterminate State**: Proper ARIA support for partial selection
+
+## Color Schemes
+
+### Primary (`colorScheme="primary"`)
+
+- Default blue color scheme
+- Used for main actions and primary settings
+- Consistent with design system
+
+### Success (`colorScheme="success"`)
+
+- Green color scheme
+- Perfect for positive actions and enabled states
+- Clear visual feedback
+
+### Warning (`colorScheme="warning"`)
+
+- Orange color scheme
+- Used for cautionary settings
+- Attention-grabbing but not alarming
+
+### Danger (`colorScheme="danger"`)
+
+- Red color scheme
+- For critical settings and destructive actions
+- Use sparingly for important warnings
+
+### Secondary (`colorScheme="secondary"`)
+
+- Neutral color scheme
+- For less prominent settings
+- Subtle visual presence
+
+## Size Variants
+
+### Small (`size="sm"`)
+
+- Compact size for dense layouts
+- Reduced padding and font size
+- Perfect for inline forms and tables
+
+### Medium (`size="md"`)
+
+- Default size for most use cases
+- Balanced proportions
+- Standard form input size
+
+### Large (`size="lg"`)
+
+- Prominent size for important settings
+- Increased padding and font size
+- Great for standalone toggles
+
+## Label Positioning
+
+### Right Position (`labelPosition="right"`)
+
+- Label appears to the right of the input
+- Default behavior for most variants
+- Traditional form layout
+
+### Left Position (`labelPosition="left"`)
+
+- Label appears to the left of the input
+- Alternative layout option
+- Useful for specific design requirements
+
+## Integration Examples
+
+### With Form Libraries
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { BooleanInput } from '@react-superadmin/web';
+
+function FormExample() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name='notifications'
+        control={control}
+        rules={{ required: 'Notifications setting is required' }}
+        render={({ field, fieldState }) => (
+          <BooleanInput
+            label='Enable Notifications'
+            checked={field.value}
+            onChange={field.onChange}
+            error={fieldState.error?.message}
+            variant='switch'
+            required
+          />
+        )}
+      />
+    </form>
+  );
+}
+```
+
+### With Data Providers
+
+```tsx
+import { useGetList } from '@react-superadmin/core';
+import { BooleanInput } from '@react-superadmin/web';
+
+function DataProviderExample() {
+  const { data: settings, isLoading } = useGetList('settings');
+
+  return (
+    <BooleanInput
+      label='Auto-save'
+      checked={settings?.autoSave || false}
+      onChange={handleAutoSaveChange}
+      variant='toggle'
+      helperText='Automatically save your work'
+      disabled={isLoading}
+    />
+  );
+}
+```
+
+## Best Practices
+
+1. **Always provide labels** for screen reader accessibility
+2. **Choose appropriate variants** for your use case (checkbox for lists, switch for settings)
+3. **Use color schemes consistently** throughout your application
+4. **Implement proper validation** with error states when required
+5. **Handle loading states** when integrating with data providers
+6. **Use indeterminate state** for select-all functionality in lists
+7. **Position labels appropriately** for your layout needs
+8. **Provide helper text** to guide users on the setting's purpose
+
+## Related Components
+
+- [Input](./input) - Basic text input component
+- [SelectInput](./select-input) - Dropdown selection component
+- [DateInput](./date-input) - Date and time input component
+- [FormField](./form) - Form field wrapper with validation
+- [Button](./button) - Button component for form actions
+- [Modal](./modal) - Modal component for complex forms
