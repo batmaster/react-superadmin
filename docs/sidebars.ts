@@ -41,6 +41,7 @@ const sidebars: SidebarsConfig = {
         'components/password-input',
         'components/label',
         'components/array-input',
+        'components/autocomplete-input',
         'components/form',
         'components/forms',
         'components/layout',
