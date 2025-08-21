@@ -35,6 +35,7 @@ const sidebars: SidebarsConfig = {
         'components/badge',
         'components/dropdown',
         'components/select-input',
+        'components/date-input',
         'components/form',
         'components/forms',
         'components/layout',

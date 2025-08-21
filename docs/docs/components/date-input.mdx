@@ -1,0 +1,447 @@
+---
+id: date-input
+title: DateInput Component
+sidebar_label: DateInput
+---
+
+# DateInput Component
+
+A powerful and accessible date input component with support for date, time, and datetime-local types, validation, and comprehensive accessibility features.
+
+## Overview
+
+The `DateInput` component provides a modern, accessible date/time input interface that supports:
+
+- Multiple input types (date, datetime-local, time)
+- Date range validation with min/max constraints
+- Accessibility features (ARIA, keyboard navigation)
+- Flexible styling and theming
+- Form validation integration
+- Icon support for visual enhancement
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function BasicDateExample() {
+  const [birthDate, setBirthDate] = useState('');
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <DateInput
+        label='Birth Date'
+        value={birthDate}
+        onChange={setBirthDate}
+        placeholder='Select your birth date'
+        helperText='Enter your date of birth'
+      />
+
+      {birthDate && (
+        <div className='p-3 bg-gray-50 rounded-md'>
+          <p className='text-sm text-gray-600'>
+            Selected:{' '}
+            <strong>{new Date(birthDate).toLocaleDateString()}</strong>
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Different Input Types
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function DateTypesExample() {
+  const [dateValue, setDateValue] = useState('');
+  const [timeValue, setTimeValue] = useState('');
+  const [datetimeValue, setDatetimeValue] = useState('');
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <DateInput
+        label='Date Only'
+        type='date'
+        value={dateValue}
+        onChange={setDateValue}
+        placeholder='Select a date'
+        helperText='Date picker without time'
+      />
+
+      <DateInput
+        label='Time Only'
+        type='time'
+        value={timeValue}
+        onChange={setTimeValue}
+        placeholder='Select a time'
+        helperText='Time picker without date'
+      />
+
+      <DateInput
+        label='Date and Time'
+        type='datetime-local'
+        value={datetimeValue}
+        onChange={setDatetimeValue}
+        placeholder='Select date and time'
+        helperText='Date and time picker'
+      />
+    </div>
+  );
+}
+```
+
+## With Validation and Constraints
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function ValidationExample() {
+  const [eventDate, setEventDate] = useState('');
+  const [touched, setTouched] = useState(false);
+
+  // Get today's date and format for min attribute
+  const today = new Date().toISOString().split('T')[0];
+  // Get date 1 year from now for max attribute
+  const nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  const maxDate = nextYear.toISOString().split('T')[0];
+
+  const hasError = touched && !eventDate;
+  const errorMessage = hasError ? 'Please select an event date' : '';
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <DateInput
+        label='Event Date'
+        value={eventDate}
+        onChange={value => {
+          setEventDate(value);
+          setTouched(true);
+        }}
+        type='date'
+        min={today}
+        max={maxDate}
+        required
+        error={errorMessage}
+        helperText='Select a date between today and next year'
+        showIcon
+      />
+
+      <button
+        onClick={() => setTouched(true)}
+        className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+      >
+        Validate
+      </button>
+    </div>
+  );
+}
+```
+
+## Different Sizes
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function SizeVariantsExample() {
+  const [smallDate, setSmallDate] = useState('');
+  const [mediumDate, setMediumDate] = useState('');
+  const [largeDate, setLargeDate] = useState('');
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <DateInput
+        label='Small Size'
+        value={smallDate}
+        onChange={setSmallDate}
+        size='sm'
+        placeholder='Small date input'
+      />
+
+      <DateInput
+        label='Medium Size (Default)'
+        value={mediumDate}
+        onChange={setMediumDate}
+        size='md'
+        placeholder='Medium date input'
+      />
+
+      <DateInput
+        label='Large Size'
+        value={largeDate}
+        onChange={setLargeDate}
+        size='lg'
+        placeholder='Large date input'
+      />
+    </div>
+  );
+}
+```
+
+## With Icons and Custom Styling
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function IconExample() {
+  const [appointmentDate, setAppointmentDate] = useState('');
+  const [appointmentTime, setAppointmentTime] = useState('');
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <DateInput
+        label='Appointment Date'
+        value={appointmentDate}
+        onChange={setAppointmentDate}
+        type='date'
+        showIcon
+        placeholder='Select appointment date'
+        helperText='Calendar icon shows this is a date field'
+      />
+
+      <DateInput
+        label='Appointment Time'
+        value={appointmentTime}
+        onChange={setAppointmentTime}
+        type='time'
+        showIcon
+        placeholder='Select appointment time'
+        helperText='Clock icon shows this is a time field'
+      />
+    </div>
+  );
+}
+```
+
+## Form Integration Example
+
+```tsx live
+import React, { useState } from 'react';
+import { DateInput } from '@react-superadmin/web';
+
+function FormIntegrationExample() {
+  const [formData, setFormData] = useState({
+    startDate: '',
+    endDate: '',
+    reminderTime: '',
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  const updateField = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className='max-w-md space-y-4'>
+      <DateInput
+        label='Start Date'
+        value={formData.startDate}
+        onChange={value => updateField('startDate', value)}
+        type='date'
+        required
+        helperText='When does this project begin?'
+      />
+
+      <DateInput
+        label='End Date'
+        value={formData.endDate}
+        onChange={value => updateField('endDate', value)}
+        type='date'
+        min={formData.startDate}
+        required
+        helperText='When does this project end?'
+      />
+
+      <DateInput
+        label='Daily Reminder Time'
+        value={formData.reminderTime}
+        onChange={value => updateField('reminderTime', value)}
+        type='time'
+        helperText='When should daily reminders be sent?'
+      />
+
+      <button
+        type='submit'
+        className='w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+      >
+        Schedule Project
+      </button>
+    </form>
+  );
+}
+```
+
+## Props Reference
+
+### DateInputProps
+
+| Prop             | Type                                   | Default      | Description                              |
+| ---------------- | -------------------------------------- | ------------ | ---------------------------------------- |
+| `value`          | `string \| null`                       | `undefined`  | Current date value (ISO string or null)  |
+| `onChange`       | `(value: string \| null) => void`      | **Required** | Callback when date changes               |
+| `label`          | `string`                               | `undefined`  | Label text for the input                 |
+| `helperText`     | `string`                               | `undefined`  | Helper text below the input              |
+| `error`          | `string`                               | `undefined`  | Error message to display                 |
+| `required`       | `boolean`                              | `false`      | Whether the field is required            |
+| `disabled`       | `boolean`                              | `false`      | Whether the input is disabled            |
+| `size`           | `"sm" \| "md" \| "lg"`                 | `"md"`       | Input size variant                       |
+| `type`           | `"date" \| "datetime-local" \| "time"` | `"date"`     | Date format type                         |
+| `min`            | `string`                               | `undefined`  | Minimum allowed date (ISO string)        |
+| `max`            | `string`                               | `undefined`  | Maximum allowed date (ISO string)        |
+| `showIcon`       | `boolean`                              | `false`      | Whether to show an icon                  |
+| `className`      | `string`                               | `undefined`  | Custom class names for the container     |
+| `inputClassName` | `string`                               | `undefined`  | Custom class names for the input element |
+| `labelClassName` | `string`                               | `undefined`  | Custom class names for the label         |
+| `placeholder`    | `string`                               | `undefined`  | Placeholder text                         |
+
+## Accessibility Features
+
+The DateInput component follows accessibility best practices:
+
+- **ARIA Support**: Proper labeling and error state attributes
+- **Keyboard Navigation**: Full keyboard support for date selection
+- **Screen Reader Support**: Clear labels and descriptions
+- **Focus Management**: Visible focus indicators
+- **Error States**: ARIA invalid attributes for form validation
+- **Icon Support**: Visual indicators that enhance understanding
+
+## Date Type Support
+
+### Date Input (`type="date"`)
+
+- HTML5 date picker interface
+- YYYY-MM-DD format
+- Browser-native calendar widget
+- Perfect for birth dates, event dates, etc.
+
+### Time Input (`type="time"`)
+
+- HH:MM format (24-hour)
+- Browser-native time picker
+- Ideal for appointment times, reminders, etc.
+
+### DateTime Input (`type="datetime-local"`)
+
+- Combined date and time picker
+- YYYY-MM-DDTHH:MM format
+- Perfect for scheduling, deadlines, etc.
+
+## Validation and Constraints
+
+### Date Range Validation
+
+```tsx
+<DateInput
+  label='Event Date'
+  min='2024-01-01' // No dates before January 1, 2024
+  max='2024-12-31' // No dates after December 31, 2024
+  value={eventDate}
+  onChange={setEventDate}
+/>
+```
+
+### Required Field Validation
+
+```tsx
+<DateInput
+  label='Due Date'
+  required
+  value={dueDate}
+  onChange={setDueDate}
+  error={dueDateError}
+/>
+```
+
+## Styling and Theming
+
+The component uses Tailwind CSS classes and supports custom styling through:
+
+- **Size variants**: `sm`, `md`, `lg` for different input sizes
+- **State classes**: Error, disabled, and focus states
+- **Custom classes**: Override any styling through `className` props
+- **Responsive design**: Works across different screen sizes
+- **Icon integration**: Calendar and clock icons for visual clarity
+
+## Integration Examples
+
+### With Form Libraries
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { DateInput } from '@react-superadmin/web';
+
+function FormExample() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name='startDate'
+        control={control}
+        rules={{ required: 'Start date is required' }}
+        render={({ field, fieldState }) => (
+          <DateInput
+            label='Start Date'
+            value={field.value}
+            onChange={field.onChange}
+            error={fieldState.error?.message}
+            required
+          />
+        )}
+      />
+    </form>
+  );
+}
+```
+
+### With Data Providers
+
+```tsx
+import { useGetList } from '@react-superadmin/core';
+import { DateInput } from '@react-superadmin/web';
+
+function DataProviderExample() {
+  const { data: events, isLoading } = useGetList('events');
+
+  return (
+    <DateInput
+      label='Event Date'
+      value={selectedDate}
+      onChange={setSelectedDate}
+      min={new Date().toISOString().split('T')[0]}
+      helperText='Select a future date for your event'
+      disabled={isLoading}
+    />
+  );
+}
+```
+
+## Best Practices
+
+1. **Always provide labels** for screen reader accessibility
+2. **Use appropriate input types** for your use case (date, time, or datetime-local)
+3. **Implement proper validation** with min/max constraints when appropriate
+4. **Show icons** to enhance visual understanding of the input type
+5. **Provide helper text** to guide users on expected input format
+6. **Handle loading states** when integrating with data providers
+7. **Use consistent date formats** throughout your application
+
+## Related Components
+
+- [Input](./input) - Basic text input component
+- [SelectInput](./select-input) - Dropdown selection component
+- [FormField](./form) - Form field wrapper with validation
+- [Button](./button) - Button component for form actions
+- [Modal](./modal) - Modal component for complex forms
