@@ -47,6 +47,7 @@ const sidebars: SidebarsConfig = {
         'components/forms',
         'components/layout',
         'components/admin',
+        'components/tooltip',
       ],
     },
     {
