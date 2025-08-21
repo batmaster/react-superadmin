@@ -1,7 +1,7 @@
-import React from 'react';
-import { Edit, Eye, Trash2 } from 'lucide-react';
-import { ColumnConfig } from '@react-superadmin/core';
-import { Button } from '../ui/Button';
+import React from "react";
+import { Edit, Eye, Trash2 } from "lucide-react";
+import { ColumnConfig } from "@react-superadmin/core";
+import { Button } from "../ui/Button";
 
 interface DataTableProps<T = any> {
   data: T[];
@@ -12,18 +12,21 @@ interface DataTableProps<T = any> {
   loading?: boolean;
 }
 
-export function DataTable<T = any>({ 
-  data, 
-  columns, 
-  onRowClick, 
-  onEdit, 
-  onDelete, 
-  loading 
+export function DataTable<T = any>({
+  data,
+  columns,
+  onRowClick,
+  onEdit,
+  onDelete,
+  loading,
 }: DataTableProps<T>) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-32">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600"></div>
+        <div
+          data-testid="loading-spinner"
+          className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600"
+        ></div>
       </div>
     );
   }
@@ -40,10 +43,10 @@ export function DataTable<T = any>({
     if (column.render) {
       return column.render(row[column.key as keyof T], row);
     }
-    
+
     const value = row[column.key as keyof T];
-    if (value == null) return '';
-    
+    if (value == null) return "";
+
     // Convert to string for display
     return String(value);
   };
@@ -71,11 +74,14 @@ export function DataTable<T = any>({
           {data.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className={`hover:bg-gray-50 ${onRowClick ? 'cursor-pointer' : ''}`}
+              className={`hover:bg-gray-50 ${onRowClick ? "cursor-pointer" : ""}`}
               onClick={() => onRowClick?.(row)}
             >
               {columns.map((column) => (
-                <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td
+                  key={column.key}
+                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                >
                   {renderCellContent(row, column)}
                 </td>
               ))}

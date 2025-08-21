@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -7,12 +7,12 @@ interface SearchBarProps {
   className?: string;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ 
-  onSearch, 
-  placeholder = "Search...", 
-  className = "" 
+export const SearchBar: React.FC<SearchBarProps> = ({
+  onSearch,
+  placeholder = "Search...",
+  className = "",
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,28 +23,29 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   }, [query, onSearch]);
 
   const handleClear = () => {
-    setQuery('');
-    onSearch('');
+    setQuery("");
+    onSearch("");
   };
 
   return (
     <div className={`relative ${className}`}>
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <Search className="h-5 w-5 text-gray-400" />
+      <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+        <Search data-testid="search-icon" className="w-5 h-5 text-gray-400" />
       </div>
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+        className="block py-2 pr-10 pl-10 w-full leading-5 placeholder-gray-500 bg-white rounded-md border border-gray-300 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
         placeholder={placeholder}
       />
       {query && (
         <button
+          data-testid="clear-button"
           onClick={handleClear}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          className="flex absolute inset-y-0 right-0 items-center pr-3"
         >
-          <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+          <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
         </button>
       )}
     </div>
