@@ -249,7 +249,8 @@ adapted for our framework's architecture.
 - **MarkdownInput** (Planned) - Markdown editor
 - **NullableBooleanInput** (Planned) - Three-state boolean input
 - **NumberInput** ✅ - Numeric input field with step controls and validation
-- **PasswordInput** (Planned) - Password input field
+- **PasswordInput** ✅ - Password input field with show/hide toggle and
+  validation
 - **PredictiveTextInput** (Planned) - AI-powered text suggestions
 - **RadioButtonGroupInput** (Planned) - Radio button group
 - **ReferenceInput** (Planned) - Related record selector

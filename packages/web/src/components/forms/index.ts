@@ -8,3 +8,4 @@ export { Input } from "./Input";
 export { ArrayInput } from "./ArrayInput";
 export { NumberInput } from "./NumberInput";
 export { PasswordInput } from "./PasswordInput";
+export { CheckboxGroupInput } from "./CheckboxGroupInput";
