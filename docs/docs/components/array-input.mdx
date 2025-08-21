@@ -1,0 +1,145 @@
+---
+id: array-input
+title: ArrayInput
+sidebar_label: ArrayInput
+keywords: [array, input, form, dynamic, validation, reordering]
+---
+
+# ArrayInput
+
+A comprehensive array input component that supports dynamic arrays of form fields with validation, reordering, and custom rendering.
+
+## Overview
+
+The `ArrayInput` component allows users to create, edit, and manage dynamic arrays of form fields. It's perfect for scenarios like:
+
+- Tag management
+- Address lists
+- Skill collections
+- Dynamic form sections
+- Multi-step workflows
+
+## Features
+
+- **Dynamic Array Management**: Add, remove, and modify array items
+- **Reordering Support**: Drag and drop or button-based reordering
+- **Validation Integration**: Built-in error handling and display
+- **Custom Rendering**: Flexible item rendering with render props
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Responsive Design**: Works on all device sizes
+- **TypeScript Support**: Full type safety with generics
+
+## Basic Usage
+
+```tsx
+import { ArrayInput } from '@react-superadmin/web';
+
+const [tags, setTags] = useState(['react', 'typescript']);
+
+<ArrayInput
+  label='Tags'
+  value={tags}
+  onChange={setTags}
+  minItems={1}
+  maxItems={10}
+>
+  {({ index, value, onChange, onRemove }) => (
+    <div key={index} className='flex gap-2 items-center'>
+      <Input value={value} onChange={onChange} />
+      <Button onClick={onRemove}>Remove</Button>
+    </div>
+  )}
+</ArrayInput>;
+```
+
+## Live Examples
+
+### Basic Array Input
+
+<!-- Temporarily commented out due to build issues
+<ArrayInputExample />
+-->
+
+### With Validation and Reordering
+
+<!-- Temporarily commented out due to build issues
+<ArrayInputWithValidation />
+-->
+
+### Complex Form Fields
+
+<!-- Temporarily commented out due to build issues
+<ArrayInputComplex />
+-->
+
+## API Reference
+
+### Props
+
+| Prop                   | Type                                              | Default      | Description                            |
+| ---------------------- | ------------------------------------------------- | ------------ | -------------------------------------- |
+| `label`                | `string`                                          | -            | The label for the array input          |
+| `required`             | `boolean`                                         | `false`      | Whether the field is required          |
+| `value`                | `any[]`                                           | `[]`         | The current array value                |
+| `onChange`             | `(value: any[]) => void`                          | -            | Callback when the array value changes  |
+| `children`             | `(props: ArrayInputItemProps) => React.ReactNode` | -            | Function to render each array item     |
+| `initialCount`         | `number`                                          | `1`          | Initial number of items to show        |
+| `minItems`             | `number`                                          | `0`          | Minimum number of items allowed        |
+| `maxItems`             | `number`                                          | `Infinity`   | Maximum number of items allowed        |
+| `allowReorder`         | `boolean`                                         | `false`      | Whether to allow reordering of items   |
+| `showItemNumbers`      | `boolean`                                         | `true`       | Whether to show item numbers           |
+| `addButtonText`        | `string`                                          | `"Add Item"` | Custom add button text                 |
+| `removeButtonText`     | `string`                                          | `"Remove"`   | Custom remove button text              |
+| `showValidationErrors` | `boolean`                                         | `true`       | Whether to show validation errors      |
+| `errors`               | `string[]`                                        | `[]`         | Validation errors for the array        |
+| `helperText`           | `string`                                          | -            | Helper text to display below the input |
+| `disabled`             | `boolean`                                         | `false`      | Whether the input is disabled          |
+
+### ArrayInputItemProps
+
+The render function receives these props for each array item:
+
+| Prop          | Type                   | Description                            |
+| ------------- | ---------------------- | -------------------------------------- |
+| `index`       | `number`               | The index of this item in the array    |
+| `value`       | `any`                  | The current value of this item         |
+| `isFirst`     | `boolean`              | Whether this is the first item         |
+| `isLast`      | `boolean`              | Whether this is the last item          |
+| `isOnly`      | `boolean`              | Whether this is the only item          |
+| `canReorder`  | `boolean`              | Whether reordering is allowed          |
+| `canRemove`   | `boolean`              | Whether this item can be removed       |
+| `canAddAfter` | `boolean`              | Whether this item can be added after   |
+| `onChange`    | `(value: any) => void` | Callback to update this item's value   |
+| `onRemove`    | `() => void`           | Callback to remove this item           |
+| `onAddAfter`  | `() => void`           | Callback to add an item after this one |
+| `onMoveUp`    | `() => void`           | Callback to move this item up          |
+| `onMoveDown`  | `() => void`           | Callback to move this item down        |
+
+## Advanced Usage
+
+### With Validation
+
+```tsx
+const [skills, setSkills] = useState(['JavaScript', 'React']);
+const [errors, setErrors] = useState([]);
+
+<ArrayInput
+  label='Skills'
+  value={skills}
+  onChange={setSkills}
+  allowReorder
+  minItems={1}
+  maxItems={10}
+  errors={errors}
+  showValidationErrors
+>
+  {({ index, value, onChange, onRemove, onMoveUp, onMoveDown, canReorder }) => (
+    <div key={index} className='flex gap-2 items-center'>
+      {canReorder && <Button onClick={onMoveUp}>↑</Button>}
+      <Input value={value} onChange={onChange} />
+      {canReorder && <Button onClick={onMoveDown}>↓</Button>}
+      <Button onClick={onRemove}>Remove</Button>
+    </div>
+  )}
+</ArrayInput>;
+```

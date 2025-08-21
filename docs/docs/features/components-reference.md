@@ -14,396 +14,470 @@ adapted for our framework's architecture.
 
 ## 📊 Status Legend
 
-- **✅** = Complete (Code + Testing + Documentation)
-- **(TO DO)** = Task created, ready for development
-- **(Planned)** = Identified from React Admin reference, needs task creation
-- **(In Progress)** = Partially implemented
+| Status          | Description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| **Planning**    | Seen in React Admin reference but not tasked in GitHub project yet |
+| **Planned**     | Has been tasked in GitHub project                                  |
+| **Implemented** | Code implementation status: TODO, In Progress, Done                |
+| **Test**        | Testing status: TODO, In Progress, Done                            |
+| **Docs**        | Documentation status: TODO, In Progress, Done                      |
 
 ## 🏗️ App Configuration
 
-### Core Framework Components
-
-- **Admin** ✅ - Main application wrapper that provides context and
-  configuration
-- **Resource** ✅ - Defines a data resource with its CRUD operations
-- **CustomRoutes** (TO DO) - Custom routing outside of resource-based routes
-- **Layout** ✅ - Main layout wrapper
+| Component        | Planning | Planned | Implemented | Test | Docs | Description                                                      |
+| ---------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------------------------------------------- |
+| **Admin**        | ✅       | ✅      | Done        | Done | Done | Main application wrapper that provides context and configuration |
+| **Resource**     | ✅       | ✅      | Done        | Done | Done | Defines a data resource with its CRUD operations                 |
+| **CustomRoutes** | ✅       | ❌      | TODO        | TODO | TODO | Custom routing outside of resource-based routes                  |
+| **Layout**       | ✅       | ✅      | Done        | Done | Done | Main layout wrapper                                              |
 
 ## 🔌 Data Fetching
 
 ### Data Provider Setup
 
-- **DataProvider Interface** ✅ - Core data provider interface
-- **REST API Data Provider** (TO DO) - RESTful API data provider
-- **GraphQL Data Provider** (TO DO) - GraphQL API data provider
-- **Mock Data Provider** ✅ - Development mock data provider
+| Component                  | Planning | Planned | Implemented | Test | Docs | Description                    |
+| -------------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------ |
+| **DataProvider Interface** | ✅       | ✅      | Done        | Done | Done | Core data provider interface   |
+| **REST API Data Provider** | ✅       | ❌      | TODO        | TODO | TODO | RESTful API data provider      |
+| **GraphQL Data Provider**  | ✅       | ❌      | TODO        | TODO | TODO | GraphQL API data provider      |
+| **Mock Data Provider**     | ✅       | ✅      | Done        | Done | Done | Development mock data provider |
 
 ### Data Provider Hooks
 
-- **useDataProvider** ✅ - Access data provider instance
-- **useGetList** ✅ - Fetch list of records
-- **useInfiniteGetList** (Planned) - Infinite scroll data fetching
-- **useGetOne** ✅ - Fetch single record
-- **useGetMany** ✅ - Fetch multiple records by IDs
-- **useGetManyReference** ✅ - Fetch related records
-- **useCreate** ✅ - Create new record
-- **useUpdate** ✅ - Update existing record
-- **useUpdateMany** (Planned) - Update multiple records
-- **useDelete** ✅ - Delete record
-- **useDeleteMany** (Planned) - Delete multiple records
-- **useGetTree** (Planned) - Fetch hierarchical data
-- **withLifecycleCallbacks** (Planned) - Add lifecycle callbacks
-- **fetchJson** (Planned) - HTTP fetch utility
+| Component                  | Planning | Planned | Implemented | Test | Docs | Description                   |
+| -------------------------- | -------- | ------- | ----------- | ---- | ---- | ----------------------------- |
+| **useDataProvider**        | ✅       | ✅      | Done        | Done | Done | Access data provider instance |
+| **useGetList**             | ✅       | ✅      | Done        | Done | Done | Fetch list of records         |
+| **useInfiniteGetList**     | ✅       | ❌      | TODO        | TODO | TODO | Infinite scroll data fetching |
+| **useGetOne**              | ✅       | ✅      | Done        | Done | Done | Fetch single record           |
+| **useGetMany**             | ✅       | ✅      | Done        | Done | Done | Fetch multiple records by IDs |
+| **useGetManyReference**    | ✅       | ✅      | Done        | Done | Done | Fetch related records         |
+| **useCreate**              | ✅       | ✅      | Done        | Done | Done | Create new record             |
+| **useUpdate**              | ✅       | ✅      | Done        | Done | Done | Update existing record        |
+| **useUpdateMany**          | ✅       | ❌      | TODO        | TODO | TODO | Update multiple records       |
+| **useDelete**              | ✅       | ✅      | Done        | Done | Done | Delete record                 |
+| **useDeleteMany**          | ✅       | ❌      | TODO        | TODO | TODO | Delete multiple records       |
+| **useGetTree**             | ✅       | ❌      | TODO        | TODO | TODO | Fetch hierarchical data       |
+| **withLifecycleCallbacks** | ✅       | ❌      | TODO        | TODO | TODO | Add lifecycle callbacks       |
+| **fetchJson**              | ✅       | ❌      | TODO        | TODO | TODO | HTTP fetch utility            |
 
 ## 🔐 Security
 
 ### Authentication
 
-- **Auth Provider Setup** (TO DO) - Authentication provider configuration
-- **Login Component** (TO DO) - Login form component
-- **RBAC System** (TO DO) - Role-based access control
+| Component               | Planning | Planned | Implemented | Test | Docs | Description                           |
+| ----------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------------- |
+| **Auth Provider Setup** | ✅       | ❌      | TODO        | TODO | TODO | Authentication provider configuration |
+| **Login Component**     | ✅       | ❌      | TODO        | TODO | TODO | Login form component                  |
+| **RBAC System**         | ✅       | ❌      | TODO        | TODO | TODO | Role-based access control             |
 
 ### Security Hooks
 
-- **useAuthenticated** ✅ - Check authentication status
-- **useAuthState** ✅ - Get authentication state
-- **useLogin** (Planned) - Login functionality
-- **useLogout** (Planned) - Logout functionality
-- **useGetIdentity** (Planned) - Get user identity
-- **useCanAccess** (Planned) - Check permissions
-- **usePermissions** (Planned) - Get user permissions
-- **useAuthProvider** (Planned) - Access auth provider
+| Component            | Planning | Planned | Implemented | Test | Docs | Description                 |
+| -------------------- | -------- | ------- | ----------- | ---- | ---- | --------------------------- |
+| **useAuthenticated** | ✅       | ✅      | Done        | Done | Done | Check authentication status |
+| **useAuthState**     | ✅       | ✅      | Done        | Done | Done | Get authentication state    |
+| **useLogin**         | ✅       | ❌      | TODO        | TODO | TODO | Login functionality         |
+| **useLogout**        | ✅       | ❌      | TODO        | TODO | TODO | Logout functionality        |
+| **useGetIdentity**   | ✅       | ❌      | TODO        | TODO | TODO | Get user identity           |
+| **useCanAccess**     | ✅       | ❌      | TODO        | TODO | TODO | Check permissions           |
+| **usePermissions**   | ✅       | ❌      | TODO        | TODO | TODO | Get user permissions        |
+| **useAuthProvider**  | ✅       | ❌      | TODO        | TODO | TODO | Access auth provider        |
 
 ## 📋 List Page
 
 ### List Components
 
-- **List** (TO DO) - Main list page wrapper
-- **ListBase** (Planned) - Base list component without UI
-- **ListGuesser** (Planned) - Auto-generated list component
-- **InfiniteList** (Planned) - Infinite scroll list
-- **Tree** (Planned) - Hierarchical data display
-- **TreeWithDetails** (Planned) - Tree with expandable details
+| Component           | Planning | Planned | Implemented | Test | Docs | Description                    |
+| ------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------ |
+| **List**            | ✅       | ✅      | TODO        | TODO | TODO | Main list page wrapper         |
+| **ListBase**        | ✅       | ❌      | TODO        | TODO | TODO | Base list component without UI |
+| **ListGuesser**     | ✅       | ❌      | TODO        | TODO | TODO | Auto-generated list component  |
+| **InfiniteList**    | ✅       | ❌      | TODO        | TODO | TODO | Infinite scroll list           |
+| **Tree**            | ✅       | ❌      | TODO        | TODO | TODO | Hierarchical data display      |
+| **TreeWithDetails** | ✅       | ❌      | TODO        | TODO | TODO | Tree with expandable details   |
 
 ### Data Display
 
-- **DataTable** ✅ - Basic data table component
-- **DataGrid** ✅ - Advanced data table with sorting, filtering, pagination
-- **Datagrid** (Planned) - React Admin style datagrid
-- **DatagridAG** (Planned) - AG Grid integration
-- **SimpleList** (Planned) - Basic list display optimized for mobile
-- **SingleFieldList** (Planned) - Single field list display
-- **EditableDatagrid** (Planned) - Inline editing data grid
-- **Calendar** (Planned) - Date-based data visualization
-- **Scheduler** (Planned) - Event scheduling interface
+| Component            | Planning | Planned | Implemented | Test | Docs | Description                                             |
+| -------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------------------------------- |
+| **DataTable**        | ✅       | ✅      | Done        | Done | Done | Basic data table component                              |
+| **DataGrid**         | ✅       | ✅      | Done        | Done | Done | Advanced data table with sorting, filtering, pagination |
+| **Datagrid**         | ✅       | ❌      | TODO        | TODO | TODO | React Admin style datagrid                              |
+| **DatagridAG**       | ✅       | ❌      | TODO        | TODO | TODO | AG Grid integration                                     |
+| **SimpleList**       | ✅       | ❌      | TODO        | TODO | TODO | Basic list display optimized for mobile                 |
+| **SingleFieldList**  | ✅       | ❌      | TODO        | TODO | TODO | Single field list display                               |
+| **EditableDatagrid** | ✅       | ❌      | TODO        | TODO | TODO | Inline editing data grid                                |
+| **Calendar**         | ✅       | ❌      | TODO        | TODO | TODO | Date-based data visualization                           |
+| **Scheduler**        | ✅       | ❌      | TODO        | TODO | TODO | Event scheduling interface                              |
 
 ### Filtering & Search
 
-- **FilterButton** (Planned) - Filter toggle button
-- **FilterList** (Planned) - Filter list component
-- **FilterLiveForm** (Planned) - Live filter form
-- **FilterLiveSearch** (Planned) - Live search filter
-- **SavedQueriesList** (Planned) - Saved queries list
-- **StackedFilters** (Planned) - Stacked filter display
-- **FilterBar** ✅ - Filter controls bar
-- **SearchBar** ✅ - Search input component
+| Component            | Planning | Planned | Implemented | Test | Docs | Description            |
+| -------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------- |
+| **FilterButton**     | ✅       | ❌      | TODO        | TODO | TODO | Filter toggle button   |
+| **FilterList**       | ✅       | ❌      | TODO        | TODO | TODO | Filter list component  |
+| **FilterLiveForm**   | ✅       | ❌      | TODO        | TODO | TODO | Live filter form       |
+| **FilterLiveSearch** | ✅       | ❌      | TODO        | TODO | TODO | Live search filter     |
+| **SavedQueriesList** | ✅       | ❌      | TODO        | TODO | TODO | Saved queries list     |
+| **StackedFilters**   | ✅       | ❌      | TODO        | TODO | TODO | Stacked filter display |
+| **FilterBar**        | ✅       | ✅      | Done        | Done | Done | Filter controls bar    |
+| **SearchBar**        | ✅       | ✅      | Done        | Done | Done | Search input component |
 
 ### Pagination & Sorting
 
-- **Pagination** ✅ - Page navigation component
-- **SortButton** (Planned) - Column sorting button
-- **SelectColumnsButton** (Planned) - Column visibility selector
-- **Count** (Planned) - Record count display
+| Component               | Planning | Planned | Implemented | Test | Docs | Description                |
+| ----------------------- | -------- | ------- | ----------- | ---- | ---- | -------------------------- |
+| **Pagination**          | ✅       | ✅      | Done        | Done | Done | Page navigation component  |
+| **SortButton**          | ✅       | ❌      | TODO        | TODO | TODO | Column sorting button      |
+| **SelectColumnsButton** | ✅       | ❌      | TODO        | TODO | TODO | Column visibility selector |
+| **Count**               | ✅       | ❌      | TODO        | TODO | TODO | Record count display       |
 
 ### List Hooks
 
-- **useListContext** (Planned) - Access list context
-- **useList** (Planned) - List state management
-- **useListController** (Planned) - List controller logic
-- **useUnselect** (Planned) - Unselect items
-- **useUnselectAll** (Planned) - Unselect all items
+| Component             | Planning | Planned | Implemented | Test | Docs | Description           |
+| --------------------- | -------- | ------- | ----------- | ---- | ---- | --------------------- |
+| **useListContext**    | ✅       | ❌      | TODO        | TODO | TODO | Access list context   |
+| **useList**           | ✅       | ❌      | TODO        | TODO | TODO | List state management |
+| **useListController** | ✅       | ❌      | TODO        | TODO | TODO | List controller logic |
+| **useUnselect**       | ✅       | ❌      | TODO        | TODO | TODO | Unselect items        |
+| **useUnselectAll**    | ✅       | ❌      | TODO        | TODO | TODO | Unselect all items    |
 
 ## ✏️ Creation & Edition Pages
 
 ### Page Components
 
-- **Create** (TO DO) - Create page wrapper
-- **CreateBase** (Planned) - Base create component without UI
-- **Edit** (TO DO) - Edit page wrapper
-- **EditBase** (Planned) - Base edit component without UI
-- **EditGuesser** (Planned) - Auto-generated edit component
-- **EditDialog** (Planned) - Edit in dialog modal
-- **EditInDialogButton** (Planned) - Button to open edit dialog
-- **CreateDialog** (Planned) - Create in dialog modal
-- **CreateInDialogButton** (Planned) - Button to open create dialog
+| Component                | Planning | Planned | Implemented | Test | Docs | Description                      |
+| ------------------------ | -------- | ------- | ----------- | ---- | ---- | -------------------------------- |
+| **Create**               | ✅       | ✅      | TODO        | TODO | TODO | Create page wrapper              |
+| **CreateBase**           | ✅       | ❌      | TODO        | TODO | TODO | Base create component without UI |
+| **Edit**                 | ✅       | ✅      | TODO        | TODO | TODO | Edit page wrapper                |
+| **EditBase**             | ✅       | ❌      | TODO        | TODO | TODO | Base edit component without UI   |
+| **EditGuesser**          | ✅       | ❌      | TODO        | TODO | TODO | Auto-generated edit component    |
+| **EditDialog**           | ✅       | ❌      | TODO        | TODO | TODO | Edit in dialog modal             |
+| **EditInDialogButton**   | ✅       | ❌      | TODO        | TODO | TODO | Button to open edit dialog       |
+| **CreateDialog**         | ✅       | ❌      | TODO        | TODO | TODO | Create in dialog modal           |
+| **CreateInDialogButton** | ✅       | ❌      | TODO        | TODO | TODO | Button to open create dialog     |
 
 ### Form Components
 
-- **SimpleForm** ✅ - Basic form layout
-- **TabbedForm** ✅ - Multi-tab form layout
-- **Form** ✅ - Base form component
-- **LongForm** (Planned) - Scrollable long form
-- **AccordionForm** (Planned) - Collapsible form sections
-- **WizardForm** (Planned) - Multi-step form wizard
-- **JsonSchemaForm** (Planned) - Schema-driven forms
+| Component          | Planning | Planned | Implemented | Test | Docs | Description               |
+| ------------------ | -------- | ------- | ----------- | ---- | ---- | ------------------------- |
+| **SimpleForm**     | ✅       | ✅      | Done        | Done | Done | Basic form layout         |
+| **TabbedForm**     | ✅       | ✅      | Done        | Done | Done | Multi-tab form layout     |
+| **Form**           | ✅       | ✅      | Done        | Done | Done | Base form component       |
+| **LongForm**       | ✅       | ❌      | TODO        | TODO | TODO | Scrollable long form      |
+| **AccordionForm**  | ✅       | ❌      | TODO        | TODO | TODO | Collapsible form sections |
+| **WizardForm**     | ✅       | ❌      | TODO        | TODO | TODO | Multi-step form wizard    |
+| **JsonSchemaForm** | ✅       | ❌      | TODO        | TODO | TODO | Schema-driven forms       |
 
 ### Form Elements
 
-- **Toolbar** (Planned) - Form toolbar with actions
-- **SaveButton** (Planned) - Form save button
-- **AutoPersistInStore** (Planned) - Auto-save to store
-- **AutoSave** (Planned) - Auto-save functionality
-- **FormFillerButton** (Planned) - Form auto-fill button
+| Component              | Planning | Planned | Implemented | Test | Docs | Description               |
+| ---------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------- |
+| **Toolbar**            | ✅       | ❌      | TODO        | TODO | TODO | Form toolbar with actions |
+| **SaveButton**         | ✅       | ❌      | TODO        | TODO | TODO | Form save button          |
+| **AutoPersistInStore** | ✅       | ❌      | TODO        | TODO | TODO | Auto-save to store        |
+| **AutoSave**           | ✅       | ❌      | TODO        | TODO | TODO | Auto-save functionality   |
+| **FormFillerButton**   | ✅       | ❌      | TODO        | TODO | TODO | Form auto-fill button     |
 
 ### Form Hooks
 
-- **useCreateContext** (Planned) - Access create context
-- **useCreateController** (Planned) - Create controller logic
-- **useEditContext** (Planned) - Access edit context
-- **useEditController** (Planned) - Edit controller logic
-- **useSaveContext** (Planned) - Access save context
-- **useRecordFromLocation** (Planned) - Get record from URL
-- **useRegisterMutationMiddleware** (Planned) - Register mutation middleware
-- **useUnique** (Planned) - Unique field validation
+| Component                         | Planning | Planned | Implemented | Test | Docs | Description                  |
+| --------------------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------- |
+| **useCreateContext**              | ✅       | ❌      | TODO        | TODO | TODO | Access create context        |
+| **useCreateController**           | ✅       | ❌      | TODO        | TODO | TODO | Create controller logic      |
+| **useEditContext**                | ✅       | ❌      | TODO        | TODO | TODO | Access edit context          |
+| **useEditController**             | ✅       | ❌      | TODO        | TODO | TODO | Edit controller logic        |
+| **useSaveContext**                | ✅       | ❌      | TODO        | TODO | TODO | Access save context          |
+| **useRecordFromLocation**         | ✅       | ❌      | TODO        | TODO | TODO | Get record from URL          |
+| **useRegisterMutationMiddleware** | ✅       | ❌      | TODO        | TODO | TODO | Register mutation middleware |
+| **useUnique**                     | ✅       | ❌      | TODO        | TODO | TODO | Unique field validation      |
 
 ## 👁️ Show Page
 
 ### Show Components
 
-- **Show** (TO DO) - Show page wrapper
-- **ShowBase** (Planned) - Base show component without UI
-- **ShowGuesser** (Planned) - Auto-generated show component
-- **SimpleShowLayout** (Planned) - Simple show layout
-- **TabbedShowLayout** (Planned) - Tabbed show layout
-- **Labeled** (Planned) - Labeled field wrapper
-- **ShowDialog** (Planned) - Show in dialog modal
-- **ShowInDialogButton** (Planned) - Button to open show dialog
+| Component              | Planning | Planned | Implemented | Test | Docs | Description                    |
+| ---------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------ |
+| **Show**               | ✅       | ✅      | TODO        | TODO | TODO | Show page wrapper              |
+| **ShowBase**           | ✅       | ❌      | TODO        | TODO | TODO | Base show component without UI |
+| **ShowGuesser**        | ✅       | ❌      | TODO        | TODO | TODO | Auto-generated show component  |
+| **SimpleShowLayout**   | ✅       | ❌      | TODO        | TODO | TODO | Simple show layout             |
+| **TabbedShowLayout**   | ✅       | ❌      | TODO        | TODO | TODO | Tabbed show layout             |
+| **Labeled**            | ✅       | ❌      | TODO        | TODO | TODO | Labeled field wrapper          |
+| **ShowDialog**         | ✅       | ❌      | TODO        | TODO | TODO | Show in dialog modal           |
+| **ShowInDialogButton** | ✅       | ❌      | TODO        | TODO | TODO | Button to open show dialog     |
 
 ### Show Hooks
 
-- **useShowContext** (Planned) - Access show context
-- **useShowController** (Planned) - Show controller logic
+| Component             | Planning | Planned | Implemented | Test | Docs | Description           |
+| --------------------- | -------- | ------- | ----------- | ---- | ---- | --------------------- |
+| **useShowContext**    | ✅       | ❌      | TODO        | TODO | TODO | Access show context   |
+| **useShowController** | ✅       | ❌      | TODO        | TODO | TODO | Show controller logic |
 
 ## 🔄 Common
 
 ### Common Components
 
-- **WithRecord** (Planned) - Record context provider
+| Component      | Planning | Planned | Implemented | Test | Docs | Description             |
+| -------------- | -------- | ------- | ----------- | ---- | ---- | ----------------------- |
+| **WithRecord** | ✅       | ❌      | TODO        | TODO | TODO | Record context provider |
 
 ### Common Hooks
 
-- **useRecordContext** (Planned) - Access record context
-- **useGetRecordId** (Planned) - Get current record ID
-- **useNotify** (Planned) - Show notifications
-- **useRedirect** (Planned) - Redirect functionality
-- **useRefresh** (Planned) - Refresh data
+| Component            | Planning | Planned | Implemented | Test | Docs | Description            |
+| -------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------- |
+| **useRecordContext** | ✅       | ❌      | TODO        | TODO | TODO | Access record context  |
+| **useGetRecordId**   | ✅       | ❌      | TODO        | TODO | TODO | Get current record ID  |
+| **useNotify**        | ✅       | ❌      | TODO        | TODO | TODO | Show notifications     |
+| **useRedirect**      | ✅       | ❌      | TODO        | TODO | TODO | Redirect functionality |
+| **useRefresh**       | ✅       | ❌      | TODO        | TODO | TODO | Refresh data           |
 
 ## 🔖 Fields
 
 ### Basic Fields
 
-- **ArrayField** (Planned) - Display array data
-- **BooleanField** (Planned) - Display boolean values
-- **ChipField** (Planned) - Display tags or chips
-- **DateField** (Planned) - Display dates with formatting
-- **EmailField** (Planned) - Display email addresses
-- **FileField** (Planned) - Display file information
-- **FunctionField** (Planned) - Display computed values
-- **ImageField** (Planned) - Display images
-- **MarkdownField** (Planned) - Display markdown content
-- **NumberField** (Planned) - Display numeric values
-- **RecordField** (Planned) - Display record context data
-- **ReferenceField** ✅ - Display related record data
-- **ReferenceArrayField** (Planned) - Display array of related records
-- **ReferenceManyField** (Planned) - Display many related records
-- **ReferenceManyCount** (Planned) - Display count of related records
-- **ReferenceManyToManyField** (Planned) - Display many-to-many relationships
-- **ReferenceOneField** (Planned) - Display single related record
-- **RichTextField** (Planned) - Display rich text content
-- **SelectField** (Planned) - Display selected values
-- **TextField** ✅ - Display text content
-- **TranslatableFields** (Planned) - Multi-language field support
-- **UrlField** (Planned) - Display URLs with links
-- **WrapperField** (Planned) - Custom field wrapper
+| Component                    | Planning | Planned | Implemented | Test | Docs | Description                        |
+| ---------------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------------- |
+| **ArrayField**               | ✅       | ❌      | TODO        | TODO | TODO | Display array data                 |
+| **BooleanField**             | ✅       | ❌      | TODO        | TODO | TODO | Display boolean values             |
+| **ChipField**                | ✅       | ❌      | TODO        | TODO | TODO | Display tags or chips              |
+| **DateField**                | ✅       | ❌      | TODO        | TODO | TODO | Display dates with formatting      |
+| **EmailField**               | ✅       | ❌      | TODO        | TODO | TODO | Display email addresses            |
+| **FileField**                | ✅       | ❌      | TODO        | TODO | TODO | Display file information           |
+| **FunctionField**            | ✅       | ❌      | TODO        | TODO | TODO | Display computed values            |
+| **ImageField**               | ✅       | ❌      | TODO        | TODO | TODO | Display images                     |
+| **MarkdownField**            | ✅       | ❌      | TODO        | TODO | TODO | Display markdown content           |
+| **NumberField**              | ✅       | ❌      | TODO        | TODO | TODO | Display numeric values             |
+| **RecordField**              | ✅       | ❌      | TODO        | TODO | TODO | Display record context data        |
+| **ReferenceField**           | ✅       | ✅      | Done        | Done | Done | Display related record data        |
+| **ReferenceArrayField**      | ✅       | ❌      | TODO        | TODO | TODO | Display array of related records   |
+| **ReferenceManyField**       | ✅       | ❌      | TODO        | TODO | TODO | Display many related records       |
+| **ReferenceManyCount**       | ✅       | ❌      | TODO        | TODO | TODO | Display count of related records   |
+| **ReferenceManyToManyField** | ✅       | ❌      | TODO        | TODO | TODO | Display many-to-many relationships |
+| **ReferenceOneField**        | ✅       | ❌      | TODO        | TODO | TODO | Display single related record      |
+| **RichTextField**            | ✅       | ❌      | TODO        | TODO | TODO | Display rich text content          |
+| **SelectField**              | ✅       | ❌      | TODO        | TODO | TODO | Display selected values            |
+| **TextField**                | ✅       | ✅      | Done        | Done | Done | Display text content               |
+| **TranslatableFields**       | ✅       | ❌      | TODO        | TODO | TODO | Multi-language field support       |
+| **UrlField**                 | ✅       | ❌      | TODO        | TODO | TODO | Display URLs with links            |
+| **WrapperField**             | ✅       | ❌      | TODO        | TODO | TODO | Custom field wrapper               |
 
 ### Field Hooks
 
-- **useFieldValue** (Planned) - Get field value
+| Component         | Planning | Planned | Implemented | Test | Docs | Description     |
+| ----------------- | -------- | ------- | ----------- | ---- | ---- | --------------- |
+| **useFieldValue** | ✅       | ❌      | TODO        | TODO | TODO | Get field value |
 
 ## ⌨️ Inputs
 
 ### Basic Inputs
 
-- **ArrayInput** ✅ - Dynamic field arrays
-- **AutocompleteInput** ✅ - Searchable select input
-- **AutocompleteArrayInput** (Planned) - Multiple autocomplete
-- **BooleanInput** ✅ - Boolean input (checkbox)
-- **CheckboxGroupInput** (Planned) - Multiple checkbox group
-- **DateInput** ✅ - Date picker input
-- **DateRangeInput** (Planned) - Date range picker
-- **DateTimeInput** (Planned) - Date and time picker
-- **DualListInput** (Planned) - Two-column list selector
-- **FileInput** (Planned) - File upload input
-- **ImageInput** (Planned) - Image upload input
-- **InPlaceEditor** (Planned) - Inline editing input
-- **MarkdownInput** (Planned) - Markdown editor
-- **NullableBooleanInput** (Planned) - Three-state boolean input
-- **NumberInput** ✅ - Numeric input field with step controls and validation
-- **PasswordInput** ✅ - Password input field with show/hide toggle and
-  validation
-- **PredictiveTextInput** (Planned) - AI-powered text suggestions
-- **RadioButtonGroupInput** (Planned) - Radio button group
-- **ReferenceInput** (Planned) - Related record selector
-- **ReferenceArrayInput** (Planned) - Multiple related record selector
-- **ReferenceManyInput** (Planned) - Many related records selector
-- **ReferenceManyToManyInput** (Planned) - Many-to-many relationship input
-- **ReferenceNodeInput** (Planned) - Tree node selector
-- **ReferenceOneInput** (Planned) - Single related record selector
-- **RichTextInput** (Planned) - Rich text editor
-- **SearchInput** (Planned) - Search input with suggestions
-- **SelectInput** ✅ - Single select dropdown
-- **SelectArrayInput** (Planned) - Multiple select dropdown
-- **SimpleFormIterator** (Planned) - Array input iterator
-- **SmartRichTextInput** (Planned) - Intelligent rich text editor
-- **TextArrayInput** (Planned) - Array of text inputs
-- **TextInput** ✅ - Text input field
-- **TimeInput** (Planned) - Time picker input
-- **TranslatableInputs** (Planned) - Multi-language input support
-- **TreeInput** (Planned) - Tree structure input
+| Component                    | Planning | Planned | Implemented | Test | Docs | Description                      |
+| ---------------------------- | -------- | ------- | ----------- | ---- | ---- | -------------------------------- |
+| **ArrayInput**               | ✅       | ✅      | Done        | Done | Done | Dynamic field arrays             |
+| **AutocompleteInput**        | ✅       | ✅      | Done        | Done | Done | Searchable select input          |
+| **AutocompleteArrayInput**   | ✅       | ❌      | TODO        | TODO | TODO | Multiple autocomplete            |
+| **BooleanInput**             | ✅       | ✅      | Done        | Done | Done | Boolean input (checkbox)         |
+| **CheckboxGroupInput**       | ✅       | ❌      | TODO        | TODO | TODO | Multiple checkbox group          |
+| **DateInput**                | ✅       | ✅      | Done        | Done | Done | Date picker input                |
+| **DateRangeInput**           | ✅       | ❌      | TODO        | TODO | TODO | Date range picker                |
+| **DateTimeInput**            | ✅       | ❌      | TODO        | TODO | TODO | Date and time picker             |
+| **DualListInput**            | ✅       | ❌      | TODO        | TODO | TODO | Two-column list selector         |
+| **FileInput**                | ✅       | ❌      | TODO        | TODO | TODO | File upload input                |
+| **ImageInput**               | ✅       | ❌      | TODO        | TODO | TODO | Image upload input               |
+| **InPlaceEditor**            | ✅       | ❌      | TODO        | TODO | TODO | Inline editing input             |
+| **MarkdownInput**            | ✅       | ❌      | TODO        | TODO | TODO | Markdown editor                  |
+| **NullableBooleanInput**     | ✅       | ❌      | TODO        | TODO | TODO | Three-state boolean input        |
+| **NumberInput**              | ✅       | ❌      | TODO        | TODO | TODO | Numeric input field              |
+| **PasswordInput**            | ✅       | ❌      | TODO        | TODO | TODO | Password input field             |
+| **PredictiveTextInput**      | ✅       | ❌      | TODO        | TODO | TODO | AI-powered text suggestions      |
+| **RadioButtonGroupInput**    | ✅       | ❌      | TODO        | TODO | TODO | Radio button group               |
+| **ReferenceInput**           | ✅       | ❌      | TODO        | TODO | TODO | Related record selector          |
+| **ReferenceArrayInput**      | ✅       | ❌      | TODO        | TODO | TODO | Multiple related record selector |
+| **ReferenceManyInput**       | ✅       | ❌      | TODO        | TODO | TODO | Many related records selector    |
+| **ReferenceManyToManyInput** | ✅       | ❌      | TODO        | TODO | TODO | Many-to-many relationship input  |
+| **ReferenceNodeInput**       | ✅       | ❌      | TODO        | TODO | TODO | Tree node selector               |
+| **ReferenceOneInput**        | ✅       | ❌      | TODO        | TODO | TODO | Single related record selector   |
+| **RichTextInput**            | ✅       | ❌      | TODO        | TODO | TODO | Rich text editor                 |
+| **SearchInput**              | ✅       | ❌      | TODO        | TODO | TODO | Search input with suggestions    |
+| **SelectInput**              | ✅       | ✅      | Done        | Done | Done | Single select dropdown           |
+| **SelectArrayInput**         | ✅       | ❌      | TODO        | TODO | TODO | Multiple select dropdown         |
+| **SimpleFormIterator**       | ✅       | ❌      | TODO        | TODO | TODO | Array input iterator             |
+| **SmartRichTextInput**       | ✅       | ❌      | TODO        | TODO | TODO | Intelligent rich text editor     |
+| **TextArrayInput**           | ✅       | ❌      | TODO        | TODO | TODO | Array of text inputs             |
+| **TextInput**                | ✅       | ✅      | Done        | Done | Done | Text input field                 |
+| **TimeInput**                | ✅       | ❌      | TODO        | TODO | TODO | Time picker input                |
+| **TranslatableInputs**       | ✅       | ❌      | TODO        | TODO | TODO | Multi-language input support     |
+| **TreeInput**                | ✅       | ❌      | TODO        | TODO | TODO | Tree structure input             |
 
 ### Input Hooks
 
-- **useInput** (Planned) - Input state management
+| Component    | Planning | Planned | Implemented | Test | Docs | Description            |
+| ------------ | -------- | ------- | ----------- | ---- | ---- | ---------------------- |
+| **useInput** | ✅       | ❌      | TODO        | TODO | TODO | Input state management |
 
 ## ⚙️ Preferences
 
 ### Preference Hooks
 
-- **useStore** (Planned) - Store state management
-- **useRemoveFromStore** (Planned) - Remove from store
-- **useResetStore** (Planned) - Reset store state
-- **useStoreContext** (Planned) - Access store context
+| Component              | Planning | Planned | Implemented | Test | Docs | Description            |
+| ---------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------- |
+| **useStore**           | ✅       | ❌      | TODO        | TODO | TODO | Store state management |
+| **useRemoveFromStore** | ✅       | ❌      | TODO        | TODO | TODO | Remove from store      |
+| **useResetStore**      | ✅       | ❌      | TODO        | TODO | TODO | Reset store state      |
+| **useStoreContext**    | ✅       | ❌      | TODO        | TODO | TODO | Access store context   |
 
 ### Preference Components
 
-- **Configurable** (Planned) - User-configurable components
+| Component        | Planning | Planned | Implemented | Test | Docs | Description                  |
+| ---------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------- |
+| **Configurable** | ✅       | ❌      | TODO        | TODO | TODO | User-configurable components |
 
 ## 🌍 I18N Provider and Translations
 
 ### I18N Components
 
-- **Translate** (Planned) - Translation component
+| Component     | Planning | Planned | Implemented | Test | Docs | Description           |
+| ------------- | -------- | ------- | ----------- | ---- | ---- | --------------------- |
+| **Translate** | ✅       | ❌      | TODO        | TODO | TODO | Translation component |
 
 ### I18N Hooks
 
-- **useTranslate** (Planned) - Translation hook
-- **useLocaleState** (Planned) - Locale state management
+| Component          | Planning | Planned | Implemented | Test | Docs | Description             |
+| ------------------ | -------- | ------- | ----------- | ---- | ---- | ----------------------- |
+| **useTranslate**   | ✅       | ❌      | TODO        | TODO | TODO | Translation hook        |
+| **useLocaleState** | ✅       | ❌      | TODO        | TODO | TODO | Locale state management |
 
 ### I18N Setup
 
-- **LocalesMenuButton** (Planned) - Locale selection menu
+| Component             | Planning | Planned | Implemented | Test | Docs | Description           |
+| --------------------- | -------- | ------- | ----------- | ---- | ---- | --------------------- |
+| **LocalesMenuButton** | ✅       | ❌      | TODO        | TODO | TODO | Locale selection menu |
 
 ## 🎨 Other UI Components
 
 ### Layout Components
 
-- **ContainerLayout** (Planned) - Container-based layout
-- **HorizontalMenu** (Planned) - Horizontal menu layout
-- **SolarLayout** (Planned) - Solar design layout
-- **AppBar** ✅ - Top navigation bar
-- **Menu** (Planned) - Main navigation menu
-- **MultiLevelMenu** (Planned) - Nested menu structure
-- **IconMenu** (Planned) - Icon-based menu
+| Component           | Planning | Planned | Implemented | Test | Docs | Description            |
+| ------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------- |
+| **ContainerLayout** | ✅       | ❌      | TODO        | TODO | TODO | Container-based layout |
+| **HorizontalMenu**  | ✅       | ❌      | TODO        | TODO | TODO | Horizontal menu layout |
+| **SolarLayout**     | ✅       | ❌      | TODO        | TODO | TODO | Solar design layout    |
+| **AppBar**          | ✅       | ✅      | Done        | Done | Done | Top navigation bar     |
+| **Menu**            | ✅       | ❌      | TODO        | TODO | TODO | Main navigation menu   |
+| **MultiLevelMenu**  | ✅       | ❌      | TODO        | TODO | TODO | Nested menu structure  |
+| **IconMenu**        | ✅       | ❌      | TODO        | TODO | TODO | Icon-based menu        |
 
 ### Navigation Components
 
-- **Title** (Planned) - Page title component
-- **Breadcrumb** (Planned) - Navigation path display
-- **Search** (Planned) - Global search component
-- **SearchWithResult** (Planned) - Search with live results
+| Component            | Planning | Planned | Implemented | Test | Docs | Description              |
+| -------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------ |
+| **Title**            | ✅       | ❌      | TODO        | TODO | TODO | Page title component     |
+| **Breadcrumb**       | ✅       | ❌      | TODO        | TODO | TODO | Navigation path display  |
+| **Search**           | ✅       | ❌      | TODO        | TODO | TODO | Global search component  |
+| **SearchWithResult** | ✅       | ❌      | TODO        | TODO | TODO | Search with live results |
 
 ### Utility Components
 
-- **Confirm** (Planned) - Confirmation dialogs
-- **RevisionsButton** (Planned) - Version history access
-- **CheckForApplicationUpdate** (Planned) - Update checker
-- **RecordRepresentation** (Planned) - Record display
-- **PrevNextButtons** (Planned) - Previous/next navigation
+| Component                     | Planning | Planned | Implemented | Test | Docs | Description              |
+| ----------------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------ |
+| **Confirm**                   | ✅       | ❌      | TODO        | TODO | TODO | Confirmation dialogs     |
+| **RevisionsButton**           | ✅       | ❌      | TODO        | TODO | TODO | Version history access   |
+| **CheckForApplicationUpdate** | ✅       | ❌      | TODO        | TODO | TODO | Update checker           |
+| **RecordRepresentation**      | ✅       | ❌      | TODO        | TODO | TODO | Record display           |
+| **PrevNextButtons**           | ✅       | ❌      | TODO        | TODO | TODO | Previous/next navigation |
 
 ### UI Hooks
 
-- **useDefineAppLocation** (Planned) - Define app location
-- **useGetRecordRepresentation** (Planned) - Get record representation
+| Component                      | Planning | Planned | Implemented | Test | Docs | Description               |
+| ------------------------------ | -------- | ------- | ----------- | ---- | ---- | ------------------------- |
+| **useDefineAppLocation**       | ✅       | ❌      | TODO        | TODO | TODO | Define app location       |
+| **useGetRecordRepresentation** | ✅       | ❌      | TODO        | TODO | TODO | Get record representation |
 
 ## 🎨 Theming
 
 ### Theme Components
 
-- **ToggleThemeButton** (Planned) - Theme switching button
-- **Box** (Planned) - Layout container component
-- **Stack** (Planned) - Vertical layout component
-- **Grid** (Planned) - Grid layout component
+| Component             | Planning | Planned | Implemented | Test | Docs | Description                |
+| --------------------- | -------- | ------- | ----------- | ---- | ---- | -------------------------- |
+| **ToggleThemeButton** | ✅       | ❌      | TODO        | TODO | TODO | Theme switching button     |
+| **Box**               | ✅       | ❌      | TODO        | TODO | TODO | Layout container component |
+| **Stack**             | ✅       | ❌      | TODO        | TODO | TODO | Vertical layout component  |
+| **Grid**              | ✅       | ❌      | TODO        | TODO | TODO | Grid layout component      |
 
 ### Theme Hooks
 
-- **useMediaQuery** ✅ - Media query hook
-- **useTheme** ✅ - Theme access hook
+| Component         | Planning | Planned | Implemented | Test | Docs | Description       |
+| ----------------- | -------- | ------- | ----------- | ---- | ---- | ----------------- |
+| **useMediaQuery** | ✅       | ✅      | Done        | Done | Done | Media query hook  |
+| **useTheme**      | ✅       | ✅      | Done        | Done | Done | Theme access hook |
 
 ## 🔄 Realtime
 
 ### Realtime Components
 
-- **ListLiveUpdate** (Planned) - Real-time list updates
-- **EditLive** (Planned) - Real-time editing
-- **ShowLive** (Planned) - Real-time display updates
-- **MenuLive** (Planned) - Real-time menu updates
+| Component          | Planning | Planned | Implemented | Test | Docs | Description               |
+| ------------------ | -------- | ------- | ----------- | ---- | ---- | ------------------------- |
+| **ListLiveUpdate** | ✅       | ❌      | TODO        | TODO | TODO | Real-time list updates    |
+| **EditLive**       | ✅       | ❌      | TODO        | TODO | TODO | Real-time editing         |
+| **ShowLive**       | ✅       | ❌      | TODO        | TODO | TODO | Real-time display updates |
+| **MenuLive**       | ✅       | ❌      | TODO        | TODO | TODO | Real-time menu updates    |
 
 ### Realtime Hooks
 
-- **usePublish** (Planned) - Publish realtime events
-- **useSubscribe** (Planned) - Subscribe to realtime events
-- **useSubscribeCallback** (Planned) - Subscribe with callback
-- **useSubscribeToRecord** (Planned) - Subscribe to record changes
-- **useSubscribeToRecordList** (Planned) - Subscribe to list changes
-- **useLock** (Planned) - Lock records
-- **useUnlock** (Planned) - Unlock records
-- **useGetLock** (Planned) - Get lock status
-- **useGetLockLive** (Planned) - Get live lock status
-- **useGetLocks** (Planned) - Get all locks
-- **useGetLocksLive** (Planned) - Get live locks
-- **useLockOnMount** (Planned) - Lock on component mount
-- **useLockOnCall** (Planned) - Lock on function call
-- **useGetListLive** (Planned) - Live list data
-- **useGetOneLive** (Planned) - Live single record data
+| Component                    | Planning | Planned | Implemented | Test | Docs | Description                  |
+| ---------------------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------- |
+| **usePublish**               | ✅       | ❌      | TODO        | TODO | TODO | Publish realtime events      |
+| **useSubscribe**             | ✅       | ❌      | TODO        | TODO | TODO | Subscribe to realtime events |
+| **useSubscribeCallback**     | ✅       | ❌      | TODO        | TODO | TODO | Subscribe with callback      |
+| **useSubscribeToRecord**     | ✅       | ❌      | TODO        | TODO | TODO | Subscribe to record changes  |
+| **useSubscribeToRecordList** | ✅       | ❌      | TODO        | TODO | TODO | Subscribe to list changes    |
+| **useLock**                  | ✅       | ❌      | TODO        | TODO | TODO | Lock records                 |
+| **useUnlock**                | ✅       | ❌      | TODO        | TODO | TODO | Unlock records               |
+| **useGetLock**               | ✅       | ❌      | TODO        | TODO | TODO | Get lock status              |
+| **useGetLockLive**           | ✅       | ❌      | TODO        | TODO | TODO | Get live lock status         |
+| **useGetLocks**              | ✅       | ❌      | TODO        | TODO | TODO | Get all locks                |
+| **useGetLocksLive**          | ✅       | ❌      | TODO        | TODO | TODO | Get live locks               |
+| **useLockOnMount**           | ✅       | ❌      | TODO        | TODO | TODO | Lock on component mount      |
+| **useLockOnCall**            | ✅       | ❌      | TODO        | TODO | TODO | Lock on function call        |
+| **useGetListLive**           | ✅       | ❌      | TODO        | TODO | TODO | Live list data               |
+| **useGetOneLive**            | ✅       | ❌      | TODO        | TODO | TODO | Live single record data      |
 
 ## 📱 Basic UI Components
 
 ### Interactive Components
 
-- **Button** ✅ - Action buttons
-- **Card** ✅ - Content cards
-- **Dropdown** ✅ - Dropdown menus
-- **Modal** ✅ - Modal dialogs
-- **Alert** (In Progress) - Information, warning, and error alerts (needs
-  documentation)
-- **Badge** ✅ - Status badges and labels
-- **Tooltip** (TO DO) - Hover tooltips
-- **Label** ✅ - Form labels
+| Component    | Planning | Planned | Implemented | Test | Docs | Description                            |
+| ------------ | -------- | ------- | ----------- | ---- | ---- | -------------------------------------- |
+| **Button**   | ✅       | ✅      | Done        | Done | Done | Action buttons                         |
+| **Card**     | ✅       | ✅      | Done        | Done | Done | Content cards                          |
+| **Dropdown** | ✅       | ✅      | Done        | Done | Done | Dropdown menus                         |
+| **Modal**    | ✅       | ✅      | Done        | Done | Done | Modal dialogs                          |
+| **Alert**    | ✅       | ✅      | Done        | Done | Done | Information, warning, and error alerts |
+| **Badge**    | ✅       | ✅      | Done        | Done | Done | Status badges and labels               |
+| **Tooltip**  | ✅       | ✅      | Done        | Done | Done | Hover tooltips                         |
+| **Label**    | ✅       | ✅      | Done        | Done | Done | Form labels                            |
 
 ### Feedback Components
 
-- **Notification** (Planned) - Toast notifications
-- **Loading** (Planned) - Loading indicators
-- **Skeleton** (Planned) - Content loading placeholders
-- **Progress** (Planned) - Progress bars and indicators
+| Component        | Planning | Planned | Implemented | Test | Docs | Description                  |
+| ---------------- | -------- | ------- | ----------- | ---- | ---- | ---------------------------- |
+| **Notification** | ✅       | ❌      | TODO        | TODO | TODO | Toast notifications          |
+| **Loading**      | ✅       | ❌      | TODO        | TODO | TODO | Loading indicators           |
+| **Skeleton**     | ✅       | ❌      | TODO        | TODO | TODO | Content loading placeholders |
+| **Progress**     | ✅       | ❌      | TODO        | TODO | TODO | Progress bars and indicators |
 
 ## 📚 Recipes
 
 ### Advanced Features
 
-- **Caching** (Planned) - Data caching strategies
-- **Unit Testing** ✅ - Testing framework and utilities
-- **Advanced Tutorials** (Planned) - Complex implementation guides
+| Component              | Planning | Planned | Implemented | Test | Docs | Description                     |
+| ---------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------------- |
+| **Caching**            | ✅       | ❌      | TODO        | TODO | TODO | Data caching strategies         |
+| **Unit Testing**       | ✅       | ✅      | Done        | Done | Done | Testing framework and utilities |
+| **Advanced Tutorials** | ✅       | ❌      | TODO        | TODO | TODO | Complex implementation guides   |
 
 ## 📊 Implementation Status Summary
 

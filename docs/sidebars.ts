@@ -40,6 +40,7 @@ const sidebars: SidebarsConfig = {
         'components/number-input',
         'components/password-input',
         'components/label',
+        'components/array-input',
         'components/form',
         'components/forms',
         'components/layout',
