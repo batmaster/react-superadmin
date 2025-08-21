@@ -43,12 +43,33 @@ pnpm build:timestamp
 🎉 Build timestamps updated successfully!
 ```
 
+### `fix-live-examples.js`
+
+Automatically fixes common issues in live examples across all MDX files.
+
+**Usage:**
+```bash
+# Fix live examples manually
+node scripts/fix-live-examples.js
+
+# Fix live examples using npm script
+pnpm fix:live
+```
+
+**What it fixes:**
+- Converts `React.React.useState` to `React.useState`
+- Changes `tsx live` to `jsx live` code blocks
+- Adds component rendering to example functions
+- Removes duplicate component tags
+- Ensures all live examples work properly
+
 ## NPM Scripts
 
 The following npm scripts are available in `package.json`:
 
 - `pnpm build` - Build documentation normally
 - `pnpm build:timestamp` - Update timestamps and build documentation
+- `pnpm fix:live` - Fix all live examples automatically
 - `pnpm serve` - Serve documentation locally for development
 
 ## Adding Timestamps to New Files
