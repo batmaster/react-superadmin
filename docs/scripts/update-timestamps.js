@@ -12,7 +12,7 @@ function updateBuildTimestamps() {
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
-    hour12: true
+    hour12: true,
   });
 
   console.log(`🔄 Updating build timestamps to: ${currentTime}`);
@@ -21,30 +21,35 @@ function updateBuildTimestamps() {
   const filesToUpdate = [
     'index.md',
     'components/button.mdx',
-    'components/footer.mdx'
+    'components/footer.mdx',
   ];
 
   filesToUpdate.forEach(file => {
     const filePath = path.join(docsDir, file);
-    
+
     if (fs.existsSync(filePath)) {
       let content = fs.readFileSync(filePath, 'utf8');
-      
+
       // Find the end of frontmatter (after the second ---)
       const firstDash = content.indexOf('---');
       const secondDash = content.indexOf('---', firstDash + 3);
-      
+
       if (secondDash !== -1) {
         // Remove any existing timestamps
         const timestampPattern = /> \*\*🔄 Last Built\*\*: .*\n/g;
         content = content.replace(timestampPattern, '');
-        
+
         // Insert timestamp after frontmatter
         const beforeContent = content.substring(0, secondDash + 3);
         const afterContent = content.substring(secondDash + 3);
-        
-        const newContent = beforeContent + '\n\n> **🔄 Last Built**: ' + currentTime + '\n' + afterContent;
-        
+
+        const newContent =
+          beforeContent +
+          '\n\n> **🔄 Last Built**: ' +
+          currentTime +
+          '\n' +
+          afterContent;
+
         fs.writeFileSync(filePath, newContent, 'utf8');
         console.log(`✅ Updated: ${file}`);
       } else {

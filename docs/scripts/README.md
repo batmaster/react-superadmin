@@ -1,6 +1,7 @@
 # Documentation Scripts
 
-This directory contains utility scripts for managing the React SuperAdmin documentation.
+This directory contains utility scripts for managing the React SuperAdmin
+documentation.
 
 ## Scripts
 
@@ -9,6 +10,7 @@ This directory contains utility scripts for managing the React SuperAdmin docume
 Automatically updates build timestamps in MDX documentation files.
 
 **Usage:**
+
 ```bash
 # Update timestamps manually
 node scripts/update-timestamps.js
@@ -18,17 +20,20 @@ pnpm build:timestamp
 ```
 
 **What it does:**
+
 - Updates build timestamps in key documentation files
 - Places timestamps after frontmatter (not inside it)
 - Removes duplicate timestamps
 - Shows when documentation was last built
 
 **Files updated:**
+
 - `docs/index.md` - Main documentation page
 - `docs/components/button.mdx` - Button component docs
 - `docs/components/footer.mdx` - Footer component docs
 
 **Example output:**
+
 ```
 🔄 Updating build timestamps to: August 21, 2025 at 9:00 PM
 ✅ Updated: index.md
@@ -57,6 +62,7 @@ To add timestamps to new MDX files:
 ## Timestamp Format
 
 Timestamps are displayed in a user-friendly format:
+
 - **Example**: `August 21, 2025 at 9:00 PM`
 - **Format**: `[Month] [Day], [Year] at [Hour]:[Minute] [AM/PM]`
 - **Timezone**: Local system timezone
