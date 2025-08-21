@@ -18,3 +18,4 @@ export { AppBar } from "./components/AppBar";
 export { Form } from "./components/Form";
 export { Layout } from "./components/Layout";
 export { Resource } from "./components/Resource";
+export { TextField } from "./components/TextField";
