@@ -6,3 +6,4 @@ export { SelectInput } from "./SelectInput";
 export { FormField } from "./FormField";
 export { Input } from "./Input";
 export { ArrayInput } from "./ArrayInput";
+export { NumberInput } from "./NumberInput";
