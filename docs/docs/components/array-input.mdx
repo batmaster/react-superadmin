@@ -1,39 +1,52 @@
 ---
+id: array-input
 title: ArrayInput
-description: A comprehensive array input component that supports dynamic arrays of form fields with add/remove functionality, validation, and accessibility
+sidebar_label: ArrayInput
+keywords: [array, input, form, dynamic, validation, reordering]
 ---
-
-import { ArrayInput } from '@site/src/components/forms/ArrayInput';
-import { Input } from '@site/src/components/forms/Input';
-import { Button } from '@site/src/components/ui/Button';
-import { useState } from 'react';
 
 # ArrayInput
 
-A comprehensive array input component that supports dynamic arrays of form fields. Follows React Admin patterns with add/remove functionality, validation, and accessibility.
+A comprehensive array input component that supports dynamic arrays of form fields with validation, reordering, and custom rendering.
+
+## Overview
+
+The `ArrayInput` component allows users to create, edit, and manage dynamic arrays of form fields. It's perfect for scenarios like:
+
+- Tag management
+- Address lists
+- Skill collections
+- Dynamic form sections
+- Multi-step workflows
 
 ## Features
 
-- **Dynamic Array Management**: Add, remove, and reorder array items
-- **Flexible Rendering**: Custom render functions for each array item
-- **Validation Support**: Built-in validation with error display
-- **Accessibility**: ARIA attributes and keyboard navigation
-- **Customization**: Extensive styling and behavior options
-- **TypeScript Support**: Full type safety with generic types
+- **Dynamic Array Management**: Add, remove, and modify array items
+- **Reordering Support**: Drag and drop or button-based reordering
+- **Validation Integration**: Built-in error handling and display
+- **Custom Rendering**: Flexible item rendering with render props
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Responsive Design**: Works on all device sizes
+- **TypeScript Support**: Full type safety with generics
 
 ## Basic Usage
 
-The ArrayInput component allows you to create dynamic arrays of form fields. Each item is rendered using a render function that receives props for managing the item.
-
 ```tsx
-import { ArrayInput } from '@react-superadmin/core';
-import { Input } from '@react-superadmin/web';
+import { ArrayInput } from '@react-superadmin/web';
 
-<ArrayInput label='Tags' value={tags} onChange={setTags}>
-  {({ index, value, onChange, onRemove, canRemove }) => (
-    <div key={index} className='flex gap-2'>
+const [tags, setTags] = useState(['react', 'typescript']);
+
+<ArrayInput
+  label='Tags'
+  value={tags}
+  onChange={setTags}
+  minItems={1}
+  maxItems={10}
+>
+  {({ index, value, onChange, onRemove }) => (
+    <div key={index} className='flex gap-2 items-center'>
       <Input value={value} onChange={onChange} />
-      {canRemove && <Button onClick={onRemove}>Remove</Button>}
+      <Button onClick={onRemove}>Remove</Button>
     </div>
   )}
 </ArrayInput>;
@@ -114,7 +127,7 @@ const [skills, setSkills] = useState(['JavaScript', 'React']);
 const [errors, setErrors] = useState([]);
 
 <ArrayInput
-  label="Skills"
+  label='Skills'
   value={skills}
   onChange={setSkills}
   allowReorder
@@ -124,281 +137,12 @@ const [errors, setErrors] = useState([]);
   showValidationErrors
 >
   {({ index, value, onChange, onRemove, onMoveUp, onMoveDown, canReorder }) => (
-    <div key={index} className="flex gap-2 items-center">
+    <div key={index} className='flex gap-2 items-center'>
       {canReorder && <Button onClick={onMoveUp}>↑</Button>}
       <Input value={value} onChange={onChange} />
       {canReorder && <Button onClick={onMoveDown}>↓</Button>}
-      <Button onClick={onRemove}>Remove</Button>}
+      <Button onClick={onRemove}>Remove</Button>
     </div>
   )}
-</ArrayInput>
-```
-
-### With Custom Styling
-
-```tsx
-<ArrayInput
-  label='Custom Styled Array'
-  value={items}
-  onChange={setItems}
-  className='border-2 border-blue-200 rounded-lg p-4'
-  labelClassName='text-blue-600 font-bold'
-  itemsClassName='space-y-3'
-  itemClassName='bg-gray-50 p-3 rounded border'
-  addButtonClassName='bg-green-500 hover:bg-green-600'
-  removeButtonClassName='bg-red-500 hover:bg-red-600'
->
-  {/* Render function */}
-</ArrayInput>
-```
-
-### Complex Form Fields
-
-```tsx
-<ArrayInput label='Addresses' value={addresses} onChange={setAddresses}>
-  {({ index, value, onChange, onRemove, canRemove }) => (
-    <div key={index} className='border p-4 rounded-lg space-y-3'>
-      <div className='grid grid-cols-2 gap-3'>
-        <Input
-          label='Street'
-          value={value.street}
-          onChange={street => onChange({ ...value, street })}
-        />
-        <Input
-          label='City'
-          value={value.city}
-          onChange={city => onChange({ ...value, city })}
-        />
-      </div>
-      <div className='grid grid-cols-3 gap-3'>
-        <Input
-          label='State'
-          value={value.state}
-          onChange={state => onChange({ ...value, state })}
-        />
-        <Input
-          label='ZIP'
-          value={value.zip}
-          onChange={zip => onChange({ ...value, zip })}
-        />
-        <Input
-          label='Country'
-          value={value.country}
-          onChange={country => onChange({ ...value, country })}
-        />
-      </div>
-      {canRemove && (
-        <Button onClick={onRemove} variant='outline' size='sm'>
-          Remove Address
-        </Button>
-      )}
-    </div>
-  )}
-</ArrayInput>
-```
-
-## Accessibility
-
-The ArrayInput component follows accessibility best practices:
-
-- **ARIA Labels**: Proper labeling for screen readers
-- **Keyboard Navigation**: Support for keyboard-only users
-- **Focus Management**: Logical focus order and focus indicators
-- **Screen Reader Support**: Descriptive text and announcements
-- **Required Field Indicators**: Clear indication of required fields
-
-## Validation
-
-The component supports both built-in and custom validation:
-
-- **Min/Max Items**: Enforce array length constraints
-- **Custom Errors**: Display custom validation messages
-- **Error Styling**: Visual indicators for validation errors
-- **Helper Text**: Additional guidance for users
-
-## Styling
-
-The component is highly customizable with CSS classes for:
-
-- Container styling
-- Label appearance
-- Array items layout
-- Individual item styling
-- Button customization
-- Error and helper text styling
-
-## Best Practices
-
-1. **Use Meaningful Labels**: Provide clear, descriptive labels
-2. **Handle Edge Cases**: Consider empty arrays and validation
-3. **Optimize Performance**: Use stable references for callbacks
-4. **Accessibility First**: Ensure keyboard navigation works
-5. **Consistent Styling**: Maintain visual consistency with your design system
-
-## Related Components
-
-- Input - Basic input component
-- SelectInput - Dropdown selection
-- FormField - Form field wrapper
-- Button - Button component for actions
-
----
-
-## Examples
-
-### ArrayInputExample
-
-```tsx
-function ArrayInputExample() {
-  const [tags, setTags] = useState(['react', 'typescript']);
-
-  return (
-    <ArrayInput label='Tags' value={tags} onChange={setTags}>
-      {({ index, value, onChange, onRemove, canRemove }) => (
-        <div key={index} className='flex gap-2 items-center'>
-          <Input
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            placeholder='Enter tag'
-            className='flex-1'
-          />
-          {canRemove && (
-            <Button onClick={onRemove} variant='outline' size='sm'>
-              Remove
-            </Button>
-          )}
-        </div>
-      )}
-    </ArrayInput>
-  );
-}
-```
-
-### ArrayInputWithValidation
-
-```tsx
-function ArrayInputWithValidation() {
-  const [skills, setSkills] = useState(['JavaScript', 'React']);
-  const [errors, setErrors] = useState([]);
-
-  const validateSkills = newSkills => {
-    const newErrors = [];
-    if (newSkills.length < 1) {
-      newErrors.push('At least one skill is required');
-    }
-    if (newSkills.length > 5) {
-      newErrors.push('Maximum 5 skills allowed');
-    }
-    setErrors(newErrors);
-  };
-
-  const handleChange = newSkills => {
-    setSkills(newSkills);
-    validateSkills(newSkills);
-  };
-
-  return (
-    <ArrayInput
-      label='Skills'
-      value={skills}
-      onChange={handleChange}
-      allowReorder
-      minItems={1}
-      maxItems={5}
-      errors={errors}
-      helperText='Add your technical skills (1-5 items)'
-    >
-      {({
-        index,
-        value,
-        onChange,
-        onRemove,
-        onMoveUp,
-        onMoveDown,
-        canReorder,
-      }) => (
-        <div key={index} className='flex gap-2 items-center'>
-          {canReorder && (
-            <Button onClick={onMoveUp} variant='outline' size='sm'>
-              ↑
-            </Button>
-          )}
-          <Input
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            placeholder='Skill name'
-            className='flex-1'
-          />
-          {canReorder && (
-            <Button onClick={onMoveDown} variant='outline' size='sm'>
-              ↓
-            </Button>
-          )}
-          <Button onClick={onRemove} variant='outline' size='sm'>
-            Remove
-          </Button>
-        </div>
-      )}
-    </ArrayInput>
-  );
-}
-```
-
-### ArrayInputComplex
-
-```tsx
-function ArrayInputComplex() {
-  const [addresses, setAddresses] = useState([
-    {
-      street: '123 Main St',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
-      country: 'USA',
-    },
-  ]);
-
-  return (
-    <ArrayInput label='Addresses' value={addresses} onChange={setAddresses}>
-      {({ index, value, onChange, onRemove, canRemove }) => (
-        <div key={index} className='border p-4 rounded-lg space-y-3'>
-          <div className='grid grid-cols-2 gap-3'>
-            <Input
-              label='Street'
-              value={value.street}
-              onChange={street => onChange({ ...value, street })}
-            />
-            <Input
-              label='City'
-              value={value.city}
-              onChange={city => onChange({ ...value, city })}
-            />
-          </div>
-          <div className='grid grid-cols-3 gap-3'>
-            <Input
-              label='State'
-              value={value.state}
-              onChange={state => onChange({ ...value, state })}
-            />
-            <Input
-              label='ZIP'
-              value={value.zip}
-              onChange={zip => onChange({ ...value, zip })}
-            />
-            <Input
-              label='Country'
-              value={value.country}
-              onChange={country => onChange({ ...value, country })}
-            />
-          </div>
-          {canRemove && (
-            <Button onClick={onRemove} variant='outline' size='sm'>
-              Remove Address
-            </Button>
-          )}
-        </div>
-      )}
-    </ArrayInput>
-  );
-}
+</ArrayInput>;
 ```
