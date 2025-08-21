@@ -161,7 +161,7 @@ gh pr merge [PR_NUMBER] --merge
 9. **Update Status**: Mark task as "Done"
 10. **Merge**: Merge PR to main branch
 
-### 7.5. Commit Message Rules (UPDATED December 2024)
+### 7.5. Commit Message Rules (UPDATED August 2025)
 
 **We use `lowerCase` for commit messages** but allow proper component names with
 warnings:
@@ -218,7 +218,7 @@ If you encounter issues:
 - **Follow established patterns** - maintain consistency
 - **Update status immediately** - keep project board current
 
-### 11. React Hook Best Practices (Updated December 2024)
+### 11. React Hook Best Practices (Updated August 2025)
 
 #### **useGetList Hook Pattern (Established)**
 

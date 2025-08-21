@@ -1,5 +1,23 @@
 # React SuperAdmin - Developer Summary
 
+## 🚨 **MEMORY UPDATE PROTOCOL - When User Says "Update Memory" or "Update Memory Files"**
+
+**🚨 ALWAYS PROVIDE COMPREHENSIVE SUMMARY:**
+
+1. **What We Faced in the Past** - Document all challenges, issues, and problems
+   encountered
+2. **What We Accomplished** - Summary of all completed tasks, components, and
+   achievements
+3. **What We're Currently Doing** - Current work status and active tasks
+4. **What We Plan to Do Next** - Roadmap and next steps
+5. **New Rules & Guidelines** - Organizational improvements and process
+   enhancements
+
+**This ensures all developers have complete context and can continue
+seamlessly.**
+
+---
+
 ## Project Overview
 
 React SuperAdmin is a CRUD admin framework designed to let users quickly create
@@ -119,7 +137,7 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 - **Status**: Complete rewrite with 181/181 core tests passing
 - **PR**: #429 ready for review and merge
 
-## Current Session Accomplishments (December 2024)
+## Current Session Accomplishments (August 2025)
 
 ### useGetList Hook Complete Rewrite
 
@@ -385,7 +403,7 @@ feat(core): Add UseGetList Hook                        # Title case (not allowed
 
 ---
 
-**Last Updated**: Current session (useGetList hook complete rewrite + PR #429 +
+**Last Updated**: August 21, 2025 (useGetList hook complete rewrite + PR #429 +
 web package test failures identified)  
 **Next Developer**: Complete PR #429 merge, fix 50 failing tests in
 packages/web, address 99 linting warnings  
