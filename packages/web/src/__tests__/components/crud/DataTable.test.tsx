@@ -1,7 +1,7 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { DataTable } from "../../../components/crud/DataTable";
 import { ColumnConfig } from "@react-superadmin/core";
+import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+import { DataTable } from "../../../components/crud/DataTable";
 
 // Mock the core package
 jest.mock("@react-superadmin/core", () => ({

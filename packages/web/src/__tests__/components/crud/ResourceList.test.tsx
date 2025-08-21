@@ -1,8 +1,8 @@
+import { useSuperAdmin } from "@react-superadmin/core";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { ResourceList } from "../../../components/crud/ResourceList";
-import { useSuperAdmin } from "@react-superadmin/core";
 
 // Mock the core package
 jest.mock("@react-superadmin/core", () => ({

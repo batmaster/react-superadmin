@@ -16,6 +16,12 @@ import { Dropdown } from '../../components/ui/Dropdown';
 import { Label } from '../../components/ui/Label';
 import { Modal } from '../../components/ui/Modal';
 import { SelectInput } from '../../components/ui/SelectInput';
+import {
+  ArrayInput,
+  ArrayInputExample,
+  ArrayInputWithValidation,
+  ArrayInputComplex,
+} from '../../components/forms';
 
 // Define the scope for live code blocks
 const ReactLiveScope = {
@@ -34,6 +40,10 @@ const ReactLiveScope = {
   SelectInput,
   DateInput,
   BooleanInput,
+  ArrayInput,
+  ArrayInputExample,
+  ArrayInputWithValidation,
+  ArrayInputComplex,
 };
 
 export default ReactLiveScope;
