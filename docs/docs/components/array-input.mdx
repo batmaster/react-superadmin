@@ -1,145 +1,743 @@
 ---
 id: array-input
-title: ArrayInput
+title: ArrayInput Component
 sidebar_label: ArrayInput
-keywords: [array, input, form, dynamic, validation, reordering]
+keywords: [array, input, form, dynamic, validation, reordering, form-fields]
 ---
 
-# ArrayInput
+# ArrayInput Component
 
-A comprehensive array input component that supports dynamic arrays of form fields with validation, reordering, and custom rendering.
+A comprehensive array input component that supports dynamic arrays of form fields with validation, reordering, and custom rendering capabilities.
 
 ## Overview
 
 The `ArrayInput` component allows users to create, edit, and manage dynamic arrays of form fields. It's perfect for scenarios like:
 
-- Tag management
-- Address lists
-- Skill collections
-- Dynamic form sections
-- Multi-step workflows
+- Tag management and categorization
+- Address lists and contact information
+- Skill collections and expertise areas
+- Dynamic form sections and workflows
+- Multi-step processes and configurations
+- Product variants and options
+- User permissions and roles
 
 ## Features
 
-- **Dynamic Array Management**: Add, remove, and modify array items
-- **Reordering Support**: Drag and drop or button-based reordering
-- **Validation Integration**: Built-in error handling and display
-- **Custom Rendering**: Flexible item rendering with render props
+- **Dynamic Array Management**: Add, remove, and modify array items dynamically
+- **Reordering Support**: Drag and drop or button-based reordering capabilities
+- **Validation Integration**: Built-in error handling and display with custom validation
+- **Custom Rendering**: Flexible item rendering with render props for complete customization
 - **Accessibility**: Full keyboard navigation and screen reader support
-- **Responsive Design**: Works on all device sizes
-- **TypeScript Support**: Full type safety with generics
+- **Responsive Design**: Works seamlessly on all device sizes
+- **TypeScript Support**: Full type safety with generics and proper typing
+- **Performance Optimized**: Efficient rendering and state management
 
 ## Basic Usage
 
 ```tsx
+import React, { useState } from 'react';
 import { ArrayInput } from '@react-superadmin/web';
 
-const [tags, setTags] = useState(['react', 'typescript']);
+function BasicArrayInputExample() {
+  const [tags, setTags] = useState(['react', 'typescript']);
 
-<ArrayInput
-  label='Tags'
-  value={tags}
-  onChange={setTags}
-  minItems={1}
-  maxItems={10}
->
-  {({ index, value, onChange, onRemove }) => (
-    <div key={index} className='flex gap-2 items-center'>
-      <Input value={value} onChange={onChange} />
-      <Button onClick={onRemove}>Remove</Button>
-    </div>
-  )}
-</ArrayInput>;
+  return (
+    <ArrayInput
+      label='Tags'
+      value={tags}
+      onChange={setTags}
+      minItems={1}
+      maxItems={10}
+      helperText='Add tags to categorize your content'
+    >
+      {({ index, value, onChange, onRemove }) => (
+        <div key={index} className='flex gap-2 items-center'>
+          <input
+            type='text'
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+            placeholder='Enter tag name'
+          />
+          <button
+            onClick={onRemove}
+            className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors'
+          >
+            Remove
+          </button>
+        </div>
+      )}
+    </ArrayInput>
+  );
+}
 ```
 
-## Live Examples
+## With Validation and Error Handling
 
-### Basic Array Input
+```tsx
+import React, { useState } from 'react';
+import { ArrayInput } from '@react-superadmin/web';
 
-<!-- Temporarily commented out due to build issues
-<ArrayInputExample />
--->
+function ValidationArrayInputExample() {
+  const [skills, setSkills] = useState(['JavaScript', 'React']);
+  const [errors, setErrors] = useState([]);
 
-### With Validation and Reordering
+  const validateSkills = skills => {
+    const newErrors = [];
 
-<!-- Temporarily commented out due to build issues
-<ArrayInputWithValidation />
--->
+    if (skills.length === 0) {
+      newErrors.push('At least one skill is required');
+    }
 
-### Complex Form Fields
+    skills.forEach((skill, index) => {
+      if (!skill.trim()) {
+        newErrors.push(`Skill ${index + 1} cannot be empty`);
+      }
+      if (skill.length < 2) {
+        newErrors.push(`Skill ${index + 1} must be at least 2 characters`);
+      }
+    });
 
-<!-- Temporarily commented out due to build issues
-<ArrayInputComplex />
--->
+    setErrors(newErrors);
+    return newErrors.length === 0;
+  };
+
+  const handleChange = newSkills => {
+    setSkills(newSkills);
+    validateSkills(newSkills);
+  };
+
+  return (
+    <ArrayInput
+      label='Skills'
+      value={skills}
+      onChange={handleChange}
+      allowReorder
+      minItems={1}
+      maxItems={10}
+      errors={errors}
+      showValidationErrors
+      helperText='List your technical skills and expertise'
+    >
+      {({
+        index,
+        value,
+        onChange,
+        onRemove,
+        onMoveUp,
+        onMoveDown,
+        canReorder,
+      }) => (
+        <div
+          key={index}
+          className='flex gap-2 items-center p-3 border border-gray-200 rounded-md'
+        >
+          {canReorder && (
+            <div className='flex flex-col gap-1'>
+              <button
+                onClick={onMoveUp}
+                className='px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors'
+                disabled={index === 0}
+              >
+                ↑
+              </button>
+              <button
+                onClick={onMoveDown}
+                className='px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors'
+                disabled={index === skills.length - 1}
+              >
+                ↓
+              </button>
+            </div>
+          )}
+
+          <input
+            type='text'
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            className='flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+            placeholder='Enter skill name'
+          />
+
+          <button
+            onClick={onRemove}
+            className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors'
+          >
+            Remove
+          </button>
+        </div>
+      )}
+    </ArrayInput>
+  );
+}
+```
+
+## Complex Form Fields
+
+```tsx
+import React, { useState } from 'react';
+import { ArrayInput } from '@react-superadmin/web';
+
+function ComplexArrayInputExample() {
+  const [addresses, setAddresses] = useState([
+    {
+      street: '123 Main St',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10001',
+      isPrimary: true,
+    },
+  ]);
+
+  return (
+    <ArrayInput
+      label='Addresses'
+      value={addresses}
+      onChange={setAddresses}
+      minItems={1}
+      maxItems={5}
+      helperText='Add multiple addresses for shipping and billing'
+    >
+      {({ index, value, onChange, onRemove, onAddAfter }) => (
+        <div
+          key={index}
+          className='p-4 border border-gray-200 rounded-lg space-y-3'
+        >
+          <div className='flex items-center justify-between'>
+            <h4 className='font-medium'>Address {index + 1}</h4>
+            <div className='flex gap-2'>
+              <button
+                onClick={onAddAfter}
+                className='px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm'
+              >
+                Add Another
+              </button>
+              <button
+                onClick={onRemove}
+                className='px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors text-sm'
+                disabled={addresses.length === 1}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-3'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Street Address
+              </label>
+              <input
+                type='text'
+                value={value.street}
+                onChange={e => onChange({ ...value, street: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='Enter street address'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                City
+              </label>
+              <input
+                type='text'
+                value={value.city}
+                onChange={e => onChange({ ...value, city: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='Enter city'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                State
+              </label>
+              <input
+                type='text'
+                value={value.state}
+                onChange={e => onChange({ ...value, state: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='Enter state'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                ZIP Code
+              </label>
+              <input
+                type='text'
+                value={value.zipCode}
+                onChange={e => onChange({ ...value, zipCode: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='Enter ZIP code'
+              />
+            </div>
+          </div>
+
+          <div className='flex items-center'>
+            <input
+              type='checkbox'
+              id={`primary-${index}`}
+              checked={value.isPrimary}
+              onChange={e =>
+                onChange({ ...value, isPrimary: e.target.checked })
+              }
+              className='w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500'
+            />
+            <label
+              htmlFor={`primary-${index}`}
+              className='ml-2 text-sm text-gray-700'
+            >
+              Set as primary address
+            </label>
+          </div>
+        </div>
+      )}
+    </ArrayInput>
+  );
+}
+```
+
+## With Reordering and Drag & Drop
+
+```tsx
+import React, { useState } from 'react';
+import { ArrayInput } from '@react-superadmin/web';
+
+function ReorderArrayInputExample() {
+  const [items, setItems] = useState([
+    { id: 1, name: 'First Item', priority: 'high' },
+    { id: 2, name: 'Second Item', priority: 'medium' },
+    { id: 3, name: 'Third Item', priority: 'low' },
+  ]);
+
+  return (
+    <ArrayInput
+      label='Reorderable Items'
+      value={items}
+      onChange={setItems}
+      allowReorder
+      minItems={1}
+      maxItems={10}
+      helperText='Drag items to reorder or use the arrow buttons'
+    >
+      {({
+        index,
+        value,
+        onChange,
+        onRemove,
+        onMoveUp,
+        onMoveDown,
+        canReorder,
+      }) => (
+        <div
+          key={index}
+          className='flex items-center gap-3 p-3 border border-gray-200 rounded-md bg-white'
+        >
+          {canReorder && (
+            <div className='flex flex-col gap-1'>
+              <button
+                onClick={onMoveUp}
+                className='px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors disabled:opacity-50'
+                disabled={index === 0}
+                title='Move up'
+              >
+                ↑
+              </button>
+              <button
+                onClick={onMoveDown}
+                className='px-2 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors disabled:opacity-50'
+                disabled={index === items.length - 1}
+                title='Move down'
+              >
+                ↓
+              </button>
+            </div>
+          )}
+
+          <div className='flex-1'>
+            <input
+              type='text'
+              value={value.name}
+              onChange={e => onChange({ ...value, name: e.target.value })}
+              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+              placeholder='Item name'
+            />
+          </div>
+
+          <select
+            value={value.priority}
+            onChange={e => onChange({ ...value, priority: e.target.value })}
+            className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+          >
+            <option value='high'>High</option>
+            <option value='medium'>Medium</option>
+            <option value='low'>Low</option>
+          </select>
+
+          <button
+            onClick={onRemove}
+            className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors'
+            title='Remove item'
+          >
+            ×
+          </button>
+        </div>
+      )}
+    </ArrayInput>
+  );
+}
+```
+
+## With Custom Add/Remove Logic
+
+```tsx
+import React, { useState } from 'react';
+import { ArrayInput } from '@react-superadmin/web';
+
+function CustomLogicArrayInputExample() {
+  const [products, setProducts] = useState([
+    { id: 1, name: 'Product 1', price: 10.99, quantity: 1 },
+  ]);
+
+  const addProduct = () => {
+    const newId = Math.max(...products.map(p => p.id), 0) + 1;
+    return { id: newId, name: '', price: 0, quantity: 1 };
+  };
+
+  const removeProduct = (products, index) => {
+    // Don't allow removing the last product
+    if (products.length <= 1) return products;
+    return products.filter((_, i) => i !== index);
+  };
+
+  const validateProducts = products => {
+    const errors = [];
+
+    products.forEach((product, index) => {
+      if (!product.name.trim()) {
+        errors.push(`Product ${index + 1} name is required`);
+      }
+      if (product.price <= 0) {
+        errors.push(`Product ${index + 1} price must be greater than 0`);
+      }
+      if (product.quantity < 1) {
+        errors.push(`Product ${index + 1} quantity must be at least 1`);
+      }
+    });
+
+    return errors;
+  };
+
+  const [errors, setErrors] = useState([]);
+
+  const handleChange = newProducts => {
+    setProducts(newProducts);
+    setErrors(validateProducts(newProducts));
+  };
+
+  return (
+    <ArrayInput
+      label='Products'
+      value={products}
+      onChange={handleChange}
+      minItems={1}
+      maxItems={10}
+      errors={errors}
+      showValidationErrors
+      helperText='Manage your product catalog'
+      addButtonText='Add Product'
+      removeButtonText='Remove Product'
+    >
+      {({ index, value, onChange, onRemove, onAddAfter }) => (
+        <div
+          key={index}
+          className='p-4 border border-gray-200 rounded-lg space-y-3'
+        >
+          <div className='flex items-center justify-between'>
+            <h4 className='font-medium'>Product {index + 1}</h4>
+            <div className='flex gap-2'>
+              <button
+                onClick={onAddAfter}
+                className='px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors text-sm'
+              >
+                Add Product
+              </button>
+              <button
+                onClick={onRemove}
+                className='px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors text-sm'
+                disabled={products.length === 1}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <div className='grid grid-cols-3 gap-3'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Product Name
+              </label>
+              <input
+                type='text'
+                value={value.name}
+                onChange={e => onChange({ ...value, name: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='Enter product name'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Price
+              </label>
+              <input
+                type='number'
+                step='0.01'
+                min='0'
+                value={value.price}
+                onChange={e =>
+                  onChange({ ...value, price: parseFloat(e.target.value) || 0 })
+                }
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='0.00'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Quantity
+              </label>
+              <input
+                type='number'
+                min='1'
+                value={value.quantity}
+                onChange={e =>
+                  onChange({
+                    ...value,
+                    quantity: parseInt(e.target.value) || 1,
+                  })
+                }
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200'
+                placeholder='1'
+              />
+            </div>
+          </div>
+
+          {errors[index] && (
+            <p className='text-sm text-red-600'>{errors[index]}</p>
+          )}
+        </div>
+      )}
+    </ArrayInput>
+  );
+}
+```
 
 ## API Reference
 
 ### Props
 
-| Prop                   | Type                                              | Default      | Description                            |
-| ---------------------- | ------------------------------------------------- | ------------ | -------------------------------------- |
-| `label`                | `string`                                          | -            | The label for the array input          |
-| `required`             | `boolean`                                         | `false`      | Whether the field is required          |
-| `value`                | `any[]`                                           | `[]`         | The current array value                |
-| `onChange`             | `(value: any[]) => void`                          | -            | Callback when the array value changes  |
-| `children`             | `(props: ArrayInputItemProps) => React.ReactNode` | -            | Function to render each array item     |
-| `initialCount`         | `number`                                          | `1`          | Initial number of items to show        |
-| `minItems`             | `number`                                          | `0`          | Minimum number of items allowed        |
-| `maxItems`             | `number`                                          | `Infinity`   | Maximum number of items allowed        |
-| `allowReorder`         | `boolean`                                         | `false`      | Whether to allow reordering of items   |
-| `showItemNumbers`      | `boolean`                                         | `true`       | Whether to show item numbers           |
-| `addButtonText`        | `string`                                          | `"Add Item"` | Custom add button text                 |
-| `removeButtonText`     | `string`                                          | `"Remove"`   | Custom remove button text              |
-| `showValidationErrors` | `boolean`                                         | `true`       | Whether to show validation errors      |
-| `errors`               | `string[]`                                        | `[]`         | Validation errors for the array        |
-| `helperText`           | `string`                                          | -            | Helper text to display below the input |
-| `disabled`             | `boolean`                                         | `false`      | Whether the input is disabled          |
+| Prop                    | Type                                              | Default      | Description                              |
+| ----------------------- | ------------------------------------------------- | ------------ | ---------------------------------------- |
+| `label`                 | `string`                                          | -            | The label for the array input            |
+| `required`              | `boolean`                                         | `false`      | Whether the field is required            |
+| `value`                 | `any[]`                                           | `[]`         | The current array value                  |
+| `onChange`              | `(value: any[]) => void`                          | -            | Callback when the array value changes    |
+| `children`              | `(props: ArrayInputItemProps) => React.ReactNode` | -            | Function to render each array item       |
+| `initialCount`          | `number`                                          | `1`          | Initial number of items to show          |
+| `minItems`              | `number`                                          | `0`          | Minimum number of items allowed          |
+| `maxItems`              | `number`                                          | `Infinity`   | Maximum number of items allowed          |
+| `allowReorder`          | `boolean`                                         | `false`      | Whether to allow reordering of items     |
+| `showItemNumbers`       | `boolean`                                         | `true`       | Whether to show item numbers             |
+| `addButtonText`         | `string`                                          | `"Add Item"` | Custom add button text                   |
+| `removeButtonText`      | `string`                                          | `"Remove"`   | Custom remove button text                |
+| `showValidationErrors`  | `boolean`                                         | `true`       | Whether to show validation errors        |
+| `errors`                | `string[]`                                        | `[]`         | Validation errors for the array          |
+| `helperText`            | `string`                                          | -            | Helper text to display below the input   |
+| `disabled`              | `boolean`                                         | `false`      | Whether the input is disabled            |
+| `className`             | `string`                                          | -            | Additional CSS classes for the container |
+| `itemClassName`         | `string`                                          | -            | CSS classes for individual items         |
+| `addButtonClassName`    | `string`                                          | -            | CSS classes for the add button           |
+| `removeButtonClassName` | `string`                                          | -            | CSS classes for the remove button        |
 
 ### ArrayInputItemProps
 
 The render function receives these props for each array item:
 
-| Prop          | Type                   | Description                            |
-| ------------- | ---------------------- | -------------------------------------- |
-| `index`       | `number`               | The index of this item in the array    |
-| `value`       | `any`                  | The current value of this item         |
-| `isFirst`     | `boolean`              | Whether this is the first item         |
-| `isLast`      | `boolean`              | Whether this is the last item          |
-| `isOnly`      | `boolean`              | Whether this is the only item          |
-| `canReorder`  | `boolean`              | Whether reordering is allowed          |
-| `canRemove`   | `boolean`              | Whether this item can be removed       |
-| `canAddAfter` | `boolean`              | Whether this item can be added after   |
-| `onChange`    | `(value: any) => void` | Callback to update this item's value   |
-| `onRemove`    | `() => void`           | Callback to remove this item           |
-| `onAddAfter`  | `() => void`           | Callback to add an item after this one |
-| `onMoveUp`    | `() => void`           | Callback to move this item up          |
-| `onMoveDown`  | `() => void`           | Callback to move this item down        |
+| Prop          | Type                      | Description                                       |
+| ------------- | ------------------------- | ------------------------------------------------- |
+| `index`       | `number`                  | The index of this item in the array               |
+| `value`       | `any`                     | The current value of this item                    |
+| `isFirst`     | `boolean`                 | Whether this is the first item                    |
+| `isLast`      | `boolean`                 | Whether this is the last item                     |
+| `isOnly`      | `boolean`                 | Whether this is the only item                     |
+| `canReorder`  | `boolean`                 | Whether reordering is allowed                     |
+| `canRemove`   | `boolean`                 | Whether this item can be removed                  |
+| `canAddAfter` | `boolean`                 | Whether this item can be added after              |
+| `onChange`    | `(value: any) => void`    | Callback to update this item's value              |
+| `onRemove`    | `() => void`              | Callback to remove this item                      |
+| `onAddAfter`  | `() => void`              | Callback to add an item after this one            |
+| `onMoveUp`    | `() => void`              | Callback to move this item up                     |
+| `onMoveDown`  | `() => void`              | Callback to move this item down                   |
+| `onMoveTo`    | `(index: number) => void` | Callback to move this item to a specific position |
 
 ## Advanced Usage
 
-### With Validation
+### With Form Libraries
 
 ```tsx
-const [skills, setSkills] = useState(['JavaScript', 'React']);
-const [errors, setErrors] = useState([]);
+import { useForm, Controller } from 'react-hook-form';
+import { ArrayInput } from '@react-superadmin/web';
 
-<ArrayInput
-  label='Skills'
-  value={skills}
-  onChange={setSkills}
-  allowReorder
-  minItems={1}
-  maxItems={10}
-  errors={errors}
-  showValidationErrors
->
-  {({ index, value, onChange, onRemove, onMoveUp, onMoveDown, canReorder }) => (
-    <div key={index} className='flex gap-2 items-center'>
-      {canReorder && <Button onClick={onMoveUp}>↑</Button>}
-      <Input value={value} onChange={onChange} />
-      {canReorder && <Button onClick={onMoveDown}>↓</Button>}
-      <Button onClick={onRemove}>Remove</Button>
-    </div>
-  )}
-</ArrayInput>;
+function FormWithArrayInput() {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      tags: ['react', 'typescript'],
+    },
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name='tags'
+        control={control}
+        rules={{
+          validate: value => value.length > 0 || 'At least one tag is required',
+        }}
+        render={({ field, fieldState }) => (
+          <ArrayInput
+            label='Tags'
+            value={field.value}
+            onChange={field.onChange}
+            errors={fieldState.error ? [fieldState.error.message] : []}
+            minItems={1}
+            maxItems={10}
+          >
+            {({ index, value, onChange, onRemove }) => (
+              <div key={index} className='flex gap-2 items-center'>
+                <input
+                  type='text'
+                  value={value}
+                  onChange={e => onChange(e.target.value)}
+                  className='px-3 py-2 border border-gray-300 rounded-md'
+                />
+                <button
+                  type='button'
+                  onClick={onRemove}
+                  className='px-3 py-2 bg-red-500 text-white rounded-md'
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </ArrayInput>
+        )}
+      />
+    </form>
+  );
+}
 ```
+
+### With Data Validation
+
+```tsx
+import { ArrayInput } from '@react-superadmin/web';
+
+function ValidatedArrayInput() {
+  const [items, setItems] = useState([]);
+  const [errors, setErrors] = useState([]);
+
+  const validateItems = newItems => {
+    const newErrors = [];
+
+    newItems.forEach((item, index) => {
+      if (!item.name?.trim()) {
+        newErrors[index] = 'Name is required';
+      }
+      if (item.price && item.price < 0) {
+        newErrors[index] = 'Price cannot be negative';
+      }
+    });
+
+    setErrors(newErrors);
+    return newErrors.every(error => !error);
+  };
+
+  const handleChange = newItems => {
+    setItems(newItems);
+    validateItems(newItems);
+  };
+
+  return (
+    <ArrayInput
+      label='Validated Items'
+      value={items}
+      onChange={handleChange}
+      errors={errors}
+      showValidationErrors
+    >
+      {/* Render function */}
+    </ArrayInput>
+  );
+}
+```
+
+### With Custom Styling
+
+```tsx
+import { ArrayInput } from '@react-superadmin/web';
+
+function StyledArrayInput() {
+  return (
+    <ArrayInput
+      label='Styled Items'
+      value={items}
+      onChange={setItems}
+      className='bg-gray-50 p-4 rounded-lg'
+      itemClassName='bg-white shadow-sm border border-gray-200 rounded-md p-3'
+      addButtonClassName='bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md'
+      removeButtonClassName='bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md'
+    >
+      {/* Render function */}
+    </ArrayInput>
+  );
+}
+```
+
+## Best Practices
+
+1. **Always provide meaningful labels** for accessibility
+2. **Use appropriate min/max constraints** to prevent empty or oversized arrays
+3. **Implement proper validation** with clear error messages
+4. **Consider performance** when dealing with large arrays
+5. **Provide clear helper text** to guide users
+6. **Use consistent styling** across your form components
+7. **Handle edge cases** like empty arrays and single items
+8. **Implement proper keyboard navigation** for accessibility
+
+## Performance Considerations
+
+- **Memoize render functions** to prevent unnecessary re-renders
+- **Use React.memo** for complex item components
+- **Limit array size** when possible to maintain performance
+- **Implement virtual scrolling** for very large arrays
+- **Debounce onChange callbacks** for real-time validation
+
+## Accessibility Features
+
+- **ARIA labels** for proper screen reader support
+- **Keyboard navigation** for all interactive elements
+- **Focus management** for dynamic content
+- **Error announcements** for validation failures
+- **Semantic HTML** structure for better accessibility
+
+## Related Components
+
+- [Input](./input) - Basic text input component
+- [FormField](./form) - Form field wrapper with validation
+- [SimpleForm](./simple-form) - Flexible form building component
+- [ReferenceField](./reference-field) - Field for displaying references
+- [SelectInput](./select-input) - Dropdown selection component
