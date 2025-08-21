@@ -1,0 +1,115 @@
+---
+id: footer
+title: Footer Component
+sidebar_label: Footer
+description: Application footer component with navigation and information
+keywords: [footer, navigation, links, information, layout]
+---
+
+# Footer Component
+
+The Footer component provides a consistent footer layout for applications with navigation links, copyright information, and additional resources.
+
+## Import
+
+```tsx
+import { Footer } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<Footer
+  copyright="© 2025 React SuperAdmin. All rights reserved."
+  links={[
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/support', label: 'Support' }
+  ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `copyright` | `string` | - | Copyright text |
+| `links` | `Link[]` | `[]` | Footer navigation links |
+| `socialLinks` | `SocialLink[]` | `[]` | Social media links |
+| `className` | `string` | - | Additional CSS classes |
+
+## Examples
+
+### Basic Footer
+```tsx
+<Footer
+  copyright="© 2025 React SuperAdmin. All rights reserved."
+  links={[
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/support', label: 'Support' }
+  ]}
+/>
+```
+
+### With Social Links
+```tsx
+<Footer
+  copyright="© 2025 React SuperAdmin. All rights reserved."
+  links={[
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/support', label: 'Support' }
+  ]}
+  socialLinks={[
+    { href: 'https://github.com/react-superadmin', icon: 'github', label: 'GitHub' },
+    { href: 'https://twitter.com/reactsuperadmin', icon: 'twitter', label: 'Twitter' },
+    { href: 'https://discord.gg/reactsuperadmin', icon: 'discord', label: 'Discord' }
+  ]}
+/>
+```
+
+### Custom Styling
+```tsx
+<Footer
+  copyright="© 2025 React SuperAdmin. All rights reserved."
+  links={[
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/support', label: 'Support' }
+  ]}
+  className="bg-gray-900 text-white border-t border-gray-800"
+/>
+```
+
+## Accessibility
+
+The Footer component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Semantic HTML structure
+- Keyboard navigation support
+- Screen reader compatibility
+
+```tsx
+<Footer
+  copyright="© 2025 React SuperAdmin. All rights reserved."
+  links={footerLinks}
+  aria-label="Application footer"
+/>
+```
+
+## Best Practices
+
+1. **Keep links relevant** - Only include important navigation links
+2. **Use descriptive labels** - Make link purposes clear
+3. **Maintain consistency** - Use consistent styling across pages
+4. **Test accessibility** - Ensure keyboard navigation works
+
+## Related Components
+
+- [Header](/docs/components/header) - For top navigation
+- [Sidebar](/docs/components/sidebar) - For side navigation
+- [AdminLayout](/docs/components/admin-layout) - For complete layout structure
+

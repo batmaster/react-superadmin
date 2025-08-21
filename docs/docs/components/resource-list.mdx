@@ -1,0 +1,284 @@
+---
+id: resource-list
+title: ResourceList Component
+sidebar_label: ResourceList
+description: List view component for displaying resource collections with filtering and pagination
+keywords: [list, resource, collection, filtering, pagination, data]
+---
+
+# ResourceList Component
+
+The ResourceList component provides a comprehensive list view for displaying resource collections with built-in filtering, sorting, pagination, and search capabilities.
+
+## Import
+
+```tsx
+import { ResourceList } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<ResourceList
+  resource="users"
+  filters={{}}
+  sortBy="name"
+  sortOrder="asc"
+  page={1}
+  pageSize={20}
+  onFiltersChange={setFilters}
+  onSortChange={setSortBy}
+  onPageChange={setPage}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `resource` | `string` | - | Resource name to display |
+| `filters` | `object` | `{}` | Current filter values |
+| `sortBy` | `string` | - | Current sort field |
+| `sortOrder` | `'asc' \| 'desc'` | `'asc'` | Current sort order |
+| `page` | `number` | `1` | Current page number |
+| `pageSize` | `number` | `20` | Number of items per page |
+| `onFiltersChange` | `(filters: object) => void` | - | Filter change handler |
+| `onSortChange` | `(field: string) => void` | - | Sort field change handler |
+| `onPageChange` | `(page: number) => void` | - | Page change handler |
+| `onPageSizeChange` | `(size: number) => void` | - | Page size change handler |
+| `loading` | `boolean` | `false` | Whether data is loading |
+| `className` | `string` | - | Additional CSS classes |
+
+## Examples
+
+### Basic Resource List
+```tsx
+const [filters, setFilters] = useState({});
+const [sortBy, setSortBy] = useState('name');
+const [sortOrder, setSortOrder] = useState('asc');
+const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(20);
+
+<ResourceList
+  resource="users"
+  filters={filters}
+  sortBy={sortBy}
+  sortOrder={sortOrder}
+  page={page}
+  pageSize={pageSize}
+  onFiltersChange={setFilters}
+  onSortChange={setSortBy}
+  onPageChange={setPage}
+  onPageSizeChange={setPageSize}
+/>
+```
+
+### With Custom Filters
+```tsx
+const [filters, setFilters] = useState({
+  role: 'admin',
+  status: 'active',
+  search: ''
+});
+
+const handleFilterChange = (newFilters) => {
+  setFilters(newFilters);
+  setPage(1); // Reset to first page when filters change
+};
+
+<ResourceList
+  resource="users"
+  filters={filters}
+  onFiltersChange={handleFilterChange}
+  sortBy="name"
+  page={page}
+  pageSize={pageSize}
+/>
+```
+
+### With Loading State
+```tsx
+const [loading, setLoading] = useState(false);
+const [data, setData] = useState([]);
+
+useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/users?${new URLSearchParams({
+        page: page.toString(),
+        size: pageSize.toString(),
+        sort: `${sortBy}:${sortOrder}`,
+        ...filters
+      })}`);
+      const result = await response.json();
+      setData(result.data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, [page, pageSize, sortBy, sortOrder, filters]);
+
+<ResourceList
+  resource="users"
+  filters={filters}
+  sortBy={sortBy}
+  sortOrder={sortOrder}
+  page={page}
+  pageSize={pageSize}
+  onFiltersChange={setFilters}
+  onSortChange={setSortBy}
+  onPageChange={setPage}
+  onPageSizeChange={setPageSize}
+  loading={loading}
+/>
+```
+
+## Filter Configuration
+
+The ResourceList component supports various filter types:
+
+```tsx
+const filterConfig = {
+  role: {
+    type: 'select',
+    label: 'Role',
+    options: [
+      { value: '', label: 'All Roles' },
+      { value: 'admin', label: 'Administrator' },
+      { value: 'user', label: 'Regular User' },
+      { value: 'moderator', label: 'Moderator' }
+    ]
+  },
+  status: {
+    type: 'select',
+    label: 'Status',
+    options: [
+      { value: '', label: 'All Statuses' },
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+      { value: 'suspended', label: 'Suspended' }
+    ]
+  },
+  search: {
+    type: 'text',
+    label: 'Search',
+    placeholder: 'Search users...'
+  },
+  createdAfter: {
+    type: 'date',
+    label: 'Created After'
+  }
+};
+```
+
+## Custom Actions
+
+You can add custom actions to the resource list:
+
+```tsx
+<ResourceList
+  resource="users"
+  filters={filters}
+  onFiltersChange={setFilters}
+  actions={[
+    {
+      label: 'Export CSV',
+      onClick: () => exportUsers(filters),
+      variant: 'secondary'
+    },
+    {
+      label: 'Bulk Delete',
+      onClick: () => deleteSelectedUsers(),
+      variant: 'danger',
+      disabled: selectedUsers.length === 0
+    }
+  ]}
+/>
+```
+
+## Integration with Other Components
+
+### With SearchBar
+```tsx
+const [searchTerm, setSearchTerm] = useState('');
+
+useEffect(() => {
+  setFilters(prev => ({ ...prev, search: searchTerm }));
+}, [searchTerm]);
+
+return (
+  <div className="space-y-4">
+    <SearchBar
+      value={searchTerm}
+      onChange={setSearchTerm}
+      placeholder="Search users..."
+    />
+    
+    <ResourceList
+      resource="users"
+      filters={filters}
+      onFiltersChange={setFilters}
+    />
+  </div>
+);
+```
+
+### With DataTable
+```tsx
+<ResourceList
+  resource="users"
+  filters={filters}
+  onFiltersChange={setFilters}
+  renderContent={(data) => (
+    <DataTable
+      data={data}
+      columns={userColumns}
+      onRowSelect={setSelectedUsers}
+      selectable={true}
+    />
+  )}
+/>
+```
+
+## Accessibility
+
+The ResourceList component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Loading state announcements
+
+```tsx
+<ResourceList
+  resource="users"
+  filters={filters}
+  onFiltersChange={setFilters}
+  aria-label="Users list"
+  aria-describedby="list-help"
+/>
+```
+
+## Best Practices
+
+1. **Reset pagination** - Go to first page when filters change
+2. **Debounce search** - Avoid excessive API calls while typing
+3. **Cache results** - Implement caching for better performance
+4. **Handle empty states** - Show appropriate messages when no data exists
+5. **Optimize queries** - Use efficient database queries with proper indexing
+
+## Related Components
+
+- [DataTable](/docs/components/data-table) - For displaying list data
+- [Pagination](/docs/components/pagination) - For page navigation
+- [SearchBar](/docs/components/search-bar) - For list filtering
+- [Button](/docs/components/button) - For list actions
+- [Form](/docs/components/form) - For filter forms
+

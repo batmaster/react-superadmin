@@ -1,0 +1,203 @@
+---
+id: search-bar
+title: SearchBar Component
+sidebar_label: SearchBar
+description: Search input component with filtering and suggestions
+keywords: [search, filter, input, suggestions, autocomplete]
+---
+
+# SearchBar Component
+
+The SearchBar component provides a search input interface with filtering capabilities, suggestions, and integration with data sources.
+
+## Import
+
+```tsx
+import { SearchBar } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<SearchBar
+  value={searchTerm}
+  onChange={setSearchTerm}
+  placeholder="Search..."
+  onSearch={handleSearch}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | - | Current search value |
+| `onChange` | `(value: string) => void` | - | Value change handler |
+| `onSearch` | `(value: string) => void` | - | Search submission handler |
+| `placeholder` | `string` | - | Placeholder text |
+| `suggestions` | `string[]` | `[]` | Search suggestions |
+| `loading` | `boolean` | `false` | Whether suggestions are loading |
+| `debounceMs` | `number` | `300` | Debounce delay in milliseconds |
+| `className` | `string` | - | Additional CSS classes |
+
+## Examples
+
+### Basic Search
+```tsx
+const [searchTerm, setSearchTerm] = useState('');
+
+const handleSearch = (term) => {
+  console.log('Searching for:', term);
+  // Implement search logic
+};
+
+<SearchBar
+  value={searchTerm}
+  onChange={setSearchTerm}
+  onSearch={handleSearch}
+  placeholder="Search users..."
+/>
+```
+
+### With Suggestions
+```tsx
+const [searchTerm, setSearchTerm] = useState('');
+const [suggestions, setSuggestions] = useState([]);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  if (searchTerm.length < 2) {
+    setSuggestions([]);
+    return;
+  }
+
+  const fetchSuggestions = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/search/suggestions?q=${searchTerm}`);
+      const data = await response.json();
+      setSuggestions(data);
+    } catch (error) {
+      console.error('Failed to fetch suggestions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const debounceTimer = setTimeout(fetchSuggestions, 300);
+  return () => clearTimeout(debounceTimer);
+}, [searchTerm]);
+
+<SearchBar
+  value={searchTerm}
+  onChange={setSearchTerm}
+  onSearch={handleSearch}
+  suggestions={suggestions}
+  loading={loading}
+  placeholder="Search with suggestions..."
+/>
+```
+
+### With Custom Debouncing
+```tsx
+<SearchBar
+  value={searchTerm}
+  onChange={setSearchTerm}
+  onSearch={handleSearch}
+  debounceMs={500}
+  placeholder="Search with 500ms debounce..."
+/>
+```
+
+## Integration with Other Components
+
+### With ResourceList
+```tsx
+const [searchTerm, setSearchTerm] = useState('');
+const [filters, setFilters] = useState({});
+
+useEffect(() => {
+  setFilters(prev => ({ ...prev, search: searchTerm }));
+}, [searchTerm]);
+
+return (
+  <div className="space-y-4">
+    <SearchBar
+      value={searchTerm}
+      onChange={setSearchTerm}
+      placeholder="Search users..."
+    />
+    
+    <ResourceList
+      resource="users"
+      filters={filters}
+      onFiltersChange={setFilters}
+    />
+  </div>
+);
+```
+
+### With DataTable
+```tsx
+const [searchTerm, setSearchTerm] = useState('');
+const [filteredData, setFilteredData] = useState(originalData);
+
+useEffect(() => {
+  const filtered = originalData.filter(item => 
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  setFilteredData(filtered);
+}, [searchTerm, originalData]);
+
+return (
+  <div className="space-y-4">
+    <SearchBar
+      value={searchTerm}
+      onChange={setSearchTerm}
+      placeholder="Filter table data..."
+    />
+    
+    <DataTable
+      data={filteredData}
+      columns={columns}
+    />
+  </div>
+);
+```
+
+## Accessibility
+
+The SearchBar component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Loading state announcements
+
+```tsx
+<SearchBar
+  value={searchTerm}
+  onChange={setSearchTerm}
+  onSearch={handleSearch}
+  aria-label="Search users"
+  aria-describedby="search-help"
+/>
+```
+
+## Best Practices
+
+1. **Use debouncing** - Avoid excessive API calls while typing
+2. **Provide suggestions** - Help users find what they're looking for
+3. **Handle loading states** - Show feedback during search operations
+4. **Implement proper filtering** - Ensure search results are relevant
+5. **Test keyboard navigation** - Ensure accessibility compliance
+
+## Related Components
+
+- [Input](/docs/components/input) - For basic text input
+- [AutocompleteInput](/docs/components/autocomplete-input) - For advanced search with options
+- [ResourceList](/docs/components/resource-list) - For displaying search results
+- [DataTable](/docs/components/data-table) - For tabular search results
