@@ -268,7 +268,7 @@ We use a structured naming convention for branches:
 ### Type Prefixes
 
 - **`feat/`** - New features
-- **`fix/`** - Bug fixes
+- **`hotfix/`** - Bug fixes and critical improvements
 - **`docs/`** - Documentation changes
 - **`style/`** - Code style changes (formatting, etc.)
 - **`refactor/`** - Code refactoring
@@ -280,7 +280,7 @@ We use a structured naming convention for branches:
 ### Scope Examples
 
 - **`feat/core/`** - New features in the core package
-- **`fix/web/`** - Bug fixes in the web package
+- **`hotfix/web/`** - Bug fixes in the web package
 - **`docs/`** - Documentation updates
 - **`test/core/`** - Test updates for core package
 
@@ -299,8 +299,8 @@ git checkout -b feat/web/implement-data-table-component
 git checkout -b feat/docs/add-contributing-guide
 
 # Bug fix branches
-git checkout -b fix/core/resolve-memory-leak-in-useResource
-git checkout -b fix/web/fix-button-styling-issues
+git checkout -b hotfix/core/resolve-memory-leak-in-useResource
+git checkout -b hotfix/web/fix-button-styling-issues
 
 # Documentation branches
 git checkout -b docs/update-api-reference
@@ -333,6 +333,18 @@ messages. The configuration follows the
 [optional footer(s)]
 ```
 
+**Important**: We use `lowerCase` for the description, but we allow proper
+component names:
+
+- Start with lowercase
+- Use proper component names (e.g., `useResource`, `useGetList`, `DataTable`) -
+  will show warning but commit succeeds
+- Use proper technical terms (e.g., `TypeScript`, `React`, `Tailwind`) - will
+  show warning but commit succeeds
+- Only capitalize the first word and proper nouns
+- **Note**: Using proper component names will show a warning but the commit will
+  succeed
+
 ### Type Values
 
 - **`feat`** - A new feature
@@ -361,8 +373,9 @@ git commit -m "feat(core): add useResource hook for CRUD operations"
 git commit -m "feat(web): implementDataTable component with sorting and pagination"
 
 # Bug fix commits
-git commit -m "fix(core): resolve memory leak in useResource hook"
-git commit -m "fix(web): fix button styling issues in dark theme"
+git commit -m "hotfix(core): resolve memory leak in useResource hook"
+git commit -m "hotfix(web): fix button styling issues in dark theme"
+git commit -m "hotfix(core): rewrite useGetList hook with proper loading state management"
 
 # Documentation commits
 git commit -m "docs: update API reference with new components"
@@ -740,7 +753,7 @@ git push origin feat/core/new-feature
 
 ```bash
 feat/core/add-user-authentication
-fix/web/resolve-table-sorting-issue
+hotfix/web/resolve-table-sorting-issue
 docs/update-getting-started-guide
 test/core/add-hook-testing-utilities
 refactor/web/optimize-component-performance
@@ -750,7 +763,8 @@ refactor/web/optimize-component-performance
 
 ```bash
 feat(core): add useAuth hook for authentication
-fix(web): resolve button styling in dark theme
+hotfix(web): resolve button styling in dark theme
+hotfix(core): rewrite useGetList hook with proper loading state management
 docs: add comprehensive contributing guide
 test(core): add tests for useResource hook
 refactor(web): optimize DataTable rendering

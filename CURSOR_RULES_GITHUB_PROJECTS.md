@@ -29,6 +29,19 @@ Todo/Not Started → In Progress → Done
 **NEVER skip the "In Progress" status** - this tracks active work and prevents
 duplicate work.
 
+### 4. Branch Management Rules
+
+- **NEVER commit directly to main** - always create feature branches
+- **Use descriptive branch names**: `hotfix/component-name-issue` or
+  `feature/component-name`
+- **Follow git-flow principles**: Branch from develop, not from main
+- **Create PRs for all changes**: Use `gh pr create` for code review
+- **Branch naming convention**:
+  - `hotfix/` for bug fixes and improvements
+  - `feature/` for new components and features
+  - `docs/` for documentation updates
+  - `refactor/` for code refactoring
+
 ### 4. Task Completion Checklist
 
 For each completed task, ensure:
@@ -148,27 +161,38 @@ gh pr merge [PR_NUMBER] --merge
 9. **Update Status**: Mark task as "Done"
 10. **Merge**: Merge PR to main branch
 
-### 7.5. Commit Message Rules (CRITICAL)
+### 7.5. Commit Message Rules (UPDATED December 2024)
 
-**ALWAYS use lowercase in commit messages** to avoid commitlint failures:
+**We use `lowerCase` for commit messages** but allow proper component names with
+warnings:
 
-✅ **CORRECT** (lowercase):
+✅ **CORRECT** (sentence-case with proper component names):
 
 ```bash
-git commit -m "feat(web): implement label component"
-git commit -m "feat(core): add text field component"
+git commit -m "feat(web): implement Label component"
+git commit -m "feat(core): add useResource hook for CRUD operations"
+git commit -m "hotfix(core): rewrite useGetList hook with proper loading state management"
 git commit -m "docs: update component documentation"
 ```
 
-❌ **WRONG** (capitalized):
+❌ **WRONG** (all lowercase or all uppercase):
 
 ```bash
-git commit -m "feat(web): Implement Label Component"  # Will fail commitlint
-git commit -m "feat(core): Add Text Field Component"  # Will fail commitlint
+git commit -m "feat(web): implement label component"  # Too generic
+git commit -m "feat(core): add useresource hook"      # Hard to read
+git commit -m "feat(web): IMPLEMENT LABEL COMPONENT"  # All caps
 ```
 
-**Remember**: The subject line MUST be lowercase according to conventional
-commits standard. This prevents wasting time on failed commits.
+**Remember**:
+
+- Start with lowercase
+- Use proper component names (e.g., `useResource`, `useGetList`, `DataTable`) -
+  will show warning but commit succeeds
+- Use proper technical terms (e.g., `TypeScript`, `React`, `Tailwind`) - will
+  show warning but commit succeeds
+- Only capitalize the first word and proper nouns
+- **Note**: Using proper component names will show a warning but the commit will
+  succeed
 
 ### 8. Error Handling
 
@@ -193,6 +217,39 @@ If you encounter issues:
 - **Complete tasks end-to-end** - implementation through merge
 - **Follow established patterns** - maintain consistency
 - **Update status immediately** - keep project board current
+
+### 11. React Hook Best Practices (Updated December 2024)
+
+#### **useGetList Hook Pattern (Established)**
+
+- **Use refs for callbacks**: Store `onSuccess` and `onError` in `useRef` to
+  avoid dependency issues
+- **Stable dependencies**: Extract primitive values from options object for
+  `useCallback` dependencies
+- **Loading state management**: Initialize `loading` to `true` for initial
+  fetch, manage refetch states properly
+- **Filter memoization**: Use `useMemo` for filter objects to ensure stable
+  references
+- **Refetch handling**: Accept `isRefetch` parameter to manage loading states
+  precisely
+
+#### **Hook Implementation Standards**
+
+- **Dependency arrays**: Only include stable primitive values, avoid object
+  references
+- **Callback stability**: Use refs for functions that change frequently
+- **State initialization**: Start with appropriate initial states (e.g.,
+  `loading: true` for data hooks)
+- **Error handling**: Proper error boundaries and user feedback
+- **Performance**: Memoize expensive operations and avoid unnecessary re-renders
+
+#### **Testing Requirements**
+
+- **Async state handling**: Use `act()` wrapper for React state updates in tests
+- **Wait for state changes**: Use `waitFor()` for asynchronous operations
+- **Mock data providers**: Proper mocking of external dependencies
+- **Edge cases**: Test loading, error, and empty states
+- **Coverage target**: 90%+ test coverage for all hooks
 
 ---
 
