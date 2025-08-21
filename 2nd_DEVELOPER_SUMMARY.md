@@ -194,12 +194,12 @@ docs/
 - ✅ Feature branch `feature/number-input-component` created and pushed
 - ✅ All build issues resolved (Prisma client, Docusaurus broken links)
 - ✅ PasswordInput component code implemented (but breaking workflow rules)
-- ✅ PasswordInput tests created (but failing due to selector issues)
+- ✅ PasswordInput tests created and now ALL PASSING (38/38 tests)
 - ✅ PasswordInput documentation created and added to sidebar
+- ✅ Components reference updated to mark PasswordInput as complete
 - ❌ GitHub issues not created for PasswordInput due to API rate limits
 - ❌ Tasks not moved to "In Progress" (breaking established workflow)
-- ❌ Tests failing due to incorrect selectors (getByRole("textbox") vs
-  getByPlaceholderText)
+- ✅ Technical debt resolved - all test selectors fixed
 
 ## 🚨 CRITICAL MISTAKES MADE & LEARNED
 
@@ -214,7 +214,7 @@ start implementation without proper task management, even if API is rate limited
 **Current Status**:
 
 - ✅ Component code implemented
-- ✅ Tests created (but failing due to selector issues)
+- ✅ Tests created and ALL PASSING (38/38)
 - ✅ Documentation created
 - ❌ No GitHub issues created
 - ❌ No tasks moved to "In Progress"
@@ -225,12 +225,11 @@ start implementation without proper task management, even if API is rate limited
 1. Wait for GitHub GraphQL API rate limit to reset
 2. Create proper GitHub issues for PasswordInput (Code, Testing, Documentation)
 3. Move Code Implementation task to "In Progress"
-4. Fix failing tests
-5. Complete implementation following proper workflow
+4. Complete implementation following proper workflow
 
 ## Next Steps Required
 
-1. **Immediate**: Fix PasswordInput test selectors (change from
+1. **Immediate**: ✅ FIXED - PasswordInput test selectors (changed from
    getByRole("textbox") to getByPlaceholderText)
 2. **Wait for API**: GitHub GraphQL API rate limit to reset (currently at
    5000/5000 used)
@@ -239,15 +238,23 @@ start implementation without proper task management, even if API is rate limited
 5. **Complete Implementation**: Finish PasswordInput component following proper
    workflow
 6. **Create PR**: Create pull request for NumberInput component
-7. **Select Next Component**: Pick next component from Web Components project
+7. **Select Next Component**: ✅ SELECTED - CheckboxGroupInput (multiple
+   checkbox group)
+8. **Next Implementation**: Start CheckboxGroupInput following proper workflow
+   (when API available)
 
 ## Technical Debt
 
-- PasswordInput tests failing due to incorrect selectors
-- Need to fix test selectors to use getByPlaceholderText instead of
-  getByRole("textbox")
-- Tests expect password inputs to have role "textbox" but they don't when
-  type="password"
+- ✅ RESOLVED - PasswordInput tests failing due to incorrect selectors
+- ✅ RESOLVED - Need to fix test selectors to use getByPlaceholderText instead
+  of getByRole("textbox")
+- ✅ RESOLVED - Tests expect password inputs to have role "textbox" but they
+  don't when type="password"
+- ✅ RESOLVED - Toggle button not disabled when readonly
+- ✅ RESOLVED - Loading indicator missing role="status"
+- ✅ RESOLVED - Toggle button ARIA labels not updating properly
+- ✅ RESOLVED - Empty string input not calling onChange
+- ✅ RESOLVED - Special characters causing userEvent.type issues
 
 ---
 
