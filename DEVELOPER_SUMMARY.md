@@ -112,6 +112,7 @@ Improvements
 - ✅ **Documentation**: Complete MDX documentation with live examples
 - ✅ **Live Examples**: Basic usage, validation with reordering, complex nested
   forms
+- ✅ **PR Creation**: Pull Request #426 created and ready for review
 
 ### CRUD Component Testing Improvements
 
@@ -129,6 +130,16 @@ Improvements
 - ✅ **Live Component System**: Enhanced with Tailwind CSS integration
 - ✅ **Component Examples**: Created reusable example components for
   documentation
+
+### Critical Learning - MDX Syntax
+
+- ❌ **MISTAKE MADE**: Incorrectly "fixed" MDX comment syntax
+- **Issue**: Changed `{/\* ... */}` to `{/* ... */}` thinking backslashes were
+  wrong
+- **Reality**: Backslashes are REQUIRED in MDX for proper comment escaping
+- **Impact**: Broke Docusaurus build, user had to revert changes
+- **Lesson**: Always verify MDX-specific syntax requirements before making
+  "fixes"
 
 ## Documentation Status
 
@@ -256,13 +267,17 @@ feat(web): implement [component-name] component
 
 ## Notes for Next Session
 
-- ArrayInput component is complete and ready for PR
-- All tests are passing
-- Documentation includes live examples
-- CRUD component testing has been significantly improved
-- Follow established pattern for next component
-- Maintain clean, minimal design aesthetic
-- Focus on admin framework use cases, not generic UI library
+- ✅ ArrayInput component is complete with PR #426 created
+- ✅ All tests are passing for implemented components
+- ✅ Documentation includes live examples (with proper MDX syntax)
+- ✅ CRUD component testing has been significantly improved
+- 🔄 Continue with ResourceForm and ResourceShow testing completion
+- 📋 Pick next component from GitHub Projects for implementation
+- ⚠️ **CRITICAL**: Remember MDX syntax - `{/\* ... */}` is correct, not
+  `{/* ... */}`
+- 🎯 Follow established pattern for next component
+- 🎨 Maintain clean, minimal design aesthetic
+- 💼 Focus on admin framework use cases, not generic UI library
 
 ## Critical Development Rules
 
@@ -291,6 +306,9 @@ feat(web): implement [component-name] component
 
 ---
 
-**Last Updated**: Current session (ArrayInput component completion) **Next
-Developer**: Commit ArrayInput changes, create PR, then continue with next
-component from GitHub Projects **Status**: Ready for commit and PR creation
+**Last Updated**: Current session (ArrayInput component completion + MDX syntax
+learning) **Next Developer**: Continue with CRUD testing completion, then pick
+next component from GitHub Projects  
+**Status**: ArrayInput complete with PR #426 created, ready for next component
+development **Critical Note**: Remember MDX comment syntax uses backslashes:
+`{/\* ... */}` not `{/* ... */}`
