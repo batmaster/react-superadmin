@@ -42,6 +42,7 @@ const sidebars: SidebarsConfig = {
         'components/label',
         'components/array-input',
         'components/autocomplete-input',
+        'components/reference-field',
         'components/form',
         'components/forms',
         'components/layout',
