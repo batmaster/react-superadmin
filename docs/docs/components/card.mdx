@@ -19,8 +19,6 @@ The Card component provides a flexible container for organizing content with var
 
 **Code:**
 ```tsx
-import { Card } from '@react-superadmin/web';
-
 <Card>
   <p>This is a basic card with default styling.</p>
 </Card>
@@ -64,49 +62,28 @@ import { Card } from '@react-superadmin/web';
 
 ### No Padding
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function NoPaddingCard() {
-  return (
-    <Card padding='none'>
-      <div className='p-4 bg-gray-50'>
-        <p>Content with custom padding applied.</p>
-      </div>
-    </Card>
-  );
-}
+```jsx live
+<Card padding='none'>
+  <div className='p-4 bg-gray-50'>
+    <p>Content with custom padding applied.</p>
+  </div>
+</Card>
 ```
 
 ### Small Padding
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function SmallPaddingCard() {
-  return (
-    <Card padding='sm'>
-      <p>Card with small padding (12px).</p>
-    </Card>
-  );
-}
+```jsx live
+<Card padding='sm'>
+  <p>Card with small padding (12px).</p>
+</Card>
 ```
 
 ### Large Padding
 
-```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
-
-function LargePaddingCard() {
-  return (
-    <Card padding='lg'>
-      <p>Card with large padding (24px).</p>
-    </Card>
-  );
-}
+```jsx live
+<Card padding='lg'>
+  <p>Card with large padding (24px).</p>
+</Card>
 ```
 
 ## Hover Effects
