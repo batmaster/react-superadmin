@@ -1,0 +1,545 @@
+---
+id: label
+title: Label Component
+sidebar_label: Label
+---
+
+# Label Component
+
+A comprehensive and accessible form label component that follows React Admin patterns with support for required field indicators, accessibility features, and flexible styling options.
+
+## Overview
+
+The `Label` component provides a modern, accessible form label interface that supports:
+
+- Required field indicators with customizable styling
+- Multiple size variants (sm, md, lg) and style variants (default, bold, subtle, error)
+- Helper text and error message display with icons
+- Comprehensive accessibility features (ARIA, screen reader support)
+- Flexible styling and theming integration
+- Form validation system integration
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { Label } from '@react-superadmin/web';
+
+function BasicLabelExample() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label htmlFor='email' required>
+          Email Address
+        </Label>
+        <input
+          id='email'
+          type='email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='password' required>
+          Password
+        </Label>
+        <input
+          id='password'
+          type='password'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+        />
+      </div>
+    </div>
+  );
+}
+
+<BasicLabelExample />;
+```
+
+## Size Variants
+
+The Label component supports three size variants to match your design system:
+
+```tsx live
+import React from 'react';
+import { Label } from '@react-superadmin/web';
+
+function SizeVariantsExample() {
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label htmlFor='small' size='sm'>
+          Small Label
+        </Label>
+        <input
+          id='small'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='medium' size='md'>
+          Medium Label (Default)
+        </Label>
+        <input
+          id='medium'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='large' size='lg'>
+          Large Label
+        </Label>
+        <input
+          id='large'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-lg'
+        />
+      </div>
+    </div>
+  );
+}
+
+<SizeVariantsExample />;
+```
+
+## Style Variants
+
+Choose from different visual styles to match your design context:
+
+```tsx live
+import React from 'react';
+import { Label } from '@react-superadmin/web';
+
+function StyleVariantsExample() {
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label htmlFor='default' variant='default'>
+          Default Style
+        </Label>
+        <input
+          id='default'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='bold' variant='bold'>
+          Bold Style
+        </Label>
+        <input
+          id='bold'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='subtle' variant='subtle'>
+          Subtle Style
+        </Label>
+        <input
+          id='subtle'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='error' variant='error'>
+          Error Style
+        </Label>
+        <input
+          id='error'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-red-300 rounded-md shadow-sm'
+        />
+      </div>
+    </div>
+  );
+}
+
+<StyleVariantsExample />;
+```
+
+## Helper Text and Error Messages
+
+Labels can include helper text and error messages with automatic icon support:
+
+```tsx live
+import React, { useState } from 'react';
+import { Label } from '@react-superadmin/web';
+
+function HelperTextExample() {
+  const [username, setUsername] = useState('');
+  const [hasError, setHasError] = useState(false);
+
+  const handleUsernameChange = e => {
+    const value = e.target.value;
+    setUsername(value);
+    setHasError(value.length < 3);
+  };
+
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label
+          htmlFor='username'
+          required
+          helperText='Username must be at least 3 characters long'
+        >
+          Username
+        </Label>
+        <input
+          id='username'
+          type='text'
+          value={username}
+          onChange={handleUsernameChange}
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+        />
+      </div>
+
+      <div>
+        <Label
+          htmlFor='email-field'
+          required
+          error={hasError ? 'Username is too short' : undefined}
+          helperText='Enter your email address'
+        >
+          Email Address
+        </Label>
+        <input
+          id='email-field'
+          type='email'
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+        />
+      </div>
+    </div>
+  );
+}
+
+<HelperTextExample />;
+```
+
+## Custom Icons
+
+You can provide custom icons for error states or other visual enhancements:
+
+```tsx live
+import React from 'react';
+import { Label } from '@react-superadmin/web';
+import { AlertTriangle, Info, CheckCircle } from 'lucide-react';
+
+function CustomIconsExample() {
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label
+          htmlFor='success-field'
+          showIcon
+          icon={CheckCircle}
+          helperText='This field has been validated successfully'
+        >
+          Success Field
+        </Label>
+        <input
+          id='success-field'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-green-300 rounded-md shadow-sm bg-green-50'
+        />
+      </div>
+
+      <div>
+        <Label
+          htmlFor='info-field'
+          showIcon
+          icon={Info}
+          helperText='This is informational text about the field'
+        >
+          Info Field
+        </Label>
+        <input
+          id='info-field'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-blue-300 rounded-md shadow-sm bg-blue-50'
+        />
+      </div>
+
+      <div>
+        <Label
+          htmlFor='warning-field'
+          showIcon
+          icon={AlertTriangle}
+          error='This field has a warning'
+        >
+          Warning Field
+        </Label>
+        <input
+          id='warning-field'
+          type='text'
+          className='mt-1 block w-full px-3 py-2 border border-yellow-300 rounded-md shadow-sm bg-yellow-50'
+        />
+      </div>
+    </div>
+  );
+}
+
+<CustomIconsExample />;
+```
+
+## Disabled State
+
+Labels can be disabled to match disabled form controls:
+
+```tsx live
+import React from 'react';
+import { Label } from '@react-superadmin/web';
+
+function DisabledStateExample() {
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label htmlFor='disabled-field' disabled>
+          Disabled Field
+        </Label>
+        <input
+          id='disabled-field'
+          type='text'
+          disabled
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed'
+        />
+      </div>
+
+      <div>
+        <Label
+          htmlFor='disabled-with-helper'
+          disabled
+          helperText='This helper text is also disabled'
+        >
+          Disabled with Helper
+        </Label>
+        <input
+          id='disabled-with-helper'
+          type='text'
+          disabled
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed'
+        />
+      </div>
+    </div>
+  );
+}
+
+<DisabledStateExample />;
+```
+
+## Props Reference
+
+### LabelProps
+
+| Prop                | Type                                          | Default       | Description                                              |
+| ------------------- | --------------------------------------------- | ------------- | -------------------------------------------------------- |
+| `children`          | `React.ReactNode`                             | -             | **Required.** The text content for the label             |
+| `htmlFor`           | `string`                                      | -             | The ID of the form control this label is associated with |
+| `required`          | `boolean`                                     | `false`       | Whether the field is required (shows required indicator) |
+| `size`              | `"sm" \| "md" \| "lg"`                        | `"md"`        | Label size variant                                       |
+| `variant`           | `"default" \| "bold" \| "subtle" \| "error"`  | `"default"`   | Label variant/style                                      |
+| `showIcon`          | `boolean`                                     | `false`       | Whether to show an icon                                  |
+| `icon`              | `React.ComponentType<{ className?: string }>` | `AlertCircle` | Custom icon component                                    |
+| `helperText`        | `string`                                      | -             | Helper text to display below the label                   |
+| `error`             | `string`                                      | -             | Error message to display (overrides helper text)         |
+| `disabled`          | `boolean`                                     | `false`       | Whether the label is disabled                            |
+| `className`         | `string`                                      | -             | CSS class names for the container                        |
+| `textClassName`     | `string`                                      | -             | CSS class names for the text content                     |
+| `requiredClassName` | `string`                                      | -             | CSS class names for the required indicator               |
+| `helperClassName`   | `string`                                      | -             | CSS class names for the helper text                      |
+| `errorClassName`    | `string`                                      | -             | CSS class names for the error message                    |
+| `iconClassName`     | `string`                                      | -             | CSS class names for the icon                             |
+
+## Accessibility Features
+
+The Label component includes comprehensive accessibility features:
+
+### ARIA Attributes
+
+- **`for` attribute**: Properly associates labels with form controls
+- **`aria-required`**: Indicates required fields for screen readers
+- **`aria-disabled`**: Indicates disabled state
+- **`role="alert"`**: Applied to error messages for screen reader announcements
+
+### Screen Reader Support
+
+- Required field indicators include `aria-label="required"`
+- Error messages are announced immediately when they appear
+- Helper text provides additional context for form fields
+
+### Keyboard Navigation
+
+- Labels are focusable and can be activated with keyboard
+- Proper tab order maintained with form controls
+
+## Integration with Form Components
+
+The Label component is designed to work seamlessly with other form components:
+
+```tsx live
+import React, { useState } from 'react';
+import { Label, SelectInput } from '@react-superadmin/web';
+
+function FormIntegrationExample() {
+  const [country, setCountry] = useState('');
+  const [interests, setInterests] = useState([]);
+
+  const countries = [
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'au', label: 'Australia' },
+  ];
+
+  const interestOptions = [
+    { value: 'technology', label: 'Technology' },
+    { value: 'sports', label: 'Sports' },
+    { value: 'music', label: 'Music' },
+    { value: 'travel', label: 'Travel' },
+  ];
+
+  return (
+    <div className='space-y-4'>
+      <div>
+        <Label htmlFor='country' required>
+          Country
+        </Label>
+        <SelectInput
+          id='country'
+          options={countries}
+          value={country}
+          onChange={setCountry}
+          placeholder='Select a country'
+        />
+      </div>
+
+      <div>
+        <Label htmlFor='interests' helperText='Select all that apply'>
+          Interests
+        </Label>
+        <SelectInput
+          id='interests'
+          options={interestOptions}
+          value={interests}
+          onChange={setInterests}
+          multiple
+          placeholder='Choose your interests'
+        />
+      </div>
+    </div>
+  );
+}
+
+<FormIntegrationExample />;
+```
+
+## Best Practices
+
+### 1. Always Use `htmlFor`
+
+```tsx
+// ✅ Good - Proper association
+<Label htmlFor="email">Email Address</Label>
+<input id="email" type="email" />
+
+// ❌ Bad - No association
+<Label>Email Address</Label>
+<input type="email" />
+```
+
+### 2. Use Helper Text for Guidance
+
+```tsx
+// ✅ Good - Provides context
+<Label htmlFor="password" helperText="Must be at least 8 characters">
+  Password
+</Label>
+
+// ❌ Bad - No guidance
+<Label htmlFor="password">Password</Label>
+```
+
+### 3. Show Required Indicators
+
+```tsx
+// ✅ Good - Clear indication
+<Label htmlFor="email" required>
+  Email Address
+</Label>
+
+// ❌ Bad - Unclear requirements
+<Label htmlFor="email">Email Address</Label>
+```
+
+### 4. Use Error States Appropriately
+
+```tsx
+// ✅ Good - Clear error communication
+<Label
+  htmlFor="username"
+  error="Username must be at least 3 characters"
+>
+  Username
+</Label>
+
+// ❌ Bad - No error feedback
+<Label htmlFor="username">Username</Label>
+```
+
+## Theme Integration
+
+The Label component integrates with your design system through Tailwind CSS classes:
+
+```tsx
+// Custom theme classes
+<Label
+  htmlFor='custom'
+  className='text-purple-900 font-bold'
+  textClassName='text-purple-700'
+  requiredClassName='text-purple-500'
+  helperClassName='text-purple-600 text-sm italic'
+>
+  Custom Themed Label
+</Label>
+```
+
+## Performance Considerations
+
+- The component uses `forwardRef` for optimal ref handling
+- Conditional rendering prevents unnecessary DOM elements
+- Icon components are only rendered when needed
+- CSS classes are optimized for minimal bundle impact
+
+## Browser Support
+
+The Label component supports all modern browsers:
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## Related Components
+
+- **Input**: Basic form input component
+- **SelectInput**: Dropdown selection component
+- **FormField**: Form field wrapper with validation
+- **Button**: Interactive button component
+- **Card**: Container component for form sections
