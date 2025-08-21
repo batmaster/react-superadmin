@@ -237,7 +237,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            disabled={isDisabled}
+            disabled={isDisabled || readOnly}
             className={cn(
               "absolute inset-y-0 right-0 pr-3 flex items-center",
               "text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600",
@@ -255,7 +255,11 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           {/* Loading Indicator */}
           {loading && (
             <div className="absolute inset-y-0 right-12 pr-3 flex items-center">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+              <div
+                className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"
+                role="status"
+                aria-label="Loading"
+              ></div>
             </div>
           )}
         </div>
