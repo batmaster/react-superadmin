@@ -1,8 +1,8 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { FormField } from "../../../components/forms/FormField";
 import { FieldConfig } from "@react-superadmin/core";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import React from "react";
+import { FormField } from "../../../components/forms/FormField";
 
 // Mock the core package to avoid dependency issues
 jest.mock("@react-superadmin/core", () => ({
