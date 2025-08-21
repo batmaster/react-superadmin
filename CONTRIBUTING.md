@@ -1,13 +1,16 @@
 # Contributing to React SuperAdmin
 
-Thank you for your interest in contributing to React SuperAdmin! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to React SuperAdmin! This document
+provides guidelines and information for contributors.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/batmaster/react-superadmin.git`
+2. Clone your fork:
+   `git clone https://github.com/batmaster/react-superadmin.git`
 3. Install dependencies: `pnpm install`
-4. Create a feature branch: `git checkout -b feature/your-feature-name`
+4. Create a feature branch: `git checkout -b feature/your-feature-name` or
+   `git checkout -b hotfix/your-bug-fix`
 
 ## Development Setup
 
@@ -47,13 +50,31 @@ react-superadmin/
 
 - Use TypeScript for all new code
 - Follow ESLint and Prettier configurations
-- Write meaningful commit messages
+- Write meaningful commit messages using sentence-case format
 - Include JSDoc comments for public APIs
 - Write tests for new functionality
 
+### Commit Message Format
+
+We use conventional commits with lowerCase format but allow proper component
+names:
+
+```bash
+# Examples
+feat(core): add useResource hook for CRUD operations
+hotfix(web): fix button styling issues in dark theme
+docs: update contributing guide with new examples
+test(core): add comprehensive tests for useResource hook
+```
+
+**Note**: Use proper component names (e.g., `useResource`, `useGetList`,
+`DataTable`) in commit messages. Using proper component names will show a
+warning but the commit will succeed.
+
 ## Code Formatting
 
-We use **Prettier** for automatic code formatting and **ESLint** for code quality checks. The formatting is automatically applied before each commit.
+We use **Prettier** for automatic code formatting and **ESLint** for code
+quality checks. The formatting is automatically applied before each commit.
 
 ### Formatting Commands
 
@@ -70,14 +91,15 @@ pnpm format:fix
 
 ### Automatic Formatting
 
-- **On Save**: VS Code will automatically format files when you save (if you have the Prettier extension)
+- **On Save**: VS Code will automatically format files when you save (if you
+  have the Prettier extension)
 - **Pre-commit**: All staged files are automatically formatted before commits
 - **CI/CD**: Formatting is checked in CI to ensure consistency
 
 ### File Types Covered
 
 - **TypeScript/TSX**: `.ts`, `.tsx` files
-- **JavaScript/JSX**: `.js`, `.jsx` files  
+- **JavaScript/JSX**: `.js`, `.jsx` files
 - **Markdown**: `.md` files
 - **Configuration**: `.json`, `.yml`, `.yaml` files
 - **Styles**: `.css`, `.scss`, `.less` files
@@ -86,6 +108,7 @@ pnpm format:fix
 ### Pre-commit Hooks
 
 The project uses Husky to run pre-commit hooks that:
+
 1. **Format code** with Prettier
 2. **Fix ESLint issues** automatically
 3. **Run tests** to ensure nothing is broken
@@ -94,10 +117,12 @@ The project uses Husky to run pre-commit hooks that:
 ### VS Code Setup
 
 For the best development experience, install these extensions:
+
 - **Prettier - Code formatter**
 - **ESLint**
 
 The project includes VS Code settings that automatically:
+
 - Set Prettier as the default formatter
 - Format on save
 - Run ESLint fixes on save

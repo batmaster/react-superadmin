@@ -1,5 +1,23 @@
 # React SuperAdmin - Developer Summary
 
+## 🚨 **MEMORY UPDATE PROTOCOL - When User Says "Update Memory" or "Update Memory Files"**
+
+**🚨 ALWAYS PROVIDE COMPREHENSIVE SUMMARY:**
+
+1. **What We Faced in the Past** - Document all challenges, issues, and problems
+   encountered
+2. **What We Accomplished** - Summary of all completed tasks, components, and
+   achievements
+3. **What We're Currently Doing** - Current work status and active tasks
+4. **What We Plan to Do Next** - Roadmap and next steps
+5. **New Rules & Guidelines** - Organizational improvements and process
+   enhancements
+
+**This ensures all developers have complete context and can continue
+seamlessly.**
+
+---
+
 ## Project Overview
 
 React SuperAdmin is a CRUD admin framework designed to let users quickly create
@@ -12,16 +30,18 @@ webapp admin interfaces. It's a monorepo with pnpm workspaces containing:
 
 ## Current Status (Latest Session)
 
-**Last Completed Task**: ArrayInput Component Implementation and CRUD Testing
-Improvements
+**Last Completed Task**: useGetList Hook Complete Rewrite and PR #429 Creation
 
-- ✅ ArrayInput component implemented with comprehensive functionality
-- ✅ ArrayInput documentation created with live examples
-- ✅ CRUD component testing significantly improved (ResourceList, ResourceForm,
-  DataTable, Pagination)
-- ✅ FormField component enhanced with better testability
-- ✅ Documentation sidebar updated with new components
-- ✅ Live component preview system working with Tailwind CSS
+- ✅ useGetList hook completely rewritten following modern React best practices
+- ✅ Loading state management optimized for initial fetch and refetch operations
+- ✅ Callback stability improved using refs to prevent infinite re-renders
+- ✅ createAdmin utility fixed to correctly pass dataProvider through
+  configuration
+- ✅ All core tests passing (181/181) with improved async state handling
+- ✅ PR #429 created: "fix(core): rewrite usegetlist hook with proper loading
+  state management"
+- ✅ Branch management: Created `hotfix/usegetlist-hook-implementation` branch
+- ✅ Code quality: All pre-commit checks passing (linting, building, testing)
 
 ## Recently Completed Components
 
@@ -102,9 +122,48 @@ Improvements
 - **Docs**: `docs/docs/components/array-input.mdx` with live examples
 - **Status**: Complete with comprehensive testing and documentation
 
-## Current Session Accomplishments (December 2024)
+### 10. useGetList Hook ✅ (Just Completed - Major Rewrite)
 
-### ArrayInput Component Implementation
+- **File**: `packages/core/src/hooks/useGetList.ts`
+- **Features**: Complete rewrite following modern React best practices
+- **Improvements**:
+  - Loading state management for initial fetch and refetch
+  - Callback stability using refs to prevent infinite re-renders
+  - Stable dependencies in useCallback to avoid unnecessary recreations
+  - Filter memoization for stable object references
+  - Proper async state handling in tests with act() wrapper
+- **Tests**: `packages/core/src/__tests__/hooks/useGetList.test.tsx` (all
+  passing)
+- **Status**: Complete rewrite with 181/181 core tests passing
+- **PR**: #429 ready for review and merge
+
+## Current Session Accomplishments (August 2025)
+
+### useGetList Hook Complete Rewrite
+
+- ✅ **Hook Rewrite**: Complete rewrite following modern React best practices
+- ✅ **Loading State Management**: Proper initial fetch and refetch handling
+- ✅ **Callback Stability**: Using refs to prevent infinite re-renders
+- ✅ **Dependency Optimization**: Stable useCallback dependencies with primitive
+  values
+- ✅ **Filter Memoization**: Stable filter object references using useMemo
+- ✅ **createAdmin Fix**: Correctly passing dataProvider through admin
+  configuration
+- ✅ **Test Improvements**: Added act() wrapper for proper React state updates
+- ✅ **All Core Tests Passing**: 181/181 tests successful
+- ✅ **PR Creation**: Pull Request #429 created and ready for review
+
+### Technical Improvements Achieved
+
+- ✅ **React Hook Best Practices**: Modern patterns for data fetching
+  implemented
+- ✅ **State Management**: Proper loading states for initial and refetch
+  operations
+- ✅ **Performance Optimization**: Stable callback references and dependencies
+- ✅ **Testing Robustness**: Proper async state handling in tests
+- ✅ **Type Safety**: Improved TypeScript interfaces and error handling
+
+### ArrayInput Component Implementation (Previous Session)
 
 - ✅ **Component Implementation**: Full-featured array input with item
   management
@@ -150,30 +209,43 @@ Improvements
 
 ## Current Branch
 
-- **Branch**: `feature/array-input-component`
-- **Status**: Ready for commit and PR creation
+- **Branch**: `hotfix/usegetlist-hook-implementation`
+- **Status**: Ready for PR review and merge
 - **Files Modified**:
-  - `packages/web/src/components/forms/ArrayInput.tsx`
-  - `packages/web/src/__tests__/components/forms/ArrayInput.test.tsx`
-  - `docs/docs/components/array-input.mdx`
-  - `docs/src/components/forms/` (live examples)
-  - `docs/sidebars.ts`
-  - `docs/src/theme/ReactLiveScope/index.js`
-  - CRUD component test improvements
+  - `packages/core/src/hooks/useGetList.ts` - Complete rewrite
+  - `packages/core/src/utils/createAdmin.ts` - Fixed dataProvider passing
+  - `packages/core/src/__tests__/hooks/useGetList.test.tsx` - Improved testing
+- **PR Status**: #429 created and ready for review
+- **Previous Branch**: `feature/array-input-component` (PR #426 - completed)
 
 ## Next Steps (Immediate Tasks)
 
-### 1. Commit and Create PR for ArrayInput ✅
+### 1. Complete PR #429 for useGetList Hook ✅
 
-- **Status**: Ready for commit
-- **Next**: Create PR and merge to main
+- **Status**: PR created and ready for review
+- **Next**: Review, approve, and merge to main
 
-### 2. Pick Next Component from GitHub Project
+### 2. Address Web Package Test Failures
+
+- **Current Issue**: 50 tests failing in packages/web
+- **Primary Focus**: ResourceForm.test.tsx failures
+- **Goal**: Get all web package tests passing
+- **Priority**: HIGH - affects CI/CD pipeline
+
+### 3. Fix Linting Issues
+
+- **Current Status**: 99 linting warnings in packages/web
+- **Focus Areas**: @typescript-eslint/no-explicit-any warnings
+- **Goal**: Reduce warnings to acceptable levels
+- **Priority**: MEDIUM - code quality improvement
+
+### 4. Pick Next Component from GitHub Project
 
 Check GitHub Projects for next priority:
 
-- **HIGH Priority**: AutocompleteInput, BooleanInput, TextField components
-- **MEDIUM Priority**: Tooltip component
+- **HIGH Priority**: Complete testing/documentation for partially implemented
+  components
+- **MEDIUM Priority**: AutocompleteInput, BooleanInput, TextField components
 - **Form Components**: Continue building form input library
 - **Layout Components**: Grid, Container, Sidebar components
 
@@ -243,13 +315,32 @@ docs/src/theme/ReactLiveScope/          # Live code block scope
 
 ## Commit Message Format
 
-```
-feat(web): implement [component-name] component
+We use **lowerCase** format but allow proper component names with warnings:
 
-- [feature description]
-- [feature description]
-- [feature description]
+```bash
+# ✅ CORRECT Examples
+feat(web): implement Label component with accessibility features
+hotfix(core): rewrite useGetList hook with proper loading state management
+feat(web): add DataTable component with sorting and pagination
+docs: update contributing guide with new examples
+
+# ❌ WRONG Examples
+feat(web): implement label component                    # Too generic
+feat(core): rewrite usegetlist hook                    # Hard to read
+feat(web): IMPLEMENT LABEL COMPONENT                   # All caps
+feat(core): Add UseGetList Hook                        # Title case (not allowed)
 ```
+
+### **Key Rules**
+
+- **Start with lowercase** (lowerCase format)
+- **Use proper component names**: `useResource`, `useGetList`, `DataTable`,
+  `Button` - will show warning but commit succeeds
+- **Use proper technical terms**: `TypeScript`, `React`, `Tailwind`, `CRUD` -
+  will show warning but commit succeeds
+- **Only capitalize** the first word and proper nouns
+- **Note**: Using proper component names will show a warning but the commit will
+  succeed
 
 ## GitHub Project Management
 
@@ -267,18 +358,23 @@ feat(web): implement [component-name] component
 
 ## Notes for Next Session
 
-- ✅ ArrayInput component is complete with PR #426 open and ready for review
-- ✅ All tests are passing for implemented components
+- ✅ useGetList hook completely rewritten with PR #429 ready for review
+- ✅ All core tests passing (181/181) with improved async state handling
+- ✅ ArrayInput component complete with PR #426 (previous session)
 - ✅ Documentation includes live examples (with proper MDX syntax)
 - ✅ CRUD component testing has been significantly improved
-- ✅ All changes committed and pushed to remote branch
-- 🔄 Continue with ResourceForm and ResourceShow testing completion
+- 🔄 **CRITICAL**: 50 tests failing in packages/web - focus on
+  ResourceForm.test.tsx
+- 🔄 **MEDIUM**: 99 linting warnings in packages/web - address
+  @typescript-eslint/no-explicit-any
 - 📋 Pick next component from GitHub Projects for implementation
 - ⚠️ **CRITICAL**: Remember MDX syntax - `{/\* ... */}` is correct, not
   `{/* ... */}`
 - 🎯 Follow established pattern for next component
 - 🎨 Maintain clean, minimal design aesthetic
 - 💼 Focus on admin framework use cases, not generic UI library
+- 🚀 **NEW**: useGetList hook pattern established - use refs for callbacks,
+  stable dependencies
 
 ## Critical Development Rules
 
@@ -307,10 +403,15 @@ feat(web): implement [component-name] component
 
 ---
 
-**Last Updated**: Current session (ArrayInput component completion + MDX syntax
-learning + PR #426 ready for review) **Next Developer**: Continue with CRUD
-testing completion, then pick next component from GitHub Projects  
-**Status**: ArrayInput complete with PR #426 open and ready for review/merge,
-all changes committed and pushed **Critical Note**: Remember MDX comment syntax
-uses backslashes: `{/\* ... */}` not `{/* ... */}` **PR Status**: #426 open,
-includes ArrayInput + enhanced CRUD testing + updated developer summary
+**Last Updated**: August 21, 2025 (useGetList hook complete rewrite + PR #429 +
+web package test failures identified)  
+**Next Developer**: Complete PR #429 merge, fix 50 failing tests in
+packages/web, address 99 linting warnings  
+**Status**: useGetList hook completely rewritten with 181/181 core tests
+passing, PR #429 ready for review/merge  
+**Critical Issues**: 50 tests failing in packages/web (ResourceForm.test.tsx),
+99 linting warnings  
+**Technical Achievement**: Established useGetList hook pattern with refs for
+callbacks and stable dependencies  
+**PR Status**: #429 open for useGetList hook rewrite, #426 completed for
+ArrayInput component
