@@ -12,6 +12,7 @@ import {
 } from '../../components/ui/Card';
 import { Dropdown } from '../../components/ui/Dropdown';
 import { Modal } from '../../components/ui/Modal';
+import { SelectInput } from '../../components/ui/SelectInput';
 
 // Define the scope for live code blocks
 const ReactLiveScope = {
@@ -26,6 +27,7 @@ const ReactLiveScope = {
   Alert,
   Badge,
   Dropdown,
+  SelectInput,
 };
 
 export default ReactLiveScope;

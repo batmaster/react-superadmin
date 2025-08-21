@@ -1,0 +1,396 @@
+---
+id: select-input
+title: SelectInput Component
+sidebar_label: SelectInput
+---
+
+# SelectInput Component
+
+A powerful and accessible select input component with search functionality, custom styling, and comprehensive validation support.
+
+## Overview
+
+The `SelectInput` component provides a modern, accessible dropdown selection interface that supports:
+
+- Single and multiple selection modes
+- Search and filtering capabilities
+- Custom option rendering with descriptions
+- Loading states and error handling
+- Accessibility features (ARIA, keyboard navigation)
+- Flexible styling and theming
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { SelectInput } from '@react-superadmin/web';
+
+function BasicSelectExample() {
+  const [selectedCountry, setSelectedCountry] = useState('');
+
+  const countries = [
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'de', label: 'Germany' },
+    { value: 'fr', label: 'France' },
+    { value: 'jp', label: 'Japan' },
+    { value: 'au', label: 'Australia' },
+  ];
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <SelectInput
+        label='Select Country'
+        value={selectedCountry}
+        onChange={setSelectedCountry}
+        options={countries}
+        placeholder='Choose a country'
+        helperText='Select your country of residence'
+      />
+
+      {selectedCountry && (
+        <div className='p-3 bg-gray-50 rounded-md'>
+          <p className='text-sm text-gray-600'>
+            Selected:{' '}
+            <strong>
+              {countries.find(c => c.value === selectedCountry)?.label}
+            </strong>
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## With Search Functionality
+
+```tsx live
+import React, { useState } from 'react';
+import { SelectInput } from '@react-superadmin/web';
+
+function SearchableSelectExample() {
+  const [selectedProduct, setSelectedProduct] = useState('');
+
+  const products = [
+    {
+      value: 'basic',
+      label: 'Basic Plan',
+      description: 'Perfect for small teams and startups',
+    },
+    {
+      value: 'pro',
+      label: 'Pro Plan',
+      description: 'Great for growing businesses',
+    },
+    {
+      value: 'enterprise',
+      label: 'Enterprise Plan',
+      description: 'Full-featured solution for large organizations',
+    },
+    {
+      value: 'custom',
+      label: 'Custom Solution',
+      description: 'Tailored to your specific needs',
+    },
+  ];
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <SelectInput
+        label='Choose Plan'
+        value={selectedProduct}
+        onChange={setSelectedProduct}
+        options={products}
+        placeholder='Select a plan'
+        searchable
+        showDescriptions
+        showSelectedIndicator
+        helperText='Search and filter through available plans'
+      />
+    </div>
+  );
+}
+```
+
+## With Validation and Error States
+
+```tsx live
+import React, { useState } from 'react';
+import { SelectInput } from '@react-superadmin/web';
+
+function ValidationExample() {
+  const [selectedRole, setSelectedRole] = useState('');
+  const [touched, setTouched] = useState(false);
+
+  const roles = [
+    { value: 'admin', label: 'Administrator' },
+    { value: 'user', label: 'User' },
+    { value: 'moderator', label: 'Moderator' },
+    { value: 'guest', label: 'Guest' },
+  ];
+
+  const hasError = touched && !selectedRole;
+  const errorMessage = hasError ? 'Please select a role' : '';
+
+  return (
+    <div className='max-w-md space-y-4'>
+      <SelectInput
+        label='User Role'
+        value={selectedRole}
+        onChange={value => {
+          setSelectedRole(value);
+          setTouched(true);
+        }}
+        options={roles}
+        placeholder='Select a role'
+        required
+        error={errorMessage}
+        helperText='Choose the appropriate role for this user'
+      />
+
+      <button
+        onClick={() => setTouched(true)}
+        className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+      >
+        Validate
+      </button>
+    </div>
+  );
+}
+```
+
+## Different Sizes
+
+```tsx live
+import React, { useState } from 'react';
+import { SelectInput } from '@react-superadmin/web';
+
+function SizeVariantsExample() {
+  const [smallValue, setSmallValue] = useState('');
+  const [mediumValue, setMediumValue] = useState('');
+  const [largeValue, setLargeValue] = useState('');
+
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <SelectInput
+        label='Small Size'
+        value={smallValue}
+        onChange={setSmallValue}
+        options={options}
+        size='sm'
+        placeholder='Small select'
+      />
+
+      <SelectInput
+        label='Medium Size (Default)'
+        value={mediumValue}
+        onChange={setMediumValue}
+        options={options}
+        size='md'
+        placeholder='Medium select'
+      />
+
+      <SelectInput
+        label='Large Size'
+        value={largeValue}
+        onChange={setLargeValue}
+        options={options}
+        size='lg'
+        placeholder='Large select'
+      />
+    </div>
+  );
+}
+```
+
+## Loading and Disabled States
+
+```tsx live
+import React, { useState } from 'react';
+import { SelectInput } from '@react-superadmin/web';
+
+function StateExample() {
+  const [selectedOption, setSelectedOption] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+
+  const toggleLoading = () => setIsLoading(!isLoading);
+  const toggleDisabled = () => setIsDisabled(!isDisabled);
+
+  return (
+    <div className='max-w-md space-y-6'>
+      <SelectInput
+        label='Interactive Select'
+        value={selectedOption}
+        onChange={setSelectedOption}
+        options={options}
+        placeholder='Select an option'
+        loading={isLoading}
+        disabled={isDisabled}
+        helperText='Toggle loading and disabled states below'
+      />
+
+      <div className='space-y-2'>
+        <button
+          onClick={toggleLoading}
+          className='px-3 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 mr-2'
+        >
+          {isLoading ? 'Stop Loading' : 'Start Loading'}
+        </button>
+
+        <button
+          onClick={toggleDisabled}
+          className='px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700'
+        >
+          {isDisabled ? 'Enable' : 'Disable'}
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+## Props Reference
+
+### SelectInputProps
+
+| Prop                    | Type                   | Default              | Description                                          |
+| ----------------------- | ---------------------- | -------------------- | ---------------------------------------------------- |
+| `value`                 | `any`                  | `undefined`          | Current selected value                               |
+| `onChange`              | `(value: any) => void` | **Required**         | Callback when selection changes                      |
+| `options`               | `SelectOption[]`       | **Required**         | Array of options to display                          |
+| `placeholder`           | `string`               | `"Select an option"` | Placeholder text when no option is selected          |
+| `label`                 | `string`               | `undefined`          | Label text for the select                            |
+| `helperText`            | `string`               | `undefined`          | Helper text below the select                         |
+| `error`                 | `string`               | `undefined`          | Error message to display                             |
+| `required`              | `boolean`              | `false`              | Whether the field is required                        |
+| `disabled`              | `boolean`              | `false`              | Whether the select is disabled                       |
+| `loading`               | `boolean`              | `false`              | Whether the select is loading                        |
+| `size`                  | `"sm" \| "md" \| "lg"` | `"md"`               | Select size variant                                  |
+| `searchable`            | `boolean`              | `false`              | Whether to show a search input for filtering options |
+| `showSelectedIndicator` | `boolean`              | `false`              | Whether to show selected option with a checkmark     |
+| `showDescriptions`      | `boolean`              | `false`              | Whether to show option descriptions                  |
+| `className`             | `string`               | `undefined`          | Custom class names for the container                 |
+| `selectClassName`       | `string`               | `undefined`          | Custom class names for the select element            |
+| `labelClassName`        | `string`               | `undefined`          | Custom class names for the label                     |
+
+### SelectOption
+
+| Prop          | Type      | Default      | Description                    |
+| ------------- | --------- | ------------ | ------------------------------ |
+| `value`       | `any`     | **Required** | The option value               |
+| `label`       | `string`  | **Required** | The option display text        |
+| `disabled`    | `boolean` | `false`      | Whether the option is disabled |
+| `description` | `string`  | `undefined`  | Optional description text      |
+
+## Accessibility Features
+
+The SelectInput component follows accessibility best practices:
+
+- **ARIA Support**: Uses proper ARIA attributes (`role="combobox"`, `aria-expanded`, `aria-haspopup`)
+- **Keyboard Navigation**: Supports Enter, Space, Escape keys for interaction
+- **Screen Reader Support**: Proper labeling and descriptions
+- **Focus Management**: Clear focus indicators and keyboard focus handling
+- **Error States**: ARIA invalid attributes for form validation
+
+## Styling and Theming
+
+The component uses Tailwind CSS classes and supports custom styling through:
+
+- **Size variants**: `sm`, `md`, `lg` for different input sizes
+- **State classes**: Error, disabled, loading, and focus states
+- **Custom classes**: Override any styling through `className` props
+- **Responsive design**: Works across different screen sizes
+
+## Integration Examples
+
+### With Form Libraries
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { SelectInput } from '@react-superadmin/web';
+
+function FormExample() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name='category'
+        control={control}
+        rules={{ required: 'Category is required' }}
+        render={({ field, fieldState }) => (
+          <SelectInput
+            label='Category'
+            value={field.value}
+            onChange={field.onChange}
+            options={categoryOptions}
+            error={fieldState.error?.message}
+            required
+          />
+        )}
+      />
+    </form>
+  );
+}
+```
+
+### With Data Providers
+
+```tsx
+import { useGetList } from '@react-superadmin/core';
+import { SelectInput } from '@react-superadmin/web';
+
+function DataProviderExample() {
+  const { data: users, isLoading } = useGetList('users');
+
+  const userOptions =
+    users?.map(user => ({
+      value: user.id,
+      label: user.name,
+      description: user.email,
+    })) || [];
+
+  return (
+    <SelectInput
+      label='Select User'
+      options={userOptions}
+      loading={isLoading}
+      searchable
+      showDescriptions
+      placeholder='Choose a user'
+    />
+  );
+}
+```
+
+## Best Practices
+
+1. **Always provide labels** for screen reader accessibility
+2. **Use helper text** to provide additional context
+3. **Implement proper validation** with error messages
+4. **Consider search functionality** for large option lists
+5. **Use descriptions** for complex options that need explanation
+6. **Handle loading states** when fetching options asynchronously
+7. **Provide meaningful placeholders** that guide user input
+
+## Related Components
+
+- [Input](./input) - Basic text input component
+- [FormField](./form) - Form field wrapper with validation
+- [Button](./button) - Button component for form actions
+- [Modal](./modal) - Modal component for complex forms
