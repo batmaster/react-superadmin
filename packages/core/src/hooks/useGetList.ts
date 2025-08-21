@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSuperAdmin } from "../contexts/SuperAdminContext";
 import { GetListResult } from "../types";
 
@@ -20,24 +20,24 @@ export interface UseGetListOptions {
 export function useGetList<T = any>(options: UseGetListOptions) {
   const { dataProvider } = useSuperAdmin();
   const [data, setData] = useState<GetListResult<T> | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  // Extract stable values for dependencies
-  const resource = options.resource;
-  const paginationPage = options.pagination?.page || 1;
-  const paginationPerPage = options.pagination?.perPage || 10;
-  const sortField = options.sort?.field || "id";
-  const sortOrder = options.sort?.order || "ASC";
-  const filterKeys = options.filter
-    ? Object.keys(options.filter).sort().join(",")
-    : "";
-  const filterValues = options.filter
-    ? Object.keys(options.filter)
-        .sort()
-        .map((k) => options.filter![k])
-        .join(",")
-    : "";
+  // Store latest callbacks in refs to avoid dependency issues
+  const onSuccessRef = useRef(options.onSuccess);
+  const onErrorRef = useRef(options.onError);
+
+  // Update refs when callbacks change
+  onSuccessRef.current = options.onSuccess;
+  onErrorRef.current = options.onError;
+
+  // Extract options for stable dependencies
+  const {
+    resource,
+    pagination = { page: 1, perPage: 10 },
+    sort = { field: "id", order: "ASC" },
+    filter = {},
+  } = options;
 
   const fetchData = useCallback(async () => {
     if (!dataProvider) {
@@ -51,25 +51,23 @@ export function useGetList<T = any>(options: UseGetListOptions) {
 
     try {
       const params = {
-        pagination: { page: paginationPage, perPage: paginationPerPage },
-        sort: { field: sortField, order: sortOrder },
-        filter: options.filter || {},
+        pagination,
+        sort,
+        filter,
       };
 
       const result = await dataProvider.getList(resource, params);
       setData(result);
 
-      // Call callbacks if they exist (using current values)
-      if (options.onSuccess) {
-        options.onSuccess(result);
+      if (onSuccessRef.current) {
+        onSuccessRef.current(result);
       }
     } catch (err) {
-      const error = err instanceof Error ? err : new Error("Unknown error");
-      setError(error);
+      const errorObj = err instanceof Error ? err : new Error("Unknown error");
+      setError(errorObj);
 
-      // Call error callback if it exists (using current values)
-      if (options.onError) {
-        options.onError(error);
+      if (onErrorRef.current) {
+        onErrorRef.current(errorObj);
       }
     } finally {
       setLoading(false);
@@ -77,18 +75,19 @@ export function useGetList<T = any>(options: UseGetListOptions) {
   }, [
     dataProvider,
     resource,
-    paginationPage,
-    paginationPerPage,
-    sortField,
-    sortOrder,
-    filterKeys,
-    filterValues,
+    pagination.page,
+    pagination.perPage,
+    sort.field,
+    sort.order,
+    JSON.stringify(filter),
   ]);
 
+  // Initial fetch
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
+  // Refetch function
   const refetch = useCallback(() => {
     fetchData();
   }, [fetchData]);

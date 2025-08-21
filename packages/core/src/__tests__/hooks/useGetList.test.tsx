@@ -1,6 +1,6 @@
-import { renderHook, waitFor } from "@testing-library/react";
-import { useGetList } from "../../hooks/useGetList";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { SuperAdminProvider } from "../../contexts/SuperAdminContext";
+import { useGetList } from "../../hooks/useGetList";
 import { AdminConfig, createAdmin } from "../../utils";
 
 // Mock data for testing
@@ -199,11 +199,14 @@ describe("useGetList Hook", () => {
     mockDataProvider.getList.mockClear();
 
     // Call refetch
-    result.current.refetch();
+    act(() => {
+      result.current.refetch();
+    });
 
     // Should be loading again
     expect(result.current.loading).toBe(true);
 
+    // Wait for the refetch to complete
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
     });
