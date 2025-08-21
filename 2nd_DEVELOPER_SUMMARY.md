@@ -78,6 +78,10 @@ Step**: Create pull request when GitHub API rate limit resets **Branch Ready**:
 4. **Build Requirements**: All packages must build successfully before PR
 5. **Test Coverage**: Comprehensive testing required for all components
 6. **Documentation**: MDX docs with examples and integration guides
+7. **🚨 CRITICAL: ALWAYS move GitHub tasks to "In Progress" BEFORE starting
+   implementation** - Never start coding without updating task status first
+8. **Task Management Order**: Create Issues → Move to In Progress → Implement →
+   Test → Document → Move to Done
 
 ## Technical Setup
 
@@ -183,6 +187,33 @@ docs/
 - Feature branch pushed and ready for PR creation
 - Next session should focus on selecting and implementing next component from
   Web Components project
+
+## 🚨 CRITICAL MISTAKES MADE & LEARNED
+
+### PasswordInput Implementation Mistake (Session 2)
+
+**What Happened**: I started implementing PasswordInput component without first
+creating GitHub issues and moving tasks to "In Progress" **Why It Happened**:
+GitHub API rate limit + impatience to continue working **What I Learned**: NEVER
+start implementation without proper task management, even if API is rate limited
+**Prevention**: Wait for API reset, create issues first, then implement
+
+**Current Status**:
+
+- ✅ Component code implemented
+- ✅ Tests created (but failing due to selector issues)
+- ✅ Documentation created
+- ❌ No GitHub issues created
+- ❌ No tasks moved to "In Progress"
+- ❌ Breaking the established workflow pattern
+
+**Action Required**:
+
+1. Wait for GitHub GraphQL API rate limit to reset
+2. Create proper GitHub issues for PasswordInput (Code, Testing, Documentation)
+3. Move Code Implementation task to "In Progress"
+4. Fix failing tests
+5. Complete implementation following proper workflow
 
 ---
 

@@ -248,7 +248,7 @@ adapted for our framework's architecture.
 - **InPlaceEditor** (Planned) - Inline editing input
 - **MarkdownInput** (Planned) - Markdown editor
 - **NullableBooleanInput** (Planned) - Three-state boolean input
-- **NumberInput** (Planned) - Numeric input field
+- **NumberInput** ✅ - Numeric input field with step controls and validation
 - **PasswordInput** (Planned) - Password input field
 - **PredictiveTextInput** (Planned) - AI-powered text suggestions
 - **RadioButtonGroupInput** (Planned) - Radio button group
