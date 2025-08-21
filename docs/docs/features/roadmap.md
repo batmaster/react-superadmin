@@ -166,6 +166,7 @@ for our framework's needs.
       TextareaInput)
 - [x] Data provider interface and mock implementation
 - [x] Basic CRUD operations structure
+- [x] BooleanInput (checkbox, radio, toggle)
 
 ### In Progress 🚧
 

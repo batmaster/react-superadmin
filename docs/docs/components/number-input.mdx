@@ -1,0 +1,256 @@
+---
+id: number-input
+title: NumberInput
+sidebar_label: NumberInput
+keywords: [number, input, form, validation, step controls, accessibility]
+---
+
+# NumberInput
+
+A specialized number input component with step controls, validation, and number formatting options. Follows React Admin patterns and provides enhanced number input functionality.
+
+## Overview
+
+The `NumberInput` component is designed for numeric data entry with built-in validation, step controls, and accessibility features. It's perfect for forms that require precise numeric input with constraints and user-friendly controls.
+
+## Features
+
+- **Step Controls**: Optional up/down buttons for incrementing/decrementing values
+- **Validation**: Min/max value constraints with automatic enforcement
+- **Decimal Support**: Configurable decimal places and decimal handling
+- **Accessibility**: Full ARIA support, keyboard navigation, and screen reader compatibility
+- **Theme Integration**: Consistent styling with Tailwind CSS
+- **TypeScript**: Fully typed with comprehensive prop interfaces
+
+## Basic Usage
+
+```tsx
+import { NumberInput } from '@react-superadmin/web';
+
+function MyForm() {
+  const [quantity, setQuantity] = useState(0);
+
+  return (
+    <NumberInput
+      label='Quantity'
+      value={quantity}
+      onChange={e => setQuantity(Number(e.target.value))}
+      min={0}
+      max={100}
+      step={1}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop               | Type                                        | Default | Description                         |
+| ------------------ | ------------------------------------------- | ------- | ----------------------------------- |
+| `label`            | `string`                                    | -       | Label text for the input            |
+| `helperText`       | `string`                                    | -       | Helper text below the input         |
+| `error`            | `string`                                    | -       | Error message to display            |
+| `required`         | `boolean`                                   | `false` | Whether the field is required       |
+| `size`             | `'sm' \| 'md' \| 'lg'`                      | `'md'`  | Input size variant                  |
+| `loading`          | `boolean`                                   | `false` | Whether to show a loading state     |
+| `leftIcon`         | `ReactNode`                                 | -       | Icon to display on the left side    |
+| `rightIcon`        | `ReactNode`                                 | -       | Icon to display on the right side   |
+| `disabled`         | `boolean`                                   | `false` | Whether the input is disabled       |
+| `readOnly`         | `boolean`                                   | `false` | Whether the input is read-only      |
+| `min`              | `number`                                    | -       | Minimum value allowed               |
+| `max`              | `number`                                    | -       | Maximum value allowed               |
+| `step`             | `number`                                    | `1`     | Step increment for up/down buttons  |
+| `showStepControls` | `boolean`                                   | `false` | Whether to show step controls       |
+| `allowDecimals`    | `boolean`                                   | `true`  | Whether to allow decimal values     |
+| `decimalPlaces`    | `number`                                    | -       | Number of decimal places to display |
+| `onStepUp`         | `(current: number, step: number) => number` | -       | Custom step up handler              |
+| `onStepDown`       | `(current: number, step: number) => number` | -       | Custom step down handler            |
+
+## Examples
+
+### Basic Number Input
+
+```tsx
+<NumberInput label='Age' placeholder='Enter your age' min={0} max={120} />
+```
+
+### With Step Controls
+
+```tsx
+<NumberInput label='Quantity' showStepControls step={5} min={0} max={1000} />
+```
+
+### Decimal Input with Constraints
+
+```tsx
+<NumberInput
+  label='Price'
+  step={0.01}
+  allowDecimals
+  decimalPlaces={2}
+  min={0}
+  max={999.99}
+  showStepControls
+/>
+```
+
+### Custom Step Handler
+
+```tsx
+<NumberInput
+  label='Custom Steps'
+  showStepControls
+  step={10}
+  onStepUp={(current, step) => current + step * 2}
+  onStepDown={(current, step) => current - step * 2}
+/>
+```
+
+### With Icons and Loading State
+
+```tsx
+<NumberInput
+  label='Population'
+  leftIcon={<UsersIcon />}
+  rightIcon={<InfoIcon />}
+  loading={isLoading}
+  helperText='Enter the current population'
+/>
+```
+
+### Error State
+
+```tsx
+<NumberInput
+  label='Score'
+  error='Score must be between 0 and 100'
+  min={0}
+  max={100}
+/>
+```
+
+### Required Field
+
+```tsx
+<NumberInput
+  label='Rating'
+  required
+  min={1}
+  max={5}
+  helperText='Rate from 1 to 5 stars'
+/>
+```
+
+## Accessibility
+
+The `NumberInput` component follows accessibility best practices:
+
+- **Labels**: Proper label association with `htmlFor` attribute
+- **ARIA**: `aria-invalid`, `aria-describedby` for error states and helper text
+- **Keyboard Navigation**: Full keyboard support for step controls
+- **Screen Readers**: Proper semantic structure and descriptions
+- **Focus Management**: Clear focus indicators and focus handling
+
+## Validation
+
+The component automatically enforces validation rules:
+
+- **Min/Max Constraints**: Values are automatically clamped to min/max bounds
+- **Decimal Handling**: Decimal places are enforced when specified
+- **Step Validation**: Step controls respect min/max constraints
+- **Input Filtering**: Non-numeric characters are filtered out
+
+## Step Controls
+
+When `showStepControls` is enabled, the component displays up/down buttons:
+
+- **Increment**: Increases value by the specified step
+- **Decrement**: Decreases value by the specified step
+- **Constraint Respect**: Buttons automatically disable when reaching min/max limits
+- **Custom Logic**: Support for custom step up/down handlers
+
+## State Management
+
+The component supports both controlled and uncontrolled modes:
+
+- **Controlled**: Use `value` prop for external state management
+- **Uncontrolled**: Use `defaultValue` for internal state management
+- **Hybrid**: Mix controlled and uncontrolled behavior as needed
+
+## Integration with Forms
+
+The `NumberInput` component integrates seamlessly with form libraries:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <NumberInput
+        label='Amount'
+        {...register('amount', {
+          required: true,
+          min: 0,
+          max: 1000,
+        })}
+      />
+      <button type='submit'>Submit</button>
+    </form>
+  );
+}
+```
+
+## Best Practices
+
+### When to Use
+
+- **Numeric Data Entry**: Any form requiring numeric input
+- **Constrained Values**: When you need min/max validation
+- **Step-based Input**: When users need to increment/decrement values
+- **Precise Input**: When decimal precision is important
+
+### When Not to Use
+
+- **Free-form Text**: Use `TextInput` instead
+- **Simple Numbers**: Basic number inputs might be sufficient
+- **Complex Calculations**: Consider specialized calculator components
+
+### Performance Considerations
+
+- **Step Controls**: Only enable when needed to avoid unnecessary re-renders
+- **Validation**: Min/max constraints are enforced on every change
+- **Decimal Handling**: Decimal place formatting happens on every input
+
+## Related Components
+
+- [`Input`](./input.mdx) - For text-based input
+- [`SelectInput`](./select-input.mdx) - For selection from options
+- [`DateInput`](./date-input.mdx) - For date/time input
+- [`BooleanInput`](./boolean-input.mdx) - For boolean values
+
+## Migration from React Admin
+
+If you're migrating from React Admin, the `NumberInput` component provides similar functionality:
+
+```tsx
+// React Admin
+<NumberInput source="quantity" min={0} max={100} />
+
+// React SuperAdmin
+<NumberInput
+  label="Quantity"
+  min={0}
+  max={100}
+  onChange={(e) => setQuantity(Number(e.target.value))}
+/>
+```
+
+The main differences are:
+
+- Explicit `onChange` handler required
+- Label prop instead of source
+- More flexible validation options
+- Enhanced accessibility features

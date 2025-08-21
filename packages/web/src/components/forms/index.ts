@@ -6,3 +6,7 @@ export { SelectInput } from "./SelectInput";
 export { FormField } from "./FormField";
 export { Input } from "./Input";
 export { ArrayInput } from "./ArrayInput";
+export { NumberInput } from "./NumberInput";
+export { PasswordInput } from "./PasswordInput";
+export { CheckboxGroupInput } from "./CheckboxGroupInput";
+export { BooleanInput } from "./BooleanInput";
