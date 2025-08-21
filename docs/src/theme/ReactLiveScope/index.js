@@ -3,6 +3,7 @@ import React from 'react';
 // Import components locally for live code blocks
 import { Alert } from '../../components/ui/Alert';
 import { Badge } from '../../components/ui/Badge';
+import { BooleanInput } from '../../components/ui/BooleanInput';
 import { Button } from '../../components/ui/Button';
 import {
   Card,
@@ -10,11 +11,11 @@ import {
   CardFooter,
   CardHeader,
 } from '../../components/ui/Card';
+import { DateInput } from '../../components/ui/DateInput';
 import { Dropdown } from '../../components/ui/Dropdown';
+import { Label } from '../../components/ui/Label';
 import { Modal } from '../../components/ui/Modal';
 import { SelectInput } from '../../components/ui/SelectInput';
-import { DateInput } from '../../components/ui/DateInput';
-import { BooleanInput } from '../../components/ui/BooleanInput';
 
 // Define the scope for live code blocks
 const ReactLiveScope = {
@@ -29,6 +30,7 @@ const ReactLiveScope = {
   Alert,
   Badge,
   Dropdown,
+  Label,
   SelectInput,
   DateInput,
   BooleanInput,
