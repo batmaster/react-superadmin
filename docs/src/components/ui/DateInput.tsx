@@ -1,6 +1,6 @@
-import React, { forwardRef, useState } from 'react';
-import { cn } from '../../utils/cn';
 import { Calendar, Clock } from 'lucide-react';
+import React, { forwardRef } from 'react';
+import { cn } from '../../utils/cn';
 
 export interface DateInputProps
   extends Omit<

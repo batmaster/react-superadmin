@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 import { cn } from '../../utils/cn';
-import { Check } from 'lucide-react';
 
 export type BooleanInputVariant = 'checkbox' | 'switch' | 'toggle';
 
