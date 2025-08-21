@@ -34,6 +34,7 @@ const sidebars: SidebarsConfig = {
         'components/modal',
         'components/badge',
         'components/dropdown',
+        'components/select-input',
         'components/form',
         'components/forms',
         'components/layout',
