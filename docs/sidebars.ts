@@ -58,6 +58,28 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'CRUD Components',
+      items: [
+        'components/data-table',
+        'components/pagination',
+        'components/resource-form',
+        'components/resource-list',
+        'components/resource-show',
+        'components/search-bar',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Layout Components',
+      items: [
+        'components/footer',
+        'components/header',
+        'components/sidebar',
+        'components/admin-layout',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Developer',
       items: [
         'developer/architecture',
