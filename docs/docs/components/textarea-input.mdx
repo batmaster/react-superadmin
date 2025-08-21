@@ -1,0 +1,245 @@
+---
+id: textarea-input
+title: TextareaInput Component
+sidebar_label: TextareaInput
+description: Multi-line text input with validation and styling support
+keywords: [textarea, input, form, validation, multiline]
+---
+
+# TextareaInput Component
+
+The TextareaInput component provides a multi-line text input field for longer text content. It supports validation states, character counting, and integrates seamlessly with form systems.
+
+## Import
+
+```tsx
+import { TextareaInput } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<TextareaInput
+  id="description"
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  placeholder="Enter your description..."
+  rows={4}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | - | Unique identifier for the textarea |
+| `name` | `string` | - | Name attribute for the textarea |
+| `value` | `string` | - | Current textarea value |
+| `onChange` | `(e: ChangeEvent<HTMLTextAreaElement>) => void` | - | Change handler function |
+| `placeholder` | `string` | - | Placeholder text |
+| `rows` | `number` | `3` | Number of visible rows |
+| `cols` | `number` | - | Number of visible columns |
+| `maxLength` | `number` | - | Maximum character limit |
+| `minLength` | `number` | - | Minimum character requirement |
+| `disabled` | `boolean` | `false` | Whether the textarea is disabled |
+| `readOnly` | `boolean` | `false` | Whether the textarea is read-only |
+| `required` | `boolean` | `false` | Whether the textarea is required |
+| `error` | `string` | - | Error message to display |
+| `helperText` | `string` | - | Helper text below the textarea |
+| `className` | `string` | - | Additional CSS classes |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Textarea size variant |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize behavior |
+
+## Examples
+
+### Basic Textarea
+```tsx
+const [bio, setBio] = useState('');
+
+<TextareaInput
+  id="bio"
+  value={bio}
+  onChange={(e) => setBio(e.target.value)}
+  placeholder="Tell us about yourself..."
+  rows={5}
+/>
+```
+
+### With Character Limit
+```tsx
+<TextareaInput
+  id="tweet"
+  value={tweet}
+  onChange={(e) => setTweet(e.target.value)}
+  placeholder="What's happening?"
+  maxLength={280}
+  helperText={`${tweet.length}/280 characters`}
+  rows={3}
+/>
+```
+
+### With Validation
+```tsx
+const [description, setDescription] = useState('');
+const [errors, setErrors] = useState({});
+
+<TextareaInput
+  id="description"
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  placeholder="Enter product description..."
+  rows={6}
+  required
+  minLength={50}
+  error={errors.description}
+  helperText="Description must be at least 50 characters long"
+/>
+```
+
+## Form Integration
+
+```tsx
+function ProductForm() {
+  const [product, setProduct] = useState({
+    name: '',
+    description: '',
+    specifications: ''
+  });
+
+  return (
+    <form className="space-y-4">
+      <div>
+        <Label htmlFor="name">Product Name</Label>
+        <Input
+          id="name"
+          value={product.name}
+          onChange={(e) => setProduct(prev => ({ ...prev, name: e.target.value }))}
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <TextareaInput
+          id="description"
+          value={product.description}
+          onChange={(e) => setProduct(prev => ({ ...prev, description: e.target.value }))}
+          placeholder="Describe your product..."
+          rows={4}
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="specifications">Technical Specifications</Label>
+        <TextareaInput
+          id="specifications"
+          value={product.specifications}
+          onChange={(e) => setProduct(prev => ({ ...prev, specifications: e.target.value }))}
+          placeholder="List technical specifications..."
+          rows={6}
+          helperText="Include dimensions, materials, features, etc."
+        />
+      </div>
+    </form>
+  );
+}
+```
+
+## Character Counting
+
+```tsx
+function CharacterCountTextarea() {
+  const [content, setContent] = useState('');
+  const maxLength = 1000;
+  const remaining = maxLength - content.length;
+  const isNearLimit = remaining <= 100;
+  const isOverLimit = remaining < 0;
+
+  return (
+    <div>
+      <TextareaInput
+        id="content"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="Enter your content..."
+        rows={8}
+        maxLength={maxLength}
+        className={isOverLimit ? 'border-red-500' : isNearLimit ? 'border-yellow-500' : ''}
+      />
+      <div className={`text-sm mt-2 ${isOverLimit ? 'text-red-600' : isNearLimit ? 'text-yellow-600' : 'text-gray-500'}`}>
+        {remaining} characters remaining
+      </div>
+    </div>
+  );
+}
+```
+
+## Resize Behavior
+
+```tsx
+// No resize
+<TextareaInput
+  id="fixed"
+  resize="none"
+  rows={4}
+  placeholder="Fixed size textarea"
+/>
+
+// Vertical resize only
+<TextareaInput
+  id="vertical"
+  resize="vertical"
+  rows={4}
+  placeholder="Vertically resizable"
+/>
+
+// Both directions
+<TextareaInput
+  id="both"
+  resize="both"
+  rows={4}
+  placeholder="Fully resizable"
+/>
+```
+
+## Accessibility
+
+The TextareaInput component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Error state announcements for screen readers
+- Keyboard navigation support
+- Focus management
+- Screen reader compatibility
+
+```tsx
+<TextareaInput
+  id="accessible-textarea"
+  aria-describedby="textarea-help textarea-error"
+  aria-invalid={!!errors.textarea}
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  placeholder="Enter your text here"
+  error={errors.textarea}
+  helperText="Provide detailed information about your request"
+/>
+```
+
+## Best Practices
+
+1. **Use appropriate rows** - Set rows based on expected content length
+2. **Provide clear placeholders** - Help users understand what to enter
+3. **Implement character limits** - Prevent overly long submissions
+4. **Show character count** - Help users stay within limits
+5. **Use helper text** - Provide additional context when needed
+6. **Consider resize behavior** - Allow resizing for better user experience
+
+## Related Components
+
+- [Input](/docs/components/input) - For single-line text input
+- [Form](/docs/components/form) - For form containers and validation
+- [Label](/docs/components/label) - For form field labels
+- [Button](/docs/components/button) - For form submission and actions
+

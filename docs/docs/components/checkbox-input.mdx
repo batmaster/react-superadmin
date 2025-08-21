@@ -1,0 +1,123 @@
+---
+id: checkbox-input
+title: CheckboxInput Component
+sidebar_label: CheckboxInput
+description: Single checkbox input with validation and styling support
+keywords: [checkbox, input, form, validation, boolean]
+---
+
+# CheckboxInput Component
+
+The CheckboxInput component provides a single checkbox input field for boolean values. It supports validation states, custom styling, and integrates seamlessly with form systems.
+
+## Import
+
+```tsx
+import { CheckboxInput } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<CheckboxInput
+  id="terms"
+  checked={acceptedTerms}
+  onChange={(checked) => setAcceptedTerms(checked)}
+  label="I accept the terms and conditions"
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | - | Unique identifier for the checkbox |
+| `name` | `string` | - | Name attribute for the checkbox |
+| `checked` | `boolean` | `false` | Whether the checkbox is checked |
+| `onChange` | `(checked: boolean) => void` | - | Change handler function |
+| `label` | `string` | - | Label text for the checkbox |
+| `disabled` | `boolean` | `false` | Whether the checkbox is disabled |
+| `required` | `boolean` | `false` | Whether the checkbox is required |
+| `error` | `string` | - | Error message to display |
+| `helperText` | `string` | - | Helper text below the checkbox |
+| `className` | `string` | - | Additional CSS classes |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Checkbox size variant |
+
+## Examples
+
+### Basic Checkbox
+```tsx
+const [isChecked, setIsChecked] = useState(false);
+
+<CheckboxInput
+  id="newsletter"
+  checked={isChecked}
+  onChange={setIsChecked}
+  label="Subscribe to newsletter"
+/>
+```
+
+### Required Checkbox with Validation
+```tsx
+const [acceptedTerms, setAcceptedTerms] = useState(false);
+const [errors, setErrors] = useState({});
+
+<CheckboxInput
+  id="terms"
+  checked={acceptedTerms}
+  onChange={setAcceptedTerms}
+  label="I accept the terms and conditions"
+  required
+  error={errors.terms}
+  helperText="You must accept the terms to continue"
+/>
+```
+
+### Disabled State
+```tsx
+<CheckboxInput
+  id="disabled"
+  checked={true}
+  onChange={() => {}}
+  label="This option is disabled"
+  disabled
+/>
+```
+
+## Form Integration
+
+```tsx
+function TermsForm() {
+  const [formData, setFormData] = useState({
+    acceptedTerms: false,
+    marketingEmails: false
+  });
+
+  return (
+    <form className="space-y-4">
+      <CheckboxInput
+        id="terms"
+        checked={formData.acceptedTerms}
+        onChange={(checked) => setFormData(prev => ({ ...prev, acceptedTerms: checked }))}
+        label="I accept the terms and conditions"
+        required
+      />
+      
+      <CheckboxInput
+        id="marketing"
+        checked={formData.marketingEmails}
+        onChange={(checked) => setFormData(prev => ({ ...prev, marketingEmails: checked }))}
+        label="Send me marketing emails"
+      />
+    </form>
+  );
+}
+```
+
+## Related Components
+
+- [BooleanInput](/docs/components/boolean-input) - For boolean input with radio buttons
+- [CheckboxGroupInput](/docs/components/checkbox-group-input) - For multiple checkbox selection
+- [Form](/docs/components/form) - For form containers and validation
+- [Label](/docs/components/label) - For form field labels

@@ -1,0 +1,276 @@
+---
+id: tooltip
+title: Tooltip Component
+sidebar_label: Tooltip
+description: Hover tooltips with customizable positioning and content
+keywords: [tooltip, hover, help, information, positioning]
+---
+
+# Tooltip Component
+
+The Tooltip component provides contextual information when users hover over or focus on elements. It supports multiple positioning options and can contain rich content including text, links, and formatted information.
+
+## Import
+
+```tsx
+import { Tooltip } from '@react-superadmin/web';
+// Note: In documentation, this import path is for reference only
+```
+
+## Basic Usage
+
+```tsx
+<Tooltip content="This is a simple tooltip">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `content` | `ReactNode` | - | The tooltip content to display |
+| `children` | `ReactNode` | - | The element that triggers the tooltip |
+| `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Preferred position of the tooltip |
+| `showDelay` | `number` | `200` | Delay before showing tooltip (ms) |
+| `hideDelay` | `number` | `0` | Delay before hiding tooltip (ms) |
+| `disabled` | `boolean` | `false` | Whether the tooltip is disabled |
+| `className` | `string` | - | Additional CSS classes for the tooltip |
+| `maxWidth` | `number` | `300` | Maximum width of the tooltip content |
+| `arrow` | `boolean` | `true` | Whether to show the positioning arrow |
+
+## Positioning
+
+The tooltip automatically positions itself to stay within the viewport, but you can specify a preferred position:
+
+```tsx
+// Top positioning (default)
+<Tooltip content="Tooltip above" position="top">
+  <Button>Hover me</Button>
+</Tooltip>
+
+// Bottom positioning
+<Tooltip content="Tooltip below" position="bottom">
+  <Button>Hover me</Button>
+</Tooltip>
+
+// Left positioning
+<Tooltip content="Tooltip to the left" position="left">
+  <Button>Hover me</Button>
+</Tooltip>
+
+// Right positioning
+<Tooltip content="Tooltip to the right" position="right">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+## Rich Content
+
+Tooltips can contain more than just text - they support rich content including formatted text, links, and even small forms:
+
+```tsx
+<Tooltip 
+  content={
+    <div className="space-y-2">
+      <h4 className="font-semibold">User Information</h4>
+      <p>Email: user@example.com</p>
+      <p>Role: Administrator</p>
+      <a href="/profile" className="text-blue-500 hover:underline">
+        View Profile
+      </a>
+    </div>
+  }
+>
+  <Badge>Admin</Badge>
+</Tooltip>
+```
+
+## Custom Delays
+
+You can customize the show and hide delays for better user experience:
+
+```tsx
+// Quick show, slow hide
+<Tooltip 
+  content="Quick to show, slow to hide" 
+  showDelay={100} 
+  hideDelay={500}
+>
+  <Button>Hover me</Button>
+</Tooltip>
+
+// No delay
+<Tooltip 
+  content="Instant tooltip" 
+  showDelay={0} 
+  hideDelay={0}
+>
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+## Disabled State
+
+You can conditionally disable tooltips:
+
+```tsx
+function ConditionalTooltip({ user, showTooltip }) {
+  return (
+    <Tooltip 
+      content={`User: ${user.name}`}
+      disabled={!showTooltip}
+    >
+      <span>{user.name}</span>
+    </Tooltip>
+  );
+}
+```
+
+## Custom Styling
+
+The tooltip can be customized with additional CSS classes:
+
+```tsx
+<Tooltip 
+  content="Custom styled tooltip"
+  className="bg-gray-900 text-white border border-gray-700"
+>
+  <Button>Custom Style</Button>
+</Tooltip>
+```
+
+## Accessibility
+
+- Automatically shows on focus for keyboard navigation
+- Uses appropriate ARIA attributes
+- Supports screen readers
+- Respects user preferences for reduced motion
+
+## Examples
+
+### Form Field Help
+```tsx
+function FormWithTooltips() {
+  return (
+    <form className="space-y-4">
+      <div>
+        <Label htmlFor="email">Email Address</Label>
+        <Input 
+          id="email" 
+          type="email" 
+          placeholder="Enter your email"
+        />
+        <Tooltip content="We'll never share your email with third parties">
+          <span className="ml-2 text-gray-500 cursor-help">ℹ️</span>
+        </Tooltip>
+      </div>
+
+      <div>
+        <Label htmlFor="password">Password</Label>
+        <Input 
+          id="password" 
+          type="password" 
+          placeholder="Enter your password"
+        />
+        <Tooltip 
+          content={
+            <div>
+              <p>Password must contain:</p>
+              <ul className="list-disc list-inside mt-1">
+                <li>At least 8 characters</li>
+                <li>One uppercase letter</li>
+                <li>One number</li>
+                <li>One special character</li>
+              </ul>
+            </div>
+          }
+        >
+          <span className="ml-2 text-gray-500 cursor-help">ℹ️</span>
+        </Tooltip>
+      </div>
+    </form>
+  );
+}
+```
+
+### Data Table Column Headers
+```tsx
+function DataTableWithTooltips() {
+  return (
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th>
+            <Tooltip content="Unique identifier for this record">
+              ID
+            </Tooltip>
+          </th>
+          <th>
+            <Tooltip content="User's full name as displayed">
+              Name
+            </Tooltip>
+          </th>
+          <th>
+            <Tooltip content="User's email address for login">
+              Email
+            </Tooltip>
+          </th>
+          <th>
+            <Tooltip content="User's role in the system">
+              Role
+            </Tooltip>
+          </th>
+        </tr>
+      </thead>
+      {/* Table body */}
+    </table>
+  );
+}
+```
+
+### Action Button Help
+```tsx
+function ActionButtonsWithTooltips() {
+  return (
+    <div className="flex space-x-2">
+      <Tooltip content="Save your changes">
+        <Button variant="primary">
+          <SaveIcon className="w-4 h-4" />
+          Save
+        </Button>
+      </Tooltip>
+
+      <Tooltip content="Discard all unsaved changes">
+        <Button variant="secondary">
+          <XIcon className="w-4 h-4" />
+          Cancel
+        </Button>
+      </Tooltip>
+
+      <Tooltip content="Delete this record permanently">
+        <Button variant="danger">
+          <TrashIcon className="w-4 h-4" />
+          Delete
+        </Button>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+## Best Practices
+
+1. **Keep content concise** - Tooltips should provide quick, helpful information
+2. **Use appropriate positioning** - Consider the layout and available space
+3. **Provide valuable information** - Don't use tooltips for obvious information
+4. **Consider mobile users** - Tooltips work on touch devices but may be less discoverable
+5. **Use consistent delays** - Maintain consistent timing across your application
+6. **Test with screen readers** - Ensure tooltip content is accessible
+
+## Related Components
+
+- [Button](/docs/components/button) - Common trigger element for tooltips
+- [Badge](/docs/components/badge) - Often used with tooltips for additional context
+- [Input](/docs/components/input) - Form fields that benefit from help tooltips
+- [Label](/docs/components/label) - Form labels that can include help tooltips
