@@ -1,8 +1,8 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { ResourceForm } from "../../../components/crud/ResourceForm";
 import { useSuperAdmin } from "@react-superadmin/core";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { ResourceForm } from "../../../components/crud/ResourceForm";
 
 // Mock the core package
 jest.mock("@react-superadmin/core", () => ({

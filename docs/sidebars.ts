@@ -38,6 +38,7 @@ const sidebars: SidebarsConfig = {
         'components/date-input',
         'components/boolean-input',
         'components/label',
+        'components/array-input',
         'components/form',
         'components/forms',
         'components/layout',
