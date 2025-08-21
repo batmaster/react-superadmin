@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSuperAdmin } from "../contexts/SuperAdminContext";
-import { DataProvider, GetListParams, GetListResult } from "../types";
+import { GetListResult } from "../types";
 
 export interface UseGetListOptions {
   resource: string;
@@ -23,9 +23,26 @@ export function useGetList<T = any>(options: UseGetListOptions) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
+  // Extract stable values for dependencies
+  const resource = options.resource;
+  const paginationPage = options.pagination?.page || 1;
+  const paginationPerPage = options.pagination?.perPage || 10;
+  const sortField = options.sort?.field || "id";
+  const sortOrder = options.sort?.order || "ASC";
+  const filterKeys = options.filter
+    ? Object.keys(options.filter).sort().join(",")
+    : "";
+  const filterValues = options.filter
+    ? Object.keys(options.filter)
+        .sort()
+        .map((k) => options.filter![k])
+        .join(",")
+    : "";
+
   const fetchData = useCallback(async () => {
     if (!dataProvider) {
       setError(new Error("Data provider not available"));
+      setLoading(false);
       return;
     }
 
@@ -33,23 +50,40 @@ export function useGetList<T = any>(options: UseGetListOptions) {
     setError(null);
 
     try {
-      const params: GetListParams = {
-        pagination: options.pagination || { page: 1, perPage: 10 },
-        sort: options.sort || { field: "id", order: "ASC" },
+      const params = {
+        pagination: { page: paginationPage, perPage: paginationPerPage },
+        sort: { field: sortField, order: sortOrder },
         filter: options.filter || {},
       };
 
-      const result = await dataProvider.getList(options.resource, params);
+      const result = await dataProvider.getList(resource, params);
       setData(result);
-      options.onSuccess?.(result);
+
+      // Call callbacks if they exist (using current values)
+      if (options.onSuccess) {
+        options.onSuccess(result);
+      }
     } catch (err) {
       const error = err instanceof Error ? err : new Error("Unknown error");
       setError(error);
-      options.onError?.(error);
+
+      // Call error callback if it exists (using current values)
+      if (options.onError) {
+        options.onError(error);
+      }
     } finally {
       setLoading(false);
     }
-  }, [dataProvider, options]);
+  }, [
+    dataProvider,
+    resource,
+    paginationPage,
+    paginationPerPage,
+    sortField,
+    sortOrder,
+    filterKeys,
+    filterValues,
+  ]);
 
   useEffect(() => {
     fetchData();

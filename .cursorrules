@@ -1,16 +1,20 @@
 # React SuperAdmin Project Rules
 
 ## Project Structure
+
 This is a monorepo with pnpm workspaces containing:
+
 - `packages/core`: Core framework with TypeScript, React hooks, contexts, and utilities
 - `packages/web`: Web admin interface using Vite, React, Tailwind CSS
 
 ## Development Commands
+
 - Use `pnpm dev` to start development (runs web package)
 - Use `pnpm build` to build both packages
 - Use `pnpm build:core` or `pnpm build:web` for individual packages
 
 ## Key Patterns
+
 - Components use PascalCase naming (e.g., DataTable, ResourceForm)
 - Hooks use camelCase with 'use' prefix (e.g., useAuth, useFilters)
 - Core package exports reusable framework code
@@ -18,12 +22,29 @@ This is a monorepo with pnpm workspaces containing:
 - Both packages use TypeScript with strict mode
 
 ## File Organization
+
 - Core package: components/, contexts/, hooks/, types/, utils/
 - Web package: components/crud/, components/forms/, components/layout/, components/ui/
 - Use relative imports within packages, package imports between packages
 
 ## Technology Stack
+
 - React 18+ with TypeScript
 - Tailwind CSS for styling
 - Vite for web package build tool
 - pnpm as package manager with workspace support
+
+## PM Workflow - GitHub Project Management
+
+- **Project ID**: Always use `2` (Web Components project)
+- **Owner**: Always use `batmaster`
+- **Commands**:
+  - List project items: `gh project item-list 2 --owner batmaster --format json`
+  - Add items to project: `gh project item-add 2 --owner batmaster --url <issue-url>`
+  - Edit item status: `gh project item-edit --project-id PVT_kwHOAC25es4BA-UG --id <item-id> --field-id <field-id> --value <status>`
+  - View project: `gh project view 2 --owner batmaster --format json`
+  - List fields: `gh project field-list 2 --owner batmaster --format json`
+- **Never ask for owner or project selection** - always specify them explicitly
+- **3-Phase Approach**: Every component needs Code Implementation, Testing (90%+ coverage), Documentation (MDX + JSDoc)
+- **Status Management**: Move null/empty status items to "Todo" immediately
+- **Continuous Work**: Keep reviewing React Admin docs and built docs for new component needs

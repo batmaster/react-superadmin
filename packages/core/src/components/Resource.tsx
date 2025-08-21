@@ -1,11 +1,11 @@
 import React, { ReactNode, useEffect } from "react";
+import { useSuperAdmin } from "../contexts/SuperAdminContext";
 import {
-  ResourceConfig,
   FieldConfig,
   PermissionConfig,
+  ResourceConfig,
   ViewConfig,
 } from "../types";
-import { useSuperAdmin } from "../contexts/SuperAdminContext";
 
 export interface ResourceProps {
   /** Resource configuration */

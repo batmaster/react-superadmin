@@ -1,10 +1,10 @@
-import React from "react";
 import { FieldConfig } from "@react-superadmin/core";
-import { TextInput } from "./TextInput";
-import { SelectInput } from "./SelectInput";
-import { TextareaInput } from "./TextareaInput";
+import React from "react";
 import { CheckboxInput } from "./CheckboxInput";
 import { DateInput } from "./DateInput";
+import { SelectInput } from "./SelectInput";
+import { TextareaInput } from "./TextareaInput";
+import { TextInput } from "./TextInput";
 
 interface FormFieldProps {
   field: FieldConfig;
