@@ -48,7 +48,7 @@ progress of React SuperAdmin features and components.
 - [ ] `<Form>` container
 - [ ] `<TextInput>` component
 - [ ] `<SelectInput>` component
-- [ ] `<BooleanInput>` component
+- [x] `<BooleanInput>` component
 - [ ] `<DateInput>` component
 - [ ] Basic form validation
 

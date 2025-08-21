@@ -1,14 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import React from "react";
-import {
-  BooleanInput,
-  CheckboxInput,
-} from "../../../components/forms/CheckboxInput";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { BooleanInput } from "../../../components/forms/BooleanInput";
 
-describe("BooleanInput Component", () => {
+describe("BooleanInput", () => {
   const defaultProps = {
-    checked: false,
+    label: "Test Boolean Input",
     onChange: jest.fn(),
   };
 
@@ -16,199 +13,277 @@ describe("BooleanInput Component", () => {
     jest.clearAllMocks();
   });
 
-  describe("Rendering", () => {
-    it("renders with basic props", () => {
-      render(<BooleanInput {...defaultProps} />);
-
-      expect(screen.getByTestId("boolean-input")).toBeInTheDocument();
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "type",
-        "checkbox",
-      );
-    });
-
+  describe("Basic Rendering", () => {
     it("renders with label", () => {
-      render(<BooleanInput {...defaultProps} label="Accept terms" />);
-
-      expect(screen.getByText("Accept terms")).toBeInTheDocument();
-      expect(screen.getByLabelText("Accept terms")).toBeInTheDocument();
+      render(<BooleanInput {...defaultProps} />);
+      expect(screen.getByText("Test Boolean Input")).toBeInTheDocument();
     });
 
-    it("renders with helper text", () => {
-      render(<BooleanInput {...defaultProps} helperText="This is required" />);
-
-      expect(screen.getByText("This is required")).toBeInTheDocument();
+    it("renders without label", () => {
+      render(<BooleanInput onChange={jest.fn()} />);
+      expect(screen.queryByText("Test Boolean Input")).not.toBeInTheDocument();
     });
 
-    it("renders with error", () => {
-      render(<BooleanInput {...defaultProps} error="This field is required" />);
-
-      expect(screen.getByText("This field is required")).toBeInTheDocument();
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "aria-invalid",
-        "true",
-      );
-    });
-
-    it("renders with required indicator", () => {
-      render(<BooleanInput {...defaultProps} label="Accept terms" required />);
-
+    it("renders required indicator when required", () => {
+      render(<BooleanInput {...defaultProps} required />);
       expect(screen.getByText("*")).toBeInTheDocument();
     });
 
-    it("renders as checked", () => {
-      render(<BooleanInput {...defaultProps} checked={true} />);
-
-      expect(screen.getByTestId("boolean-input")).toBeChecked();
+    it("renders helper text", () => {
+      render(
+        <BooleanInput {...defaultProps} helperText="This is helper text" />,
+      );
+      expect(screen.getByText("This is helper text")).toBeInTheDocument();
     });
 
-    it("renders as disabled", () => {
-      render(<BooleanInput {...defaultProps} disabled />);
-
-      expect(screen.getByTestId("boolean-input")).toBeDisabled();
+    it("renders error message", () => {
+      render(<BooleanInput {...defaultProps} error="This is an error" />);
+      expect(screen.getByText("This is an error")).toBeInTheDocument();
     });
   });
 
-  describe("Variants", () => {
-    it("renders as checkbox by default", () => {
+  describe("Checkbox Variant (Default)", () => {
+    it("renders checkbox by default", () => {
       render(<BooleanInput {...defaultProps} />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "type",
-        "checkbox",
-      );
-      expect(screen.getByTestId("boolean-input")).toBeVisible();
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
     });
 
-    it("renders as switch variant", () => {
-      render(<BooleanInput {...defaultProps} variant="switch" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "type",
-        "checkbox",
-      );
-      expect(screen.getByTestId("boolean-input")).toHaveClass("sr-only");
+    it("handles controlled value", () => {
+      render(<BooleanInput {...defaultProps} value={true} />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeChecked();
     });
 
-    it("renders as toggle variant", () => {
-      render(<BooleanInput {...defaultProps} variant="toggle" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "type",
-        "checkbox",
-      );
-      expect(screen.getByTestId("boolean-input")).toHaveClass("sr-only");
+    it("handles uncontrolled value with defaultValue", () => {
+      render(<BooleanInput {...defaultProps} defaultValue={false} />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
     });
-  });
 
-  describe("Interaction", () => {
-    it("calls onChange when clicked", async () => {
+    it("calls onChange when checkbox is clicked", async () => {
       const user = userEvent.setup();
-      const onChange = jest.fn();
-      render(<BooleanInput {...defaultProps} onChange={onChange} />);
+      render(<BooleanInput {...defaultProps} />);
+      const checkbox = screen.getByRole("checkbox");
 
-      const input = screen.getByTestId("boolean-input");
-      await user.click(input);
-
-      expect(onChange).toHaveBeenCalledWith(true);
+      await user.click(checkbox);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
     });
 
-    it("calls onChange when label is clicked", async () => {
+    it("toggles value on click", async () => {
       const user = userEvent.setup();
-      const onChange = jest.fn();
+      render(<BooleanInput {...defaultProps} defaultValue={false} />);
+      const checkbox = screen.getByRole("checkbox");
+
+      await user.click(checkbox);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
+
+      await user.click(checkbox);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(false);
+    });
+
+    it("shows labels when showLabels is true", () => {
       render(
         <BooleanInput
           {...defaultProps}
-          label="Test Label"
-          onChange={onChange}
+          showLabels
+          trueLabel="Enabled"
+          falseLabel="Disabled"
         />,
       );
-
-      const label = screen.getByText("Test Label");
-      await user.click(label);
-
-      expect(onChange).toHaveBeenCalledWith(true);
-    });
-
-    it("handles focus and blur events", async () => {
-      const user = userEvent.setup();
-      const onFocus = jest.fn();
-      const onBlur = jest.fn();
-      render(
-        <BooleanInput {...defaultProps} onFocus={onFocus} onBlur={onBlur} />,
-      );
-
-      const input = screen.getByTestId("boolean-input");
-      await user.click(input);
-      expect(onFocus).toHaveBeenCalled();
-
-      await user.tab();
-      expect(onBlur).toHaveBeenCalled();
-    });
-
-    it("does not call onChange when disabled", async () => {
-      const user = userEvent.setup();
-      const onChange = jest.fn();
-      render(<BooleanInput {...defaultProps} onChange={onChange} disabled />);
-
-      const input = screen.getByTestId("boolean-input");
-      await user.click(input);
-
-      expect(onChange).not.toHaveBeenCalled();
+      expect(screen.getByText("Disabled")).toBeInTheDocument();
     });
   });
 
-  describe("Switch variant interactions", () => {
-    it("calls onChange when switch is clicked", async () => {
-      const user = userEvent.setup();
-      const onChange = jest.fn();
-      render(
-        <BooleanInput {...defaultProps} variant="switch" onChange={onChange} />,
-      );
-
-      // Click on the visible switch element (span)
-      const switchElement =
-        screen.getByTestId("boolean-input").nextElementSibling;
-      if (switchElement) {
-        await user.click(switchElement);
-        expect(onChange).toHaveBeenCalledWith(true);
-      }
+  describe("Radio Variant", () => {
+    it("renders radio buttons when variant is radio", () => {
+      render(<BooleanInput {...defaultProps} variant="radio" />);
+      const radioButtons = screen.getAllByRole("radio");
+      expect(radioButtons).toHaveLength(2);
     });
 
-    it("shows correct visual state when checked", () => {
-      render(
-        <BooleanInput {...defaultProps} variant="switch" checked={true} />,
-      );
+    it("renders three radio buttons when nullable", () => {
+      render(<BooleanInput {...defaultProps} variant="radio" nullable />);
+      const radioButtons = screen.getAllByRole("radio");
+      expect(radioButtons).toHaveLength(3);
+    });
 
-      const input = screen.getByTestId("boolean-input");
-      expect(input).toBeChecked();
+    it("handles horizontal layout", () => {
+      render(
+        <BooleanInput
+          {...defaultProps}
+          variant="radio"
+          direction="horizontal"
+        />,
+      );
+      const container = screen.getByRole("group");
+      expect(container).toHaveClass("flex", "flex-row");
+    });
+
+    it("handles vertical layout", () => {
+      render(
+        <BooleanInput {...defaultProps} variant="radio" direction="vertical" />,
+      );
+      const container = screen.getByRole("group");
+      expect(container).toHaveClass("space-y-2");
+    });
+
+    it("calls onChange when radio is selected", async () => {
+      const user = userEvent.setup();
+      render(<BooleanInput {...defaultProps} variant="radio" />);
+      const radioButtons = screen.getAllByRole("radio");
+
+      await user.click(radioButtons[0]);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
+
+      await user.click(radioButtons[1]);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(false);
+    });
+
+    it("handles nullable radio selection", async () => {
+      const user = userEvent.setup();
+      render(<BooleanInput {...defaultProps} variant="radio" nullable />);
+      const radioButtons = screen.getAllByRole("radio");
+
+      await user.click(radioButtons[2]); // null option
+      expect(defaultProps.onChange).toHaveBeenCalledWith(null);
+    });
+
+    it("shows custom labels for radio buttons", () => {
+      render(
+        <BooleanInput
+          {...defaultProps}
+          variant="radio"
+          trueLabel="Active"
+          falseLabel="Inactive"
+          nullLabel="Pending"
+          nullable
+        />,
+      );
+      expect(screen.getByText("Active")).toBeInTheDocument();
+      expect(screen.getByText("Inactive")).toBeInTheDocument();
+      expect(screen.getByText("Pending")).toBeInTheDocument();
     });
   });
 
-  describe("Toggle variant interactions", () => {
-    it("calls onChange when toggle is clicked", async () => {
-      const user = userEvent.setup();
-      const onChange = jest.fn();
-      render(
-        <BooleanInput {...defaultProps} variant="toggle" onChange={onChange} />,
-      );
-
-      // Click on the visible toggle element (span)
-      const toggleElement =
-        screen.getByTestId("boolean-input").nextElementSibling;
-      if (toggleElement) {
-        await user.click(toggleElement);
-        expect(onChange).toHaveBeenCalledWith(true);
-      }
+  describe("Toggle Variant", () => {
+    it("renders toggle switch when variant is toggle", () => {
+      render(<BooleanInput {...defaultProps} variant="toggle" />);
+      const toggle = screen.getByRole("button");
+      expect(toggle).toBeInTheDocument();
     });
 
-    it("shows check icon when checked", () => {
+    it("handles toggle state changes", async () => {
+      const user = userEvent.setup();
       render(
-        <BooleanInput {...defaultProps} variant="toggle" checked={true} />,
+        <BooleanInput
+          {...defaultProps}
+          variant="toggle"
+          defaultValue={false}
+        />,
       );
+      const toggle = screen.getByRole("button");
 
-      const input = screen.getByTestId("boolean-input");
-      expect(input).toBeChecked();
+      await user.click(toggle);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
+
+      await user.click(toggle);
+      expect(defaultProps.onChange).toHaveBeenCalledWith(false);
+    });
+
+    it("handles nullable toggle", async () => {
+      const user = userEvent.setup();
+      render(<BooleanInput {...defaultProps} variant="toggle" nullable />);
+      const toggle = screen.getByRole("button");
+
+      // false -> true -> null -> false
+      await user.click(toggle); // false -> true
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
+
+      await user.click(toggle); // true -> null
+      expect(defaultProps.onChange).toHaveBeenCalledWith(null);
+
+      await user.click(toggle); // null -> false
+      expect(defaultProps.onChange).toHaveBeenCalledWith(false);
+    });
+
+    it("shows labels when showLabels is true", () => {
+      render(
+        <BooleanInput
+          {...defaultProps}
+          variant="toggle"
+          showLabels
+          trueLabel="On"
+          falseLabel="Off"
+        />,
+      );
+      expect(screen.getByText("Off")).toBeInTheDocument();
+    });
+
+    it("handles keyboard navigation", async () => {
+      const user = userEvent.setup();
+      render(
+        <BooleanInput
+          {...defaultProps}
+          variant="toggle"
+          defaultValue={false}
+        />,
+      );
+      const toggle = screen.getByRole("button");
+
+      toggle.focus();
+      await user.keyboard("{Enter}");
+      expect(defaultProps.onChange).toHaveBeenCalledWith(true);
+
+      await user.keyboard(" ");
+      expect(defaultProps.onChange).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe("Size Variants", () => {
+    it("applies small size classes", () => {
+      render(<BooleanInput {...defaultProps} size="sm" />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toHaveClass("text-sm");
+    });
+
+    it("applies medium size classes", () => {
+      render(<BooleanInput {...defaultProps} size="md" />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toHaveClass("text-base");
+    });
+
+    it("applies large size classes", () => {
+      render(<BooleanInput {...defaultProps} size="lg" />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toHaveClass("text-lg");
+    });
+  });
+
+  describe("State Management", () => {
+    it("handles disabled state", () => {
+      render(<BooleanInput {...defaultProps} disabled />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeDisabled();
+    });
+
+    it("handles read-only state", () => {
+      render(<BooleanInput {...defaultProps} readOnly />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toHaveAttribute("readonly");
+    });
+
+    it("handles loading state", () => {
+      render(<BooleanInput {...defaultProps} loading />);
+      const spinner = screen.getByTestId("loading-spinner");
+      expect(spinner).toBeInTheDocument();
+    });
+
+    it("combines disabled and loading states", () => {
+      render(<BooleanInput {...defaultProps} disabled loading />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeDisabled();
+      expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
     });
   });
 
@@ -217,219 +292,100 @@ describe("BooleanInput Component", () => {
       render(
         <BooleanInput
           {...defaultProps}
-          label="Test Label"
-          helperText="Help text"
-        />,
-      );
-
-      const input = screen.getByTestId("boolean-input");
-      expect(input).toHaveAttribute("aria-describedby");
-      expect(input).toHaveAttribute("aria-invalid", "false");
-    });
-
-    it("sets aria-invalid to true when there's an error", () => {
-      render(<BooleanInput {...defaultProps} error="Error message" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveAttribute(
-        "aria-invalid",
-        "true",
-      );
-    });
-
-    it("associates label with input", () => {
-      render(
-        <BooleanInput {...defaultProps} label="Test Label" id="test-boolean" />,
-      );
-
-      const label = screen.getByText("Test Label");
-      const input = screen.getByTestId("boolean-input");
-      expect(label).toHaveAttribute("for", "test-boolean");
-      expect(input).toHaveAttribute("id", "test-boolean");
-    });
-
-    it("generates unique id when not provided", () => {
-      render(<BooleanInput {...defaultProps} label="Test Label" />);
-
-      const input = screen.getByTestId("boolean-input");
-      const id = input.getAttribute("id");
-      expect(id).toMatch(/^boolean-/);
-    });
-  });
-
-  describe("Sizes", () => {
-    it("applies small size classes for checkbox", () => {
-      render(<BooleanInput {...defaultProps} size="sm" variant="checkbox" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass("h-3", "w-3");
-    });
-
-    it("applies medium size classes for checkbox", () => {
-      render(<BooleanInput {...defaultProps} size="md" variant="checkbox" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass("h-4", "w-4");
-    });
-
-    it("applies large size classes for checkbox", () => {
-      render(<BooleanInput {...defaultProps} size="lg" variant="checkbox" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass("h-5", "w-5");
-    });
-  });
-
-  describe("Color schemes", () => {
-    it("applies primary color scheme", () => {
-      render(<BooleanInput {...defaultProps} colorScheme="primary" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass(
-        "text-primary-600",
-        "focus:ring-primary-500",
-      );
-    });
-
-    it("applies success color scheme", () => {
-      render(<BooleanInput {...defaultProps} colorScheme="success" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass(
-        "text-green-600",
-        "focus:ring-green-500",
-      );
-    });
-
-    it("applies danger color scheme", () => {
-      render(<BooleanInput {...defaultProps} colorScheme="danger" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass(
-        "text-red-600",
-        "focus:ring-red-500",
-      );
-    });
-  });
-
-  describe("Label positioning", () => {
-    it("positions label to the right by default", () => {
-      render(<BooleanInput {...defaultProps} label="Test Label" />);
-
-      const container = screen.getByTestId("boolean-input").closest("div");
-      const label = screen.getByText("Test Label");
-
-      // Check that input comes before label in DOM order
-      expect(container?.children[0]).toBe(screen.getByTestId("boolean-input"));
-      expect(container?.children[1]).toBe(label);
-    });
-
-    it("positions label to the left when specified", () => {
-      render(
-        <BooleanInput
-          {...defaultProps}
-          label="Test Label"
-          labelPosition="left"
-        />,
-      );
-
-      const container = screen.getByTestId("boolean-input").closest("div");
-      const label = screen.getByText("Test Label");
-
-      // Check that label comes before input in DOM order
-      expect(container?.children[0]).toBe(label);
-      expect(container?.children[1]).toBe(screen.getByTestId("boolean-input"));
-    });
-  });
-
-  describe("Custom styling", () => {
-    it("applies custom className", () => {
-      render(<BooleanInput {...defaultProps} className="custom-class" />);
-
-      const container = screen
-        .getByTestId("boolean-input")
-        .closest("div")?.parentElement;
-      expect(container).toHaveClass("custom-class");
-    });
-
-    it("applies custom inputClassName", () => {
-      render(<BooleanInput {...defaultProps} inputClassName="custom-input" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass("custom-input");
-    });
-
-    it("applies custom labelClassName", () => {
-      render(
-        <BooleanInput
-          {...defaultProps}
-          label="Test"
-          labelClassName="custom-label"
-        />,
-      );
-
-      expect(screen.getByText("Test")).toHaveClass("custom-label");
-    });
-  });
-
-  describe("Error states", () => {
-    it("shows error styling", () => {
-      render(<BooleanInput {...defaultProps} error="Error message" />);
-
-      expect(screen.getByTestId("boolean-input")).toHaveClass(
-        "border-red-300",
-        "focus:ring-red-500",
-      );
-    });
-
-    it("prioritizes error over helper text", () => {
-      render(
-        <BooleanInput
-          {...defaultProps}
-          helperText="Helper text"
           error="Error message"
+          helperText="Helper text"
         />,
       );
+      const checkbox = screen.getByRole("checkbox");
 
-      expect(screen.getByText("Error message")).toBeInTheDocument();
-      expect(screen.queryByText("Helper text")).not.toBeInTheDocument();
+      expect(checkbox).toHaveAttribute("aria-invalid", "true");
+      expect(checkbox).toHaveAttribute("aria-describedby");
+    });
+
+    it("has proper labels", () => {
+      render(<BooleanInput {...defaultProps} label="Test Label" />);
+      const label = screen.getByText("Test Label");
+      const checkbox = screen.getByRole("checkbox");
+
+      expect(label).toHaveAttribute("for", checkbox.id);
+    });
+
+    it("has proper button role for toggle", () => {
+      render(<BooleanInput {...defaultProps} variant="toggle" />);
+      const toggle = screen.getByRole("button");
+      expect(toggle).toHaveAttribute("aria-label");
+    });
+
+    it("has proper loading indicator", () => {
+      render(<BooleanInput {...defaultProps} loading />);
+      const spinner = screen.getByTestId("loading-spinner");
+      expect(spinner).toHaveAttribute("role", "status");
+      expect(spinner).toHaveAttribute("aria-label", "Loading");
     });
   });
 
-  describe("Edge cases", () => {
-    it("handles undefined checked value", () => {
-      render(<BooleanInput checked={undefined} onChange={jest.fn()} />);
-
-      expect(screen.getByTestId("boolean-input")).not.toBeChecked();
+  describe("Edge Cases", () => {
+    it("handles null value correctly", () => {
+      render(<BooleanInput {...defaultProps} value={null} nullable />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
     });
 
-    it("forwards additional HTML attributes", () => {
+    it("handles undefined value correctly", () => {
+      render(<BooleanInput {...defaultProps} value={undefined} />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
+    });
+
+    it("handles empty string value as false", () => {
+      render(<BooleanInput {...defaultProps} value={"" as any} />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
+    });
+
+    it("handles zero value as false", () => {
+      render(<BooleanInput {...defaultProps} value={0 as any} />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
+    });
+  });
+
+  describe("Integration", () => {
+    it("works with form validation", () => {
       render(
         <BooleanInput
           {...defaultProps}
-          data-testid="custom-boolean"
-          tabIndex={0}
+          required
+          error="This field is required"
         />,
       );
 
-      const input = screen.getByTestId("custom-boolean");
-      expect(input).toHaveAttribute("tabIndex", "0");
+      expect(screen.getByText("This field is required")).toBeInTheDocument();
+      expect(screen.getByText("*")).toBeInTheDocument();
     });
 
-    it("forwards ref correctly", () => {
-      const ref = React.createRef<HTMLInputElement>();
-      render(<BooleanInput {...defaultProps} ref={ref} />);
+    it("handles controlled to uncontrolled transition", () => {
+      const { rerender } = render(
+        <BooleanInput {...defaultProps} value={true} />,
+      );
+      let checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeChecked();
 
-      expect(ref.current).toBeInstanceOf(HTMLInputElement);
-    });
-  });
-
-  describe("CheckboxInput alias", () => {
-    it("CheckboxInput works as alias for BooleanInput", () => {
-      render(<CheckboxInput {...defaultProps} label="Checkbox alias test" />);
-
-      expect(screen.getByText("Checkbox alias test")).toBeInTheDocument();
-      expect(screen.getByTestId("boolean-input")).toBeInTheDocument();
+      rerender(<BooleanInput {...defaultProps} />);
+      checkbox = screen.getByRole("checkbox");
+      expect(checkbox).not.toBeChecked();
     });
 
-    it("CheckboxInput maintains backward compatibility", () => {
-      const onChange = jest.fn();
-      render(<CheckboxInput checked={false} onChange={onChange} />);
+    it("maintains internal state when not controlled", () => {
+      const { rerender } = render(
+        <BooleanInput {...defaultProps} defaultValue={true} />,
+      );
+      let checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeChecked();
 
-      const input = screen.getByTestId("boolean-input");
-      expect(input).toHaveAttribute("type", "checkbox");
+      rerender(<BooleanInput {...defaultProps} />);
+      checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeChecked();
     });
   });
 });
