@@ -3,6 +3,7 @@ import { cn } from "../../utils/cn";
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "info" | "success" | "warning" | "danger";
+  type?: "info" | "success" | "warning" | "error";
   title?: string;
   onClose?: () => void;
   showCloseButton?: boolean;
@@ -11,12 +12,17 @@ interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Alert: React.FC<AlertProps> = ({
   children,
   className,
-  variant = "info",
+  variant,
+  type,
   title,
   onClose,
   showCloseButton = false,
   ...props
 }) => {
+  // Support both variant and type props for compatibility
+  const alertType = type || variant || "info";
+  // Map "error" to "danger" for internal consistency
+  const internalType = alertType === "error" ? "danger" : alertType;
   const variantClasses = {
     info: "bg-blue-50 border-blue-200 text-blue-800",
     success: "bg-green-50 border-green-200 text-green-800",
@@ -31,8 +37,15 @@ export const Alert: React.FC<AlertProps> = ({
     danger: "text-red-400",
   };
 
+  const focusRingClasses = {
+    info: "focus:ring-blue-500",
+    success: "focus:ring-green-500",
+    warning: "focus:ring-yellow-500",
+    danger: "focus:ring-red-500",
+  };
+
   const getIcon = () => {
-    switch (variant) {
+    switch (internalType) {
       case "info":
         return (
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -82,28 +95,29 @@ export const Alert: React.FC<AlertProps> = ({
     <div
       className={cn(
         "rounded-md border p-4",
-        variantClasses[variant],
+        variantClasses[internalType],
         className,
       )}
       role="alert"
       {...props}
     >
       <div className="flex">
-        <div className={cn("flex-shrink-0", iconClasses[variant])}>
+        <div className={cn("flex-shrink-0", iconClasses[internalType])}>
           {getIcon()}
         </div>
         <div className="ml-3 flex-1">
           {title && <h3 className="text-sm font-medium mb-1">{title}</h3>}
           <div className="text-sm">{children}</div>
         </div>
-        {showCloseButton && onClose && (
+        {onClose && (
           <div className="ml-auto pl-3">
             <button
               onClick={onClose}
               className={cn(
                 "inline-flex rounded-md p-1.5 transition-colors duration-200",
                 "hover:bg-black hover:bg-opacity-10 focus:outline-none focus:ring-2 focus:ring-offset-2",
-                iconClasses[variant],
+                iconClasses[internalType],
+                focusRingClasses[internalType],
               )}
               aria-label="Close alert"
             >

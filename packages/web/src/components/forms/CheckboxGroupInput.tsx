@@ -139,6 +139,9 @@ export const CheckboxGroupInput = forwardRef<
 
     // Use controlled value if provided, otherwise use internal state
     const selectedValues = value !== undefined ? value : internalValue;
+    
+    // Debug logging
+    console.log('CheckboxGroupInput render:', { value, internalValue, selectedValues });
 
     const inputId =
       id || `checkbox-group-${Math.random().toString(36).substr(2, 9)}`;
@@ -163,31 +166,45 @@ export const CheckboxGroupInput = forwardRef<
       optionValue: string | number,
       checked: boolean,
     ) => {
+      console.log('handleCheckboxChange called:', { optionValue, checked, isDisabled });
       if (isDisabled) return;
 
       let newValue: (string | number)[];
       if (checked) {
+        console.log('Adding value:', { optionValue, selectedValues, maxSelections });
         // Add value if not already selected
         if (!selectedValues.includes(optionValue)) {
           // Check max selections limit
           if (maxSelections && selectedValues.length >= maxSelections) {
+            console.log('Max selections limit reached');
             return; // Don't add if at limit
           }
           newValue = [...selectedValues, optionValue];
+          console.log('New value after adding:', newValue);
         } else {
-          newValue = selectedValues;
+          console.log('Value already selected, no change');
+          newValue = selectedValues; // Already selected, no change
+          return; // Don't call onChange if no change
         }
       } else {
+        console.log('Removing value:', { optionValue, selectedValues });
         // Remove value
         newValue = selectedValues.filter((v) => v !== optionValue);
+        console.log('New value after removing:', newValue);
       }
 
+      console.log('About to update state:', { value, newValue });
+      
       // Update internal state if not controlled
-      if (value === undefined) {
+      if (value === undefined || (Array.isArray(value) && value.length === 0 && !onChange)) {
+        console.log('Setting internal value:', newValue);
         setInternalValue(newValue);
       }
 
-      onChange?.(newValue);
+      // Call onChange with the new value if provided
+      if (onChange) {
+        onChange(newValue);
+      }
     };
 
     // Handle select all
@@ -234,7 +251,6 @@ export const CheckboxGroupInput = forwardRef<
       <div
         ref={ref}
         className={cn("w-full", className)}
-        key={JSON.stringify(selectedValues)} // Force re-render when selection changes
         {...props}
       >
         {/* Label */}
@@ -250,7 +266,7 @@ export const CheckboxGroupInput = forwardRef<
           >
             {label}
             {required && (
-              <span className="text-red-500 ml-1" aria-label="required">
+              <span className="ml-1 text-red-500" aria-label="required">
                 *
               </span>
             )}
@@ -311,6 +327,15 @@ export const CheckboxGroupInput = forwardRef<
               maxSelections &&
               selectedValues.length >= maxSelections &&
               !isSelected;
+            
+            console.log('Checkbox option:', { 
+              option: option.value, 
+              isSelected, 
+              isOptionDisabled, 
+              isAtLimit, 
+              maxSelections, 
+              selectedValuesLength: selectedValues.length 
+            });
 
             return (
               <div
@@ -332,7 +357,7 @@ export const CheckboxGroupInput = forwardRef<
                   disabled={!!(isOptionDisabled || isAtLimit)}
                   readOnly={readOnly}
                   className={cn(
-                    "h-4 w-4 rounded border-gray-300 text-blue-600",
+                    "w-4 h-4 text-blue-600 rounded border-gray-300",
                     "focus:ring-blue-500 focus:ring-2 focus:ring-offset-2",
                     "disabled:cursor-not-allowed",
                     checkboxClassName,
@@ -357,7 +382,7 @@ export const CheckboxGroupInput = forwardRef<
                   {showDescriptions && option.data?.description && (
                     <span
                       id={`${inputId}-${option.value}-description`}
-                      className="text-sm text-gray-500 mt-1"
+                      className="mt-1 text-sm text-gray-500"
                     >
                       {renderDescription
                         ? renderDescription(option)
@@ -403,8 +428,8 @@ export const CheckboxGroupInput = forwardRef<
 
         {/* Loading Indicator */}
         {loading && (
-          <div className="mt-3 flex items-center gap-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <div className="flex gap-2 items-center mt-3">
+            <div className="w-4 h-4 rounded-full border-b-2 border-blue-600 animate-spin"></div>
             <span className="text-sm text-gray-500">Loading options...</span>
           </div>
         )}

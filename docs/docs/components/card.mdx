@@ -89,8 +89,8 @@ The Card component provides a flexible container for organizing content with var
 ## Hover Effects
 
 ```tsx live
-import React from 'react';
-import { Card } from '@react-superadmin/web';
+
+// Card component is available in the live scope
 
 function HoverCard() {
   return (
@@ -143,49 +143,35 @@ Try different card variants and see how they look:
 
 ### CardHeader
 
-```tsx live
-import React from 'react';
-import { Card, CardHeader, CardContent } from '@react-superadmin/web';
-
-function CardWithHeader() {
-  return (
-    <Card>
-      <CardHeader>
-        <h3 className='text-lg font-semibold'>Card Title</h3>
-      </CardHeader>
-      <CardContent>
-        <p>This card has a header section with a title.</p>
-      </CardContent>
-    </Card>
-  );
-}
+```jsx live
+<Card>
+  <CardHeader>
+    <h3 className='text-lg font-semibold'>Card Title</h3>
+  </CardHeader>
+  <CardContent>
+    <p>This card has a header section with a title.</p>
+  </CardContent>
+</Card>
 ```
 
 ### CardHeader with Action
 
-```tsx live
-import React from 'react';
-import { Card, CardHeader, CardContent, Button } from '@react-superadmin/web';
-
-function CardWithHeaderAction() {
-  return (
-    <Card>
-      <CardHeader action={<Button size='sm'>Edit</Button>}>
-        <h3 className='text-lg font-semibold'>User Profile</h3>
-      </CardHeader>
-      <CardContent>
-        <p>This card header includes an action button.</p>
-      </CardContent>
-    </Card>
-  );
-}
+```jsx live
+<Card>
+  <CardHeader action={<Button size='sm'>Edit</Button>}>
+    <h3 className='text-lg font-semibold'>User Profile</h3>
+  </CardHeader>
+  <CardContent>
+    <p>This card header includes an action button.</p>
+  </CardContent>
+</Card>
 ```
 
 ### CardContent
 
 ```tsx live
-import React from 'react';
-import { Card, CardHeader, CardContent } from '@react-superadmin/web';
+
+// Component is available in the live scope
 
 function CardWithContent() {
   return (
@@ -207,7 +193,7 @@ function CardWithContent() {
 ### CardFooter
 
 ```tsx live
-import React from 'react';
+
 import {
   Card,
   CardHeader,
@@ -239,7 +225,7 @@ function CardWithFooter() {
 ### Footer Alignment
 
 ```tsx live
-import React from 'react';
+
 import {
   Card,
   CardHeader,
@@ -294,7 +280,7 @@ function CardWithAlignedFooter() {
 ## Complete Card Example
 
 ```tsx live
-import React from 'react';
+
 import {
   Card,
   CardHeader,
@@ -439,7 +425,7 @@ Cards include proper accessibility features:
 ### Dashboard Widget
 
 ```tsx
-import { Card, CardHeader, CardContent } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function DashboardWidget() {
   return (

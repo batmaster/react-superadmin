@@ -13,73 +13,87 @@ The Footer component provides a consistent footer layout for applications with n
 ## Import
 
 ```tsx
-import { Footer } from '@react-superadmin/web';
-// Note: In documentation, this import path is for reference only
+// Footer component is available in the live scope
 ```
 
 ## Basic Usage
 
 ```tsx
 <Footer
-  copyright="© 2025 React SuperAdmin. All rights reserved."
+  copyright='© 2025 React SuperAdmin. All rights reserved.'
   links={[
     { href: '/privacy', label: 'Privacy Policy' },
     { href: '/terms', label: 'Terms of Service' },
-    { href: '/support', label: 'Support' }
+    { href: '/support', label: 'Support' },
   ]}
 />
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `copyright` | `string` | - | Copyright text |
-| `links` | `Link[]` | `[]` | Footer navigation links |
-| `socialLinks` | `SocialLink[]` | `[]` | Social media links |
-| `className` | `string` | - | Additional CSS classes |
+| Prop          | Type           | Default | Description             |
+| ------------- | -------------- | ------- | ----------------------- |
+| `copyright`   | `string`       | -       | Copyright text          |
+| `links`       | `Link[]`       | `[]`    | Footer navigation links |
+| `socialLinks` | `SocialLink[]` | `[]`    | Social media links      |
+| `className`   | `string`       | -       | Additional CSS classes  |
 
 ## Examples
 
 ### Basic Footer
+
 ```tsx
 <Footer
-  copyright="© 2025 React SuperAdmin. All rights reserved."
+  copyright='© 2025 React SuperAdmin. All rights reserved.'
   links={[
     { href: '/privacy', label: 'Privacy Policy' },
     { href: '/terms', label: 'Terms of Service' },
-    { href: '/support', label: 'Support' }
+    { href: '/support', label: 'Support' },
   ]}
 />
 ```
 
 ### With Social Links
+
 ```tsx
 <Footer
-  copyright="© 2025 React SuperAdmin. All rights reserved."
+  copyright='© 2025 React SuperAdmin. All rights reserved.'
   links={[
     { href: '/privacy', label: 'Privacy Policy' },
     { href: '/terms', label: 'Terms of Service' },
-    { href: '/support', label: 'Support' }
+    { href: '/support', label: 'Support' },
   ]}
   socialLinks={[
-    { href: 'https://github.com/react-superadmin', icon: 'github', label: 'GitHub' },
-    { href: 'https://twitter.com/reactsuperadmin', icon: 'twitter', label: 'Twitter' },
-    { href: 'https://discord.gg/reactsuperadmin', icon: 'discord', label: 'Discord' }
+    {
+      href: 'https://github.com/react-superadmin',
+      icon: 'github',
+      label: 'GitHub',
+    },
+    {
+      href: 'https://twitter.com/reactsuperadmin',
+      icon: 'twitter',
+      label: 'Twitter',
+    },
+    {
+      href: 'https://discord.gg/reactsuperadmin',
+      icon: 'discord',
+      label: 'Discord',
+    },
   ]}
 />
 ```
 
 ### Custom Styling
+
 ```tsx
 <Footer
-  copyright="© 2025 React SuperAdmin. All rights reserved."
+  copyright='© 2025 React SuperAdmin. All rights reserved.'
   links={[
     { href: '/privacy', label: 'Privacy Policy' },
     { href: '/terms', label: 'Terms of Service' },
-    { href: '/support', label: 'Support' }
+    { href: '/support', label: 'Support' },
   ]}
-  className="bg-gray-900 text-white border-t border-gray-800"
+  className='bg-gray-900 text-white border-t border-gray-800'
 />
 ```
 
@@ -94,9 +108,9 @@ The Footer component includes comprehensive accessibility features:
 
 ```tsx
 <Footer
-  copyright="© 2025 React SuperAdmin. All rights reserved."
+  copyright='© 2025 React SuperAdmin. All rights reserved.'
   links={footerLinks}
-  aria-label="Application footer"
+  aria-label='Application footer'
 />
 ```
 
@@ -112,4 +126,3 @@ The Footer component includes comprehensive accessibility features:
 - [Header](/docs/components/header) - For top navigation
 - [Sidebar](/docs/components/sidebar) - For side navigation
 - [AdminLayout](/docs/components/admin-layout) - For complete layout structure
-

@@ -64,7 +64,6 @@ const sidebars: SidebarsConfig = {
         'components/pagination',
         'components/resource-form',
         'components/resource-list',
-        'components/resource-show',
         'components/search-bar',
       ],
     },
@@ -72,9 +71,9 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Layout Components',
       items: [
-        'components/footer',
         'components/header',
         'components/sidebar',
+        'components/footer',
         'components/admin-layout',
       ],
     },

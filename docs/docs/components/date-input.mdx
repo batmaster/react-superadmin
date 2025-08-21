@@ -23,7 +23,7 @@ The `DateInput` component provides a modern, accessible date/time input interfac
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function BasicDateExample() {
   const [birthDate, setBirthDate] = useState('');
@@ -55,7 +55,7 @@ function BasicDateExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function DateTypesExample() {
   const [dateValue, setDateValue] = useState('');
@@ -99,7 +99,7 @@ function DateTypesExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function ValidationExample() {
   const [eventDate, setEventDate] = useState('');
@@ -148,7 +148,7 @@ function ValidationExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function SizeVariantsExample() {
   const [smallDate, setSmallDate] = useState('');
@@ -189,7 +189,7 @@ function SizeVariantsExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function IconExample() {
   const [appointmentDate, setAppointmentDate] = useState('');
@@ -225,7 +225,7 @@ function IconExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function FormIntegrationExample() {
   const [formData, setFormData] = useState({
@@ -380,7 +380,7 @@ The component uses Tailwind CSS classes and supports custom styling through:
 
 ```tsx
 import { useForm, Controller } from 'react-hook-form';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function FormExample() {
   const { control, handleSubmit } = useForm();
@@ -410,7 +410,7 @@ function FormExample() {
 
 ```tsx
 import { useGetList } from '@react-superadmin/core';
-import { DateInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function DataProviderExample() {
   const { data: events, isLoading } = useGetList('events');

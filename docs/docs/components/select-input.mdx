@@ -23,7 +23,7 @@ The `SelectInput` component provides a modern, accessible dropdown selection int
 
 ```tsx live
 import React, { useState } from 'react';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function BasicSelectExample() {
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -68,7 +68,7 @@ function BasicSelectExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function SearchableSelectExample() {
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -118,7 +118,7 @@ function SearchableSelectExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function ValidationExample() {
   const [selectedRole, setSelectedRole] = useState('');
@@ -165,7 +165,7 @@ function ValidationExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function SizeVariantsExample() {
   const [smallValue, setSmallValue] = useState('');
@@ -215,7 +215,7 @@ function SizeVariantsExample() {
 
 ```tsx live
 import React, { useState } from 'react';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function StateExample() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -322,7 +322,7 @@ The component uses Tailwind CSS classes and supports custom styling through:
 
 ```tsx
 import { useForm, Controller } from 'react-hook-form';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function FormExample() {
   const { control, handleSubmit } = useForm();
@@ -353,7 +353,7 @@ function FormExample() {
 
 ```tsx
 import { useGetList } from '@react-superadmin/core';
-import { SelectInput } from '@react-superadmin/web';
+// Component is available in the live scope
 
 function DataProviderExample() {
   const { data: users, isLoading } = useGetList('users');

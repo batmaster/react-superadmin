@@ -13,8 +13,7 @@ The SearchBar component provides a search input interface with filtering capabil
 ## Import
 
 ```tsx
-import { SearchBar } from '@react-superadmin/web';
-// Note: In documentation, this import path is for reference only
+// SearchBar component is available in the live scope
 ```
 
 ## Basic Usage
@@ -23,31 +22,32 @@ import { SearchBar } from '@react-superadmin/web';
 <SearchBar
   value={searchTerm}
   onChange={setSearchTerm}
-  placeholder="Search..."
+  placeholder='Search...'
   onSearch={handleSearch}
 />
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | - | Current search value |
-| `onChange` | `(value: string) => void` | - | Value change handler |
-| `onSearch` | `(value: string) => void` | - | Search submission handler |
-| `placeholder` | `string` | - | Placeholder text |
-| `suggestions` | `string[]` | `[]` | Search suggestions |
-| `loading` | `boolean` | `false` | Whether suggestions are loading |
-| `debounceMs` | `number` | `300` | Debounce delay in milliseconds |
-| `className` | `string` | - | Additional CSS classes |
+| Prop          | Type                      | Default | Description                     |
+| ------------- | ------------------------- | ------- | ------------------------------- |
+| `value`       | `string`                  | -       | Current search value            |
+| `onChange`    | `(value: string) => void` | -       | Value change handler            |
+| `onSearch`    | `(value: string) => void` | -       | Search submission handler       |
+| `placeholder` | `string`                  | -       | Placeholder text                |
+| `suggestions` | `string[]`                | `[]`    | Search suggestions              |
+| `loading`     | `boolean`                 | `false` | Whether suggestions are loading |
+| `debounceMs`  | `number`                  | `300`   | Debounce delay in milliseconds  |
+| `className`   | `string`                  | -       | Additional CSS classes          |
 
 ## Examples
 
 ### Basic Search
+
 ```tsx
 const [searchTerm, setSearchTerm] = useState('');
 
-const handleSearch = (term) => {
+const handleSearch = term => {
   console.log('Searching for:', term);
   // Implement search logic
 };
@@ -56,11 +56,12 @@ const handleSearch = (term) => {
   value={searchTerm}
   onChange={setSearchTerm}
   onSearch={handleSearch}
-  placeholder="Search users..."
-/>
+  placeholder='Search users...'
+/>;
 ```
 
 ### With Suggestions
+
 ```tsx
 const [searchTerm, setSearchTerm] = useState('');
 const [suggestions, setSuggestions] = useState([]);
@@ -95,24 +96,26 @@ useEffect(() => {
   onSearch={handleSearch}
   suggestions={suggestions}
   loading={loading}
-  placeholder="Search with suggestions..."
-/>
+  placeholder='Search with suggestions...'
+/>;
 ```
 
 ### With Custom Debouncing
+
 ```tsx
 <SearchBar
   value={searchTerm}
   onChange={setSearchTerm}
   onSearch={handleSearch}
   debounceMs={500}
-  placeholder="Search with 500ms debounce..."
+  placeholder='Search with 500ms debounce...'
 />
 ```
 
 ## Integration with Other Components
 
 ### With ResourceList
+
 ```tsx
 const [searchTerm, setSearchTerm] = useState('');
 const [filters, setFilters] = useState({});
@@ -122,15 +125,15 @@ useEffect(() => {
 }, [searchTerm]);
 
 return (
-  <div className="space-y-4">
+  <div className='space-y-4'>
     <SearchBar
       value={searchTerm}
       onChange={setSearchTerm}
-      placeholder="Search users..."
+      placeholder='Search users...'
     />
-    
+
     <ResourceList
-      resource="users"
+      resource='users'
       filters={filters}
       onFiltersChange={setFilters}
     />
@@ -139,30 +142,29 @@ return (
 ```
 
 ### With DataTable
+
 ```tsx
 const [searchTerm, setSearchTerm] = useState('');
 const [filteredData, setFilteredData] = useState(originalData);
 
 useEffect(() => {
-  const filtered = originalData.filter(item => 
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = originalData.filter(
+    item =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
   setFilteredData(filtered);
 }, [searchTerm, originalData]);
 
 return (
-  <div className="space-y-4">
+  <div className='space-y-4'>
     <SearchBar
       value={searchTerm}
       onChange={setSearchTerm}
-      placeholder="Filter table data..."
+      placeholder='Filter table data...'
     />
-    
-    <DataTable
-      data={filteredData}
-      columns={columns}
-    />
+
+    <DataTable data={filteredData} columns={columns} />
   </div>
 );
 ```
@@ -182,8 +184,8 @@ The SearchBar component includes comprehensive accessibility features:
   value={searchTerm}
   onChange={setSearchTerm}
   onSearch={handleSearch}
-  aria-label="Search users"
-  aria-describedby="search-help"
+  aria-label='Search users'
+  aria-describedby='search-help'
 />
 ```
 

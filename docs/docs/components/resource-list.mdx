@@ -13,18 +13,17 @@ The ResourceList component provides a comprehensive list view for displaying res
 ## Import
 
 ```tsx
-import { ResourceList } from '@react-superadmin/web';
-// Note: In documentation, this import path is for reference only
+// ResourceList component is available in the live scope
 ```
 
 ## Basic Usage
 
 ```tsx
 <ResourceList
-  resource="users"
+  resource='users'
   filters={{}}
-  sortBy="name"
-  sortOrder="asc"
+  sortBy='name'
+  sortOrder='asc'
   page={1}
   pageSize={20}
   onFiltersChange={setFilters}
@@ -35,24 +34,25 @@ import { ResourceList } from '@react-superadmin/web';
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `resource` | `string` | - | Resource name to display |
-| `filters` | `object` | `{}` | Current filter values |
-| `sortBy` | `string` | - | Current sort field |
-| `sortOrder` | `'asc' \| 'desc'` | `'asc'` | Current sort order |
-| `page` | `number` | `1` | Current page number |
-| `pageSize` | `number` | `20` | Number of items per page |
-| `onFiltersChange` | `(filters: object) => void` | - | Filter change handler |
-| `onSortChange` | `(field: string) => void` | - | Sort field change handler |
-| `onPageChange` | `(page: number) => void` | - | Page change handler |
-| `onPageSizeChange` | `(size: number) => void` | - | Page size change handler |
-| `loading` | `boolean` | `false` | Whether data is loading |
-| `className` | `string` | - | Additional CSS classes |
+| Prop               | Type                        | Default | Description               |
+| ------------------ | --------------------------- | ------- | ------------------------- |
+| `resource`         | `string`                    | -       | Resource name to display  |
+| `filters`          | `object`                    | `{}`    | Current filter values     |
+| `sortBy`           | `string`                    | -       | Current sort field        |
+| `sortOrder`        | `'asc' \| 'desc'`           | `'asc'` | Current sort order        |
+| `page`             | `number`                    | `1`     | Current page number       |
+| `pageSize`         | `number`                    | `20`    | Number of items per page  |
+| `onFiltersChange`  | `(filters: object) => void` | -       | Filter change handler     |
+| `onSortChange`     | `(field: string) => void`   | -       | Sort field change handler |
+| `onPageChange`     | `(page: number) => void`    | -       | Page change handler       |
+| `onPageSizeChange` | `(size: number) => void`    | -       | Page size change handler  |
+| `loading`          | `boolean`                   | `false` | Whether data is loading   |
+| `className`        | `string`                    | -       | Additional CSS classes    |
 
 ## Examples
 
 ### Basic Resource List
+
 ```tsx
 const [filters, setFilters] = useState({});
 const [sortBy, setSortBy] = useState('name');
@@ -61,7 +61,7 @@ const [page, setPage] = useState(1);
 const [pageSize, setPageSize] = useState(20);
 
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   sortBy={sortBy}
   sortOrder={sortOrder}
@@ -71,33 +71,35 @@ const [pageSize, setPageSize] = useState(20);
   onSortChange={setSortBy}
   onPageChange={setPage}
   onPageSizeChange={setPageSize}
-/>
+/>;
 ```
 
 ### With Custom Filters
+
 ```tsx
 const [filters, setFilters] = useState({
   role: 'admin',
   status: 'active',
-  search: ''
+  search: '',
 });
 
-const handleFilterChange = (newFilters) => {
+const handleFilterChange = newFilters => {
   setFilters(newFilters);
   setPage(1); // Reset to first page when filters change
 };
 
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   onFiltersChange={handleFilterChange}
-  sortBy="name"
+  sortBy='name'
   page={page}
   pageSize={pageSize}
-/>
+/>;
 ```
 
 ### With Loading State
+
 ```tsx
 const [loading, setLoading] = useState(false);
 const [data, setData] = useState([]);
@@ -106,12 +108,14 @@ useEffect(() => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/users?${new URLSearchParams({
-        page: page.toString(),
-        size: pageSize.toString(),
-        sort: `${sortBy}:${sortOrder}`,
-        ...filters
-      })}`);
+      const response = await fetch(
+        `/api/users?${new URLSearchParams({
+          page: page.toString(),
+          size: pageSize.toString(),
+          sort: `${sortBy}:${sortOrder}`,
+          ...filters,
+        })}`
+      );
       const result = await response.json();
       setData(result.data);
     } catch (error) {
@@ -125,7 +129,7 @@ useEffect(() => {
 }, [page, pageSize, sortBy, sortOrder, filters]);
 
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   sortBy={sortBy}
   sortOrder={sortOrder}
@@ -136,7 +140,7 @@ useEffect(() => {
   onPageChange={setPage}
   onPageSizeChange={setPageSize}
   loading={loading}
-/>
+/>;
 ```
 
 ## Filter Configuration
@@ -152,8 +156,8 @@ const filterConfig = {
       { value: '', label: 'All Roles' },
       { value: 'admin', label: 'Administrator' },
       { value: 'user', label: 'Regular User' },
-      { value: 'moderator', label: 'Moderator' }
-    ]
+      { value: 'moderator', label: 'Moderator' },
+    ],
   },
   status: {
     type: 'select',
@@ -162,18 +166,18 @@ const filterConfig = {
       { value: '', label: 'All Statuses' },
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'suspended', label: 'Suspended' }
-    ]
+      { value: 'suspended', label: 'Suspended' },
+    ],
   },
   search: {
     type: 'text',
     label: 'Search',
-    placeholder: 'Search users...'
+    placeholder: 'Search users...',
   },
   createdAfter: {
     type: 'date',
-    label: 'Created After'
-  }
+    label: 'Created After',
+  },
 };
 ```
 
@@ -183,21 +187,21 @@ You can add custom actions to the resource list:
 
 ```tsx
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   onFiltersChange={setFilters}
   actions={[
     {
       label: 'Export CSV',
       onClick: () => exportUsers(filters),
-      variant: 'secondary'
+      variant: 'secondary',
     },
     {
       label: 'Bulk Delete',
       onClick: () => deleteSelectedUsers(),
       variant: 'danger',
-      disabled: selectedUsers.length === 0
-    }
+      disabled: selectedUsers.length === 0,
+    },
   ]}
 />
 ```
@@ -205,6 +209,7 @@ You can add custom actions to the resource list:
 ## Integration with Other Components
 
 ### With SearchBar
+
 ```tsx
 const [searchTerm, setSearchTerm] = useState('');
 
@@ -213,15 +218,15 @@ useEffect(() => {
 }, [searchTerm]);
 
 return (
-  <div className="space-y-4">
+  <div className='space-y-4'>
     <SearchBar
       value={searchTerm}
       onChange={setSearchTerm}
-      placeholder="Search users..."
+      placeholder='Search users...'
     />
-    
+
     <ResourceList
-      resource="users"
+      resource='users'
       filters={filters}
       onFiltersChange={setFilters}
     />
@@ -230,12 +235,13 @@ return (
 ```
 
 ### With DataTable
+
 ```tsx
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   onFiltersChange={setFilters}
-  renderContent={(data) => (
+  renderContent={data => (
     <DataTable
       data={data}
       columns={userColumns}
@@ -258,11 +264,11 @@ The ResourceList component includes comprehensive accessibility features:
 
 ```tsx
 <ResourceList
-  resource="users"
+  resource='users'
   filters={filters}
   onFiltersChange={setFilters}
-  aria-label="Users list"
-  aria-describedby="list-help"
+  aria-label='Users list'
+  aria-describedby='list-help'
 />
 ```
 
@@ -281,4 +287,3 @@ The ResourceList component includes comprehensive accessibility features:
 - [SearchBar](/docs/components/search-bar) - For list filtering
 - [Button](/docs/components/button) - For list actions
 - [Form](/docs/components/form) - For filter forms
-

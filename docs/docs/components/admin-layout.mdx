@@ -1,0 +1,46 @@
+---
+id: admin-layout
+title: AdminLayout Component
+sidebar_label: AdminLayout
+description: Complete admin layout component with header, sidebar, and footer
+keywords: [layout, admin, header, sidebar, footer]
+---
+
+# AdminLayout Component
+
+The AdminLayout component provides a complete layout structure for admin applications.
+
+## Basic Usage
+
+```jsx live
+<div className="min-h-screen bg-gray-100">
+  <div className="bg-white border-b border-gray-200 px-4 py-3">
+    <h1 className="text-xl font-semibold">React SuperAdmin</h1>
+  </div>
+  
+  <div className="flex">
+    <div className="bg-gray-50 w-64 min-h-screen p-4">
+      <nav className="space-y-2">
+        <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-200 rounded">Dashboard</a>
+        <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-200 rounded">Users</a>
+        <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-200 rounded">Settings</a>
+      </nav>
+    </div>
+    
+    <div className="flex-1 p-6">
+      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+      <p>Main content area goes here.</p>
+    </div>
+  </div>
+  
+  <div className="bg-white border-t border-gray-200 px-4 py-3 text-center text-gray-600">
+    © 2025 React SuperAdmin. All rights reserved.
+  </div>
+</div>
+```
+
+## Related Components
+
+- [Header](/docs/components/header) - For top navigation
+- [Sidebar](/docs/components/sidebar) - For side navigation
+- [Footer](/docs/components/footer) - For bottom navigation

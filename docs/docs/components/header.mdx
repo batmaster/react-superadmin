@@ -1,0 +1,32 @@
+---
+id: header
+title: Header Component
+sidebar_label: Header
+description: Application header component with navigation
+keywords: [header, navigation, layout]
+---
+
+# Header Component
+
+The Header component provides the top navigation bar for applications.
+
+## Basic Usage
+
+```jsx live
+<div className="bg-white border-b border-gray-200 px-4 py-3">
+  <div className="flex items-center justify-between">
+    <h1 className="text-xl font-semibold">React SuperAdmin</h1>
+    <nav className="flex space-x-4">
+      <a href="#" className="text-gray-600 hover:text-gray-900">Dashboard</a>
+      <a href="#" className="text-gray-600 hover:text-gray-900">Users</a>
+      <a href="#" className="text-gray-600 hover:text-gray-900">Settings</a>
+    </nav>
+  </div>
+</div>
+```
+
+## Related Components
+
+- [Footer](/docs/components/footer) - For bottom navigation
+- [Sidebar](/docs/components/sidebar) - For side navigation
+- [AdminLayout](/docs/components/admin-layout) - For complete layout structure

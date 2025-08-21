@@ -119,7 +119,11 @@ export const FormField: React.FC<FormFieldProps> = ({
         <p className="text-sm text-gray-500">{field.helpText}</p>
       )}
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className="text-sm text-red-600" data-testid={`error-${field.name}`}>
+          {error}
+        </p>
+      )}
     </div>
   );
 };
