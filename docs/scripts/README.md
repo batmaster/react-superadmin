@@ -63,13 +63,36 @@ pnpm fix:live
 - Removes duplicate component tags
 - Ensures all live examples work properly
 
+### `fix-all-live-examples.js`
+
+Comprehensive script that fixes ALL live example issues systematically.
+
+**Usage:**
+```bash
+# Fix all live examples comprehensively
+node scripts/fix-all-live-examples.js
+
+# Fix all live examples using npm script
+pnpm fix:all
+```
+
+**What it fixes comprehensively:**
+- All useState/React.useState issues
+- All tsx live to jsx live conversions
+- Component rendering for ALL example functions
+- Component syntax errors (Modal, DateInput, Input)
+- Malformed closing tags and syntax errors
+- Proper spacing and formatting
+- Handles nested braces and complex functions
+
 ## NPM Scripts
 
 The following npm scripts are available in `package.json`:
 
 - `pnpm build` - Build documentation normally
 - `pnpm build:timestamp` - Update timestamps and build documentation
-- `pnpm fix:live` - Fix all live examples automatically
+- `pnpm fix:live` - Fix basic live examples automatically
+- `pnpm fix:all` - Fix ALL live examples comprehensively
 - `pnpm serve` - Serve documentation locally for development
 
 ## Adding Timestamps to New Files

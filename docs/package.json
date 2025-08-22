@@ -9,6 +9,7 @@
     "build:search": "docusaurus build && node scripts/generate-search-index.js",
     "build:timestamp": "node scripts/update-timestamps.js && docusaurus build",
     "fix:live": "node scripts/fix-live-examples.js",
+    "fix:all": "node scripts/fix-all-live-examples.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
