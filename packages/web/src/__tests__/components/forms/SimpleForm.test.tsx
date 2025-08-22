@@ -1,7 +1,7 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { SimpleForm, FormField } from "../../../components/forms/SimpleForm";
+import React from "react";
+import { FormField, SimpleForm } from "../../../components/forms/SimpleForm";
 
 // Helper function to find form fields reliably
 const getFieldByLabel = (labelText: string) => {
