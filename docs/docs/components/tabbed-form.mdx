@@ -1,0 +1,617 @@
+---
+id: tabbed-form
+title: TabbedForm Component
+sidebar_label: TabbedForm
+keywords: [form, tabs, multi-tab, validation, navigation, progress]
+---
+
+# TabbedForm Component
+
+A powerful multi-tab form component that organizes form fields into logical groups with tab navigation, validation, and flexible styling options.
+
+## Overview
+
+The `TabbedForm` component provides a sophisticated form interface that:
+
+- **Organizes Fields**: Groups related form fields into logical tabs
+- **Tab Navigation**: Allows users to navigate between form sections
+- **Validation**: Provides field-level and tab-level validation
+- **Progress Tracking**: Shows completion progress across tabs
+- **Flexible Styling**: Supports multiple tab styles and positions
+- **Accessibility**: Full keyboard navigation and screen reader support
+
+## Features
+
+- **Multi-tab Layout**: Organize complex forms into manageable sections
+- **Tab Navigation**: Previous/Next buttons and direct tab selection
+- **Progress Indicators**: Visual progress bars and completion status
+- **Validation**: Real-time and submit-time validation
+- **Flexible Positioning**: Top, left, or bottom tab placement
+- **Multiple Styles**: Pills, tabs, or underline tab styles
+- **Tab Validation**: Show validation errors per tab
+- **Completion Tracking**: Track field completion per tab
+- **Custom Styling**: Extensive customization options
+- **Responsive Design**: Works seamlessly across screen sizes
+
+## Basic Usage
+
+```tsx live
+import React, { useState } from 'react';
+import { TabbedForm } from '@react-superadmin/web';
+
+function BasicTabbedForm() {
+  const [formData, setFormData] = useState({});
+
+  const tabs = [
+    {
+      id: 'personal',
+      label: 'Personal Info',
+      fields: [
+        {
+          name: 'firstName',
+          label: 'First Name',
+          type: 'text',
+          required: true,
+        },
+        { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+      ],
+    },
+    {
+      id: 'contact',
+      label: 'Contact Info',
+      fields: [
+        { name: 'phone', label: 'Phone', type: 'tel' },
+        { name: 'address', label: 'Address', type: 'textarea' },
+        { name: 'city', label: 'City', type: 'text' },
+      ],
+    },
+    {
+      id: 'preferences',
+      label: 'Preferences',
+      fields: [
+        { name: 'newsletter', label: 'Newsletter', type: 'boolean' },
+        { name: 'notifications', label: 'Notifications', type: 'boolean' },
+      ],
+    },
+  ];
+
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+    setFormData(values);
+  };
+
+  return (
+    <div className='max-w-4xl mx-auto p-6'>
+      <TabbedForm
+        tabs={tabs}
+        onSubmit={handleSubmit}
+        title='User Registration Form'
+        showProgress
+        showTabValidation
+      />
+
+      {Object.keys(formData).length > 0 && (
+        <div className='mt-8 p-4 bg-gray-50 rounded-md'>
+          <h3 className='font-semibold mb-2'>Submitted Data:</h3>
+          <pre className='text-sm'>{JSON.stringify(formData, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Advanced Usage
+
+### With Validation and Custom Styling
+
+```tsx live
+import React, { useState } from 'react';
+import { TabbedForm } from '@react-superadmin/web';
+
+function AdvancedTabbedForm() {
+  const [formData, setFormData] = useState({});
+
+  const tabs = [
+    {
+      id: 'account',
+      label: 'Account Details',
+      description: 'Basic account information',
+      fields: [
+        {
+          name: 'username',
+          label: 'Username',
+          type: 'text',
+          required: true,
+          validation: {
+            minLength: 3,
+            pattern: '^[a-zA-Z0-9_]+$',
+            message:
+              'Username must be at least 3 characters and contain only letters, numbers, and underscores',
+          },
+        },
+        {
+          name: 'password',
+          label: 'Password',
+          type: 'password',
+          required: true,
+          validation: {
+            minLength: 8,
+            message: 'Password must be at least 8 characters long',
+          },
+        },
+        {
+          name: 'confirmPassword',
+          label: 'Confirm Password',
+          type: 'password',
+          required: true,
+        },
+      ],
+      validation: {
+        custom: values => {
+          if (values.password !== values.confirmPassword) {
+            return 'Passwords do not match';
+          }
+          return null;
+        },
+      },
+    },
+    {
+      id: 'profile',
+      label: 'Profile Information',
+      description: 'Personal and professional details',
+      fields: [
+        { name: 'fullName', label: 'Full Name', type: 'text', required: true },
+        { name: 'bio', label: 'Biography', type: 'textarea' },
+        { name: 'website', label: 'Website', type: 'url' },
+        { name: 'birthDate', label: 'Birth Date', type: 'date' },
+      ],
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      description: 'Account preferences and settings',
+      fields: [
+        {
+          name: 'language',
+          label: 'Language',
+          type: 'select',
+          options: [
+            { value: 'en', label: 'English' },
+            { value: 'es', label: 'Spanish' },
+            { value: 'fr', label: 'French' },
+          ],
+        },
+        {
+          name: 'timezone',
+          label: 'Timezone',
+          type: 'select',
+          options: [
+            { value: 'UTC', label: 'UTC' },
+            { value: 'EST', label: 'Eastern Time' },
+            { value: 'PST', label: 'Pacific Time' },
+          ],
+        },
+        {
+          name: 'notifications',
+          label: 'Email Notifications',
+          type: 'boolean',
+        },
+      ],
+    },
+  ];
+
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+    setFormData(values);
+  };
+
+  return (
+    <div className='max-w-5xl mx-auto p-6'>
+      <TabbedForm
+        tabs={tabs}
+        onSubmit={handleSubmit}
+        title='Complete User Profile'
+        showProgress
+        showTabValidation
+        showTabDescriptions
+        tabStyle='pills'
+        tabPosition='left'
+        validateOnChange
+        showSuccessMessage
+        successMessage='Profile updated successfully!'
+      />
+    </div>
+  );
+}
+```
+
+### With Custom Tab Icons and Styling
+
+```tsx live
+import React, { useState } from 'react';
+import { TabbedForm } from '@react-superadmin/web';
+import { User, Settings, Bell, Shield } from 'lucide-react';
+
+function CustomStyledTabbedForm() {
+  const [formData, setFormData] = useState({});
+
+  const tabs = [
+    {
+      id: 'account',
+      label: 'Account',
+      icon: <User className='w-4 h-4' />,
+      description: 'Account settings and preferences',
+      fields: [
+        { name: 'username', label: 'Username', type: 'text', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+      ],
+    },
+    {
+      id: 'security',
+      label: 'Security',
+      icon: <Shield className='w-4 h-4' />,
+      description: 'Security and privacy settings',
+      fields: [
+        {
+          name: 'twoFactor',
+          label: 'Two-Factor Authentication',
+          type: 'boolean',
+        },
+        {
+          name: 'sessionTimeout',
+          label: 'Session Timeout (minutes)',
+          type: 'number',
+        },
+      ],
+    },
+    {
+      id: 'notifications',
+      label: 'Notifications',
+      icon: <Bell className='w-4 h-4' />,
+      description: 'Notification preferences',
+      fields: [
+        {
+          name: 'emailNotifications',
+          label: 'Email Notifications',
+          type: 'boolean',
+        },
+        {
+          name: 'pushNotifications',
+          label: 'Push Notifications',
+          type: 'boolean',
+        },
+      ],
+    },
+    {
+      id: 'advanced',
+      label: 'Advanced',
+      icon: <Settings className='w-4 h-4' />,
+      description: 'Advanced configuration options',
+      fields: [
+        { name: 'debugMode', label: 'Debug Mode', type: 'boolean' },
+        {
+          name: 'logLevel',
+          label: 'Log Level',
+          type: 'select',
+          options: [
+            { value: 'error', label: 'Error' },
+            { value: 'warn', label: 'Warning' },
+            { value: 'info', label: 'Info' },
+            { value: 'debug', label: 'Debug' },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+    setFormData(values);
+  };
+
+  return (
+    <div className='max-w-6xl mx-auto p-6'>
+      <TabbedForm
+        tabs={tabs}
+        onSubmit={handleSubmit}
+        title='User Settings'
+        showProgress
+        showTabValidation
+        showTabIcons
+        showTabDescriptions
+        showTabNumbers
+        tabStyle='pills'
+        tabPosition='left'
+        className='bg-white rounded-lg shadow-lg p-6'
+        tabClassName='bg-gray-50 rounded-lg p-2'
+        contentClassName='bg-gray-50 rounded-lg p-6'
+        actionsClassName='bg-white rounded-lg p-4'
+      />
+    </div>
+  );
+}
+```
+
+## Props Reference
+
+### TabbedFormProps
+
+| Prop                  | Type                                                     | Default                          | Description                            |
+| --------------------- | -------------------------------------------------------- | -------------------------------- | -------------------------------------- |
+| `tabs`                | `Tab[]`                                                  | **Required**                     | Array of tab configurations            |
+| `onSubmit`            | `(values: Record<string, any>) => void \| Promise<void>` | -                                | Form submission handler                |
+| `onCancel`            | `() => void`                                             | -                                | Cancel button handler                  |
+| `initialValues`       | `Record<string, any>`                                    | `{}`                             | Initial form values                    |
+| `title`               | `string`                                                 | -                                | Form title                             |
+| `submitText`          | `string`                                                 | `"Save"`                         | Submit button text                     |
+| `cancelText`          | `string`                                                 | `"Cancel"`                       | Cancel button text                     |
+| `loading`             | `boolean`                                                | `false`                          | Loading state                          |
+| `className`           | `string`                                                 | -                                | Custom class names for container       |
+| `showTabs`            | `boolean`                                                | `true`                           | Whether to show tab navigation         |
+| `showTabNavigation`   | `boolean`                                                | `true`                           | Whether to show prev/next buttons      |
+| `showTabValidation`   | `boolean`                                                | `false`                          | Whether to show tab validation errors  |
+| `allowTabSkipping`    | `boolean`                                                | `false`                          | Whether to allow skipping tabs         |
+| `defaultActiveTab`    | `string`                                                 | First tab                        | Default active tab ID                  |
+| `tabPosition`         | `"top" \| "left" \| "bottom"`                            | `"top"`                          | Tab position                           |
+| `tabStyle`            | `"pills" \| "tabs" \| "underline"`                       | `"tabs"`                         | Tab visual style                       |
+| `showProgress`        | `boolean`                                                | `false`                          | Whether to show progress bar           |
+| `showTabNumbers`      | `boolean`                                                | `false`                          | Whether to show tab numbers            |
+| `showTabIcons`        | `boolean`                                                | `false`                          | Whether to show tab icons              |
+| `showTabDescriptions` | `boolean`                                                | `false`                          | Whether to show tab descriptions       |
+| `tabClassName`        | `string`                                                 | -                                | Custom class names for tabs            |
+| `contentClassName`    | `string`                                                 | -                                | Custom class names for content area    |
+| `actionsClassName`    | `string`                                                 | -                                | Custom class names for actions area    |
+| `resetOnSubmit`       | `boolean`                                                | `false`                          | Whether to reset form after submission |
+| `validateOnChange`    | `boolean`                                                | `false`                          | Whether to validate on field change    |
+| `validateOnBlur`      | `boolean`                                                | `false`                          | Whether to validate on field blur      |
+| `validateOnSubmit`    | `boolean`                                                | `true`                           | Whether to validate on form submission |
+| `showErrors`          | `boolean`                                                | `true`                           | Whether to show error messages         |
+| `showSuccessMessage`  | `boolean`                                                | `false`                          | Whether to show success message        |
+| `successMessage`      | `string`                                                 | `"Form submitted successfully!"` | Success message text                   |
+| `errorMessage`        | `string`                                                 | `"Please fix the errors below."` | Error message text                     |
+| `onTabChange`         | `(tabId: string, previousTabId?: string) => void`        | -                                | Tab change callback                    |
+| `onFieldChange`       | `(fieldName: string, value: any, tabId: string) => void` | -                                | Field change callback                  |
+| `onValidationError`   | `(errors: Record<string, string>) => void`               | -                                | Validation error callback              |
+
+### Tab Interface
+
+| Prop          | Type                                                                               | Description                       |
+| ------------- | ---------------------------------------------------------------------------------- | --------------------------------- |
+| `id`          | `string`                                                                           | Unique tab identifier             |
+| `label`       | `string`                                                                           | Tab display label                 |
+| `icon`        | `React.ReactNode`                                                                  | Optional tab icon                 |
+| `description` | `string`                                                                           | Optional tab description          |
+| `disabled`    | `boolean`                                                                          | Whether tab is disabled           |
+| `fields`      | `TabField[]`                                                                       | Array of form fields for this tab |
+| `validation`  | `{ required?: boolean; custom?: (values: Record<string, any>) => string \| null }` | Tab-level validation              |
+
+### TabField Interface
+
+| Prop           | Type                                                                                                                                                                                                            | Description                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `name`         | `string`                                                                                                                                                                                                        | Field name (used as form key)   |
+| `label`        | `string`                                                                                                                                                                                                        | Field display label             |
+| `type`         | `"text" \| "email" \| "password" \| "number" \| "textarea" \| "select" \| "checkbox" \| "radio" \| "date" \| "time" \| "boolean" \| "array" \| "autocomplete" \| "file" \| "image" \| "markdown" \| "richtext"` | Field input type                |
+| `required`     | `boolean`                                                                                                                                                                                                       | Whether field is required       |
+| `placeholder`  | `string`                                                                                                                                                                                                        | Field placeholder text          |
+| `options`      | `Array<{ value: string \| number; label: string; disabled?: boolean }>`                                                                                                                                         | Options for select/radio fields |
+| `validation`   | `{ min?: number; max?: number; minLength?: number; maxLength?: number; pattern?: string; message?: string }`                                                                                                    | Field validation rules          |
+| `defaultValue` | `any`                                                                                                                                                                                                           | Default field value             |
+| `disabled`     | `boolean`                                                                                                                                                                                                       | Whether field is disabled       |
+| `helperText`   | `string`                                                                                                                                                                                                        | Helper text below field         |
+| `className`    | `string`                                                                                                                                                                                                        | Custom class names for field    |
+| `size`         | `"sm" \| "md" \| "lg"`                                                                                                                                                                                          | Field size variant              |
+| `variant`      | `"outline" \| "filled"`                                                                                                                                                                                         | Field visual variant            |
+| `tabIndex`     | `number`                                                                                                                                                                                                        | Which tab this field belongs to |
+
+## Validation
+
+The TabbedForm component supports multiple levels of validation:
+
+### Field-Level Validation
+
+```tsx
+{
+  name: 'age',
+  label: 'Age',
+  type: 'number',
+  required: true,
+  validation: {
+    min: 18,
+    max: 120,
+    message: 'Age must be between 18 and 120'
+  }
+}
+```
+
+### Tab-Level Validation
+
+```tsx
+{
+  id: 'account',
+  label: 'Account',
+  fields: [...],
+  validation: {
+    custom: (values) => {
+      if (values.password !== values.confirmPassword) {
+        return 'Passwords do not match';
+      }
+      return null;
+    }
+  }
+}
+```
+
+### Validation Modes
+
+- **`validateOnChange`**: Validate fields as user types
+- **`validateOnBlur`**: Validate fields when user leaves them
+- **`validateOnSubmit`**: Validate all fields on form submission
+
+## Styling and Customization
+
+### Tab Positions
+
+```tsx
+// Top tabs (default)
+<TabbedForm tabPosition="top" />
+
+// Left sidebar tabs
+<TabbedForm tabPosition="left" />
+
+// Bottom tabs
+<TabbedForm tabPosition="bottom" />
+```
+
+### Tab Styles
+
+```tsx
+// Traditional tabs
+<TabbedForm tabStyle="tabs" />
+
+// Pill-style tabs
+<TabbedForm tabStyle="pills" />
+
+// Underline tabs
+<TabbedForm tabStyle="underline" />
+```
+
+### Custom Styling
+
+```tsx
+<TabbedForm
+  className='bg-white rounded-lg shadow-lg p-6'
+  tabClassName='bg-gray-50 rounded-lg p-2'
+  contentClassName='bg-gray-50 rounded-lg p-6'
+  actionsClassName='bg-white rounded-lg p-4'
+/>
+```
+
+## Accessibility Features
+
+The TabbedForm component follows accessibility best practices:
+
+- **Keyboard Navigation**: Full keyboard support for tab navigation
+- **ARIA Support**: Proper ARIA labels and descriptions
+- **Screen Reader Support**: Clear tab and field descriptions
+- **Focus Management**: Visible focus indicators and logical tab order
+- **Error States**: ARIA invalid attributes for validation errors
+- **Progress Indicators**: Screen reader accessible progress information
+
+## Best Practices
+
+### Tab Organization
+
+- **Logical Grouping**: Group related fields into meaningful tabs
+- **Balanced Distribution**: Avoid having too many fields in one tab
+- **Progressive Disclosure**: Use tabs to reveal complexity gradually
+- **Clear Labels**: Use descriptive tab labels that indicate content
+
+### Validation Strategy
+
+- **Real-time Feedback**: Use `validateOnChange` for immediate feedback
+- **Tab-level Validation**: Implement custom validation for cross-field rules
+- **Clear Error Messages**: Provide specific, actionable error messages
+- **Visual Indicators**: Use progress bars and completion status
+
+### User Experience
+
+- **Progress Tracking**: Show completion progress to encourage completion
+- **Tab Navigation**: Provide clear navigation between tabs
+- **Responsive Design**: Ensure tabs work well on all screen sizes
+- **Loading States**: Show appropriate loading indicators during submission
+
+## Integration Examples
+
+### With Form Libraries
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { TabbedForm } from '@react-superadmin/web';
+
+function FormLibraryIntegration() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const tabs = [
+    {
+      id: 'basic',
+      label: 'Basic Info',
+      fields: [
+        { name: 'name', label: 'Name', type: 'text', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+      ],
+    },
+  ];
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <TabbedForm
+        tabs={tabs}
+        onSubmit={onSubmit}
+        showTabValidation
+        validateOnChange
+      />
+    </form>
+  );
+}
+```
+
+### With State Management
+
+```tsx
+import { useState, useCallback } from 'react';
+import { TabbedForm } from '@react-superadmin/web';
+
+function StateManagementExample() {
+  const [formData, setFormData] = useState({});
+  const [activeTab, setActiveTab] = useState('personal');
+
+  const handleTabChange = useCallback((tabId, previousTabId) => {
+    setActiveTab(tabId);
+    console.log(`Switched from ${previousTabId} to ${tabId}`);
+  }, []);
+
+  const handleFieldChange = useCallback((fieldName, value, tabId) => {
+    setFormData(prev => ({ ...prev, [fieldName]: value }));
+    console.log(`Field ${fieldName} changed to ${value} in tab ${tabId}`);
+  }, []);
+
+  return (
+    <TabbedForm
+      tabs={tabs}
+      onSubmit={handleSubmit}
+      defaultActiveTab={activeTab}
+      onTabChange={handleTabChange}
+      onFieldChange={handleFieldChange}
+    />
+  );
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Tabs not showing**: Ensure `showTabs` is `true` and `tabs` array is not empty
+2. **Validation not working**: Check that validation rules are properly configured
+3. **Styling issues**: Verify custom class names are valid and CSS is loaded
+4. **Navigation problems**: Ensure tab IDs are unique and properly referenced
+
+### Performance Considerations
+
+- **Large forms**: Consider lazy loading tab content for very large forms
+- **Validation**: Use `validateOnSubmit` for better performance with many fields
+- **Re-renders**: Memoize tab configurations to prevent unnecessary re-renders
+
+## Related Components
+
+- **[SimpleForm](./simple-form.mdx)** - Basic form layout without tabs
+- **[Form](./form.mdx)** - Base form container component
+- **[Input](./input.mdx)** - Individual form input components
+- **[Validation](./validation.mdx)** - Form validation utilities

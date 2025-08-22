@@ -1,0 +1,603 @@
+---
+id: reference-field
+title: ReferenceField Component
+sidebar_label: ReferenceField
+---
+
+# ReferenceField Component
+
+A powerful and flexible field component that displays references to other resources with support for single and multiple references, loading states, error handling, and custom rendering.
+
+## Overview
+
+The `ReferenceField` component provides a robust way to display references to other resources in your admin interface. It supports:
+
+- Single and multiple reference display
+- Data provider integration for fetching reference data
+- Loading and error states with custom components
+- Custom rendering and link generation
+- Multiple display formats (separated, list, limited)
+- Accessibility features and ARIA support
+- Flexible styling and customization
+
+## Basic Usage
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function BasicReferenceExample() {
+  return (
+    <div className='space-y-4'>
+      {/* Single reference */}
+      <ReferenceField value='123' reference='users' source='name' />
+
+      {/* Multiple references */}
+      <ReferenceField value={['123', '456']} reference='users' source='name' />
+    </div>
+  );
+}
+```
+
+## With Data Provider Integration
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function DataProviderReferenceExample() {
+  const dataProvider = {
+    getOne: async (resource, id) => {
+      // Fetch single resource
+      const response = await fetch(`/api/${resource}/${id}`);
+      return response.json();
+    },
+    getMany: async (resource, ids) => {
+      // Fetch multiple resources
+      const response = await fetch(`/api/${resource}?ids=${ids.join(',')}`);
+      return response.json();
+    },
+  };
+
+  return (
+    <div className='space-y-4'>
+      <ReferenceField
+        value='123'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showLink
+      />
+
+      <ReferenceField
+        value={['123', '456', '789']}
+        reference='posts'
+        source='title'
+        dataProvider={dataProvider}
+        showAsList
+      />
+    </div>
+  );
+}
+```
+
+## Custom Rendering
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function CustomRenderingExample() {
+  const dataProvider = {
+    getOne: async (resource, id) => {
+      const response = await fetch(`/api/${resource}/${id}`);
+      return response.json();
+    },
+  };
+
+  const customUserRenderer = user => (
+    <div className='flex items-center space-x-2'>
+      <img src={user.avatar} alt={user.name} className='w-8 h-8 rounded-full' />
+      <div>
+        <div className='font-medium'>{user.name}</div>
+        <div className='text-sm text-gray-500'>{user.email}</div>
+      </div>
+    </div>
+  );
+
+  const customPostRenderer = posts => (
+    <div className='grid grid-cols-1 gap-2'>
+      {posts.map(post => (
+        <div key={post.id} className='p-3 bg-gray-50 rounded-md'>
+          <h4 className='font-medium'>{post.title}</h4>
+          <p className='text-sm text-gray-600'>{post.excerpt}</p>
+          <div className='text-xs text-gray-400 mt-1'>
+            {post.author} • {post.publishedAt}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className='space-y-6'>
+      <ReferenceField
+        value='123'
+        reference='users'
+        dataProvider={dataProvider}
+        render={customUserRenderer}
+      />
+
+      <ReferenceField
+        value={['123', '456']}
+        reference='posts'
+        dataProvider={dataProvider}
+        render={customPostRenderer}
+      />
+    </div>
+  );
+}
+```
+
+## Multiple Display Formats
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function DisplayFormatsExample() {
+  const dataProvider = {
+    getMany: async (resource, ids) => {
+      const response = await fetch(`/api/${resource}?ids=${ids.join(',')}`);
+      return response.json();
+    },
+  };
+
+  const userIds = ['1', '2', '3', '4', '5'];
+
+  return (
+    <div className='space-y-6'>
+      {/* Default format with separator */}
+      <ReferenceField
+        value={userIds}
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        separator=' • '
+      />
+
+      {/* List format */}
+      <ReferenceField
+        value={userIds}
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showAsList
+      />
+
+      {/* Limited items with "more" indicator */}
+      <ReferenceField
+        value={userIds}
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        maxItems={3}
+        separator=', '
+      />
+    </div>
+  );
+}
+```
+
+## Loading and Error States
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function LoadingErrorStatesExample() {
+  const dataProvider = {
+    getOne: async (resource, id) => {
+      // Simulate slow API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      const response = await fetch(`/api/${resource}/${id}`);
+      return response.json();
+    },
+  };
+
+  const CustomLoading = () => (
+    <div className='flex items-center space-x-2 text-blue-600'>
+      <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600'></div>
+      <span>Loading user...</span>
+    </div>
+  );
+
+  const CustomError = ({ error }) => (
+    <div className='flex items-center space-x-2 text-red-600'>
+      <span>⚠️</span>
+      <span>Failed to load: {error.message}</span>
+    </div>
+  );
+
+  return (
+    <div className='space-y-4'>
+      <ReferenceField
+        value='123'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        loadingComponent={CustomLoading}
+        errorComponent={CustomError}
+      />
+
+      {/* Hide loading state */}
+      <ReferenceField
+        value='456'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showLoading={false}
+      />
+
+      {/* Hide error state */}
+      <ReferenceField
+        value='789'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showError={false}
+      />
+    </div>
+  );
+}
+```
+
+## Link Generation
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function LinkGenerationExample() {
+  const dataProvider = {
+    getOne: async (resource, id) => {
+      const response = await fetch(`/api/${resource}/${id}`);
+      return response.json();
+    },
+  };
+
+  const customLinkRenderer = (id, data) => (
+    <a
+      href={`/admin/${data.resource}/${id}`}
+      className='text-blue-600 hover:text-blue-800 underline'
+      target='_blank'
+      rel='noopener noreferrer'
+    >
+      {data.name} ↗
+    </a>
+  );
+
+  return (
+    <div className='space-y-4'>
+      {/* Default link generation */}
+      <ReferenceField
+        value='123'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showLink
+      />
+
+      {/* Custom link renderer */}
+      <ReferenceField
+        value='456'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        showLink
+        linkRenderer={customLinkRenderer}
+      />
+    </div>
+  );
+}
+```
+
+## Advanced Configuration
+
+```tsx
+import React from 'react';
+import { ReferenceField } from '@react-superadmin/core';
+
+function AdvancedConfigurationExample() {
+  const dataProvider = {
+    getMany: async (resource, ids) => {
+      const response = await fetch(`/api/${resource}?ids=${ids.join(',')}`);
+      return response.json();
+    },
+  };
+
+  return (
+    <div className='space-y-6'>
+      {/* With custom styling */}
+      <ReferenceField
+        value={['1', '2', '3']}
+        reference='categories'
+        source='name'
+        dataProvider={dataProvider}
+        className='p-4 bg-gray-50 rounded-lg'
+        contentClassName='text-lg font-medium'
+        loadingClassName='text-blue-600'
+        errorClassName='text-red-600'
+      />
+
+      {/* With accessibility */}
+      <ReferenceField
+        value='123'
+        reference='users'
+        source='name'
+        dataProvider={dataProvider}
+        required={true}
+        emptyText='No user assigned'
+      />
+
+      {/* Complex configuration */}
+      <ReferenceField
+        value={['1', '2', '3', '4', '5', '6', '7', '8']}
+        reference='tags'
+        source='name'
+        dataProvider={dataProvider}
+        showAsList
+        maxItems={5}
+        separator=' | '
+        emptyText='No tags available'
+        showLink
+        className='border border-gray-200 rounded-md p-3'
+      />
+    </div>
+  );
+}
+```
+
+## API Reference
+
+### Props
+
+| Prop               | Type                                                             | Default                 | Description                                       |
+| ------------------ | ---------------------------------------------------------------- | ----------------------- | ------------------------------------------------- |
+| `children`         | `React.ReactNode`                                                | -                       | Custom content to render                          |
+| `value`            | `string \| number \| (string \| number)[] \| null`               | -                       | Reference ID(s) to display                        |
+| `reference`        | `string`                                                         | -                       | The resource type to reference                    |
+| `source`           | `string`                                                         | `"id"`                  | The field to display from the referenced resource |
+| `render`           | `(data: ReferenceData \| ReferenceData[]) => React.ReactNode`    | -                       | Custom renderer for the reference data            |
+| `showLoading`      | `boolean`                                                        | `true`                  | Whether to show loading state while fetching      |
+| `showError`        | `boolean`                                                        | `true`                  | Whether to show error state if fetch fails        |
+| `loadingComponent` | `React.ComponentType`                                            | -                       | Custom loading component                          |
+| `errorComponent`   | `React.ComponentType`                                            | -                       | Custom error component                            |
+| `className`        | `string`                                                         | -                       | CSS class names for the container                 |
+| `contentClassName` | `string`                                                         | -                       | CSS class names for the content                   |
+| `required`         | `boolean`                                                        | `false`                 | Whether the field is required (for accessibility) |
+| `loadingClassName` | `string`                                                         | -                       | Custom styling for loading state                  |
+| `errorClassName`   | `string`                                                         | -                       | Custom styling for error state                    |
+| `showAsList`       | `boolean`                                                        | `false`                 | Whether to show multiple references as a list     |
+| `separator`        | `string`                                                         | `", "`                  | Separator for multiple references                 |
+| `maxItems`         | `number`                                                         | -                       | Maximum number of references to display           |
+| `emptyText`        | `string`                                                         | `"No references found"` | Text to show when no references are found         |
+| `showLink`         | `boolean`                                                        | `false`                 | Whether to show a link to the referenced resource |
+| `linkRenderer`     | `(id: string \| number, data: ReferenceData) => React.ReactNode` | -                       | Custom link renderer                              |
+| `dataProvider`     | `DataProvider`                                                   | -                       | Data provider for fetching references             |
+
+### DataProvider Interface
+
+```tsx
+interface DataProvider {
+  getOne: (resource: string, id: string | number) => Promise<ReferenceData>;
+  getMany?: (
+    resource: string,
+    ids: (string | number)[]
+  ) => Promise<ReferenceData[]>;
+}
+```
+
+### ReferenceData Interface
+
+```tsx
+interface ReferenceData {
+  id: string | number;
+  [key: string]: any;
+}
+```
+
+## Features
+
+### Single and Multiple References
+
+The component handles both single and multiple references seamlessly:
+
+- **Single Reference**: Pass a single ID value
+- **Multiple References**: Pass an array of IDs
+- **Automatic Detection**: Automatically detects the reference type
+- **Mixed Values**: Handles arrays with mixed valid/invalid IDs
+
+### Data Provider Integration
+
+Flexible data fetching with support for:
+
+- **getOne**: Fetch single resource by ID
+- **getMany**: Fetch multiple resources by IDs (optional)
+- **Fallback**: Automatically falls back to multiple single requests if getMany not available
+- **Error Handling**: Graceful error handling with custom error components
+
+### Display Formats
+
+Multiple ways to display references:
+
+- **Default**: Comma-separated values
+- **Custom Separator**: Use any separator string
+- **List Format**: Display as HTML list
+- **Limited Display**: Show only N items with "more" indicator
+
+### Custom Rendering
+
+Extensive customization options:
+
+- **Custom Renderer**: Complete control over how data is displayed
+- **Custom Loading**: Custom loading component
+- **Custom Error**: Custom error component
+- **Custom Links**: Custom link generation and styling
+
+### Loading and Error States
+
+Built-in state management:
+
+- **Loading States**: Shows loading indicator while fetching
+- **Error Handling**: Displays errors with custom components
+- **Configurable**: Show/hide loading and error states
+- **Custom Components**: Use your own loading/error components
+
+## Accessibility Features
+
+The component follows accessibility best practices:
+
+- **ARIA Support**: Proper ARIA attributes and states
+- **Required Fields**: aria-required attribute support
+- **Screen Readers**: Compatible with screen readers
+- **Keyboard Navigation**: Proper focus management
+- **Semantic HTML**: Uses appropriate HTML elements
+
+## Performance Considerations
+
+- **Memoization**: Uses React.useMemo for derived values
+- **Efficient Fetching**: Supports batch fetching with getMany
+- **Conditional Rendering**: Only fetches when data provider is available
+- **Type Safety**: Full TypeScript support with proper typing
+
+## Best Practices
+
+1. **Always provide a dataProvider** for dynamic data fetching
+2. **Use appropriate source fields** for meaningful display values
+3. **Handle loading states** with custom components for better UX
+4. **Implement error boundaries** for robust error handling
+5. **Use custom renderers** for complex data display requirements
+6. **Consider performance** with large reference lists
+7. **Provide meaningful empty states** for better user experience
+8. **Use accessibility features** for inclusive design
+
+## Integration Examples
+
+### With React Hook Form
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { ReferenceField } from '@react-superadmin/core';
+
+function FormWithReferenceExample() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name='assignedUsers'
+        control={control}
+        render={({ field }) => (
+          <ReferenceField
+            value={field.value}
+            reference='users'
+            source='name'
+            dataProvider={dataProvider}
+            showLink
+          />
+        )}
+      />
+    </form>
+  );
+}
+```
+
+### With Data Tables
+
+```tsx
+import { ReferenceField } from '@react-superadmin/core';
+
+function DataTableWithReferencesExample() {
+  const columns = [
+    { key: 'title', label: 'Title' },
+    {
+      key: 'author',
+      label: 'Author',
+      render: value => (
+        <ReferenceField
+          value={value}
+          reference='users'
+          source='name'
+          dataProvider={dataProvider}
+          showLink
+        />
+      ),
+    },
+    {
+      key: 'categories',
+      label: 'Categories',
+      render: value => (
+        <ReferenceField
+          value={value}
+          reference='categories'
+          source='name'
+          dataProvider={dataProvider}
+          showAsList
+          maxItems={3}
+        />
+      ),
+    },
+  ];
+
+  return <DataTable columns={columns} data={posts} />;
+}
+```
+
+### With Search and Filtering
+
+```tsx
+import { ReferenceField } from '@react-superadmin/core';
+
+function SearchWithReferencesExample() {
+  const [searchResults, setSearchResults] = useState([]);
+
+  return (
+    <div className='space-y-4'>
+      {searchResults.map(result => (
+        <div key={result.id} className='p-4 border rounded-lg'>
+          <h3>{result.title}</h3>
+          <div className='text-sm text-gray-600'>
+            By:{' '}
+            <ReferenceField
+              value={result.authorId}
+              reference='users'
+              source='name'
+              dataProvider={dataProvider}
+              showLink
+            />
+          </div>
+          <div className='text-sm text-gray-500'>
+            Tags:{' '}
+            <ReferenceField
+              value={result.tagIds}
+              reference='tags'
+              source='name'
+              dataProvider={dataProvider}
+              separator=', '
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [TextField](./text-field) - Basic text display component
+- [FormField](./form) - Form field wrapper with validation
+- [DataTable](./data-table) - Table component for displaying data
+- [ResourceForm](./resource-form) - Form component for resource management
+- [SimpleForm](./simple-form) - Flexible form building component

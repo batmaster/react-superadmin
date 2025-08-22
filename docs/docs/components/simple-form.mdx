@@ -1,0 +1,766 @@
+---
+title: SimpleForm
+description: A flexible and customizable form component for building simple to complex forms with validation and multiple field types.
+---
+
+import { SimpleForm } from '@react-superadmin/web';
+import { useState } from 'react';
+
+# SimpleForm
+
+A powerful and flexible form component that provides a simple way to create forms with various field types, validation, and customizable layouts.
+
+## Overview
+
+The `SimpleForm` component is designed to handle common form scenarios with minimal configuration. It supports multiple field types, built-in validation, flexible layouts, and customizable styling. Perfect for user registration, settings forms, data entry, and any other form-based interfaces.
+
+## Features
+
+- **Multiple Field Types**: Text, email, password, number, textarea, select, checkbox, radio, date, boolean, array, and autocomplete
+- **Built-in Validation**: Required fields, min/max values, pattern matching, email validation, and custom validation messages
+- **Flexible Layouts**: Vertical, horizontal, and grid layouts with customizable columns
+- **Real-time Validation**: Validate on change, blur, or submit
+- **Responsive Design**: Mobile-friendly with responsive grid layouts
+- **Accessibility**: Proper labels, error messages, and keyboard navigation
+- **Customizable**: Extensive props for styling, behavior, and appearance
+- **TypeScript Support**: Full type safety with comprehensive interfaces
+
+## Basic Usage
+
+```tsx
+import { SimpleForm } from '@react-superadmin/web';
+
+const MyForm = () => {
+  const fields = [
+    {
+      name: 'name',
+      label: 'Full Name',
+      type: 'text',
+      required: true,
+      placeholder: 'Enter your full name',
+    },
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email',
+      required: true,
+      placeholder: 'Enter your email',
+    },
+    {
+      name: 'age',
+      label: 'Age',
+      type: 'number',
+      validation: {
+        min: 18,
+        max: 100,
+      },
+    },
+  ];
+
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+    // Handle form submission
+  };
+
+  return (
+    <SimpleForm
+      fields={fields}
+      onSubmit={handleSubmit}
+      title='User Registration'
+    />
+  );
+};
+```
+
+## Live Example
+
+```tsx live
+function SimpleFormExample() {
+  const [submittedValues, setSubmittedValues] = useState(null);
+
+  const fields = [
+    {
+      name: 'firstName',
+      label: 'First Name',
+      type: 'text',
+      required: true,
+      placeholder: 'Enter first name',
+      validation: {
+        minLength: 2,
+        maxLength: 50,
+      },
+    },
+    {
+      name: 'lastName',
+      label: 'Last Name',
+      type: 'text',
+      required: true,
+      placeholder: 'Enter last name',
+      validation: {
+        minLength: 2,
+        maxLength: 50,
+      },
+    },
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email',
+      required: true,
+      placeholder: 'Enter email address',
+    },
+    {
+      name: 'age',
+      label: 'Age',
+      type: 'number',
+      validation: {
+        min: 18,
+        max: 100,
+      },
+      helperText: 'Must be between 18 and 100 years old',
+    },
+    {
+      name: 'role',
+      label: 'Role',
+      type: 'select',
+      required: true,
+      options: [
+        { value: 'admin', label: 'Administrator' },
+        { value: 'user', label: 'Regular User' },
+        { value: 'moderator', label: 'Moderator' },
+      ],
+    },
+    {
+      name: 'newsletter',
+      label: 'Subscribe to Newsletter',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+  ];
+
+  const handleSubmit = values => {
+    setSubmittedValues(values);
+  };
+
+  return (
+    <div className='space-y-6'>
+      <SimpleForm
+        fields={fields}
+        onSubmit={handleSubmit}
+        title='User Registration Form'
+        submitText='Create User'
+        layout='grid'
+        columns={2}
+      />
+
+      {submittedValues && (
+        <div className='mt-6 p-4 bg-green-50 border border-green-200 rounded-md'>
+          <h3 className='text-lg font-medium text-green-800 mb-2'>
+            Form Submitted Successfully!
+          </h3>
+          <pre className='text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto'>
+            {JSON.stringify(submittedValues, null, 2)}
+          </pre>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Advanced Usage
+
+### Custom Validation
+
+```tsx
+const fields = [
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    required: true,
+    validation: {
+      pattern: '^[a-zA-Z0-9_]{3,20}$',
+      message:
+        'Username must be 3-20 characters and contain only letters, numbers, and underscores',
+    },
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    required: true,
+    validation: {
+      minLength: 8,
+      pattern:
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]',
+      message:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+    },
+  },
+];
+```
+
+### Array Fields
+
+```tsx
+const fields = [
+  {
+    name: 'tags',
+    label: 'Tags',
+    type: 'array',
+    placeholder: 'Add tags',
+    helperText: 'Add multiple tags to categorize your content',
+  },
+];
+```
+
+### Autocomplete Fields
+
+```tsx
+const fields = [
+  {
+    name: 'country',
+    label: 'Country',
+    type: 'autocomplete',
+    placeholder: 'Search for a country',
+    options: [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada' },
+      { value: 'uk', label: 'United Kingdom' },
+      { value: 'de', label: 'Germany' },
+      { value: 'fr', label: 'France' },
+    ],
+  },
+];
+```
+
+### Different Layouts
+
+```tsx
+// Horizontal layout
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  layout="horizontal"
+/>
+
+// Grid layout with 3 columns
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  layout="grid"
+  columns={3}
+/>
+
+// Vertical layout (default)
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  layout="vertical"
+/>
+```
+
+## API Reference
+
+### SimpleFormProps
+
+| Prop               | Type                                                     | Default      | Description                                            |
+| ------------------ | -------------------------------------------------------- | ------------ | ------------------------------------------------------ |
+| `fields`           | `FormField[]`                                            | -            | Array of form field configurations                     |
+| `onSubmit`         | `(values: Record<string, any>) => void \| Promise<void>` | -            | Function called when form is submitted                 |
+| `onCancel`         | `() => void`                                             | -            | Optional function called when cancel button is clicked |
+| `initialValues`    | `Record<string, any>`                                    | `{}`         | Initial form values                                    |
+| `title`            | `string`                                                 | -            | Optional form title displayed above the form           |
+| `submitText`       | `string`                                                 | `"Save"`     | Text for the submit button                             |
+| `cancelText`       | `string`                                                 | `"Cancel"`   | Text for the cancel button                             |
+| `loading`          | `boolean`                                                | `false`      | Whether the form is in a loading state                 |
+| `className`        | `string`                                                 | `""`         | Additional CSS classes for the form                    |
+| `layout`           | `"vertical" \| "horizontal" \| "grid"`                   | `"vertical"` | Form layout style                                      |
+| `columns`          | `number`                                                 | `1`          | Number of columns for grid layout                      |
+| `showActions`      | `boolean`                                                | `true`       | Whether to show action buttons                         |
+| `resetOnSubmit`    | `boolean`                                                | `false`      | Whether to reset form after successful submission      |
+| `validateOnChange` | `boolean`                                                | `false`      | Whether to validate fields on change                   |
+| `validateOnBlur`   | `boolean`                                                | `false`      | Whether to validate fields on blur                     |
+
+### FormField
+
+| Prop           | Type                                                                  | Default     | Description                                        |
+| -------------- | --------------------------------------------------------------------- | ----------- | -------------------------------------------------- |
+| `name`         | `string`                                                              | -           | Unique identifier for the field                    |
+| `label`        | `string`                                                              | -           | Display label for the field                        |
+| `type`         | `FieldType`                                                           | -           | Type of form field                                 |
+| `required`     | `boolean`                                                             | `false`     | Whether the field is required                      |
+| `placeholder`  | `string`                                                              | -           | Placeholder text for the field                     |
+| `options`      | `Array<{value: string \| number, label: string, disabled?: boolean}>` | -           | Options for select, radio, and autocomplete fields |
+| `validation`   | `ValidationRules`                                                     | -           | Validation rules for the field                     |
+| `defaultValue` | `any`                                                                 | -           | Default value for the field                        |
+| `disabled`     | `boolean`                                                             | `false`     | Whether the field is disabled                      |
+| `helperText`   | `string`                                                              | -           | Helper text displayed below the field              |
+| `className`    | `string`                                                              | -           | Additional CSS classes for the field               |
+| `size`         | `"sm" \| "md" \| "lg"`                                                | `"md"`      | Size of the field                                  |
+| `variant`      | `"outline" \| "filled"`                                               | `"outline"` | Visual variant of the field                        |
+
+### FieldType
+
+```tsx
+type FieldType =
+  | 'text'
+  | 'email'
+  | 'password'
+  | 'number'
+  | 'textarea'
+  | 'select'
+  | 'checkbox'
+  | 'radio'
+  | 'date'
+  | 'boolean'
+  | 'array'
+  | 'autocomplete';
+```
+
+### ValidationRules
+
+```tsx
+interface ValidationRules {
+  min?: number; // Minimum value for numbers
+  max?: number; // Maximum value for numbers
+  minLength?: number; // Minimum length for text fields
+  maxLength?: number; // Maximum length for text fields
+  pattern?: string; // Regular expression pattern
+  message?: string; // Custom validation message
+}
+```
+
+## Field Types
+
+### Text Fields
+
+Text fields include `text`, `email`, and `password` types. They support all validation rules and can be customized with placeholders and helper text.
+
+```tsx
+{
+  name: 'email',
+  label: 'Email Address',
+  type: 'email',
+  required: true,
+  placeholder: 'Enter your email',
+  validation: {
+    pattern: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+    message: 'Please enter a valid email address'
+  }
+}
+```
+
+### Number Fields
+
+Number fields support min/max validation and can be used for ages, quantities, prices, etc.
+
+```tsx
+{
+  name: 'price',
+  label: 'Price',
+  type: 'number',
+  required: true,
+  validation: {
+    min: 0,
+    max: 10000
+  },
+  helperText: 'Price must be between $0 and $10,000'
+}
+```
+
+### Select Fields
+
+Select fields provide a dropdown of options for single selection.
+
+```tsx
+{
+  name: 'category',
+  label: 'Category',
+  type: 'select',
+  required: true,
+  options: [
+    { value: 'tech', label: 'Technology' },
+    { value: 'design', label: 'Design' },
+    { value: 'business', label: 'Business' }
+  ]
+}
+```
+
+### Checkbox Fields
+
+Checkbox fields are boolean inputs that can be checked/unchecked.
+
+```tsx
+{
+  name: 'terms',
+  label: 'I agree to the terms and conditions',
+  type: 'checkbox',
+  required: true,
+  validation: {
+    message: 'You must agree to the terms and conditions'
+  }
+}
+```
+
+### Radio Fields
+
+Radio fields allow single selection from a group of options.
+
+```tsx
+{
+  name: 'gender',
+  label: 'Gender',
+  type: 'radio',
+  options: [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' }
+  ]
+}
+```
+
+### Date Fields
+
+Date fields provide date picker functionality.
+
+```tsx
+{
+  name: 'birthDate',
+  label: 'Date of Birth',
+  type: 'date',
+  required: true,
+  validation: {
+    max: new Date().toISOString().split('T')[0], // Cannot be in the future
+    message: 'Date of birth cannot be in the future'
+  }
+}
+```
+
+### Boolean Fields
+
+Boolean fields provide Yes/No selection.
+
+```tsx
+{
+  name: 'active',
+  label: 'Active Status',
+  type: 'boolean',
+  defaultValue: true,
+  helperText: 'Whether this user account is active'
+}
+```
+
+### Array Fields
+
+Array fields allow dynamic addition/removal of items.
+
+```tsx
+{
+  name: 'skills',
+  label: 'Skills',
+  type: 'array',
+  placeholder: 'Add a skill',
+  helperText: 'Add multiple skills separated by items'
+}
+```
+
+### Autocomplete Fields
+
+Autocomplete fields provide searchable dropdown functionality.
+
+```tsx
+{
+  name: 'tags',
+  label: 'Tags',
+  type: 'autocomplete',
+  placeholder: 'Search and select tags',
+  options: [
+    { value: 'react', label: 'React' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'tailwind', label: 'Tailwind CSS' }
+  ]
+}
+```
+
+## Validation
+
+The SimpleForm component provides comprehensive validation capabilities:
+
+### Built-in Validation
+
+- **Required Fields**: Automatically validates required fields
+- **Email Validation**: Ensures valid email format
+- **Number Ranges**: Min/max value validation for numbers
+- **Text Length**: Min/max length validation for text fields
+- **Pattern Matching**: Regular expression pattern validation
+
+### Custom Validation Messages
+
+```tsx
+{
+  name: 'username',
+  label: 'Username',
+  type: 'text',
+  required: true,
+  validation: {
+    pattern: '^[a-zA-Z0-9_]{3,20}$',
+    message: 'Username must be 3-20 characters and contain only letters, numbers, and underscores'
+  }
+}
+```
+
+### Validation Timing
+
+Control when validation occurs:
+
+```tsx
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  validateOnChange={true} // Validate as user types
+  validateOnBlur={true} // Validate when field loses focus
+/>
+```
+
+## Layout Options
+
+### Vertical Layout (Default)
+
+Fields are stacked vertically with labels above each field.
+
+```tsx
+<SimpleForm fields={fields} onSubmit={handleSubmit} layout='vertical' />
+```
+
+### Horizontal Layout
+
+Fields are arranged horizontally with labels to the left.
+
+```tsx
+<SimpleForm fields={fields} onSubmit={handleSubmit} layout='horizontal' />
+```
+
+### Grid Layout
+
+Fields are arranged in a responsive grid with customizable columns.
+
+```tsx
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  layout='grid'
+  columns={3} // 3 columns on medium+ screens
+/>
+```
+
+## Styling and Customization
+
+### Custom CSS Classes
+
+```tsx
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  className='max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg'
+/>
+```
+
+### Field-level Styling
+
+```tsx
+const fields = [
+  {
+    name: 'special',
+    label: 'Special Field',
+    type: 'text',
+    className: 'border-2 border-blue-300 focus:border-blue-500',
+  },
+];
+```
+
+### Responsive Design
+
+The form automatically adapts to different screen sizes:
+
+- **Mobile**: Single column layout
+- **Tablet**: Optimized spacing and sizing
+- **Desktop**: Full grid layouts and horizontal arrangements
+
+## Accessibility Features
+
+- **Proper Labels**: Each field has an associated label
+- **Error Messages**: Clear error messages for validation failures
+- **Keyboard Navigation**: Full keyboard support for all field types
+- **Screen Reader Support**: Proper ARIA attributes and semantic HTML
+- **Focus Management**: Clear focus indicators and logical tab order
+
+## Best Practices
+
+### Field Organization
+
+1. **Logical Grouping**: Group related fields together
+2. **Required Fields**: Mark required fields clearly with asterisks
+3. **Progressive Disclosure**: Show complex fields only when needed
+4. **Consistent Naming**: Use clear, descriptive field names
+
+### Validation Strategy
+
+1. **Real-time Feedback**: Use `validateOnChange` for immediate feedback
+2. **Clear Messages**: Provide helpful validation error messages
+3. **Progressive Validation**: Validate on blur for better UX
+4. **Server Validation**: Always validate on the server as well
+
+### Performance Considerations
+
+1. **Field Count**: Keep forms under 20 fields for optimal performance
+2. **Validation Timing**: Use validation timing that matches user expectations
+3. **Debouncing**: Consider debouncing validation for text inputs
+4. **Lazy Loading**: Load complex field types only when needed
+
+## Integration Examples
+
+### With Form Libraries
+
+```tsx
+import { useFormik } from 'formik';
+
+const MyForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+    },
+    onSubmit: values => {
+      console.log(values);
+    },
+  });
+
+  const fields = [
+    {
+      name: 'name',
+      label: 'Name',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      required: true,
+    },
+  ];
+
+  return (
+    <SimpleForm
+      fields={fields}
+      onSubmit={formik.handleSubmit}
+      initialValues={formik.values}
+    />
+  );
+};
+```
+
+### With State Management
+
+```tsx
+import { useReducer } from 'react';
+
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_FIELD':
+      return { ...state, [action.field]: action.value };
+    case 'RESET':
+      return action.initialValues;
+    default:
+      return state;
+  }
+};
+
+const MyForm = () => {
+  const [state, dispatch] = useReducer(formReducer, initialValues);
+
+  const handleSubmit = values => {
+    // Handle submission
+    console.log(values);
+  };
+
+  return (
+    <SimpleForm fields={fields} onSubmit={handleSubmit} initialValues={state} />
+  );
+};
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Validation Not Working**: Ensure `validateOnChange` or `validateOnBlur` is enabled
+2. **Layout Issues**: Check that `columns` prop is appropriate for your field count
+3. **Field Not Rendering**: Verify the field type is supported and properly configured
+4. **Styling Conflicts**: Check for CSS conflicts with your existing styles
+
+### Debug Mode
+
+Enable console logging to debug form behavior:
+
+```tsx
+<SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  debug={true} // Log form state changes
+/>
+```
+
+## Related Components
+
+- **[TabbedForm](./tabbed-form.mdx)**: Multi-tab form layout
+- **[FormField](./form-field.mdx)**: Individual form field wrapper
+- **[Input](./input.mdx)**: Basic input component
+- **[SelectInput](./select-input.mdx)**: Select dropdown component
+- **[CheckboxInput](./checkbox-input.mdx)**: Checkbox input component
+- **[DateInput](./date-input.mdx)**: Date input component
+
+## Migration Guide
+
+### From Basic HTML Forms
+
+```tsx
+// Before: Basic HTML form
+<form>
+  <input type="text" name="name" required />
+  <input type="email" name="email" required />
+  <button type="submit">Submit</button>
+</form>
+
+// After: SimpleForm component
+<SimpleForm
+  fields={[
+    { name: 'name', label: 'Name', type: 'text', required: true },
+    { name: 'email', label: 'Email', type: 'email', required: true }
+  ]}
+  onSubmit={handleSubmit}
+/>
+```
+
+### From Other Form Libraries
+
+The SimpleForm component is designed to be a drop-in replacement for many form libraries, providing a simpler API while maintaining flexibility.
+
+## Performance Tips
+
+1. **Memoize Fields**: Use `useMemo` for field definitions if they're computed
+2. **Lazy Validation**: Only validate fields that have been touched
+3. **Debounced Input**: Use debouncing for text input validation
+4. **Field Virtualization**: For very long forms, consider virtualizing fields
+
+## Browser Support
+
+- **Modern Browsers**: Full support for all features
+- **IE11+**: Basic functionality with polyfills
+- **Mobile Browsers**: Optimized for touch interfaces
+- **Screen Readers**: Full accessibility support
+
+## Contributing
+
+The SimpleForm component is part of the React SuperAdmin framework. Contributions are welcome! Please see our contributing guidelines for more information.

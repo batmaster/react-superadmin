@@ -1,245 +1,326 @@
 ---
-id: tooltip
-title: Tooltip Component
-sidebar_label: Tooltip
-description: Hover tooltips with customizable positioning and content
-keywords: [tooltip, hover, help, information, positioning]
+title: Tooltip
+keywords:
+  ['tooltip', 'popover', 'help text', 'information', 'hover', 'click', 'focus']
 ---
 
-# Tooltip Component
+# Tooltip
 
-The Tooltip component provides contextual information when users hover over or focus on elements. It supports multiple positioning options and can contain rich content including text, links, and formatted information.
+A flexible and accessible tooltip component that provides contextual information when hovering over, clicking on, or focusing elements.
 
-## Import
+## Overview
 
-```tsx
-// Tooltip component is available in the live scope
-```
+The Tooltip component displays additional information or context for UI elements. It supports multiple trigger modes, positioning options, and can be fully customized to match your application's design system.
+
+## Features
+
+- **Multiple Trigger Modes**: Hover, click, focus, or manual control
+- **Flexible Positioning**: 12 different position options with automatic viewport detection
+- **Accessibility**: Full ARIA support and keyboard navigation
+- **Customizable**: Styling, animations, delays, and offsets
+- **Responsive**: Automatically adjusts position on scroll and resize
+- **Performance**: Efficient event handling and cleanup
 
 ## Basic Usage
 
 ```tsx
-<Tooltip content='This is a simple tooltip'>
-  <Button>Hover me</Button>
-</Tooltip>
-```
+import { Tooltip } from '@react-superadmin/web';
 
-## Props
-
-| Prop        | Type                                     | Default | Description                            |
-| ----------- | ---------------------------------------- | ------- | -------------------------------------- |
-| `content`   | `ReactNode`                              | -       | The tooltip content to display         |
-| `children`  | `ReactNode`                              | -       | The element that triggers the tooltip  |
-| `position`  | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Preferred position of the tooltip      |
-| `showDelay` | `number`                                 | `200`   | Delay before showing tooltip (ms)      |
-| `hideDelay` | `number`                                 | `0`     | Delay before hiding tooltip (ms)       |
-| `disabled`  | `boolean`                                | `false` | Whether the tooltip is disabled        |
-| `className` | `string`                                 | -       | Additional CSS classes for the tooltip |
-| `maxWidth`  | `number`                                 | `300`   | Maximum width of the tooltip content   |
-| `arrow`     | `boolean`                                | `true`  | Whether to show the positioning arrow  |
-
-## Positioning
-
-The tooltip automatically positions itself to stay within the viewport, but you can specify a preferred position:
-
-```tsx
-// Top positioning (default)
-<Tooltip content="Tooltip above" position="top">
-  <Button>Hover me</Button>
-</Tooltip>
-
-// Bottom positioning
-<Tooltip content="Tooltip below" position="bottom">
-  <Button>Hover me</Button>
-</Tooltip>
-
-// Left positioning
-<Tooltip content="Tooltip to the left" position="left">
-  <Button>Hover me</Button>
-</Tooltip>
-
-// Right positioning
-<Tooltip content="Tooltip to the right" position="right">
-  <Button>Hover me</Button>
-</Tooltip>
-```
-
-## Rich Content
-
-Tooltips can contain more than just text - they support rich content including formatted text, links, and even small forms:
-
-```tsx
-<Tooltip
-  content={
-    <div className='space-y-2'>
-      <h4 className='font-semibold'>User Information</h4>
-      <p>Email: user@example.com</p>
-      <p>Role: Administrator</p>
-      <a href='/profile' className='text-blue-500 hover:underline'>
-        View Profile
-      </a>
-    </div>
-  }
->
-  <Badge>Admin</Badge>
-</Tooltip>
-```
-
-## Custom Delays
-
-You can customize the show and hide delays for better user experience:
-
-```tsx
-// Quick show, slow hide
-<Tooltip
-  content="Quick to show, slow to hide"
-  showDelay={100}
-  hideDelay={500}
->
-  <Button>Hover me</Button>
-</Tooltip>
-
-// No delay
-<Tooltip
-  content="Instant tooltip"
-  showDelay={0}
-  hideDelay={0}
->
-  <Button>Hover me</Button>
-</Tooltip>
-```
-
-## Disabled State
-
-You can conditionally disable tooltips:
-
-```tsx
-function ConditionalTooltip({ user, showTooltip }) {
+function BasicExample() {
   return (
-    <Tooltip content={`User: ${user.name}`} disabled={!showTooltip}>
-      <span>{user.name}</span>
+    <Tooltip content='This is a helpful tooltip'>
+      <button className='px-4 py-2 bg-blue-500 text-white rounded'>
+        Hover me
+      </button>
     </Tooltip>
   );
 }
 ```
 
-## Custom Styling
+## Live Examples
 
-The tooltip can be customized with additional CSS classes:
+### With Different Positions
 
 ```tsx
-<Tooltip
-  content='Custom styled tooltip'
-  className='bg-gray-900 text-white border border-gray-700'
->
-  <Button>Custom Style</Button>
-</Tooltip>
+import { Tooltip } from '@react-superadmin/web';
+
+function PositionExample() {
+  return (
+    <div className='flex flex-wrap gap-4 p-8'>
+      <Tooltip content='Top tooltip' position='top'>
+        <button className='px-3 py-2 bg-gray-200 rounded'>Top</button>
+      </Tooltip>
+
+      <Tooltip content='Bottom tooltip' position='bottom'>
+        <button className='px-3 py-2 bg-gray-200 rounded'>Bottom</button>
+      </Tooltip>
+
+      <Tooltip content='Left tooltip' position='left'>
+        <button className='px-3 py-2 bg-gray-200 rounded'>Left</button>
+      </Tooltip>
+
+      <Tooltip content='Right tooltip' position='right'>
+        <button className='px-3 py-2 bg-gray-200 rounded'>Right</button>
+      </Tooltip>
+    </div>
+  );
+}
 ```
 
-## Accessibility
-
-- Automatically shows on focus for keyboard navigation
-- Uses appropriate ARIA attributes
-- Supports screen readers
-- Respects user preferences for reduced motion
-
-## Examples
-
-### Form Field Help
+### With Different Triggers
 
 ```tsx
-function FormWithTooltips() {
+import { Tooltip } from '@react-superadmin/web';
+
+function TriggerExample() {
   return (
-    <form className='space-y-4'>
-      <div>
-        <Label htmlFor='email'>Email Address</Label>
-        <Input id='email' type='email' placeholder='Enter your email' />
-        <Tooltip content="We'll never share your email with third parties">
-          <span className='ml-2 text-gray-500 cursor-help'>ℹ️</span>
+    <div className='flex flex-wrap gap-4 p-8'>
+      <Tooltip content='Hover to see this' trigger='hover'>
+        <button className='px-3 py-2 bg-blue-500 text-white rounded'>
+          Hover Trigger
+        </button>
+      </Tooltip>
+
+      <Tooltip content='Click to toggle' trigger='click'>
+        <button className='px-3 py-2 bg-green-500 text-white rounded'>
+          Click Trigger
+        </button>
+      </Tooltip>
+
+      <Tooltip content='Focus to see this' trigger='focus'>
+        <button className='px-3 py-2 bg-purple-500 text-white rounded'>
+          Focus Trigger
+        </button>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### With Custom Styling
+
+```tsx
+import { Tooltip } from '@react-superadmin/web';
+
+function StylingExample() {
+  return (
+    <div className='p-8'>
+      <Tooltip
+        content='Custom styled tooltip'
+        className='bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 shadow-xl'
+        showArrow={false}
+        maxWidth={200}
+      >
+        <button className='px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
+          Custom Styling
+        </button>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### With Manual Control
+
+```tsx
+import { Tooltip } from '@react-superadmin/web';
+import { useState } from 'react';
+
+function ManualControlExample() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className='p-8 space-y-4'>
+      <div className='flex gap-2'>
+        <button
+          onClick={() => setIsOpen(true)}
+          className='px-3 py-2 bg-green-500 text-white rounded'
+        >
+          Show Tooltip
+        </button>
+        <button
+          onClick={() => setIsOpen(false)}
+          className='px-3 py-2 bg-red-500 text-white rounded'
+        >
+          Hide Tooltip
+        </button>
+      </div>
+
+      <Tooltip
+        content='This tooltip is manually controlled'
+        trigger='manual'
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <button className='px-4 py-2 bg-blue-500 text-white rounded'>
+          Target Element
+        </button>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+### With Rich Content
+
+```tsx
+import { Tooltip } from '@react-superadmin/web';
+
+function RichContentExample() {
+  return (
+    <div className='p-8'>
+      <Tooltip
+        content={
+          <div className='space-y-2'>
+            <h4 className='font-semibold text-white'>User Information</h4>
+            <div className='text-sm'>
+              <p>Name: John Doe</p>
+              <p>Email: john@example.com</p>
+              <p>Role: Administrator</p>
+            </div>
+          </div>
+        }
+        maxWidth={250}
+        className='bg-gray-800 text-white p-3'
+      >
+        <button className='px-4 py-2 bg-gray-600 text-white rounded'>
+          User Details
+        </button>
+      </Tooltip>
+    </div>
+  );
+}
+```
+
+## API Reference
+
+| Prop           | Type                        | Default   | Description                                         |
+| -------------- | --------------------------- | --------- | --------------------------------------------------- |
+| `content`      | `React.ReactNode`           | -         | **Required.** The content to display in the tooltip |
+| `children`     | `React.ReactElement`        | -         | **Required.** The element that triggers the tooltip |
+| `position`     | `Position`                  | `"top"`   | Position of the tooltip relative to the trigger     |
+| `trigger`      | `Trigger`                   | `"hover"` | How the tooltip is triggered                        |
+| `isOpen`       | `boolean`                   | -         | Whether the tooltip is visible (for manual trigger) |
+| `onOpenChange` | `(isOpen: boolean) => void` | -         | Callback when tooltip visibility changes            |
+| `delay`        | `number`                    | `200`     | Delay before showing the tooltip (ms)               |
+| `showArrow`    | `boolean`                   | `true`    | Whether to show an arrow pointing to the trigger    |
+| `maxWidth`     | `number`                    | `300`     | Maximum width of the tooltip                        |
+| `className`    | `string`                    | -         | Custom CSS classes for the tooltip                  |
+| `disabled`     | `boolean`                   | `false`   | Whether the tooltip is disabled                     |
+| `zIndex`       | `number`                    | `1000`    | Z-index for the tooltip                             |
+| `animate`      | `boolean`                   | `true`    | Whether to animate the tooltip                      |
+| `offset`       | `number`                    | `8`       | Custom offset from the trigger                      |
+
+### Position Options
+
+```tsx
+type Position =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end'
+  | 'right-start'
+  | 'right-end';
+```
+
+### Trigger Options
+
+```tsx
+type Trigger = 'hover' | 'click' | 'focus' | 'manual';
+```
+
+## Advanced Usage
+
+### Integration with Form Libraries
+
+```tsx
+import { Tooltip } from '@react-superadmin/web';
+import { useForm, Controller } from 'react-hook-form';
+
+function FormIntegrationExample() {
+  const { control, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(console.log)} className='space-y-4'>
+      <div className='flex items-center gap-2'>
+        <label htmlFor='email' className='text-sm font-medium'>
+          Email Address
+        </label>
+        <Tooltip content="We'll never share your email with anyone else">
+          <span className='text-gray-400 cursor-help'>ℹ️</span>
         </Tooltip>
       </div>
 
-      <div>
-        <Label htmlFor='password'>Password</Label>
-        <Input
-          id='password'
-          type='password'
-          placeholder='Enter your password'
-        />
-        <Tooltip
-          content={
-            <div>
-              <p>Password must contain:</p>
-              <ul className='list-disc list-inside mt-1'>
-                <li>At least 8 characters</li>
-                <li>One uppercase letter</li>
-                <li>One number</li>
-                <li>One special character</li>
-              </ul>
-            </div>
-          }
-        >
-          <span className='ml-2 text-gray-500 cursor-help'>ℹ️</span>
-        </Tooltip>
-      </div>
+      <Controller
+        name='email'
+        control={control}
+        rules={{ required: true, email: true }}
+        render={({ field, fieldState }) => (
+          <div>
+            <input
+              {...field}
+              type='email'
+              className='w-full px-3 py-2 border rounded'
+              placeholder='Enter your email'
+            />
+            {fieldState.error && (
+              <Tooltip
+                content={fieldState.error.message}
+                position='bottom'
+                className='bg-red-500 text-white'
+              >
+                <span className='text-red-500 text-sm'>⚠️</span>
+              </Tooltip>
+            )}
+          </div>
+        )}
+      />
     </form>
   );
 }
 ```
 
-### Data Table Column Headers
+### Custom Positioning Logic
 
 ```tsx
-function DataTableWithTooltips() {
+import { Tooltip } from '@react-superadmin/web';
+import { useCallback, useState } from 'react';
+
+function CustomPositioningExample() {
+  const [position, setPosition] = useState<'top' | 'bottom'>('top');
+
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.pageYOffset;
+    const elementTop = 400; // Example threshold
+
+    if (scrollTop > elementTop) {
+      setPosition('top');
+    } else {
+      setPosition('bottom');
+    }
+  }, []);
+
+  useState(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  });
+
   return (
-    <table className='w-full'>
-      <thead>
-        <tr>
-          <th>
-            <Tooltip content='Unique identifier for this record'>ID</Tooltip>
-          </th>
-          <th>
-            <Tooltip content="User's full name as displayed">Name</Tooltip>
-          </th>
-          <th>
-            <Tooltip content="User's email address for login">Email</Tooltip>
-          </th>
-          <th>
-            <Tooltip content="User's role in the system">Role</Tooltip>
-          </th>
-        </tr>
-      </thead>
-      {/* Table body */}
-    </table>
-  );
-}
-```
-
-### Action Button Help
-
-```tsx
-function ActionButtonsWithTooltips() {
-  return (
-    <div className='flex space-x-2'>
-      <Tooltip content='Save your changes'>
-        <Button variant='primary'>
-          <SaveIcon className='w-4 h-4' />
-          Save
-        </Button>
-      </Tooltip>
-
-      <Tooltip content='Discard all unsaved changes'>
-        <Button variant='secondary'>
-          <XIcon className='w-4 h-4' />
-          Cancel
-        </Button>
-      </Tooltip>
-
-      <Tooltip content='Delete this record permanently'>
-        <Button variant='danger'>
-          <TrashIcon className='w-4 h-4' />
-          Delete
-        </Button>
+    <div className='p-8'>
+      <Tooltip
+        content='This tooltip changes position based on scroll'
+        position={position}
+        className='bg-blue-600 text-white'
+      >
+        <button className='px-4 py-2 bg-blue-500 text-white rounded'>
+          Dynamic Position
+        </button>
       </Tooltip>
     </div>
   );
@@ -248,16 +329,47 @@ function ActionButtonsWithTooltips() {
 
 ## Best Practices
 
-1. **Keep content concise** - Tooltips should provide quick, helpful information
-2. **Use appropriate positioning** - Consider the layout and available space
-3. **Provide valuable information** - Don't use tooltips for obvious information
-4. **Consider mobile users** - Tooltips work on touch devices but may be less discoverable
-5. **Use consistent delays** - Maintain consistent timing across your application
-6. **Test with screen readers** - Ensure tooltip content is accessible
+### Accessibility
+
+- Always provide meaningful content in tooltips
+- Use tooltips to supplement, not replace, accessible labels
+- Ensure tooltips don't interfere with keyboard navigation
+- Consider using `aria-describedby` for screen readers
+
+### Performance
+
+- Avoid complex calculations in tooltip content
+- Use `delay` to prevent tooltips from appearing too quickly
+- Consider disabling tooltips on mobile devices if not needed
+- Clean up event listeners properly
+
+### User Experience
+
+- Keep tooltip content concise and helpful
+- Use appropriate positioning to avoid covering important content
+- Consider the user's context when choosing trigger modes
+- Provide visual feedback for interactive tooltips
+
+## Performance Considerations
+
+The Tooltip component is optimized for performance with:
+
+- **Debounced positioning**: Position calculations are optimized and cached
+- **Efficient event handling**: Uses passive event listeners where possible
+- **Memory management**: Proper cleanup of timeouts and event listeners
+- **Viewport detection**: Smart positioning that avoids unnecessary calculations
+
+## Accessibility Features
+
+- **ARIA attributes**: Proper `role="tooltip"` and `aria-describedby`
+- **Keyboard support**: Focus management for focus-triggered tooltips
+- **Screen reader support**: Content is properly announced
+- **Focus indicators**: Visual feedback for keyboard navigation
 
 ## Related Components
 
-- [Button](/docs/components/button) - Common trigger element for tooltips
-- [Badge](/docs/components/badge) - Often used with tooltips for additional context
-- [Input](/docs/components/input) - Form fields that benefit from help tooltips
-- [Label](/docs/components/label) - Form labels that can include help tooltips
+- [Button](./button.mdx) - Common trigger element for tooltips
+- [Input](./input.mdx) - Form inputs that benefit from help text
+- [Label](./label.mdx) - Labels that can include tooltip help
+- [Modal](./modal.mdx) - For more complex information display
+- [Dropdown](./dropdown.mdx) - Alternative to click-triggered tooltips

@@ -436,5 +436,195 @@ describe("ArrayInput", () => {
       expect(screen.getByDisplayValue("")).toBeInTheDocument();
       expect(screen.getByDisplayValue("item2")).toBeInTheDocument();
     });
+
+    it("handles undefined values in array", () => {
+      render(
+        <ArrayInput
+          {...defaultProps}
+          value={[undefined, "item2"]}
+          onChange={jest.fn()}
+        />,
+      );
+
+      expect(screen.getByDisplayValue("")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("item2")).toBeInTheDocument();
+    });
+
+    it("handles mixed falsy values in array", () => {
+      render(
+        <ArrayInput
+          {...defaultProps}
+          value={[false, 0, "", null, undefined]}
+          onChange={jest.fn()}
+        />,
+      );
+
+      // All falsy values should render as empty strings in inputs
+      const emptyInputs = screen.getAllByDisplayValue("");
+      expect(emptyInputs).toHaveLength(5);
+
+      // Verify that we have 5 items total
+      const allInputs = screen.getAllByRole("textbox");
+      expect(allInputs).toHaveLength(5);
+
+      // Debug: log what we actually have
+      console.log("Empty inputs found:", emptyInputs.length);
+      console.log("All inputs found:", allInputs.length);
+    });
+  });
+
+  describe("Styling and Customization", () => {
+    it("applies custom className to container", () => {
+      render(<ArrayInput {...defaultProps} className="custom-container" />);
+
+      const container = screen
+        .getByText("Test Array")
+        .closest(".custom-container");
+      expect(container).toBeInTheDocument();
+    });
+
+    it("applies custom labelClassName", () => {
+      render(<ArrayInput {...defaultProps} labelClassName="custom-label" />);
+
+      const label = screen.getByText("Test Array").closest("label");
+      expect(label).toHaveClass("custom-label");
+    });
+
+    it("applies custom itemsClassName", () => {
+      render(<ArrayInput {...defaultProps} itemsClassName="custom-items" />);
+
+      // Look for the items container with the custom class
+      const itemsContainer = document.querySelector(".custom-items");
+      expect(itemsContainer).toBeInTheDocument();
+    });
+
+    it("applies custom itemClassName", () => {
+      render(<ArrayInput {...defaultProps} itemClassName="custom-item" />);
+
+      const items = screen.getAllByDisplayValue("item1");
+      items.forEach((item) => {
+        const itemContainer = item.closest(".custom-item");
+        expect(itemContainer).toBeInTheDocument();
+      });
+    });
+
+    it("applies custom addButtonClassName", () => {
+      render(
+        <ArrayInput {...defaultProps} addButtonClassName="custom-add-btn" />,
+      );
+
+      const addButton = screen.getByText("Add Item");
+      expect(addButton).toHaveClass("custom-add-btn");
+    });
+
+    it("applies custom removeButtonClassName", () => {
+      render(
+        <ArrayInput
+          {...defaultProps}
+          removeButtonClassName="custom-remove-btn"
+        />,
+      );
+
+      // The custom class should be applied to the remove button
+      // Look for the actual remove button with the custom class, not the test button
+      const removeButton = screen.getByLabelText("Remove item 1");
+      expect(removeButton).toHaveClass("custom-remove-btn");
+    });
+
+    it("applies custom errorClassName", () => {
+      const errors = ["Error 1", "Error 2"];
+      render(
+        <ArrayInput
+          {...defaultProps}
+          errors={errors}
+          errorClassName="custom-error"
+        />,
+      );
+
+      const errorContainer = screen
+        .getByText("Error 1")
+        .closest(".custom-error");
+      expect(errorContainer).toBeInTheDocument();
+    });
+
+    it("applies custom helperClassName", () => {
+      render(
+        <ArrayInput
+          {...defaultProps}
+          helperClassName="custom-helper"
+          helperText="Helper text"
+        />,
+      );
+
+      const helperContainer = screen.getByText("Helper text");
+      expect(helperContainer).toHaveClass("custom-helper");
+    });
+  });
+
+  describe("Complex Scenarios", () => {
+    it("handles rapid add/remove operations", async () => {
+      const onChange = jest.fn();
+      const user = userEvent.setup();
+
+      render(<ArrayInput {...defaultProps} onChange={onChange} />);
+
+      const addButton = screen.getByText("Add Item");
+      const removeButton = screen.getByTestId("remove-0");
+
+      // Rapidly add and remove items
+      await user.click(addButton);
+      await user.click(removeButton);
+      await user.click(addButton);
+
+      expect(onChange).toHaveBeenCalledTimes(3);
+    });
+
+    it("maintains item order during reordering operations", async () => {
+      const onChange = jest.fn();
+      const user = userEvent.setup();
+
+      render(<ArrayInput {...defaultProps} allowReorder onChange={onChange} />);
+
+      const moveUpButton = screen.getByLabelText("Move item 2 up");
+      const moveDownButton = screen.getByLabelText("Move item 1 down");
+
+      await user.click(moveUpButton);
+      await user.click(moveDownButton);
+
+      expect(onChange).toHaveBeenCalledTimes(2);
+    });
+
+    it("handles boundary conditions for min/max items", () => {
+      const onChange = jest.fn();
+
+      render(
+        <ArrayInput
+          {...defaultProps}
+          minItems={1}
+          maxItems={2}
+          onChange={onChange}
+        />,
+      );
+
+      // Should not be able to add more items (already at max)
+      // When at maxItems, the add button should not be rendered
+      expect(screen.queryByText("Add Item")).not.toBeInTheDocument();
+
+      // Should be able to remove items (above min)
+      const removeButton = screen.getByTestId("remove-0");
+      expect(removeButton).not.toBeDisabled();
+    });
+
+    it("handles zero minItems correctly", () => {
+      const onChange = jest.fn();
+
+      render(<ArrayInput {...defaultProps} minItems={0} onChange={onChange} />);
+
+      // Should be able to remove all items
+      const removeButtons = screen.getAllByTestId(/remove-/);
+      removeButtons.forEach((button) => {
+        expect(button).not.toBeDisabled();
+      });
+    });
   });
 });

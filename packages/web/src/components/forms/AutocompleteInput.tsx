@@ -75,15 +75,14 @@ export const AutocompleteInput = React.forwardRef<
 
     // Filter options based on search query
     const filteredOptions = useMemo(() => {
-      if (!searchQuery.trim()) return options;
+      const filtered = options.filter(
+        (option) =>
+          option.label.toLowerCase().includes(searchQuery.toLowerCase()),
+        // Removed !option.disabled filter to show disabled options
+      );
 
-      return options
-        .filter(
-          (option) =>
-            option.label.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            !option.disabled,
-        )
-        .slice(0, maxSuggestions);
+      // Apply maxSuggestions limit to all options
+      return filtered.slice(0, maxSuggestions);
     }, [options, searchQuery, maxSuggestions]);
 
     // Update input value when value prop changes
