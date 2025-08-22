@@ -195,6 +195,13 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
+    // Set all fields as touched when validating the entire form
+    const newTouched: Record<string, boolean> = {};
+    fields.forEach((field) => {
+      newTouched[field.name] = true;
+    });
+    setTouched(newTouched);
+
     fields.forEach((field) => {
       const error = validateField(field.name, values[field.name]);
       if (error) {
@@ -278,7 +285,17 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
       const commonProps = {
         value: fieldValue,
-        onChange: (value: any) => handleFieldChange(field.name, value),
+        onChange: (
+          e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+          >,
+        ) => {
+          const value =
+            e.target.type === "checkbox"
+              ? (e.target as HTMLInputElement).checked
+              : e.target.value;
+          handleFieldChange(field.name, value);
+        },
         onBlur: () => handleFieldBlur(field.name),
         disabled: field.disabled || loading,
         required: field.required,
@@ -560,6 +577,12 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
               {field.helperText && !errors[field.name] && (
                 <p className="mt-1 text-sm text-gray-500">{field.helperText}</p>
+              )}
+
+              {errors[field.name] && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors[field.name]}
+                </p>
               )}
             </div>
           </div>
