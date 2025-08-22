@@ -1,0 +1,160 @@
+---
+id: pagination
+title: Pagination Component
+sidebar_label: Pagination
+description: Pagination component with page navigation and size selection
+keywords: [pagination, page, navigation, size, selection]
+---
+
+# Pagination Component
+
+The Pagination component provides page navigation controls with configurable page sizes and accessible navigation.
+
+## Import
+
+```tsx
+// Pagination component is available in the live scope
+```
+
+## Basic Usage
+
+```tsx
+<Pagination
+  currentPage={1}
+  totalPages={10}
+  onPageChange={setCurrentPage}
+  pageSize={20}
+  onPageSizeChange={setPageSize}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `currentPage` | `number` | - | Current active page |
+| `totalPages` | `number` | - | Total number of pages |
+| `onPageChange` | `(page: number) => void` | - | Page change handler |
+| `pageSize` | `number` | - | Current page size |
+| `onPageSizeChange` | `(size: number) => void` | - | Page size change handler |
+| `pageSizeOptions` | `number[]` | `[10, 20, 50, 100]` | Available page sizes |
+| `showPageSizeSelector` | `boolean` | `true` | Whether to show page size selector |
+| `showPageInfo` | `boolean` | `true` | Whether to show page information |
+| `className` | `string` | - | Additional CSS classes |
+
+## Examples
+
+### Basic Pagination
+```tsx
+const [currentPage, setCurrentPage] = useState(1);
+const totalPages = Math.ceil(totalItems / pageSize);
+
+<Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+/>
+```
+
+### With Page Size Selection
+```tsx
+const [pageSize, setPageSize] = useState(20);
+const [currentPage, setCurrentPage] = useState(1);
+
+<Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+  pageSize={pageSize}
+  onPageSizeChange={setPageSize}
+  pageSizeOptions={[10, 25, 50, 100]}
+/>
+```
+
+### Custom Page Size Options
+```tsx
+<Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+  pageSize={pageSize}
+  onPageSizeChange={setPageSize}
+  pageSizeOptions={[5, 15, 30, 60]}
+  showPageInfo={true}
+  showPageSizeSelector={true}
+/>
+```
+
+## Integration with DataTable
+
+```tsx
+function DataTableWithPagination() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [data, setData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/users?page=${currentPage}&size=${pageSize}`);
+      const result = await response.json();
+      setData(result.data);
+      setTotalItems(result.total);
+    };
+
+    fetchData();
+  }, [currentPage, pageSize]);
+
+  return (
+    <div className="space-y-4">
+      <DataTable data={data} columns={columns} />
+      
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+      />
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+The Pagination component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Page state announcements
+
+```tsx
+<Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+  aria-label="Table pagination"
+  aria-describedby="pagination-help"
+/>
+```
+
+## Best Practices
+
+1. **Reset to first page** - When changing page size, reset to page 1
+2. **Handle edge cases** - Ensure pagination works with 0 or 1 total pages
+3. **Provide clear feedback** - Show current page and total pages clearly
+4. **Optimize page size options** - Choose sensible default page sizes
+5. **Test keyboard navigation** - Ensure accessibility compliance
+
+## Related Components
+
+- [DataTable](/docs/components/data-table) - For displaying paginated data
+- [SearchBar](/docs/components/search-bar) - For filtering data before pagination
+- [Button](/docs/components/button) - For navigation controls
+

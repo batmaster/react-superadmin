@@ -29,6 +29,7 @@ export const Modal: React.FC<ModalProps> = ({
   contentClassName,
   headerClassName,
   backdropClassName,
+  ...props
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +60,7 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const sizeClasses = {
-    xs: "max-w-sm",
+    xs: "max-w-xs",
     sm: "max-w-md",
     md: "max-w-lg",
     lg: "max-w-2xl",
@@ -70,29 +71,32 @@ export const Modal: React.FC<ModalProps> = ({
   const variantClasses = {
     default: "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
     centered: "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
-    "bottom-sheet": "bottom-0 left-0 right-0 transform translate-y-0",
-    "side-panel": "top-0 right-0 bottom-0 transform translate-x-0",
+    "bottom-sheet": "bottom-0 left-0 right-0 transform translate-y-0 rounded-t-lg sm:rounded-b-none",
+    "side-panel": "top-0 right-0 bottom-0 transform translate-x-0 rounded-l-lg h-full w-full sm:w-96",
   };
 
   const variantSizeClasses = {
     default: sizeClasses[size],
     centered: sizeClasses[size],
     "bottom-sheet": "w-full max-h-[90vh]",
-    "side-panel": "w-96 h-full",
+    "side-panel": "h-full w-full sm:w-96",
   };
 
   return (
     <div
       className={cn(
         "fixed inset-0 z-50 flex items-center justify-center",
-        variant === "bottom-sheet" && "items-end",
-        variant === "side-panel" && "items-stretch justify-end",
+        variant === "default" && "sm:my-8",
+        variant === "centered" && "sm:my-8",
+        variant === "bottom-sheet" && "items-end sm:items-end sm:my-0",
+        variant === "side-panel" && "items-stretch justify-end sm:items-start sm:justify-end sm:my-0",
         backdropClassName,
       )}
     >
       <div
         className={cn(
           "fixed inset-0 bg-black bg-opacity-50 transition-opacity",
+          backdropClassName,
         )}
         aria-hidden="true"
       />
@@ -100,7 +104,7 @@ export const Modal: React.FC<ModalProps> = ({
         <button
           className="fixed inset-0 z-10 cursor-pointer"
           onClick={onClose}
-          aria-label="Close modal"
+          aria-label="Close modal backdrop"
         />
       )}
       <div
@@ -115,11 +119,13 @@ export const Modal: React.FC<ModalProps> = ({
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
+        {...props}
       >
         {title && (
           <div
             className={cn(
-              "flex items-center justify-between border-b border-gray-200 px-6 py-4",
+              "flex items-center justify-between border-b border-gray-200",
+              variant === "side-panel" ? "px-4 py-3" : "px-6 py-4",
               headerClassName,
             )}
           >
@@ -149,7 +155,10 @@ export const Modal: React.FC<ModalProps> = ({
             )}
           </div>
         )}
-        <div className="px-6 py-4">{children}</div>
+        <div className={cn(
+          variant === "side-panel" ? "px-4 py-3" : "px-6 py-4",
+          contentClassName
+        )}>{children}</div>
       </div>
     </div>
   );

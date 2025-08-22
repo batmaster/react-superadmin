@@ -1,0 +1,204 @@
+---
+id: alert
+title: Alert Component
+sidebar_label: Alert
+description: Information, warning, and error alerts with multiple variants
+keywords: [alert, notification, warning, error, info, success]
+---
+
+# Alert Component
+
+The Alert component provides a way to display important information, warnings, errors, and success messages to users. It supports multiple variants and includes appropriate icons for each type.
+
+## Import
+
+```tsx
+// Alert component is available in the live scope
+```
+
+## Basic Usage
+
+```jsx live
+<Alert variant="info" title="Information">
+  This is an informational message for the user.
+</Alert>
+```
+
+```jsx live
+<Alert variant="success" title="Success">
+  Your action was completed successfully!
+</Alert>
+```
+
+```jsx live
+<Alert variant="warning" title="Warning">
+  Please review your input before proceeding.
+</Alert>
+```
+
+```jsx live
+<Alert variant="danger" title="Error">
+  An error occurred while processing your request.
+</Alert>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'info' \| 'success' \| 'warning' \| 'danger'` | `'info'` | The visual style of the alert |
+| `title` | `string` | - | Optional title displayed above the message |
+| `children` | `ReactNode` | - | The alert message content |
+| `className` | `string` | - | Additional CSS classes |
+| `dismissible` | `boolean` | `false` | Whether the alert can be dismissed |
+| `onDismiss` | `() => void` | - | Callback when alert is dismissed |
+
+## Variants
+
+### Info Alert
+```jsx live
+<Alert variant="info" title="System Update">
+  A new version of the application is available.
+</Alert>
+```
+
+### Success Alert
+```jsx live
+<Alert variant="success" title="Profile Updated">
+  Your profile information has been saved successfully.
+</Alert>
+```
+
+### Warning Alert
+```jsx live
+<Alert variant="warning" title="Data Validation">
+  Some fields may contain invalid data. Please review and correct.
+</Alert>
+```
+
+### Danger Alert
+```jsx live
+<Alert variant="danger" title="Connection Failed">
+  Unable to connect to the server. Please check your internet connection.
+</Alert>
+```
+
+## Dismissible Alerts
+
+You can make alerts dismissible by setting the `dismissible` prop and providing an `onDismiss` callback:
+
+```jsx live
+function DismissibleAlert() {
+  const [showAlert, setShowAlert] = React.useState(true);
+
+  if (!showAlert) return null;
+
+  return (
+    <Alert 
+      variant="info" 
+      title="Welcome!"
+      dismissible
+      onDismiss={() => setShowAlert(false)}
+    >
+      Welcome to React SuperAdmin! This alert can be dismissed.
+    </Alert>
+  );
+}
+
+<DismissibleAlert />
+```
+
+## Custom Styling
+
+The Alert component uses Tailwind CSS classes and can be customized with additional classes:
+
+```tsx
+<Alert 
+  variant="success" 
+  className="my-4 border-l-4 border-green-500"
+>
+  Custom styled success message
+</Alert>
+```
+
+## Accessibility
+
+- Uses appropriate ARIA roles and labels
+- Includes semantic color coding for different alert types
+- Provides clear visual hierarchy with titles and content
+- Supports keyboard navigation
+
+## Examples
+
+### Form Validation Alerts
+```tsx
+function FormWithAlerts() {
+  const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
+
+  return (
+    <div>
+      {errors.length > 0 && (
+        <Alert variant="danger" title="Validation Errors">
+          <ul>
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </Alert>
+      )}
+
+      {success && (
+        <Alert variant="success" title="Form Submitted">
+          Your form has been submitted successfully!
+        </Alert>
+      )}
+
+      {/* Form content */}
+    </div>
+  );
+}
+```
+
+### System Status Alerts
+```tsx
+function SystemStatus() {
+  const [status, setStatus] = useState('operational');
+
+  return (
+    <div>
+      {status === 'operational' && (
+        <Alert variant="success" title="System Status">
+          All systems are operating normally.
+        </Alert>
+      )}
+
+      {status === 'maintenance' && (
+        <Alert variant="warning" title="Scheduled Maintenance">
+          System maintenance is scheduled for tonight at 2:00 AM.
+        </Alert>
+      )}
+
+      {status === 'error' && (
+        <Alert variant="danger" title="System Error">
+          We are experiencing technical difficulties. Please try again later.
+        </Alert>
+      )}
+    </div>
+  );
+}
+```
+
+## Best Practices
+
+1. **Use appropriate variants** - Match the alert type to the message content
+2. **Keep messages concise** - Long alerts can be overwhelming
+3. **Use titles sparingly** - Only add titles when they provide additional context
+4. **Consider dismissibility** - Allow users to dismiss non-critical alerts
+5. **Group related alerts** - Use multiple alerts for different types of information
+
+## Related Components
+
+- [Button](/docs/components/button) - For action buttons within alerts
+- [Badge](/docs/components/badge) - For status indicators
+- [Modal](/docs/components/modal) - For more detailed information dialogs

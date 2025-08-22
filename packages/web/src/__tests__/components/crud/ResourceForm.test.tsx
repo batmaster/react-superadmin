@@ -174,7 +174,9 @@ describe("ResourceForm", () => {
     it("renders create form for users correctly", () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
-      expect(screen.getByText("Create Users")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Users" }),
+      ).toBeInTheDocument();
       expect(
         screen.getByText("Fill in the information below"),
       ).toBeInTheDocument();
@@ -189,7 +191,9 @@ describe("ResourceForm", () => {
     it("renders create form for posts correctly", () => {
       renderWithRouter(<ResourceForm />, "/posts/create");
 
-      expect(screen.getByText("Create Posts")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Posts" }),
+      ).toBeInTheDocument();
       expect(screen.getByText("Title")).toBeInTheDocument();
       expect(screen.getByText("Content")).toBeInTheDocument();
       expect(screen.getByText("Author")).toBeInTheDocument();
@@ -200,7 +204,9 @@ describe("ResourceForm", () => {
     it("renders create form for products correctly", () => {
       renderWithRouter(<ResourceForm />, "/products/create");
 
-      expect(screen.getByText("Create Products")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Products" }),
+      ).toBeInTheDocument();
       expect(screen.getByText("Name")).toBeInTheDocument();
       expect(screen.getByText("Description")).toBeInTheDocument();
       expect(screen.getByText("Price")).toBeInTheDocument();
@@ -220,21 +226,27 @@ describe("ResourceForm", () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
       // The icon should be present (mocked as User icon)
-      expect(screen.getByText("Create Users")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Users" }),
+      ).toBeInTheDocument();
     });
 
     it("displays correct resource icon for posts", () => {
       renderWithRouter(<ResourceForm />, "/posts/create");
 
       // The icon should be present (mocked as FileText icon)
-      expect(screen.getByText("Create Posts")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Posts" }),
+      ).toBeInTheDocument();
     });
 
     it("displays correct resource icon for products", () => {
       renderWithRouter(<ResourceForm />, "/products/create");
 
       // The icon should be present (mocked as Package icon)
-      expect(screen.getByText("Create Products")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Products" }),
+      ).toBeInTheDocument();
     });
   });
 
@@ -284,7 +296,9 @@ describe("ResourceForm", () => {
     it("shows create title and description", () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
-      expect(screen.getByText("Create Users")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Create Users" }),
+      ).toBeInTheDocument();
       expect(
         screen.getByText("Fill in the information below"),
       ).toBeInTheDocument();
@@ -293,7 +307,9 @@ describe("ResourceForm", () => {
     it("shows create button text", () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
-      expect(screen.getByText("Create Users")).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /Create Users/ }),
+      ).toBeInTheDocument();
     });
 
     it("initializes with empty form data", () => {
@@ -371,8 +387,9 @@ describe("ResourceForm", () => {
     it("shows required field errors when submitting empty form", async () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
-      const submitButton = screen.getByTestId("button-default");
-      fireEvent.click(submitButton);
+      // Get the form element and submit it directly
+      const formElement = screen.getByTestId("card").querySelector("form");
+      fireEvent.submit(formElement!);
 
       await waitFor(() => {
         expect(screen.getByTestId("error-name")).toBeInTheDocument();
@@ -385,8 +402,9 @@ describe("ResourceForm", () => {
     it("clears field errors when user starts typing", async () => {
       renderWithRouter(<ResourceForm />, "/users/create");
 
-      const submitButton = screen.getByTestId("button-default");
-      fireEvent.click(submitButton);
+      // Get the form element and submit it directly
+      const formElement = screen.getByTestId("card").querySelector("form");
+      fireEvent.submit(formElement!);
 
       await waitFor(() => {
         expect(screen.getByTestId("error-name")).toBeInTheDocument();
@@ -405,8 +423,9 @@ describe("ResourceForm", () => {
     it("validates all required fields for posts", async () => {
       renderWithRouter(<ResourceForm />, "/posts/create");
 
-      const submitButton = screen.getByTestId("button-default");
-      fireEvent.click(submitButton);
+      // Get the form element and submit it directly
+      const formElement = screen.getByTestId("card").querySelector("form");
+      fireEvent.submit(formElement!);
 
       await waitFor(() => {
         expect(screen.getByTestId("error-title")).toBeInTheDocument();
@@ -420,8 +439,9 @@ describe("ResourceForm", () => {
     it("validates all required fields for products", async () => {
       renderWithRouter(<ResourceForm />, "/products/create");
 
-      const submitButton = screen.getByTestId("button-default");
-      fireEvent.click(submitButton);
+      // Get the form element and submit it directly
+      const formElement = screen.getByTestId("card").querySelector("form");
+      fireEvent.submit(formElement!);
 
       await waitFor(() => {
         expect(screen.getByTestId("error-name")).toBeInTheDocument();
@@ -693,8 +713,9 @@ describe("ResourceForm", () => {
         .querySelector("input");
       fireEvent.change(nameInput!, { target: { value: "John Doe" } });
 
-      const submitButton = screen.getByTestId("button-default");
-      fireEvent.click(submitButton);
+      // Get the form element and submit it directly
+      const formElement = screen.getByTestId("card").querySelector("form");
+      fireEvent.submit(formElement!);
 
       await waitFor(() => {
         expect(screen.getByTestId("error-email")).toBeInTheDocument();

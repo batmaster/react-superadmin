@@ -34,7 +34,7 @@ describe("Pagination", () => {
       render(<Pagination {...defaultProps} currentPage={3} />);
 
       const currentPageButton = screen.getByText("3");
-      expect(currentPageButton).toHaveClass("bg-blue-600", "text-white");
+      expect(currentPageButton).toHaveClass("bg-primary-600", "text-white");
     });
 
     it("renders non-current pages with outline variant", () => {

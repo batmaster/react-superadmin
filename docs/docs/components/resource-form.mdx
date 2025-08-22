@@ -1,0 +1,227 @@
+---
+id: resource-form
+title: ResourceForm Component
+sidebar_label: ResourceForm
+description: Dynamic form component for creating and editing resources
+keywords: [form, resource, create, edit, dynamic, validation]
+---
+
+# ResourceForm Component
+
+The ResourceForm component provides a dynamic form interface for creating and editing resources with automatic field generation and validation.
+
+## Import
+
+```tsx
+// ResourceForm component is available in the live scope
+```
+
+## Basic Usage
+
+```tsx
+<ResourceForm
+  resource='users'
+  mode='create'
+  initialData={{}}
+  onSubmit={handleSubmit}
+  onCancel={handleCancel}
+/>
+```
+
+## Props
+
+| Prop          | Type                     | Default    | Description                          |
+| ------------- | ------------------------ | ---------- | ------------------------------------ |
+| `resource`    | `string`                 | -          | Resource name for form configuration |
+| `mode`        | `'create' \| 'edit'`     | `'create'` | Form mode (create or edit)           |
+| `initialData` | `object`                 | `{}`       | Initial form data for edit mode      |
+| `onSubmit`    | `(data: object) => void` | -          | Form submission handler              |
+| `onCancel`    | `() => void`             | -          | Cancel action handler                |
+| `loading`     | `boolean`                | `false`    | Whether form is in loading state     |
+| `className`   | `string`                 | -          | Additional CSS classes               |
+
+## Examples
+
+### Create Mode
+
+```tsx
+const handleSubmit = async formData => {
+  try {
+    await createUser(formData);
+    // Handle success
+  } catch (error) {
+    // Handle error
+  }
+};
+
+<ResourceForm
+  resource='users'
+  mode='create'
+  onSubmit={handleSubmit}
+  onCancel={() => navigate('/users')}
+/>;
+```
+
+### Edit Mode
+
+```tsx
+const [user, setUser] = useState(null);
+
+useEffect(() => {
+  const fetchUser = async () => {
+    const data = await getUserById(userId);
+    setUser(data);
+  };
+  fetchUser();
+}, [userId]);
+
+const handleSubmit = async formData => {
+  try {
+    await updateUser(userId, formData);
+    // Handle success
+  } catch (error) {
+    // Handle error
+  }
+};
+
+{
+  user && (
+    <ResourceForm
+      resource='users'
+      mode='edit'
+      initialData={user}
+      onSubmit={handleSubmit}
+      onCancel={() => navigate('/users')}
+    />
+  );
+}
+```
+
+### With Loading State
+
+```tsx
+const [loading, setLoading] = useState(false);
+
+const handleSubmit = async formData => {
+  setLoading(true);
+  try {
+    await submitForm(formData);
+    // Handle success
+  } catch (error) {
+    // Handle error
+  } finally {
+    setLoading(false);
+  }
+};
+
+<ResourceForm
+  resource='products'
+  mode='create'
+  onSubmit={handleSubmit}
+  onCancel={handleCancel}
+  loading={loading}
+/>;
+```
+
+## Form Configuration
+
+The ResourceForm component automatically generates forms based on resource configuration:
+
+```tsx
+// Resource configuration example
+const userResource = {
+  fields: [
+    { name: 'firstName', type: 'text', required: true, label: 'First Name' },
+    { name: 'lastName', type: 'text', required: true, label: 'Last Name' },
+    { name: 'email', type: 'email', required: true, label: 'Email' },
+    { name: 'role', type: 'select', options: ['admin', 'user', 'moderator'] },
+    { name: 'active', type: 'boolean', label: 'Active Account' },
+  ],
+};
+```
+
+## Custom Field Rendering
+
+You can customize how specific fields are rendered:
+
+```tsx
+<ResourceForm
+  resource='users'
+  mode='create'
+  onSubmit={handleSubmit}
+  fieldRenderers={{
+    role: props => (
+      <SelectInput
+        {...props}
+        options={[
+          { value: 'admin', label: 'Administrator' },
+          { value: 'user', label: 'Regular User' },
+          { value: 'moderator', label: 'Moderator' },
+        ]}
+      />
+    ),
+    avatar: props => (
+      <ImageInput
+        {...props}
+        accept='image/*'
+        maxSize={5 * 1024 * 1024} // 5MB
+      />
+    ),
+  }}
+/>
+```
+
+## Validation Integration
+
+The ResourceForm integrates with validation systems:
+
+```tsx
+const validationSchema = {
+  firstName: { required: true, minLength: 2 },
+  lastName: { required: true, minLength: 2 },
+  email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+};
+
+<ResourceForm
+  resource='users'
+  mode='create'
+  onSubmit={handleSubmit}
+  validationSchema={validationSchema}
+/>;
+```
+
+## Accessibility
+
+The ResourceForm component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Form validation announcements
+- Keyboard navigation support
+- Screen reader compatibility
+- Error state management
+
+```tsx
+<ResourceForm
+  resource='users'
+  mode='create'
+  onSubmit={handleSubmit}
+  aria-label='User creation form'
+  aria-describedby='form-help'
+/>
+```
+
+## Best Practices
+
+1. **Provide clear validation** - Use descriptive error messages
+2. **Handle loading states** - Show feedback during form submission
+3. **Implement proper error handling** - Gracefully handle API failures
+4. **Use consistent field types** - Maintain UI consistency across forms
+5. **Test form accessibility** - Ensure keyboard navigation works
+
+## Related Components
+
+- [Input](/docs/components/input) - For text input fields
+- [SelectInput](/docs/components/select-input) - For dropdown selection
+- [BooleanInput](/docs/components/boolean-input) - For boolean fields
+- [DateInput](/docs/components/date-input) - For date fields
+- [Button](/docs/components/button) - For form submission and actions

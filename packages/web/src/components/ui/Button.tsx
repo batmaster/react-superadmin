@@ -32,8 +32,8 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses = cn(
-    "inline-flex items-center justify-center font-medium transition-colors duration-200",
-    "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+    "inline-flex items-center justify-center font-medium transition-all duration-200",
+    "focus:outline-none focus:ring-2 focus:ring-offset-2",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     "active:scale-95",
     fullWidth && "w-full",
@@ -41,7 +41,8 @@ export const Button: React.FC<ButtonProps> = ({
   );
 
   const variantClasses = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
+    primary:
+      "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md",
     secondary: "bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500",
     outline:
       "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500 hover:border-gray-400",

@@ -1,0 +1,216 @@
+---
+id: text-input
+title: TextInput Component
+sidebar_label: TextInput
+description: Basic text input field with validation and styling support
+keywords: [text, input, form, validation, field]
+---
+
+# TextInput Component
+
+The TextInput component provides a basic text input field for single-line text entry. It supports validation states, custom styling, and integrates seamlessly with form systems.
+
+## Import
+
+```tsx
+// TextInput component is available in the live scope
+```
+
+## Basic Usage
+
+```tsx
+<TextInput
+  id="username"
+  value={username}
+  onChange={(e) => setUsername(e.target.value)}
+  placeholder="Enter your username"
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | - | Unique identifier for the input |
+| `name` | `string` | - | Name attribute for the input |
+| `value` | `string` | - | Current input value |
+| `onChange` | `(e: ChangeEvent<HTMLInputElement>) => void` | - | Change handler function |
+| `placeholder` | `string` | - | Placeholder text |
+| `type` | `string` | `'text'` | HTML input type |
+| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| `readOnly` | `boolean` | `false` | Whether the input is read-only |
+| `required` | `boolean` | `false` | Whether the input is required |
+| `error` | `string` | - | Error message to display |
+| `helperText` | `string` | - | Helper text below the input |
+| `className` | `string` | - | Additional CSS classes |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Input size variant |
+| `maxLength` | `number` | - | Maximum character limit |
+| `minLength` | `number` | - | Minimum character requirement |
+
+## Examples
+
+### Basic Text Input
+```tsx
+const [name, setName] = useState('');
+
+<TextInput
+  id="name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  placeholder="Enter your name"
+/>
+```
+
+### With Validation
+```tsx
+const [email, setEmail] = useState('');
+const [errors, setErrors] = useState({});
+
+<TextInput
+  id="email"
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder="Enter your email"
+  required
+  error={errors.email}
+  helperText="We'll never share your email"
+/>
+```
+
+### With Character Limit
+```tsx
+<TextInput
+  id="title"
+  value={title}
+  onChange={(e) => setTitle(e.target.value)}
+  placeholder="Enter title"
+  maxLength={100}
+  helperText={`${title.length}/100 characters`}
+/>
+```
+
+## Form Integration
+
+```tsx
+function UserForm() {
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
+
+  return (
+    <form className="space-y-4">
+      <div>
+        <Label htmlFor="firstName">First Name</Label>
+        <TextInput
+          id="firstName"
+          value={user.firstName}
+          onChange={(e) => setUser(prev => ({ ...prev, firstName: e.target.value }))}
+          placeholder="Enter first name"
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="lastName">Last Name</Label>
+        <TextInput
+          id="lastName"
+          value={user.lastName}
+          onChange={(e) => setUser(prev => ({ ...prev, lastName: e.target.value }))}
+          placeholder="Enter last name"
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="email">Email</Label>
+        <TextInput
+          id="email"
+          type="email"
+          value={user.email}
+          onChange={(e) => setUser(prev => ({ ...prev, email: e.target.value }))}
+          placeholder="Enter email address"
+          required
+        />
+      </div>
+    </form>
+  );
+}
+```
+
+## Input Types
+
+The TextInput component supports various HTML input types:
+
+```tsx
+// Text input (default)
+<TextInput type="text" placeholder="Enter text" />
+
+// Email input
+<TextInput type="email" placeholder="Enter email" />
+
+// Password input
+<TextInput type="password" placeholder="Enter password" />
+
+// Number input
+<TextInput type="number" placeholder="Enter number" />
+
+// Search input
+<TextInput type="search" placeholder="Search..." />
+
+// URL input
+<TextInput type="url" placeholder="Enter URL" />
+
+// Tel input
+<TextInput type="tel" placeholder="Enter phone number" />
+```
+
+## Sizes
+
+```tsx
+<TextInput size="sm" placeholder="Small input" />
+<TextInput size="md" placeholder="Medium input (default)" />
+<TextInput size="lg" placeholder="Large input" />
+```
+
+## Accessibility
+
+The TextInput component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Error state announcements for screen readers
+- Keyboard navigation support
+- Focus management
+- Screen reader compatibility
+
+```tsx
+<TextInput
+  id="accessible-input"
+  aria-describedby="input-help input-error"
+  aria-invalid={!!errors.input}
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  placeholder="Enter your text"
+  error={errors.input}
+  helperText="Provide additional information"
+/>
+```
+
+## Best Practices
+
+1. **Always provide labels** - Use the Label component or aria-label for accessibility
+2. **Use appropriate input types** - Leverage HTML5 input types for better UX
+3. **Provide clear error messages** - Help users understand what went wrong
+4. **Use helper text sparingly** - Only when additional context is needed
+5. **Consider validation timing** - Validate on blur or submit, not on every keystroke
+6. **Test with screen readers** - Ensure all states are properly announced
+
+## Related Components
+
+- [Input](/docs/components/input) - For more advanced input features
+- [Label](/docs/components/label) - For form field labels
+- [Form](/docs/components/form) - For form containers and validation
+- [Button](/docs/components/button) - For form submission and actions
+

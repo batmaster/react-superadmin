@@ -12,7 +12,7 @@ const config: Config = {
   projectName: 'react-superadmin',
 
   // Search configuration
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {

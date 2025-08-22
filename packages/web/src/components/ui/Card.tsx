@@ -15,6 +15,7 @@ interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   alignment?: "left" | "center" | "right";
+  align?: "left" | "center" | "right"; // Support both prop names for compatibility
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -26,10 +27,10 @@ export const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   const variantClasses = {
-    default: "bg-white border border-gray-200",
-    outlined: "bg-white border border-gray-300",
-    elevated: "bg-white border border-gray-200 shadow-md",
-    flat: "bg-gray-50 border border-gray-200",
+    default: "bg-white border border-gray-200 shadow-sm",
+    outlined: "bg-white border border-gray-300 shadow-none",
+    elevated: "bg-white border border-transparent shadow-lg",
+    flat: "bg-gray-50 border border-gray-100 shadow-none",
   };
 
   const paddingClasses = {
@@ -42,10 +43,10 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        "rounded-lg",
+        "rounded-lg transition-all duration-200 focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2",
         variantClasses[variant],
         paddingClasses[padding],
-        hover && "transition-shadow duration-200 hover:shadow-md",
+        hover && "hover:shadow-md hover:-translate-y-1",
         className,
       )}
       {...props}
@@ -64,7 +65,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between border-b border-gray-200 pb-3 mb-3",
+        "flex items-center justify-between border-b border-gray-100 pb-3 mb-3",
         className,
       )}
       {...props}
@@ -89,10 +90,14 @@ export const CardContent: React.FC<CardContentProps> = ({
 
 export const CardFooter: React.FC<CardFooterProps> = ({
   children,
-  alignment = "left",
+  alignment,
+  align,
   className,
   ...props
 }) => {
+  // Support both prop names for compatibility
+  const finalAlignment = align || alignment || "left";
+  
   const alignmentClasses = {
     left: "justify-start",
     center: "justify-center",
@@ -102,8 +107,8 @@ export const CardFooter: React.FC<CardFooterProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center border-t border-gray-200 pt-3 mt-3",
-        alignmentClasses[alignment],
+        "flex items-center border-t border-gray-100 pt-3 mt-3",
+        alignmentClasses[finalAlignment],
         className,
       )}
       {...props}

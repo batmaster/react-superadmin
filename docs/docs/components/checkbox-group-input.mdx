@@ -1,0 +1,273 @@
+---
+id: checkbox-group-input
+title: CheckboxGroupInput Component
+sidebar_label: CheckboxGroupInput
+description: Multiple checkbox selection with validation and styling support
+keywords: [checkbox, group, input, form, validation, multiple]
+---
+
+# CheckboxGroupInput Component
+
+The CheckboxGroupInput component provides multiple checkbox selection for choosing multiple values from a list of options. It supports validation states, custom styling, and integrates seamlessly with form systems.
+
+## Import
+
+```tsx
+// CheckboxGroupInput component is available in the live scope
+```
+
+## Basic Usage
+
+```tsx
+<CheckboxGroupInput
+  id="interests"
+  options={[
+    { value: 'sports', label: 'Sports' },
+    { value: 'music', label: 'Music' },
+    { value: 'reading', label: 'Reading' },
+    { value: 'travel', label: 'Travel' }
+  ]}
+  value={selectedInterests}
+  onChange={setSelectedInterests}
+  label="Select your interests"
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | - | Unique identifier for the checkbox group |
+| `name` | `string` | - | Name attribute for the checkbox group |
+| `options` | `Array<{value: string, label: string}>` | `[]` | Available options to choose from |
+| `value` | `string[]` | `[]` | Currently selected values |
+| `onChange` | `(values: string[]) => void` | - | Change handler function |
+| `label` | `string` | - | Group label text |
+| `disabled` | `boolean` | `false` | Whether the checkbox group is disabled |
+| `required` | `boolean` | `false` | Whether at least one option is required |
+| `error` | `string` | - | Error message to display |
+| `helperText` | `string` | - | Helper text below the checkbox group |
+| `className` | `string` | - | Additional CSS classes |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Checkbox size variant |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout orientation |
+
+## Examples
+
+### Basic Checkbox Group
+```tsx
+const [interests, setInterests] = useState([]);
+
+<CheckboxGroupInput
+  id="interests"
+  options={[
+    { value: 'sports', label: 'Sports' },
+    { value: 'music', label: 'Music' },
+    { value: 'reading', label: 'Reading' },
+    { value: 'travel', label: 'Travel' }
+  ]}
+  value={interests}
+  onChange={setInterests}
+  label="Select your interests"
+/>
+```
+
+### Horizontal Layout
+```tsx
+<CheckboxGroupInput
+  id="permissions"
+  options={[
+    { value: 'read', label: 'Read' },
+    { value: 'write', label: 'Write' },
+    { value: 'delete', label: 'Delete' },
+    { value: 'admin', label: 'Admin' }
+  ]}
+  value={permissions}
+  onChange={setPermissions}
+  label="User Permissions"
+  orientation="horizontal"
+/>
+```
+
+### Required Selection with Validation
+```tsx
+const [categories, setCategories] = useState([]);
+const [errors, setErrors] = useState({});
+
+<CheckboxGroupInput
+  id="categories"
+  options={[
+    { value: 'tech', label: 'Technology' },
+    { value: 'business', label: 'Business' },
+    { value: 'lifestyle', label: 'Lifestyle' },
+    { value: 'health', label: 'Health & Fitness' }
+  ]}
+  value={categories}
+  onChange={setCategories}
+  label="Select article categories"
+  required
+  error={errors.categories}
+  helperText="Select at least one category"
+/>
+```
+
+## Form Integration
+
+```tsx
+function UserPreferencesForm() {
+  const [preferences, setPreferences] = useState({
+    notifications: [],
+    privacy: [],
+    features: []
+  });
+
+  return (
+    <form className="space-y-6">
+      <CheckboxGroupInput
+        id="notifications"
+        options={[
+          { value: 'email', label: 'Email notifications' },
+          { value: 'sms', label: 'SMS notifications' },
+          { value: 'push', label: 'Push notifications' },
+          { value: 'in-app', label: 'In-app notifications' }
+        ]}
+        value={preferences.notifications}
+        onChange={(values) => setPreferences(prev => ({ ...prev, notifications: values }))}
+        label="Notification preferences"
+        helperText="Choose how you want to be notified"
+      />
+      
+      <CheckboxGroupInput
+        id="privacy"
+        options={[
+          { value: 'profile-public', label: 'Make profile public' },
+          { value: 'show-email', label: 'Show email to others' },
+          { value: 'show-activity', label: 'Show activity status' },
+          { value: 'allow-messages', label: 'Allow direct messages' }
+        ]}
+        value={preferences.privacy}
+        onChange={(values) => setPreferences(prev => ({ ...prev, privacy: values }))}
+        label="Privacy settings"
+        helperText="Control your privacy preferences"
+      />
+      
+      <CheckboxGroupInput
+        id="features"
+        options={[
+          { value: 'beta-features', label: 'Enable beta features' },
+          { value: 'analytics', label: 'Share usage analytics' },
+          { value: 'marketing', label: 'Receive marketing content' }
+        ]}
+        value={preferences.features}
+        onChange={(values) => setPreferences(prev => ({ ...prev, features: values }))}
+        label="Feature preferences"
+        helperText="Customize your experience"
+      />
+    </form>
+  );
+}
+```
+
+## Dynamic Options
+
+```tsx
+function DynamicCheckboxGroup() {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/categories');
+        const data = await response.json();
+        setCategories(data.map(cat => ({ value: cat.id, label: cat.name })));
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return <div>Loading categories...</div>;
+  }
+
+  return (
+    <CheckboxGroupInput
+      id="categories"
+      options={categories}
+      value={selectedCategories}
+      onChange={setSelectedCategories}
+      label="Select categories"
+      helperText={`${selectedCategories.length} categories selected`}
+    />
+  );
+}
+```
+
+## Custom Styling
+
+```tsx
+<CheckboxGroupInput
+  id="themes"
+  options={[
+    { value: 'light', label: 'Light Theme' },
+    { value: 'dark', label: 'Dark Theme' },
+    { value: 'auto', label: 'Auto (System)' }
+  ]}
+  value={selectedThemes}
+  onChange={setSelectedThemes}
+  label="Theme preferences"
+  className="border border-gray-200 rounded-lg p-4"
+  orientation="horizontal"
+/>
+```
+
+## Accessibility
+
+The CheckboxGroupInput component includes comprehensive accessibility features:
+
+- Proper ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Error state announcements
+
+```tsx
+<CheckboxGroupInput
+  id="accessibility-demo"
+  aria-describedby="accessibility-help accessibility-error"
+  aria-invalid={!!errors.accessibility}
+  options={[
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' }
+  ]}
+  value={selectedOptions}
+  onChange={setSelectedOptions}
+  label="Accessibility options"
+  error={errors.accessibility}
+  helperText="Choose your accessibility preferences"
+/>
+```
+
+## Best Practices
+
+1. **Use clear, descriptive labels** - Help users understand what they're selecting
+2. **Limit the number of options** - Too many options can be overwhelming
+3. **Group related options** - Use logical groupings for better organization
+4. **Provide helpful descriptions** - Use helper text to explain the purpose
+5. **Consider layout orientation** - Use horizontal layout for fewer options, vertical for many
+6. **Handle validation properly** - Show clear error messages for required selections
+
+## Related Components
+
+- [CheckboxInput](/docs/components/checkbox-input) - For single checkbox selection
+- [BooleanInput](/docs/components/boolean-input) - For boolean input with radio buttons
+- [SelectInput](/docs/components/select-input) - For dropdown selection
+- [Form](/docs/components/form) - For form containers and validation
+- [Label](/docs/components/label) - For form field labels
+

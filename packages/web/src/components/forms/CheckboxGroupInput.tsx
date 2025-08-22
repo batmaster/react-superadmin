@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface CheckboxOption {
@@ -102,7 +102,7 @@ export const CheckboxGroupInput = forwardRef<
   (
     {
       options,
-      value = [],
+      value,
       onChange,
       label,
       helperText,
@@ -175,18 +175,19 @@ export const CheckboxGroupInput = forwardRef<
           }
           newValue = [...selectedValues, optionValue];
         } else {
-          newValue = selectedValues;
+          return; // Don't call onChange if no change
         }
       } else {
         // Remove value
         newValue = selectedValues.filter((v) => v !== optionValue);
       }
 
-      // Update internal state if not controlled
+      // Update internal state if not controlled (no value prop provided)
       if (value === undefined) {
         setInternalValue(newValue);
       }
 
+      // Call onChange with the new value if provided
       onChange?.(newValue);
     };
 
@@ -231,12 +232,7 @@ export const CheckboxGroupInput = forwardRef<
     const anySelected = selectedValues.length > 0;
 
     return (
-      <div
-        ref={ref}
-        className={cn("w-full", className)}
-        key={JSON.stringify(selectedValues)} // Force re-render when selection changes
-        {...props}
-      >
+      <div ref={ref} className={cn("w-full", className)} {...props}>
         {/* Label */}
         {label && (
           <label
@@ -250,7 +246,7 @@ export const CheckboxGroupInput = forwardRef<
           >
             {label}
             {required && (
-              <span className="text-red-500 ml-1" aria-label="required">
+              <span className="ml-1 text-red-500" aria-label="required">
                 *
               </span>
             )}
@@ -332,7 +328,7 @@ export const CheckboxGroupInput = forwardRef<
                   disabled={!!(isOptionDisabled || isAtLimit)}
                   readOnly={readOnly}
                   className={cn(
-                    "h-4 w-4 rounded border-gray-300 text-blue-600",
+                    "w-4 h-4 text-blue-600 rounded border-gray-300",
                     "focus:ring-blue-500 focus:ring-2 focus:ring-offset-2",
                     "disabled:cursor-not-allowed",
                     checkboxClassName,
@@ -357,7 +353,7 @@ export const CheckboxGroupInput = forwardRef<
                   {showDescriptions && option.data?.description && (
                     <span
                       id={`${inputId}-${option.value}-description`}
-                      className="text-sm text-gray-500 mt-1"
+                      className="mt-1 text-sm text-gray-500"
                     >
                       {renderDescription
                         ? renderDescription(option)
@@ -403,8 +399,8 @@ export const CheckboxGroupInput = forwardRef<
 
         {/* Loading Indicator */}
         {loading && (
-          <div className="mt-3 flex items-center gap-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <div className="flex gap-2 items-center mt-3">
+            <div className="w-4 h-4 rounded-full border-b-2 border-blue-600 animate-spin"></div>
             <span className="text-sm text-gray-500">Loading options...</span>
           </div>
         )}
