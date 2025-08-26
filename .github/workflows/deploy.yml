@@ -85,10 +85,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Build packages
-        run: |
-          pnpm build:core
-          pnpm build:web
       - name: Build documentation
         run: pnpm docs:build
       - name: Deploy to Firebase Preview Channel
@@ -123,10 +119,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Build packages
-        run: |
-          pnpm build:core
-          pnpm build:web
       - name: Build documentation
         run: pnpm docs:build
 
@@ -147,10 +139,6 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Build packages
-        run: |
-          pnpm build:core
-          pnpm build:web
       - name: Build documentation
         run: pnpm docs:build
       - name: Deploy to Firebase Staging Channel
