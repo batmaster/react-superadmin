@@ -1,5 +1,5 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Modal } from "../../../components/ui/Modal";
 
 // Mock the lucide-react icon
@@ -210,7 +210,7 @@ describe("Modal", () => {
     render(<Modal {...defaultProps} backdropClassName="custom-backdrop" />);
 
     // Find the backdrop by looking for the fixed inset-0 element
-    const backdrop = document.querySelector(".fixed.inset-0.bg-gray-500");
+    const backdrop = document.querySelector(".fixed.inset-0.bg-black");
     expect(backdrop).toHaveClass("custom-backdrop");
   });
 
