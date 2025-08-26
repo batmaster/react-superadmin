@@ -62,6 +62,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
+          target: production
           channelId: live
 
   deploy-docs-preview:
@@ -103,6 +104,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
+          target: preview
           channelId: pr-${{ github.event.number }}
 
   deploy-docs-staging:
@@ -138,6 +140,14 @@ jobs:
           cd docs
           pnpm install --frozen-lockfile
           pnpm build
+      - name: Deploy to Firebase Staging Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: react-superadmin
+          target: staging
+          channelId: staging
 
   build-docs-develop:
     name: Build Docs (develop)
@@ -205,10 +215,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
           channelId: develop
-      - name: Deploy to Firebase Staging Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          channelId: staging
