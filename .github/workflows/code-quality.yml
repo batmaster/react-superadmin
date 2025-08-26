@@ -7,50 +7,51 @@ on:
     branches: [main, develop]
 
 jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          standalone: true
-
-      - name: Setup pnpm cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Generate Prisma Client
-        run: pnpm --filter=@react-superadmin/web db:generate
-        env:
-          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
-
-      - name: Build packages
-        run: pnpm build
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # SonarCloud analysis disabled per user request
+  # sonarcloud:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     actions: read
+  #
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #
+  #     - name: Use Node.js 20.x
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20.x'
+  #
+  #     - name: Install pnpm
+  #       uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 8
+  #         standalone: true
+  #
+  #     - name: Setup pnpm cache
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20.x'
+  #         cache: 'pnpm'
+  #
+  #     - name: Install dependencies
+  #       run: pnpm install
+  #
+  #     - name: Generate Prisma Client
+  #       run: pnpm --filter=@react-superadmin/web db:generate
+  #       env:
+  #         DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+  #
+  #     - name: Build packages
+  #       run: pnpm build
+  #
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarqube-scan-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   codeql-analysis:
     runs-on: ubuntu-latest
@@ -90,7 +91,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma Client
         run: pnpm --filter=@react-superadmin/web db:generate

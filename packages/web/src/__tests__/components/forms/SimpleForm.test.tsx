@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { FormField, SimpleForm } from "../../../components/forms/SimpleForm";
@@ -1044,16 +1050,20 @@ describe("SimpleForm", () => {
     const roleSelect = getFieldByLabel("Role");
 
     // Modify values
-    await userEvent.clear(nameInput);
-    await userEvent.type(nameInput, "Modified Name");
-    await userEvent.clear(emailInput);
-    await userEvent.type(emailInput, "modified@example.com");
-    fireEvent.change(ageInput, { target: { value: "30" } });
-    fireEvent.change(roleSelect, { target: { value: "user" } });
+    await act(async () => {
+      await userEvent.clear(nameInput);
+      await userEvent.type(nameInput, "Modified Name");
+      await userEvent.clear(emailInput);
+      await userEvent.type(emailInput, "modified@example.com");
+      fireEvent.change(ageInput, { target: { value: "30" } });
+      fireEvent.change(roleSelect, { target: { value: "user" } });
+    });
 
     // Reset form
     const resetButton = screen.getByRole("button", { name: /reset/i });
-    await userEvent.click(resetButton);
+    await act(async () => {
+      await userEvent.click(resetButton);
+    });
 
     // Form should be reset to initial values
     expect(nameInput).toHaveValue("John Doe");
