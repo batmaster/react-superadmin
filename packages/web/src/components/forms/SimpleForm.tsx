@@ -1,5 +1,5 @@
 import { Plus, Save, Trash2 } from "lucide-react";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export interface FormField {
   name: string;
@@ -81,7 +81,7 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Initialize values for fields that don't have initial values
-  useMemo(() => {
+  useEffect(() => {
     const newValues = { ...initialValues };
     fields.forEach((field) => {
       if (
@@ -217,15 +217,27 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
   // Handle field change
   const handleFieldChange = useCallback(
     (name: string, value: any) => {
-      setValues((prev) => ({ ...prev, [name]: value }));
+      // Convert value based on field type
+      let convertedValue = value;
+      const field = fields.find((f) => f.name === name);
+
+      if (field?.type === "number" && value !== "") {
+        convertedValue = Number(value);
+        // Check if conversion was successful
+        if (isNaN(convertedValue)) {
+          convertedValue = value; // Keep original if conversion fails
+        }
+      }
+
+      setValues((prev) => ({ ...prev, [name]: convertedValue }));
 
       // Validate on change if enabled
       if (validateOnChange) {
-        const error = validateField(name, value);
+        const error = validateField(name, convertedValue);
         setErrors((prev) => ({ ...prev, [name]: error }));
       }
     },
-    [validateOnChange, validateField],
+    [validateOnChange, validateField, fields],
   );
 
   // Handle field blur
@@ -278,10 +290,12 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
   // Render form field based on type
   const renderField = useCallback(
     (field: FormField) => {
-      const fieldValue = values[field.name];
+      const fieldValue = values[field.name] ?? field.defaultValue ?? "";
       const fieldError = errors[field.name];
       const fieldTouched = touched[field.name];
-      const showError = fieldError && fieldTouched;
+      // Show error if it exists and either field is touched OR we're showing all errors (form validation)
+      const showError =
+        fieldError && (fieldTouched || Object.keys(errors).length > 0);
 
       const commonProps = {
         value: fieldValue,
@@ -300,7 +314,6 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         disabled: field.disabled || loading,
         required: field.required,
         placeholder: field.placeholder,
-        helperText: field.helperText,
         className: field.className,
         error: showError ? fieldError : undefined,
       };
@@ -311,6 +324,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "password":
           return (
             <input
+              id={field.name}
+              name={field.name}
               type={field.type}
               {...commonProps}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
@@ -322,6 +337,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "number":
           return (
             <input
+              id={field.name}
+              name={field.name}
               type="number"
               {...commonProps}
               min={field.validation?.min}
@@ -335,6 +352,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "textarea":
           return (
             <textarea
+              id={field.name}
+              name={field.name}
               {...commonProps}
               rows={4}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
@@ -346,7 +365,11 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "select":
           return (
             <select
-              {...commonProps}
+              id={field.name}
+              name={field.name}
+              value={fieldValue || ""}
+              onChange={(e) => handleFieldChange(field.name, e.target.value)}
+              disabled={field.disabled || loading}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
                 showError ? "border-red-500" : "border-gray-300"
               } ${field.className || ""}`}
@@ -354,9 +377,9 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
               <option value="">
                 {field.placeholder || `Select ${field.label}`}
               </option>
-              {field.options?.map((option) => (
+              {field.options?.map((option, index) => (
                 <option
-                  key={option.value}
+                  key={`${option.value}-${index}`}
                   value={option.value}
                   disabled={option.disabled}
                 >
@@ -370,6 +393,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
           return (
             <label className="flex items-center space-x-2">
               <input
+                id={field.name}
+                name={field.name}
                 type="checkbox"
                 checked={fieldValue || false}
                 onChange={(e) =>
@@ -385,12 +410,13 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "radio":
           return (
             <div className="space-y-2">
-              {field.options?.map((option) => (
+              {field.options?.map((option, index) => (
                 <label
-                  key={option.value}
+                  key={`${option.value}-${index}`}
                   className="flex items-center space-x-2"
                 >
                   <input
+                    id={`${field.name}-${option.value}`}
                     type="radio"
                     name={field.name}
                     value={option.value}
@@ -410,6 +436,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "date":
           return (
             <input
+              id={field.name}
+              name={field.name}
               type="date"
               {...commonProps}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
@@ -421,6 +449,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
         case "boolean":
           return (
             <select
+              id={field.name}
+              name={field.name}
               {...commonProps}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
                 showError ? "border-red-500" : "border-gray-300"
@@ -439,6 +469,8 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
               {arrayValue.map((item, index) => (
                 <div key={index} className="flex items-center space-x-2">
                   <input
+                    id={`${field.name}-${index}`}
+                    name={`${field.name}[${index}]`}
                     type="text"
                     value={item}
                     onChange={(e) => {
@@ -467,7 +499,7 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
                   const newArray = [...arrayValue, ""];
                   handleFieldChange(field.name, newArray);
                 }}
-                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700"
+                className="flex items-center space-x-2 px-3 py-2 text-sm text-primary-600 hover:text-primary-700"
               >
                 <Plus size={16} />
                 <span>Add Item</span>
@@ -478,36 +510,30 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
         case "autocomplete":
           return (
-            <div className="relative">
+            <div className="space-y-2">
               <input
+                id={field.name}
+                name={field.name}
                 type="text"
-                value={fieldValue || ""}
-                onChange={(e) => handleFieldChange(field.name, e.target.value)}
-                placeholder={field.placeholder || `Search ${field.label}`}
+                {...commonProps}
                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-200 ${
                   showError ? "border-red-500" : "border-gray-300"
                 } ${field.className || ""}`}
               />
-              {field.options && fieldValue && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-                  {field.options
-                    .filter((option) =>
-                      option.label
-                        .toLowerCase()
-                        .includes(fieldValue.toLowerCase()),
-                    )
-                    .map((option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() =>
-                          handleFieldChange(field.name, option.value)
-                        }
-                        className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
+              {field.options && (
+                <div className="border border-gray-200 rounded-md max-h-40 overflow-y-auto">
+                  {field.options.map((option, index) => (
+                    <button
+                      key={`${option.value}-${index}`}
+                      type="button"
+                      onClick={() =>
+                        handleFieldChange(field.name, option.value)
+                      }
+                      className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
+                    >
+                      {option.label}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -557,7 +583,10 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
             }
           >
             {layout === "horizontal" && (
-              <label className="w-1/3 text-sm font-medium text-gray-700">
+              <label
+                htmlFor={field.name}
+                className="w-1/3 text-sm font-medium text-gray-700"
+              >
                 {field.label}
                 {field.required && <span className="text-red-500 ml-1">*</span>}
               </label>
@@ -565,7 +594,10 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
             <div className={layout === "horizontal" ? "flex-1" : ""}>
               {layout !== "horizontal" && (
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor={field.name}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   {field.label}
                   {field.required && (
                     <span className="text-red-500 ml-1">*</span>
@@ -575,10 +607,12 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({
 
               {renderField(field)}
 
+              {/* Show helper text only when there are no errors */}
               {field.helperText && !errors[field.name] && (
                 <p className="mt-1 text-sm text-gray-500">{field.helperText}</p>
               )}
 
+              {/* Show validation errors when they exist */}
               {errors[field.name] && (
                 <p className="mt-1 text-sm text-red-600">
                   {errors[field.name]}
