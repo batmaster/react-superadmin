@@ -76,6 +76,7 @@ const config: Config = {
     // Inline plugin to alias monorepo packages for MDX/live examples
     function resolveMonorepoPackages() {
       return {
+        name: 'resolve-monorepo-packages',
         configureWebpack() {
           return {
             resolve: {
