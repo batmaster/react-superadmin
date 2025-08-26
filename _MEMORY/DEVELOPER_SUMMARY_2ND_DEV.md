@@ -1,3 +1,21 @@
+## Session Auto-Start (2nd Developer) — READ FIRST
+
+- Role: 2nd developer focused on component implementation, testing (90%+), and
+  documentation.
+- Always read this file at session start and follow the 3-phase workflow (Code →
+  Testing → Docs).
+- Git flow: open PRs to `develop` (NOT `main`). `main` is release-only and must
+  stay green and milestone-complete.
+- Branching: one small feature branch per component/phase (e.g.,
+  `test/web/textinput-tests`).
+- Commits: conventional commits, e.g., `test(web): add textinput test suite`.
+- Quality gates before PR: tests green (`pnpm test`), no linter errors, web
+  builds (`pnpm build:web`).
+- Project mgmt (Web Components Project #2, owner `batmaster`): move cards to In
+  Progress when starting; set to Done when finished.
+- Status field id and options are recorded below; set
+  TextInput/Textarea/CheckboxInput tests to Done when merged.
+
 # React SuperAdmin - 2nd Developer Summary
 
 ## Project Overview
