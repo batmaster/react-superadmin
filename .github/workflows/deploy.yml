@@ -53,13 +53,12 @@ jobs:
           pnpm build:web
       - name: Build documentation
         run: pnpm docs:build
-      - name: Deploy to Firebase Production Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          target: production
+      - name: Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Production
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:production" --non-interactive
 
   deploy-docs-preview:
     runs-on: ubuntu-latest
@@ -122,13 +121,12 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build documentation
         run: pnpm docs:build
-      - name: Deploy to Firebase Staging Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          target: staging
+      - name: Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Staging
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:staging" --non-interactive
 
   build-docs-develop:
     name: Build Docs (develop)
@@ -153,10 +151,9 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build documentation
         run: pnpm docs:build
-      - name: Deploy to Firebase Develop Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          target: develop
+      - name: Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Develop
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:develop" --non-interactive
