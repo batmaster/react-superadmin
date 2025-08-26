@@ -17,10 +17,13 @@ import {
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: "postgres://neondb_owner:npg_f9xB2jZKQeoa@ep-billowing-frog-a1xfrp7r-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require",
+      url:
+        typeof window === "undefined"
+          ? process.env.DATABASE_URL || "postgres://localhost/disabled"
+          : "postgres://localhost/browser",
     },
   },
-});
+} as any);
 
 // Resource field mappings for Prisma
 const resourceFields: Record<string, string[]> = {
@@ -454,6 +457,10 @@ export const prismaDataProvider: DataProvider = {
 };
 
 // Graceful shutdown
-process.on("beforeExit", async () => {
-  await prisma.$disconnect();
-});
+if (typeof process !== "undefined" && process?.on) {
+  process.on("beforeExit", async () => {
+    if (typeof prisma.$disconnect === "function") {
+      await prisma.$disconnect();
+    }
+  });
+}
