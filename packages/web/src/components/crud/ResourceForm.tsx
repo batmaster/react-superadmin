@@ -61,7 +61,7 @@ export const ResourceForm: React.FC = () => {
     if (isEdit && service && actualId) {
       const loadData = async () => {
         try {
-          const data = await service.read(actualId);
+          const data = await service.instance.read(actualId);
           setFormData(data);
         } catch (error) {
           console.error("Error loading data:", error);
@@ -237,9 +237,9 @@ export const ResourceForm: React.FC = () => {
 
     try {
       if (isEdit && actualId) {
-        await service.update(actualId, formData);
+        await service.instance.update(actualId, formData);
       } else {
-        await service.create(formData);
+        await service.instance.create(formData);
       }
 
       navigate(`/${resourceName}`);

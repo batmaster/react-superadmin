@@ -58,7 +58,7 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
     setError(null);
 
     try {
-      const result = await service.list({
+      const result = await service.instance.list({
         page,
         perPage: limit,
         search,
@@ -108,7 +108,7 @@ export const ResourceList: React.FC<ResourceListProps> = ({ resourceName }) => {
     if (!service || !itemToDelete) return;
 
     try {
-      await service.delete(itemToDelete.id);
+      await service.instance.delete(itemToDelete.id);
       setShowDeleteModal(false);
       setItemToDelete(null);
       loadData(); // Reload data
