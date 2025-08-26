@@ -1,15 +1,12 @@
-name: Docs Build (develop) [deprecated]
+name: Docs Build (develop) [removed]
 
 on:
-  push:
-    branches-ignore: ['**']
-  pull_request:
-    branches-ignore: ['**']
+  workflow_dispatch:
 
 jobs:
   build-docs:
     if: false
-    name: Disabled - use .github/workflows/deploy.yml
+    name: Do not use this workflow. Use deploy.yml.
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'Use deploy.yml for all docs builds and deploys'
+      - run: echo 'This workflow is intentionally disabled.'
