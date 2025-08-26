@@ -52,7 +52,10 @@ jobs:
           pnpm build:core
           pnpm build:web
       - name: Build documentation
-        run: pnpm docs:build
+        run: |
+          cd docs
+          pnpm install --frozen-lockfile
+          pnpm build
       - name: Deploy to Firebase Production Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -90,7 +93,10 @@ jobs:
           pnpm build:core
           pnpm build:web
       - name: Build documentation
-        run: pnpm docs:build
+        run: |
+          cd docs
+          pnpm install --frozen-lockfile
+          pnpm build
       - name: Deploy to Firebase Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -128,7 +134,10 @@ jobs:
           pnpm build:core
           pnpm build:web
       - name: Build documentation
-        run: pnpm docs:build
+        run: |
+          cd docs
+          pnpm install --frozen-lockfile
+          pnpm build
 
   build-docs-develop:
     name: Build Docs (develop)
@@ -152,7 +161,50 @@ jobs:
           pnpm build:core
           pnpm build:web
       - name: Build documentation
-        run: pnpm docs:build
+        run: |
+          cd docs
+          pnpm install --frozen-lockfile
+          pnpm build
+
+  deploy-docs-develop:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    environment:
+      name: develop
+      url: https://react-superadmin.web.app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build packages
+        run: |
+          pnpm build:core
+          pnpm build:web
+      - name: Build documentation
+        run: |
+          cd docs
+          pnpm install --frozen-lockfile
+          pnpm build
+      - name: Deploy to Firebase Develop Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: react-superadmin
+          channelId: develop
       - name: Deploy to Firebase Staging Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
