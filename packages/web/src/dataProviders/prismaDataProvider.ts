@@ -1,4 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+// In docs/SSR environments, '@prisma/client' may be stubbed without named exports
+// so import the default and read PrismaClient off it when available.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import * as PrismaModule from "@prisma/client";
+const PrismaClient =
+  (PrismaModule as any).PrismaClient ??
+  (PrismaModule as any).default?.PrismaClient;
 import {
   CreateParams,
   DataProvider,
@@ -14,16 +20,26 @@ import {
 } from "@react-superadmin/core";
 
 // Initialize Prisma client with Neon database
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url:
-        typeof window === "undefined"
-          ? process.env.DATABASE_URL || "postgres://localhost/disabled"
-          : "postgres://localhost/browser",
-    },
-  },
-} as any);
+// Fallback no-op client during docs build if PrismaClient is absent
+const prisma = PrismaClient
+  ? new PrismaClient({
+      datasources: {
+        db: {
+          url:
+            typeof window === "undefined"
+              ? process.env.DATABASE_URL || "postgres://localhost/disabled"
+              : "postgres://localhost/browser",
+        },
+      },
+    } as any)
+  : (new Proxy(
+      {},
+      {
+        get: () => () => {
+          throw new Error("Prisma client unavailable in this environment");
+        },
+      },
+    ) as any);
 
 // Resource field mappings for Prisma
 const resourceFields: Record<string, string[]> = {

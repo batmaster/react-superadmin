@@ -1,38 +1,15 @@
-name: Docs Build (develop)
+name: Docs Build (develop) [deprecated]
 
 on:
   push:
-    branches: [develop]
+    branches-ignore: ['**']
   pull_request:
-    branches: [develop]
+    branches-ignore: ['**']
 
 jobs:
   build-docs:
-    name: Build Docusaurus Docs
+    if: false
+    name: Disabled - use .github/workflows/deploy.yml
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.14.0
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-
-      - name: Build core package
-        run: pnpm build:core
-
-      - name: Build web package
-        run: pnpm build:web
-
-      - name: Build docs
-        run: pnpm docs:build
+      - run: echo 'Use deploy.yml for all docs builds and deploys'
