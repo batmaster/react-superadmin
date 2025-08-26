@@ -458,13 +458,18 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       const fieldTouched = touched[field.name];
 
       // For now, render a basic input - this would be replaced with actual input components
+      const fieldId = `field-${field.name}`;
       return (
         <div key={field.name} className={field.className || ""}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor={fieldId}
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             {field.label}
             {field.required && <span className="text-red-500 ml-1">*</span>}
           </label>
           <input
+            id={fieldId}
             type={field.type === "boolean" ? "checkbox" : field.type}
             value={field.type === "boolean" ? undefined : fieldValue || ""}
             checked={field.type === "boolean" ? Boolean(fieldValue) : undefined}

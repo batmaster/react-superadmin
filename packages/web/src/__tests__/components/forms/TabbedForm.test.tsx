@@ -141,8 +141,8 @@ describe("TabbedForm", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Name *")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email *")).toBeInTheDocument();
+    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+    expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter email")).toBeInTheDocument();
   });
@@ -157,7 +157,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name *");
+    const nameInput = screen.getByLabelText("Name");
     await userEvent.clear(nameInput);
     await userEvent.type(nameInput, "Jane Doe");
 
@@ -175,7 +175,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name *");
+    const nameInput = screen.getByLabelText("Name");
     await userEvent.clear(nameInput);
     fireEvent.blur(nameInput);
 
@@ -268,7 +268,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name *");
+    const nameInput = screen.getByLabelText("Name");
     await userEvent.clear(nameInput);
     fireEvent.blur(nameInput);
 
@@ -276,7 +276,7 @@ describe("TabbedForm", () => {
     await userEvent.click(nextButton);
 
     // Should still be on first tab due to validation error
-    expect(screen.getByLabelText("Name *")).toBeInTheDocument();
+    expect(screen.getByLabelText("Name")).toBeInTheDocument();
   });
 
   it("handles form submission with validation errors", async () => {
@@ -340,8 +340,8 @@ describe("TabbedForm", () => {
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
         initialValues={mockInitialValues}
-        submitButtonText="Create User"
-        cancelButtonText="Go Back"
+        submitText="Create User"
+        cancelText="Go Back"
       />,
     );
 
@@ -464,7 +464,7 @@ describe("TabbedForm", () => {
     );
 
     // All validation modes should be enabled
-    const nameInput = screen.getByLabelText("Name *");
+    const nameInput = screen.getByLabelText("Name");
 
     // Change should trigger validation
     fireEvent.change(nameInput, { target: { value: "" } });
