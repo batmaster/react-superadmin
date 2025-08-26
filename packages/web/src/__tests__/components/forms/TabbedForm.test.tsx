@@ -171,7 +171,7 @@ describe("TabbedForm", () => {
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
         initialValues={{}}
-        validateOnChange={true}
+        validateOnBlur={true}
       />,
     );
 
@@ -263,8 +263,8 @@ describe("TabbedForm", () => {
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
         initialValues={{}}
-        showNavigation={true}
-        validateOnChange={true}
+        showTabNavigation={true}
+        validateOnBlur={true}
       />,
     );
 
