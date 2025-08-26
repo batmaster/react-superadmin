@@ -60,7 +60,6 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
           target: production
-          channelId: live
 
   deploy-docs-preview:
     runs-on: ubuntu-latest
@@ -130,7 +129,6 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
           target: staging
-          channelId: staging
 
   build-docs-develop:
     name: Build Docs (develop)
@@ -162,4 +160,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
           target: develop
-          channelId: live
