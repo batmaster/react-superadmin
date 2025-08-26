@@ -2,9 +2,6 @@
 // so import the default and read PrismaClient off it when available.
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import * as PrismaModule from "@prisma/client";
-const PrismaClient =
-  (PrismaModule as any).PrismaClient ??
-  (PrismaModule as any).default?.PrismaClient;
 import {
   CreateParams,
   DataProvider,
@@ -18,6 +15,9 @@ import {
   UpdateManyParams,
   UpdateParams,
 } from "@react-superadmin/core";
+const PrismaClient =
+  (PrismaModule as any).PrismaClient ??
+  (PrismaModule as any).default?.PrismaClient;
 
 // Initialize Prisma client with Neon database
 // Fallback no-op client during docs build if PrismaClient is absent
@@ -179,14 +179,14 @@ export const prismaDataProvider: DataProvider = {
     try {
       // Get data with pagination
       const [data, total] = await Promise.all([
-        (prisma[resource as keyof PrismaClient] as any).findMany({
+        (prisma as any)[resource].findMany({
           where,
           orderBy,
           select,
           skip,
           take: perPage,
         }),
-        (prisma[resource as keyof PrismaClient] as any).count({ where }),
+        (prisma as any)[resource].count({ where }),
       ]);
 
       return {
@@ -212,9 +212,7 @@ export const prismaDataProvider: DataProvider = {
     const select = buildSelectClause(resource);
 
     try {
-      const data = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).findUnique({
+      const data = await (prisma as any)[resource].findUnique({
         where: { id: String(id) },
         select,
       });
@@ -240,9 +238,7 @@ export const prismaDataProvider: DataProvider = {
     const select = buildSelectClause(resource);
 
     try {
-      const data = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).findMany({
+      const data = await (prisma as any)[resource].findMany({
         where: {
           id: {
             in: ids.map((id) => String(id)),
@@ -307,14 +303,14 @@ export const prismaDataProvider: DataProvider = {
     try {
       // Get data with pagination
       const [data, total] = await Promise.all([
-        (prisma[resource as keyof PrismaClient] as any).findMany({
+        (prisma as any)[resource].findMany({
           where,
           orderBy,
           select,
           skip,
           take: perPage,
         }),
-        (prisma[resource as keyof PrismaClient] as any).count({ where }),
+        (prisma as any)[resource].count({ where }),
       ]);
 
       return {
@@ -343,9 +339,7 @@ export const prismaDataProvider: DataProvider = {
     const select = buildSelectClause(resource);
 
     try {
-      const createdData = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).create({
+      const createdData = await (prisma as any)[resource].create({
         data: {
           ...data,
           createdAt: new Date(),
@@ -371,9 +365,7 @@ export const prismaDataProvider: DataProvider = {
     const select = buildSelectClause(resource);
 
     try {
-      const updatedData = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).update({
+      const updatedData = await (prisma as any)[resource].update({
         where: { id: String(id) },
         data: {
           ...data,
@@ -398,9 +390,7 @@ export const prismaDataProvider: DataProvider = {
     const { ids, data } = params;
 
     try {
-      const result = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).updateMany({
+      const result = await (prisma as any)[resource].updateMany({
         where: {
           id: {
             in: ids.map((id) => String(id)),
@@ -429,9 +419,7 @@ export const prismaDataProvider: DataProvider = {
     const select = buildSelectClause(resource);
 
     try {
-      const deletedData = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).delete({
+      const deletedData = await (prisma as any)[resource].delete({
         where: { id: String(id) },
         select,
       });
@@ -452,9 +440,7 @@ export const prismaDataProvider: DataProvider = {
     const { ids } = params;
 
     try {
-      const result = await (
-        prisma[resource as keyof PrismaClient] as any
-      ).deleteMany({
+      const result = await (prisma as any)[resource].deleteMany({
         where: {
           id: {
             in: ids.map((id) => String(id)),
