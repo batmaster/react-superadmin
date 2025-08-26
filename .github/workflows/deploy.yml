@@ -59,7 +59,7 @@ jobs:
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
       - name: Deploy to Firebase Production
-        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:production" --non-interactive
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting" --target production --non-interactive
 
   deploy-docs-preview:
     runs-on: ubuntu-latest
@@ -129,7 +129,7 @@ jobs:
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
       - name: Deploy to Firebase Staging
-        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:staging" --non-interactive
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting" --target staging --non-interactive
 
   build-docs-develop:
     name: Build Docs (develop)
@@ -160,4 +160,4 @@ jobs:
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
       - name: Deploy to Firebase Develop
-        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:develop" --non-interactive
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting" --target develop --non-interactive
