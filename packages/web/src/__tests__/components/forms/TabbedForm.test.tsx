@@ -79,7 +79,9 @@ describe("TabbedForm", () => {
       />,
     );
 
-    expect(screen.getByText("Basic Info")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Basic Info" }),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("Basic information about the item"),
     ).toBeInTheDocument();
