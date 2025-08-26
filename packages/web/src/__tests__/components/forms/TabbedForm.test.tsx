@@ -76,6 +76,7 @@ describe("TabbedForm", () => {
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
         initialValues={mockInitialValues}
+        showTabDescriptions={true}
       />,
     );
 
