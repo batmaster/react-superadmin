@@ -22,10 +22,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: '10.14.0'
           standalone: true
 
       - name: Setup pnpm cache
@@ -35,7 +35,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Generate Prisma Client
         run: pnpm --filter=@react-superadmin/web db:generate
@@ -62,10 +62,10 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: '10.14.0'
           standalone: true
 
       - name: Setup pnpm cache
@@ -75,7 +75,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Generate Prisma Client
         run: pnpm --filter=@react-superadmin/web db:generate
