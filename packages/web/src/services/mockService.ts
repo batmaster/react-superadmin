@@ -1,8 +1,13 @@
-import { mockUsers, mockPosts, mockProducts } from "../data/mockData";
 import { ListParams, ListResponse } from "@react-superadmin/core";
+import { mockPosts, mockProducts, mockUsers } from "../data/mockData";
 
-// Initialize localStorage with mock data if empty
+// Initialize localStorage with mock data if empty (browser only)
 const initializeStorage = () => {
+  // Check if we're in a browser environment
+  if (typeof window === "undefined" || typeof localStorage === "undefined") {
+    return;
+  }
+
   if (!localStorage.getItem("react-superadmin-users")) {
     localStorage.setItem("react-superadmin-users", JSON.stringify(mockUsers));
   }
@@ -28,6 +33,11 @@ export class MockService<T extends { id: string | number }> {
   }
 
   private loadData(initialData: T[]): T[] {
+    // Check if we're in a browser environment
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return initialData;
+    }
+
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
       return JSON.parse(stored);
@@ -38,6 +48,11 @@ export class MockService<T extends { id: string | number }> {
   }
 
   private saveData(): void {
+    // Check if we're in a browser environment
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
+
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
   }
 
@@ -135,16 +150,45 @@ export class MockService<T extends { id: string | number }> {
   }
 }
 
-// Initialize storage
-initializeStorage();
+// Initialize storage (only in browser)
+if (typeof window !== "undefined") {
+  initializeStorage();
+}
 
-// Create service instances
-export const userService = new MockService("react-superadmin-users", mockUsers);
-export const postService = new MockService("react-superadmin-posts", mockPosts);
-export const productService = new MockService(
-  "react-superadmin-products",
-  mockProducts,
-);
+// Create service instances (lazy-loaded to avoid SSR issues)
+let _userService: MockService<any> | null = null;
+let _postService: MockService<any> | null = null;
+let _productService: MockService<any> | null = null;
+
+export const userService = {
+  get instance() {
+    if (!_userService) {
+      _userService = new MockService("react-superadmin-users", mockUsers);
+    }
+    return _userService;
+  },
+};
+
+export const postService = {
+  get instance() {
+    if (!_postService) {
+      _postService = new MockService("react-superadmin-posts", mockPosts);
+    }
+    return _postService;
+  },
+};
+
+export const productService = {
+  get instance() {
+    if (!_productService) {
+      _productService = new MockService(
+        "react-superadmin-products",
+        mockProducts,
+      );
+    }
+    return _productService;
+  },
+};
 
 // Export service types
 export type User = (typeof mockUsers)[0];

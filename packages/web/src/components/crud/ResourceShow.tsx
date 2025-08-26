@@ -1,27 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useSuperAdmin } from '@react-superadmin/core';
-import { Edit, Trash2, ArrowLeft, User, FileText, Package, Calendar, Mail, Phone, Building, Tag, Eye, ThumbsUp, Star } from 'lucide-react';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { Badge } from '../ui/Badge';
-import { Modal } from '../ui/Modal';
-import { userService, postService, productService, User as UserType, Post, Product } from '../../services/mockService';
-import { formatDate } from '../../utils/formatDate';
-import { formatCurrency } from '../../utils/formatCurrency';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useSuperAdmin } from "@react-superadmin/core";
+import {
+  Edit,
+  Trash2,
+  ArrowLeft,
+  User,
+  FileText,
+  Package,
+  Calendar,
+  Mail,
+  Phone,
+  Building,
+  Tag,
+  Eye,
+  ThumbsUp,
+  Star,
+} from "lucide-react";
+import { Card } from "../ui/Card";
+import { Button } from "../ui/Button";
+import { Badge } from "../ui/Badge";
+import { Modal } from "../ui/Modal";
+import {
+  userService,
+  postService,
+  productService,
+  User as UserType,
+  Post,
+  Product,
+} from "../../services/mockService";
+import { formatDate } from "../../utils/formatDate";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export const ResourceShow: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Extract resource name from the current path
-  const pathSegments = location.pathname.split('/');
+  const pathSegments = location.pathname.split("/");
   const resourceName = pathSegments[1]; // /users/123 -> users
-  
+
   const { resources } = useSuperAdmin();
-  const resource = resources[resourceName || ''];
-  
+  const resource = resources[resourceName || ""];
+
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,12 +52,12 @@ export const ResourceShow: React.FC = () => {
   // Get the appropriate service based on resource name
   const getService = () => {
     switch (resourceName) {
-      case 'users':
-        return userService;
-      case 'posts':
-        return postService;
-      case 'products':
-        return productService;
+      case "users":
+        return userService.instance;
+      case "posts":
+        return postService.instance;
+      case "products":
+        return productService.instance;
       default:
         return null;
     }
@@ -49,18 +71,18 @@ export const ResourceShow: React.FC = () => {
       const loadData = async () => {
         setLoading(true);
         setError(null);
-        
+
         try {
           const result = await service.read(id);
           setData(result);
         } catch (error) {
-          setError('Failed to load data');
-          console.error('Error loading data:', error);
+          setError("Failed to load data");
+          console.error("Error loading data:", error);
         } finally {
           setLoading(false);
         }
       };
-      
+
       loadData();
     }
   }, [service, id]);
@@ -96,18 +118,18 @@ export const ResourceShow: React.FC = () => {
       setShowDeleteModal(false);
       navigate(`/${resourceName}`);
     } catch (error) {
-      console.error('Error deleting item:', error);
+      console.error("Error deleting item:", error);
     }
   };
 
   // Get resource icon
   const getResourceIcon = () => {
     switch (resourceName) {
-      case 'users':
+      case "users":
         return <User className="w-6 h-6" />;
-      case 'posts':
+      case "posts":
         return <FileText className="w-6 h-6" />;
-      case 'products':
+      case "products":
         return <Package className="w-6 h-6" />;
       default:
         return null;
@@ -129,7 +151,15 @@ export const ResourceShow: React.FC = () => {
           <p className="text-gray-600">{user.email}</p>
           <div className="flex items-center space-x-2 mt-2">
             <Badge variant="outline">{user.role}</Badge>
-            <Badge variant={user.status === 'active' ? 'success' : user.status === 'suspended' ? 'danger' : 'warning'}>
+            <Badge
+              variant={
+                user.status === "active"
+                  ? "success"
+                  : user.status === "suspended"
+                    ? "danger"
+                    : "warning"
+              }
+            >
               {user.status}
             </Badge>
           </div>
@@ -140,7 +170,9 @@ export const ResourceShow: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Contact Information
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-gray-400" />
@@ -160,15 +192,21 @@ export const ResourceShow: React.FC = () => {
 
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Account Details</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Account Details
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Calendar className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-700">Created: {formatDate(user.createdAt)}</span>
+                <span className="text-gray-700">
+                  Created: {formatDate(user.createdAt)}
+                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Calendar className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-700">Last Login: {formatDate(user.lastLogin)}</span>
+                <span className="text-gray-700">
+                  Last Login: {formatDate(user.lastLogin)}
+                </span>
               </div>
             </div>
           </div>
@@ -184,7 +222,15 @@ export const ResourceShow: React.FC = () => {
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{post.title}</h2>
         <div className="flex items-center space-x-2 mb-4">
-          <Badge variant={post.status === 'published' ? 'success' : post.status === 'draft' ? 'warning' : 'secondary'}>
+          <Badge
+            variant={
+              post.status === "published"
+                ? "success"
+                : post.status === "draft"
+                  ? "warning"
+                  : "secondary"
+            }
+          >
             {post.status}
           </Badge>
           <Badge variant="outline">{post.category}</Badge>
@@ -204,7 +250,9 @@ export const ResourceShow: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Post Information</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Post Information
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <User className="w-5 h-5 text-gray-400" />
@@ -213,12 +261,14 @@ export const ResourceShow: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <Calendar className="w-5 h-5 text-gray-400" />
                 <span className="text-gray-700">
-                  {post.publishedAt ? formatDate(post.publishedAt) : 'Not published'}
+                  {post.publishedAt
+                    ? formatDate(post.publishedAt)
+                    : "Not published"}
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Tag className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-700">{post.tags.join(', ')}</span>
+                <span className="text-gray-700">{post.tags.join(", ")}</span>
               </div>
             </div>
           </div>
@@ -226,7 +276,9 @@ export const ResourceShow: React.FC = () => {
 
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Statistics</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Statistics
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Eye className="w-5 h-5 text-gray-400" />
@@ -252,10 +304,20 @@ export const ResourceShow: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          {product.name}
+        </h2>
         <div className="flex items-center space-x-2 mb-4">
-          <Badge variant={product.status === 'in_stock' ? 'success' : product.status === 'low_stock' ? 'warning' : 'danger'}>
-            {product.status.replace('_', ' ')}
+          <Badge
+            variant={
+              product.status === "in_stock"
+                ? "success"
+                : product.status === "low_stock"
+                  ? "warning"
+                  : "danger"
+            }
+          >
+            {product.status.replace("_", " ")}
           </Badge>
           <Badge variant="outline">{product.category}</Badge>
         </div>
@@ -272,7 +334,9 @@ export const ResourceShow: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Product Information</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Product Information
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Package className="w-5 h-5 text-gray-400" />
@@ -284,7 +348,9 @@ export const ResourceShow: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Calendar className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-700">Created: {formatDate(product.createdAt)}</span>
+                <span className="text-gray-700">
+                  Created: {formatDate(product.createdAt)}
+                </span>
               </div>
             </div>
           </div>
@@ -292,7 +358,9 @@ export const ResourceShow: React.FC = () => {
 
         <Card>
           <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Pricing & Stock</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Pricing & Stock
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl font-bold text-primary-600">
@@ -301,11 +369,15 @@ export const ResourceShow: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Package className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-700">Stock: {product.stock} units</span>
+                <span className="text-gray-700">
+                  Stock: {product.stock} units
+                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Star className="w-5 h-5 text-yellow-400" />
-                <span className="text-gray-700">{product.rating} rating ({product.reviews} reviews)</span>
+                <span className="text-gray-700">
+                  {product.rating} rating ({product.reviews} reviews)
+                </span>
               </div>
             </div>
           </div>
@@ -317,11 +389,11 @@ export const ResourceShow: React.FC = () => {
   // Render content based on resource type
   const renderContent = () => {
     switch (resourceName) {
-      case 'users':
+      case "users":
         return renderUserDetails(data);
-      case 'posts':
+      case "posts":
         return renderPostDetails(data);
-      case 'products':
+      case "products":
         return renderProductDetails(data);
       default:
         return <div>Unsupported resource type</div>;
@@ -333,19 +405,29 @@ export const ResourceShow: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <Button variant="outline" onClick={() => navigate(`/${resourceName}`)}>
+          <Button
+            variant="outline"
+            onClick={() => navigate(`/${resourceName}`)}
+          >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to {resource.label}
           </Button>
           {getResourceIcon()}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{resource.label} Details</h1>
-            <p className="text-gray-600">View {resource.label.toLowerCase()} information</p>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {resource.label} Details
+            </h1>
+            <p className="text-gray-600">
+              View {resource.label.toLowerCase()} information
+            </p>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-2">
-          <Button variant="outline" onClick={() => navigate(`/${resourceName}/${id}/edit`)}>
+          <Button
+            variant="outline"
+            onClick={() => navigate(`/${resourceName}/${id}/edit`)}
+          >
             <Edit className="w-4 h-4 mr-2" />
             Edit
           </Button>
@@ -367,7 +449,8 @@ export const ResourceShow: React.FC = () => {
       >
         <div className="p-6">
           <p className="text-gray-600 mb-4">
-            Are you sure you want to delete this {resource.label.toLowerCase()}? This action cannot be undone.
+            Are you sure you want to delete this {resource.label.toLowerCase()}?
+            This action cannot be undone.
           </p>
           <div className="flex justify-end space-x-3">
             <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
