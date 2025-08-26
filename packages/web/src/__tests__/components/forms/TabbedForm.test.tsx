@@ -87,6 +87,11 @@ describe("TabbedForm", () => {
       screen.getByText("Basic information about the item"),
     ).toBeInTheDocument();
     expect(screen.getByText("Details")).toBeInTheDocument();
+
+    // Click on Details tab to see its description
+    const detailsTab = screen.getByRole("button", { name: "Details" });
+    fireEvent.click(detailsTab);
+
     expect(screen.getByText("Additional details")).toBeInTheDocument();
   });
 
