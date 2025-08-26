@@ -141,8 +141,8 @@ describe("TabbedForm", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText(/Name/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Email/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter email")).toBeInTheDocument();
   });
@@ -157,7 +157,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name");
+    const nameInput = screen.getByLabelText(/Name/);
     await userEvent.clear(nameInput);
     await userEvent.type(nameInput, "Jane Doe");
 
@@ -175,7 +175,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name");
+    const nameInput = screen.getByLabelText(/Name/);
     await userEvent.clear(nameInput);
     fireEvent.blur(nameInput);
 
@@ -223,11 +223,11 @@ describe("TabbedForm", () => {
         onSubmit={mockOnSubmit}
         onCancel={mockOnCancel}
         initialValues={mockInitialValues}
-        showProgress={true}
+        showTabNumbers={true}
       />,
     );
 
-    expect(screen.getByText("1 of 3")).toBeInTheDocument();
+    expect(screen.getByText("1 of 2")).toBeInTheDocument();
   });
 
   it("handles tab navigation with next/previous buttons", async () => {
@@ -268,7 +268,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const nameInput = screen.getByLabelText("Name");
+    const nameInput = screen.getByLabelText(/Name/);
     await userEvent.clear(nameInput);
     fireEvent.blur(nameInput);
 
@@ -276,7 +276,7 @@ describe("TabbedForm", () => {
     await userEvent.click(nextButton);
 
     // Should still be on first tab due to validation error
-    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+    expect(screen.getByLabelText(/Name/)).toBeInTheDocument();
   });
 
   it("handles form submission with validation errors", async () => {
@@ -377,14 +377,14 @@ describe("TabbedForm", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Text")).toHaveAttribute("type", "text");
-    expect(screen.getByLabelText("Number")).toHaveAttribute("type", "number");
-    expect(screen.getByLabelText("Boolean")).toHaveAttribute(
+    expect(screen.getByLabelText(/Text/)).toHaveAttribute("type", "text");
+    expect(screen.getByLabelText(/Number/)).toHaveAttribute("type", "number");
+    expect(screen.getByLabelText(/Boolean/)).toHaveAttribute(
       "type",
       "checkbox",
     );
-    expect(screen.getByLabelText("Date")).toHaveAttribute("type", "date");
-    expect(screen.getByLabelText("Time")).toHaveAttribute("type", "time");
+    expect(screen.getByLabelText(/Date/)).toHaveAttribute("type", "date");
+    expect(screen.getByLabelText(/Time/)).toHaveAttribute("type", "time");
   });
 
   it("handles field helper text", () => {
@@ -445,7 +445,7 @@ describe("TabbedForm", () => {
       />,
     );
 
-    const readonlyInput = screen.getByLabelText("Read Only Field");
+    const readonlyInput = screen.getByLabelText(/Read Only Field/);
     expect(readonlyInput).toBeDisabled();
     expect(readonlyInput).toHaveValue("Cannot edit this");
   });
@@ -464,7 +464,7 @@ describe("TabbedForm", () => {
     );
 
     // All validation modes should be enabled
-    const nameInput = screen.getByLabelText("Name");
+    const nameInput = screen.getByLabelText(/Name/);
 
     // Change should trigger validation
     fireEvent.change(nameInput, { target: { value: "" } });

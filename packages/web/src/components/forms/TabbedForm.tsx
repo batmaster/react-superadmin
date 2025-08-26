@@ -66,6 +66,7 @@ export interface TabbedFormProps {
   onCancel?: () => void;
   initialValues?: Record<string, any>;
   title?: string;
+  description?: string;
   submitText?: string;
   cancelText?: string;
   loading?: boolean;
@@ -143,6 +144,7 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
   onCancel,
   initialValues = {},
   title,
+  description,
   submitText = "Save",
   cancelText = "Cancel",
   loading = false,
@@ -535,6 +537,9 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       {title && (
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+          {description && (
+            <p className="text-sm text-gray-600 mt-2">{description}</p>
+          )}
         </div>
       )}
 
@@ -607,6 +612,16 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {Math.round(getTabCompletion(activeTabId))}% complete
+                </p>
+              </div>
+            )}
+
+            {/* Step Indicator */}
+            {showTabNumbers && (
+              <div className="ml-4">
+                <p className="text-sm text-gray-600">
+                  {tabs.findIndex((tab) => tab.id === activeTabId) + 1} of{" "}
+                  {tabs.length}
                 </p>
               </div>
             )}
