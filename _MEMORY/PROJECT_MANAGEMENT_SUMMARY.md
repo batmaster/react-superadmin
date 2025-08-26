@@ -27,6 +27,53 @@ seamlessly.**
 - **Reference**: Based on React Admin patterns from
   https://marmelab.com/react-admin/documentation.html
 
+## ✅ **CI/CD – Documentation Deploy Pipeline (August 2025)**
+
+### What changed
+
+- Consolidated all docs build/deploy into `.github/workflows/deploy.yml` (single
+  source of truth)
+- Added Firebase Hosting targets per environment via `.firebaserc` and
+  `firebase.json` (multi-site)
+  - Targets → Sites:
+    - production → `react-superadmin`
+    - preview → `react-superadmin-preview`
+    - staging → `react-superadmin-staging`
+    - develop → `react-superadmin-develop`
+- Triggers configured:
+  - Production: push/merge to `main`
+  - Preview: any Pull Request (channel `pr-<number>`, target `preview`)
+  - Staging: PRs labeled `staging` (target `staging`)
+  - Develop: pushes to `develop` (target `develop`)
+- Switched deploy steps to `firebase-tools` CLI with
+  `GOOGLE_APPLICATION_CREDENTIALS` set from `FIREBASE_SERVICE_ACCOUNT_KEY`
+  secret
+- Hardened pnpm setup to use standalone installer to avoid npm registry 403s in
+  Actions
+- Deprecated legacy `.github/workflows/docs-build.yml` (disabled; safe to delete
+  later)
+
+### Build fixes done to make docs green
+
+- Docusaurus ESM-safe dirname and Webpack aliases for workspace packages
+- SSR hardening: guarded `localStorage` access and lazy mock services
+- Added browser-safe stub for `@prisma/client` during docs build
+
+### Current status
+
+- Local builds green; CI runs building docs successfully
+- Some docs broken-link warnings remain (non-blocking) and should be cleaned up
+
+### Next steps (CI/CD)
+
+1. Delete the legacy `.github/workflows/docs-build.yml` in a housekeeping PR
+2. Open a tiny docs-only PR to produce a Preview URL and apply `staging` label
+   to produce Staging URL
+3. Verify a live release appears under `react-superadmin-develop` site after
+   `develop` pushes
+4. Add a brief "Docs CI/CD" section to `README.md` describing triggers and
+   targets
+
 ## 🚨 **CRITICAL: PROJECT MANAGEMENT CRISIS IDENTIFIED**
 
 ### **Emergency Situation Discovered (August 2025)**
