@@ -1,5 +1,6 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
+import path from 'path';
 import { getEnvironmentUrl } from './config/environments';
 
 const config: Config = {
@@ -72,6 +73,27 @@ const config: Config = {
         docsDir: ['docs'],
       },
     ],
+    // Inline plugin to alias monorepo packages for MDX/live examples
+    function resolveMonorepoPackages() {
+      return {
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                '@react-superadmin/web': path.resolve(
+                  __dirname,
+                  '../packages/web/src'
+                ),
+                '@react-superadmin/core': path.resolve(
+                  __dirname,
+                  '../packages/core/src'
+                ),
+              },
+            },
+          };
+        },
+      };
+    },
   ],
 
   themeConfig: {
