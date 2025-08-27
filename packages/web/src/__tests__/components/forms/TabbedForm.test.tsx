@@ -1,11 +1,7 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  TabbedForm,
-  Tab,
-  TabField,
-} from "../../../components/forms/TabbedForm";
+import React from "react";
+import { Tab, TabbedForm } from "../../../components/forms/TabbedForm";
 
 // Mock data for testing
 const mockTabs: Tab[] = [
@@ -458,7 +454,8 @@ describe("TabbedForm", () => {
     expect(readonlyInput).toHaveValue("Cannot edit this");
   });
 
-  it("handles form validation modes", () => {
+  it("handles form validation modes", async () => {
+    const user = userEvent.setup();
     render(
       <TabbedForm
         tabs={mockTabs}
@@ -475,16 +472,17 @@ describe("TabbedForm", () => {
     const nameInput = screen.getByLabelText(/Name/);
 
     // Change should trigger validation
-    fireEvent.change(nameInput, { target: { value: "" } });
+    await user.type(nameInput, "test");
+    await user.clear(nameInput);
     expect(screen.getByText("Name is required")).toBeInTheDocument();
 
     // Blur should trigger validation
-    fireEvent.blur(nameInput);
+    await user.tab(); // This will blur the input
     expect(screen.getByText("Name is required")).toBeInTheDocument();
 
     // Submit should trigger validation
     const submitButton = screen.getByRole("button", { name: /save/i });
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
     expect(screen.getByText("Name is required")).toBeInTheDocument();
   });
 

@@ -294,6 +294,8 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
           const error = validateField(field, value);
           if (error) {
             setErrors((prev) => ({ ...prev, [fieldName]: error }));
+            // Set field as touched so error is displayed
+            setTouched((prev) => ({ ...prev, [fieldName]: true }));
           }
         }
       }
@@ -350,6 +352,12 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       const newErrors = validateAll();
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+        // Set all fields as touched so validation errors are displayed
+        const newTouched: Record<string, boolean> = {};
+        allFields.forEach((field) => {
+          newTouched[field.name] = true;
+        });
+        setTouched(newTouched);
         setIsSubmitting(false);
         if (onValidationError) {
           onValidationError(newErrors);
@@ -402,9 +410,46 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
   const handleNextTab = useCallback(() => {
     const currentIndex = tabs.findIndex((tab) => tab.id === activeTabId);
     if (currentIndex < tabs.length - 1) {
+      const currentTab = tabs[currentIndex];
+
+      // Validate current tab fields if validation is enabled
+      if (validateOnBlur || validateOnChange || validateOnSubmit) {
+        const currentTabErrors: Record<string, string> = {};
+        let hasErrors = false;
+
+        currentTab.fields.forEach((field) => {
+          const error = validateField(field, values[field.name]);
+          if (error) {
+            currentTabErrors[field.name] = error;
+            hasErrors = true;
+          }
+        });
+
+        // If there are validation errors, don't navigate and show errors
+        if (hasErrors) {
+          setErrors((prev) => ({ ...prev, ...currentTabErrors }));
+          // Set current tab fields as touched so errors are displayed
+          const newTouched: Record<string, boolean> = {};
+          currentTab.fields.forEach((field) => {
+            newTouched[field.name] = true;
+          });
+          setTouched((prev) => ({ ...prev, ...newTouched }));
+          return;
+        }
+      }
+
       handleTabChange(tabs[currentIndex + 1].id);
     }
-  }, [activeTabId, tabs, handleTabChange]);
+  }, [
+    activeTabId,
+    tabs,
+    handleTabChange,
+    validateOnBlur,
+    validateOnChange,
+    validateOnSubmit,
+    validateField,
+    values,
+  ]);
 
   // Navigate to previous tab
   const handlePreviousTab = useCallback(() => {
