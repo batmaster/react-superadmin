@@ -2,42 +2,31 @@
 title: Validation Utilities
 description: Form validation utilities with built-in rules and custom validation support
 ---
-
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { validateField, validateForm } from '@react-superadmin/core';
-
 # Validation Utilities
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 The validation utilities provide a comprehensive form validation system with built-in validation rules and support for custom validation functions. These utilities are designed to work seamlessly with form components and provide consistent validation across your application.
-
 ## Overview
-
 The validation utilities provide:
-
 - **Built-in Validation Rules**: Common validation patterns (required, min, max, pattern)
 - **Custom Validation**: Support for custom validation functions
 - **Field-level Validation**: Validate individual fields with specific rules
 - **Form-level Validation**: Validate entire forms with multiple fields
 - **Type Safety**: Full TypeScript support with proper typing
 - **Flexible Configuration**: Easy to configure and extend validation rules
-
 ## Validation Rules
-
 The system supports the following built-in validation rules:
-
-| Rule Type  | Description                | Example                                                                            |
-| ---------- | -------------------------- | ---------------------------------------------------------------------------------- |
-| `required` | Field must have a value    | `{ type: 'required', message: 'This field is required' }`                          |
-| `min`      | Minimum length or value    | `{ type: 'min', value: 3, message: 'Must be at least 3 characters' }`              |
-| `max`      | Maximum length or value    | `{ type: 'max', value: 100, message: 'Must be less than 100 characters' }`         |
-| `pattern`  | Regular expression pattern | `{ type: 'pattern', value: '^[a-zA-Z]+$', message: 'Only letters allowed' }`       |
+| Rule Type  | Description  | Example  |
+| ---------------------------------------------------------------------------------- |
+| `required` | Field must have a value    | `{ type: 'required', message: 'This field is required' }`  |
+| `min`  | Minimum length or value    | `{ type: 'min', value: 3, message: 'Must be at least 3 characters' }`  |
+| `max`  | Maximum length or value    | `{ type: 'max', value: 100, message: 'Must be less than 100 characters' }`  |
+| `pattern`  | Regular expression pattern | `{ type: 'pattern', value: '^[a-zA-Z]+$', message: 'Only letters allowed' }`  |
 | `custom`   | Custom validation function | `{ type: 'custom', value: (val) => val.includes('@'), message: 'Must contain @' }` |
-
 ## Basic Usage
-
 ```jsx
 import { validateField, validateForm } from '@react-superadmin/core';
-
 // Field configuration with validation rules
 const fieldConfig = {
   name: 'email',
@@ -46,27 +35,22 @@ const fieldConfig = {
   validation: [
     { type: 'required', message: 'Email is required' },
     {
-      type: 'pattern',
-      value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-      message: 'Invalid email format',
+  type: 'pattern',
+  value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  message: 'Invalid email format',
     },
   ],
 };
-
 // Validate a single field
 const error = validateField('user@example.com', fieldConfig);
 console.log(error); // null (valid)
-
 // Validate an entire form
 const formData = { email: 'invalid-email' };
 const errors = validateForm(formData, [fieldConfig]);
 console.log(errors); // { email: 'Invalid email format' }
 ```
-
 ## Examples
-
 ### Basic Field Validation
-
 <LiveProvider code={`
 function BasicValidationExample() {
   const fieldConfig = {
@@ -74,37 +58,31 @@ function BasicValidationExample() {
     label: 'Username',
     type: 'text',
     validation: [
-      { type: 'required', message: 'Username is required' },
-      { type: 'min', value: 3, message: 'Username must be at least 3 characters' },
-      { type: 'max', value: 20, message: 'Username must be less than 20 characters' }
+  { type: 'required', message: 'Username is required' },
+  { type: 'min', value: 3, message: 'Username must be at least 3 characters' },
+  { type: 'max', value: 20, message: 'Username must be less than 20 characters' }
     ]
   };
-
 const testValues = ['', 'ab', 'validusername', 'verylongusername123456789'];
-
 return (
-
 <div className='space-y-4'>
   <h3 className='text-lg font-medium'>Validation Results:</h3>
   {testValues.map((value, index) => {
     const error = validateField(value, fieldConfig);
     return (
-      <div key={index} className='p-3 border rounded'>
-        <strong>Value:</strong> "{value}" <br />
-        <strong>Error:</strong> {error || 'Valid ✓'}
-      </div>
+  <div key={index} className='p-3 border rounded'>
+  <strong>Value:</strong> "{value}" <br />
+  <strong>Error:</strong> {error || 'Valid ✓'}
+  </div>
     );
   })}
 </div>
 ); } `}>
-
   <LiveEditor />
   <LiveError />
   <LivePreview />
 </LiveProvider>
-
 ### Email Validation
-
 <LiveProvider code={`
 function EmailValidationExample() {
   const emailField = {
@@ -112,36 +90,30 @@ function EmailValidationExample() {
     label: 'Email Address',
     type: 'email',
     validation: [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', value: '^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$', message: 'Invalid email format' }
+  { type: 'required', message: 'Email is required' },
+  { type: 'pattern', value: '^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$', message: 'Invalid email format' }
     ]
   };
-
 const testEmails = ['', 'invalid', 'user@example', 'user@example.com'];
-
 return (
-
 <div className='space-y-4'>
   <h3 className='text-lg font-medium'>Email Validation:</h3>
   {testEmails.map((email, index) => {
     const error = validateField(email, emailField);
     return (
-      <div key={index} className='p-3 border rounded'>
-        <strong>Email:</strong> "{email}" <br />
-        <strong>Result:</strong> {error || 'Valid ✓'}
-      </div>
+  <div key={index} className='p-3 border rounded'>
+  <strong>Email:</strong> "{email}" <br />
+  <strong>Result:</strong> {error || 'Valid ✓'}
+  </div>
     );
   })}
 </div>
 ); } `}>
-
   <LiveEditor />
   <LiveError />
   <LivePreview />
 </LiveProvider>
-
 ### Custom Validation
-
 <LiveProvider code={`
 function CustomValidationExample() {
   const passwordField = {
@@ -149,88 +121,67 @@ function CustomValidationExample() {
     label: 'Password',
     type: 'password',
     validation: [
-      { type: 'required', message: 'Password is required' },
-      { type: 'min', value: 8, message: 'Password must be at least 8 characters' },
-      { 
-        type: 'custom', 
-        value: (val) => /[A-Z]/.test(val), 
-        message: 'Password must contain at least one uppercase letter' 
-      },
-      { 
-        type: 'custom', 
-        value: (val) => /[0-9]/.test(val), 
-        message: 'Password must contain at least one number' 
-      }
+  { type: 'required', message: 'Password is required' },
+  { type: 'min', value: 8, message: 'Password must be at least 8 characters' },
+  {  type: 'custom',  value: (val) => /[A-Z]/.test(val),  message: 'Password must contain at least one uppercase letter'  },
+  {  type: 'custom',  value: (val) => /[0-9]/.test(val),  message: 'Password must contain at least one number'  }
     ]
   };
-
 const testPasswords = ['', 'weak', 'StrongPass', 'StrongPass123'];
-
 return (
-
 <div className='space-y-4'>
   <h3 className='text-lg font-medium'>Password Validation:</h3>
   {testPasswords.map((password, index) => {
     const error = validateField(password, passwordField);
     return (
-      <div key={index} className='p-3 border rounded'>
-        <strong>Password:</strong> "{password}" <br />
-        <strong>Result:</strong> {error || 'Valid ✓'}
-      </div>
+  <div key={index} className='p-3 border rounded'>
+  <strong>Password:</strong> "{password}" <br />
+  <strong>Result:</strong> {error || 'Valid ✓'}
+  </div>
     );
   })}
 </div>
 ); } `}>
-
   <LiveEditor />
   <LiveError />
   <LivePreview />
 </LiveProvider>
-
 ### Form Validation
-
 <LiveProvider code={`
 function FormValidationExample() {
   const formFields = [
     {
-      name: 'name',
-      label: 'Full Name',
-      type: 'text',
-      validation: [
-        { type: 'required', message: 'Name is required' },
-        { type: 'min', value: 2, message: 'Name must be at least 2 characters' }
-      ]
+  name: 'name',
+  label: 'Full Name',
+  type: 'text',
+  validation: [
+  { type: 'required', message: 'Name is required' },
+  { type: 'min', value: 2, message: 'Name must be at least 2 characters' }
+  ]
     },
     {
-      name: 'age',
-      label: 'Age',
-      type: 'number',
-      validation: [
-        { type: 'required', message: 'Age is required' },
-        { type: 'min', value: 18, message: 'Must be at least 18 years old' },
-        { type: 'max', value: 120, message: 'Age must be less than 120' }
-      ]
+  name: 'age',
+  label: 'Age',
+  type: 'number',
+  validation: [
+  { type: 'required', message: 'Age is required' },
+  { type: 'min', value: 18, message: 'Must be at least 18 years old' },
+  { type: 'max', value: 120, message: 'Age must be less than 120' }
+  ]
     },
     {
-      name: 'website',
-      label: 'Website',
-      type: 'url',
-      validation: [
-        { type: 'pattern', value: '^https?://.+', message: 'Website must start with http:// or https://' }
-      ]
-    }
-  ];
-
+  name: 'website',
+  label: 'Website',
+  type: 'url',
+  validation: [
+  { type: 'pattern', value: '^https?://.+', message: 'Website must start with http:// or https://' } ];
 const testFormData = {
 name: 'John Doe',
 age: 25,
 website: 'https://example.com'
 };
-
 const errors = validateForm(testFormData, formFields);
-
 return (
-
 <div className='space-y-4'>
   <h3 className='text-lg font-medium'>Form Validation Results:</h3>
   <div className='p-3 border rounded'>
@@ -240,29 +191,21 @@ return (
   </div>
 </div>
 ); } `}>
-
   <LiveEditor />
   <LiveError />
   <LivePreview />
 </LiveProvider>
-
 ## Validation Rule Types
-
 ### Required Validation
-
 Ensures a field has a value:
-
 ```jsx
 const requiredRule = {
   type: 'required',
   message: 'This field is required',
 };
 ```
-
 ### Min/Max Validation
-
 Validates minimum and maximum values for strings and numbers:
-
 ```jsx
 // String length validation
 const minLengthRule = {
@@ -270,7 +213,6 @@ const minLengthRule = {
   value: 3,
   message: 'Must be at least 3 characters',
 };
-
 // Number value validation
 const maxValueRule = {
   type: 'max',
@@ -278,11 +220,8 @@ const maxValueRule = {
   message: 'Value must be less than 100',
 };
 ```
-
 ### Pattern Validation
-
 Uses regular expressions for complex validation:
-
 ```jsx
 // Email validation
 const emailRule = {
@@ -290,7 +229,6 @@ const emailRule = {
   value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
   message: 'Invalid email format',
 };
-
 // Phone number validation
 const phoneRule = {
   type: 'pattern',
@@ -298,11 +236,8 @@ const phoneRule = {
   message: 'Invalid phone number format',
 };
 ```
-
 ### Custom Validation
-
 Allows custom validation functions:
-
 ```jsx
 const customRule = {
   type: 'custom',
@@ -313,11 +248,8 @@ const customRule = {
   message: 'Must contain @ and be longer than 5 characters',
 };
 ```
-
 ## Field Configuration
-
 Fields can be configured with multiple validation rules:
-
 ```jsx
 const fieldConfig = {
   name: 'username',
@@ -328,18 +260,15 @@ const fieldConfig = {
     { type: 'min', value: 3, message: 'Must be at least 3 characters' },
     { type: 'max', value: 20, message: 'Must be less than 20 characters' },
     {
-      type: 'pattern',
-      value: '^[a-zA-Z0-9_]+$',
-      message: 'Only letters, numbers, and underscores allowed',
+  type: 'pattern',
+  value: '^[a-zA-Z0-9_]+$',
+  message: 'Only letters, numbers, and underscores allowed',
     },
   ],
 };
 ```
-
 ## Form Validation
-
 Validate entire forms with multiple fields:
-
 ```jsx
 const formFields = [
   {
@@ -347,12 +276,12 @@ const formFields = [
     label: 'Email',
     type: 'email',
     validation: [
-      { type: 'required', message: 'Email is required' },
-      {
-        type: 'pattern',
-        value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-        message: 'Invalid email',
-      },
+  { type: 'required', message: 'Email is required' },
+  {
+  type: 'pattern',
+  value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  message: 'Invalid email',
+  },
     ],
   },
   {
@@ -360,28 +289,22 @@ const formFields = [
     label: 'Password',
     type: 'password',
     validation: [
-      { type: 'required', message: 'Password is required' },
-      { type: 'min', value: 8, message: 'Must be at least 8 characters' },
+  { type: 'required', message: 'Password is required' },
+  { type: 'min', value: 8, message: 'Must be at least 8 characters' },
     ],
   },
 ];
-
 const formData = {
   email: 'user@example.com',
   password: 'secret123',
 };
-
 const errors = validateForm(formData, formFields);
 // Returns: {} (no errors) or { email: 'error message', password: 'error message' }
 ```
-
 ## Integration with Forms
-
 The validation utilities work seamlessly with form components:
-
 ```jsx
 import { SimpleForm, validateForm } from '@react-superadmin/web';
-
 const formFields = [
   {
     name: 'name',
@@ -394,38 +317,31 @@ const formFields = [
     label: 'Email',
     type: 'email',
     validation: [
-      { type: 'required', message: 'Email is required' },
-      {
-        type: 'pattern',
-        value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-        message: 'Invalid email',
-      },
+  { type: 'required', message: 'Email is required' },
+  {
+  type: 'pattern',
+  value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  message: 'Invalid email',
+  },
     ],
   },
 ];
-
 function MyForm() {
   const handleSubmit = values => {
     // Validate form before submission
     const errors = validateForm(values, formFields);
-
     if (Object.keys(errors).length === 0) {
-      // Form is valid, proceed with submission
-      console.log('Form submitted:', values);
+  // Form is valid, proceed with submission
+  console.log('Form submitted:', values);
     } else {
-      // Handle validation errors
-      console.log('Validation errors:', errors);
-    }
+  // Handle validation errors
+  console.log('Validation errors:', errors);
   };
-
   return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
 }
 ```
-
 ## Error Handling
-
 The validation utilities return clear error messages:
-
 ```jsx
 const fieldConfig = {
   name: 'age',
@@ -434,40 +350,31 @@ const fieldConfig = {
     { type: 'min', value: 18, message: 'Must be at least 18 years old' },
   ],
 };
-
 // Empty value
 const error1 = validateField('', fieldConfig);
 console.log(error1); // "Age is required"
-
 // Invalid value
 const error2 = validateField('16', fieldConfig);
 console.log(error2); // "Must be at least 18 years old"
-
 // Valid value
 const error3 = validateField('25', fieldConfig);
 console.log(error3); // null
 ```
-
 ## TypeScript Support
-
 The validation utilities provide full TypeScript support:
-
 ```typescript
 import { ValidationRule, FieldConfig } from '@react-superadmin/core';
-
 interface ValidationRule {
   type: 'required' | 'min' | 'max' | 'pattern' | 'custom';
   value?: number | string | ((value: any) => boolean);
   message: string;
 }
-
 interface FieldConfig {
   name: string;
   label: string;
   type: string;
   validation?: ValidationRule[];
 }
-
 // Type-safe validation
 const field: FieldConfig = {
   name: 'email',
@@ -476,16 +383,14 @@ const field: FieldConfig = {
   validation: [
     { type: 'required', message: 'Email is required' },
     {
-      type: 'pattern',
-      value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-      message: 'Invalid email',
+  type: 'pattern',
+  value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  message: 'Invalid email',
     },
   ],
 };
 ```
-
 ## Related Components
-
 - [`FormField`](./form-field.mdx) - Universal form field renderer with validation
 - [`SimpleForm`](./simple-form.mdx) - Simple form with built-in validation
 - [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation

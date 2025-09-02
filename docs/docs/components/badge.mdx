@@ -2,25 +2,15 @@
 title: Badge
 description: A versatile badge component for displaying status, labels, and small pieces of information
 ---
-
 import { Badge } from '@site/src/components/ui/Badge';
-
 # Badge
-
-> **🔄 Last Built**: August 20, 2025 at 08:24 PM
-
 A clean, minimal badge component for displaying status indicators, labels, and small pieces of information. Follows Headless UI design principles with subtle borders and consistent spacing.
-
 ## Basic Usage
-
 ```jsx live
 <Badge>Default Badge</Badge>
 ```
-
 ## Variants
-
 The Badge component supports different visual variants to convey different meanings:
-
 ```jsx live
 <div className='flex flex-wrap gap-2'>
   <Badge variant='default'>Default</Badge>
@@ -33,11 +23,8 @@ The Badge component supports different visual variants to convey different meani
   <Badge variant='outline'>Outline</Badge>
 </div>
 ```
-
 ## Sizes
-
 Choose from three different sizes to fit your design needs:
-
 ```jsx live
 <div className='flex flex-wrap items-center gap-2'>
   <Badge size='sm'>Small</Badge>
@@ -45,22 +32,16 @@ Choose from three different sizes to fit your design needs:
   <Badge size='lg'>Large</Badge>
 </div>
 ```
-
 ## Rounded Style
-
 Toggle between rounded and standard border radius:
-
 ```jsx live
 <div className='flex flex-wrap gap-2'>
   <Badge>Standard</Badge>
   <Badge rounded>Rounded</Badge>
 </div>
 ```
-
 ## Custom Styling
-
 Apply custom classes and HTML attributes:
-
 ```jsx live
 <div className='flex flex-wrap gap-2'>
   <Badge className='bg-purple-100 text-purple-800 border-purple-200'>
@@ -71,11 +52,8 @@ Apply custom classes and HTML attributes:
   </Badge>
 </div>
 ```
-
 ## Real-world Examples
-
 ### Status Indicators
-
 ```jsx live
 <div className='flex flex-wrap gap-2'>
   <Badge variant='success'>Active</Badge>
@@ -84,9 +62,7 @@ Apply custom classes and HTML attributes:
   <Badge variant='info'>Processing</Badge>
 </div>
 ```
-
 ### Category Tags
-
 ```jsx live
 <div className='flex flex-wrap gap-2'>
   <Badge variant='primary' size='sm'>
@@ -103,9 +79,7 @@ Apply custom classes and HTML attributes:
   </Badge>
 </div>
 ```
-
 ### Notification Counts
-
 ```jsx live
 <div className='flex flex-wrap items-center gap-2'>
   <Badge variant='danger' size='sm'>
@@ -119,11 +93,8 @@ Apply custom classes and HTML attributes:
   </Badge>
 </div>
 ```
-
 ## API Reference
-
 ### Props
-
 | Prop        | Type                                                                                                 | Default     | Description                    |
 | ----------- | ---------------------------------------------------------------------------------------------------- | ----------- | ------------------------------ |
 | `variant`   | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'outline'` | `'default'` | Visual style variant           |
@@ -131,9 +102,7 @@ Apply custom classes and HTML attributes:
 | `rounded`   | `boolean`                                                                                            | `false`     | Whether to use rounded corners |
 | `className` | `string`                                                                                             | -           | Additional CSS classes         |
 | `children`  | `ReactNode`                                                                                          | -           | Badge content                  |
-
 ### Variants
-
 - **default**: Neutral gray styling for general use
 - **primary**: Blue styling for primary actions
 - **secondary**: Gray styling for secondary actions
@@ -142,34 +111,24 @@ Apply custom classes and HTML attributes:
 - **danger**: Red styling for error or danger states
 - **info**: Sky blue styling for informational content
 - **outline**: White background with gray border for subtle emphasis
-
 ### Sizes
-
 - **sm**: Small size with `px-2 py-0.5 text-xs`
 - **md**: Medium size with `px-2.5 py-1 text-sm` (default)
 - **lg**: Large size with `px-3 py-1.5 text-base`
-
 ## Accessibility
-
 The Badge component renders as a `<span>` element and passes through all HTML attributes. It's designed to be semantic and accessible:
-
 - Uses appropriate contrast ratios for text readability
 - Supports custom ARIA attributes when needed
 - Maintains proper focus states
 - Works with screen readers
-
 ## Design Principles
-
 The Badge component follows these design principles:
-
 - **Minimal**: Clean, simple design without unnecessary visual noise
 - **Consistent**: Uniform spacing and sizing across all variants
 - **Accessible**: High contrast and readable text
 - **Flexible**: Easy to customize and extend with custom classes
 - **Semantic**: Uses appropriate colors to convey meaning
-
 ## Best Practices
-
 - Use consistent variants across your application for similar types of information
 - Choose sizes that fit the context - smaller badges for dense layouts, larger ones for emphasis
 - Consider using the `rounded` variant for a more modern, pill-like appearance

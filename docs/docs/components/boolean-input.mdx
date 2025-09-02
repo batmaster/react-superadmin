@@ -2,156 +2,123 @@
 title: BooleanInput
 description: A comprehensive boolean input component supporting checkbox, radio button, and toggle switch variants with nullable support.
 ---
-
 // Component is available in the live scope
-
 # BooleanInput
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 A comprehensive boolean input component that supports checkbox, radio button, and toggle switch variants. Follows React Admin patterns and provides enhanced boolean input functionality with nullable support.
-
 ## Features
-
 - **Multiple Variants**: Checkbox, radio buttons, and toggle switch
 - **Nullable Support**: Optional support for null/undefined values
 - **Accessibility**: Full ARIA support and keyboard navigation
 - **Theme Integration**: Consistent styling with the design system
 - **Form Integration**: Works seamlessly with form validation
 - **Controlled/Uncontrolled**: Supports both controlled and uncontrolled usage
-
 ## Basic Usage
-
 ### Checkbox Variant (Default)
-
 ```tsx
 // Component is available in the live scope
-
 function MyForm() {
   const [agreed, setAgreed] = useState(false);
-
   return (
     <BooleanInput
-      label='I agree to the terms and conditions'
-      value={agreed}
-      onChange={setAgreed}
-      required
+  label='I agree to the terms and conditions'
+  value={agreed}
+  onChange={setAgreed}
+  required
     />
   );
 }
 ```
-
 ### Radio Button Variant
-
 ```tsx
 function UserStatusForm() {
   const [status, setStatus] = useState(false);
-
   return (
     <BooleanInput
-      label='User Status'
-      variant='radio'
-      value={status}
-      onChange={setStatus}
-      trueLabel='Active'
-      falseLabel='Inactive'
-      direction='horizontal'
+  label='User Status'
+  variant='radio'
+  value={status}
+  onChange={setStatus}
+  trueLabel='Active'
+  falseLabel='Inactive'
+  direction='horizontal'
     />
   );
 }
 ```
-
 ### Toggle Switch Variant
-
 ```tsx
 function FeatureFlagForm() {
   const [enabled, setEnabled] = useState(false);
-
   return (
     <BooleanInput
-      label='Feature Flag'
-      variant='toggle'
-      value={enabled}
-      onChange={setEnabled}
-      trueLabel='Enabled'
-      falseLabel='Disabled'
+  label='Feature Flag'
+  variant='toggle'
+  value={enabled}
+  onChange={setEnabled}
+  trueLabel='Enabled'
+  falseLabel='Disabled'
     />
   );
 }
 ```
-
 ## Props
-
 ### Core Props
-
-| Prop           | Type                                | Default      | Description                          |
-| -------------- | ----------------------------------- | ------------ | ------------------------------------ |
-| `label`        | `string`                            | -            | Label text for the input             |
-| `value`        | `boolean \| null`                   | -            | Controlled value                     |
-| `defaultValue` | `boolean \| null`                   | `false`      | Default value for uncontrolled usage |
-| `onChange`     | `(value: boolean \| null) => void`  | -            | Callback when value changes          |
-| `variant`      | `'checkbox' \| 'radio' \| 'toggle'` | `'checkbox'` | Input variant to render              |
-
+| Prop  | Type  | Default  | Description  |
+| ------------------------------------ |
+| `label`  | `string`  | -  | Label text for the input  |
+| `value`  | `boolean \| null`  | -  | Controlled value  |
+| `defaultValue` | `boolean \| null`  | `false`  | Default value for uncontrolled usage |
+| `onChange`  | `(value: boolean \| null) => void`  | -  | Callback when value changes  |
+| `variant`  | `'checkbox' \| 'radio' \| 'toggle'` | `'checkbox'` | Input variant to render  |
 ### Variant-Specific Props
-
 #### Radio Variant
-
-| Prop         | Type                         | Default        | Description                        |
-| ------------ | ---------------------------- | -------------- | ---------------------------------- |
+| Prop  | Type  | Default  | Description  |
+| ---------------------------------- |
 | `direction`  | `'horizontal' \| 'vertical'` | `'horizontal'` | Layout direction for radio buttons |
-| `trueLabel`  | `string`                     | `'Yes'`        | Text for true state                |
-| `falseLabel` | `string`                     | `'No'`         | Text for false state               |
-| `nullLabel`  | `string`                     | `'Not Set'`    | Text for null state                |
-
+| `trueLabel`  | `string`  | `'Yes'`  | Text for true state  |
+| `falseLabel` | `string`  | `'No'`  | Text for false state  |
+| `nullLabel`  | `string`  | `'Not Set'`    | Text for null state  |
 #### Toggle Variant
-
-| Prop         | Type     | Default     | Description          |
-| ------------ | -------- | ----------- | -------------------- |
-| `trueLabel`  | `string` | `'Yes'`     | Text for true state  |
-| `falseLabel` | `string` | `'No'`      | Text for false state |
+| Prop  | Type  | Default  | Description  |
+| ------------ | -------------------- |
+| `trueLabel`  | `string` | `'Yes'`  | Text for true state  |
+| `falseLabel` | `string` | `'No'`  | Text for false state |
 | `nullLabel`  | `string` | `'Not Set'` | Text for null state  |
-
 ### Common Props
-
-| Prop         | Type                   | Default | Description                    |
-| ------------ | ---------------------- | ------- | ------------------------------ |
-| `helperText` | `string`               | -       | Helper text below the input    |
-| `error`      | `string`               | -       | Error message to display       |
-| `required`   | `boolean`              | `false` | Whether the field is required  |
-| `size`       | `'sm' \| 'md' \| 'lg'` | `'md'`  | Input size variant             |
-| `loading`    | `boolean`              | `false` | Whether to show loading state  |
-| `disabled`   | `boolean`              | `false` | Whether the input is disabled  |
-| `readOnly`   | `boolean`              | `false` | Whether the input is read-only |
-| `nullable`   | `boolean`              | `false` | Whether to allow null values   |
-| `showLabels` | `boolean`              | `false` | Whether to show labels inline  |
-
+| Prop  | Type  | Default | Description  |
+| ------------------------------ |
+| `helperText` | `string`  | -  | Helper text below the input    |
+| `error`  | `string`  | -  | Error message to display  |
+| `required`   | `boolean`  | `false` | Whether the field is required  |
+| `size`  | `'sm' \| 'md' \| 'lg'` | `'md'`  | Input size variant  |
+| `loading`    | `boolean`  | `false` | Whether to show loading state  |
+| `disabled`   | `boolean`  | `false` | Whether the input is disabled  |
+| `readOnly`   | `boolean`  | `false` | Whether the input is read-only |
+| `nullable`   | `boolean`  | `false` | Whether to allow null values   |
+| `showLabels` | `boolean`  | `false` | Whether to show labels inline  |
 ## Advanced Usage
-
 ### Nullable Boolean Support
-
 When `nullable={true}`, the component supports three states: `true`, `false`, and `null`.
-
 ```tsx
 function NullableForm() {
   const [status, setStatus] = useState<boolean | null>(null);
-
   return (
     <BooleanInput
-      label='User Status'
-      variant='radio'
-      value={status}
-      onChange={setStatus}
-      nullable
-      trueLabel='Active'
-      falseLabel='Inactive'
-      nullLabel='Pending'
+  label='User Status'
+  variant='radio'
+  value={status}
+  onChange={setStatus}
+  nullable
+  trueLabel='Active'
+  falseLabel='Inactive'
+  nullLabel='Pending'
     />
   );
 }
 ```
-
 ### Custom Labels
-
 Customize the labels for each state:
-
 ```tsx
 <BooleanInput
   label='Feature Flag'
@@ -163,94 +130,72 @@ Customize the labels for each state:
   showLabels
 />
 ```
-
 ### Form Validation Integration
-
 ```tsx
 function ValidatedForm() {
   const [agreed, setAgreed] = useState(false);
   const [errors, setErrors] = useState({});
-
   const handleSubmit = () => {
     if (!agreed) {
-      setErrors({ agreed: 'You must agree to continue' });
-      return;
+  setErrors({ agreed: 'You must agree to continue' });
+  return;
     }
     // Submit form
   };
-
   return (
     <BooleanInput
-      label='Terms and Conditions'
-      value={agreed}
-      onChange={setAgreed}
-      error={errors.agreed}
-      required
+  label='Terms and Conditions'
+  value={agreed}
+  onChange={setAgreed}
+  error={errors.agreed}
+  required
     />
   );
 }
 ```
-
 ### Controlled vs Uncontrolled
-
 #### Controlled Component
-
 ```tsx
 function ControlledExample() {
   const [value, setValue] = useState(false);
-
   return (
     <BooleanInput label='Controlled Input' value={value} onChange={setValue} />
   );
 }
 ```
-
 #### Uncontrolled Component
-
 ```tsx
 function UncontrolledExample() {
   return (
     <BooleanInput
-      label='Uncontrolled Input'
-      defaultValue={true}
-      onChange={value => console.log('Value changed:', value)}
+  label='Uncontrolled Input'
+  defaultValue={true}
+  onChange={value => console.log('Value changed:', value)}
     />
   );
 }
 ```
-
 ## Accessibility
-
 The BooleanInput component follows accessibility best practices:
-
 - **ARIA Labels**: Proper labeling for screen readers
 - **Keyboard Navigation**: Full keyboard support for all variants
 - **Focus Management**: Clear focus indicators and focus order
 - **Screen Reader Support**: Semantic HTML and ARIA attributes
 - **Error States**: Clear error messaging and validation
-
 ### Keyboard Shortcuts
-
 - **Space/Enter**: Toggle checkbox or radio selection
 - **Tab**: Navigate between form elements
 - **Arrow Keys**: Navigate between radio options (when focused)
-
 ## Styling
-
 The component uses Tailwind CSS classes and integrates with the design system:
-
 - **Responsive Design**: Adapts to different screen sizes
 - **Theme Integration**: Uses design system colors and spacing
 - **State Variants**: Different styles for different states (default, error, disabled)
 - **Size Variants**: Small, medium, and large size options
-
 ## Examples
-
 ### Complete Form Example
-
 ```tsx
 // Component is available in the live scope
-
 function UserPreferencesForm() {
   const [preferences, setPreferences] = useState({
     notifications: false,
@@ -258,97 +203,84 @@ function UserPreferencesForm() {
     darkMode: true,
     twoFactor: false,
   });
-
   const handleChange = (key: string, value: boolean | null) => {
     setPreferences(prev => ({ ...prev, [key]: value }));
   };
-
   return (
     <form className='space-y-6'>
-      <BooleanInput
-        label='Email Notifications'
-        value={preferences.notifications}
-        onChange={value => handleChange('notifications', value)}
-        helperText='Receive email notifications for important updates'
-      />
-
-      <BooleanInput
-        label='Marketing Communications'
-        variant='radio'
-        value={preferences.marketing}
-        onChange={value => handleChange('marketing', value)}
-        nullable
-        trueLabel='Yes, send me marketing emails'
-        falseLabel="No, don't send marketing emails"
-        nullLabel='Ask me later'
-        helperText="We'll never share your email with third parties"
-      />
-
-      <BooleanInput
-        label='Dark Mode'
-        variant='toggle'
-        value={preferences.darkMode}
-        onChange={value => handleChange('darkMode', value)}
-        trueLabel='Enabled'
-        falseLabel='Disabled'
-        helperText='Switch between light and dark themes'
-      />
-
-      <BooleanInput
-        label='Two-Factor Authentication'
-        variant='checkbox'
-        value={preferences.twoFactor}
-        onChange={value => handleChange('twoFactor', value)}
-        required
-        helperText='Add an extra layer of security to your account'
-      />
+  <BooleanInput
+  label='Email Notifications'
+  value={preferences.notifications}
+  onChange={value => handleChange('notifications', value)}
+  helperText='Receive email notifications for important updates'
+  />
+  <BooleanInput
+  label='Marketing Communications'
+  variant='radio'
+  value={preferences.marketing}
+  onChange={value => handleChange('marketing', value)}
+  nullable
+  trueLabel='Yes, send me marketing emails'
+  falseLabel="No, don't send marketing emails"
+  nullLabel='Ask me later'
+  helperText="We'll never share your email with third parties"
+  />
+  <BooleanInput
+  label='Dark Mode'
+  variant='toggle'
+  value={preferences.darkMode}
+  onChange={value => handleChange('darkMode', value)}
+  trueLabel='Enabled'
+  falseLabel='Disabled'
+  helperText='Switch between light and dark themes'
+  />
+  <BooleanInput
+  label='Two-Factor Authentication'
+  variant='checkbox'
+  value={preferences.twoFactor}
+  onChange={value => handleChange('twoFactor', value)}
+  required
+  helperText='Add an extra layer of security to your account'
+  />
     </form>
   );
 }
 ```
-
 ### Integration with React Hook Form
-
 ```tsx
 import { useForm, Controller } from 'react-hook-form';
 // Component is available in the live scope
-
 function HookFormExample() {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const onSubmit = (data: any) => {
     console.log('Form data:', data);
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name='agreed'
-        control={control}
-        rules={{ required: 'You must agree to continue' }}
-        render={({ field }) => (
-          <BooleanInput
-            label='I agree to the terms'
-            value={field.value}
-            onChange={field.onChange}
-            error={errors.agreed?.message}
-            required
-          />
-        )}
-      />
-
-      <button type='submit'>Submit</button>
+  <Controller
+  name='agreed'
+  control={control}
+  rules={{ required: 'You must agree to continue' }}
+  render={({ field }) => (
+  <BooleanInput
+  label='I agree to the terms'
+  value={field.value}
+  onChange={field.onChange}
+  error={errors.agreed?.message}
+  required
+  />
+  )}
+  />
+  <button type='submit'>Submit</button>
     </form>
   );
 }
 ```
-
 ## Related Components
-
 - [Input](./input.mdx) - Basic text input component
 - [NumberInput](./number-input.mdx) - Numeric input with validation
 - [PasswordInput](./password-input.mdx) - Password input with show/hide toggle

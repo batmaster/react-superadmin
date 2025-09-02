@@ -1,0 +1,56 @@
+.lastBuilt {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.lastBuilt:hover {
+  opacity: 0.8;
+}
+
+.label {
+  color: #9ca3af;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+
+.date {
+  color: #f3f4f6;
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .lastBuilt {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.625rem;
+    padding: 0.375rem 0.5rem;
+  }
+}
+
+/* Dark mode support */
+[data-theme='dark'] .lastBuilt {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .label {
+  color: #d1d5db;
+}
+
+[data-theme='dark'] .date {
+  color: #f9fafb;
+}

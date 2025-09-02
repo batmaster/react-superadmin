@@ -35,12 +35,12 @@ pnpm build:timestamp
 **Example output:**
 
 ```
-🔄 Updating build timestamps to: August 21, 2025 at 9:00 PM
-✅ Updated: index.md
-✅ Updated: components/button.mdx
-✅ Updated: footer.mdx
+ Updating build timestamps to: August 21, 2025 at 9:00 PM
+ Updated: index.md
+ Updated: components/button.mdx
+ Updated: footer.mdx
 
-🎉 Build timestamps updated successfully!
+ Build timestamps updated successfully!
 ```
 
 ### `fix-live-examples.js`
@@ -101,7 +101,7 @@ To add timestamps to new MDX files:
 
 1. Add the file path to the `filesToUpdate` array in `update-timestamps.js`
 2. Run `pnpm build:timestamp` to update all timestamps
-3. The timestamp will appear as: `> **🔄 Last Built**: [Current Date/Time]`
+3. The timestamp will appear as: `> ** Last Built**: [Current Date/Time]`
 
 ## Timestamp Format
 

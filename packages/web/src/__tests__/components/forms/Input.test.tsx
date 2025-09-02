@@ -94,8 +94,8 @@ describe("Input Component", () => {
     });
 
     it("renders with left and right icons", () => {
-      const leftIcon = <span data-testid="left-icon">🔍</span>;
-      const rightIcon = <span data-testid="right-icon">✓</span>;
+      const leftIcon = <span data-testid="left-icon"></span>;
+      const rightIcon = <span data-testid="right-icon"></span>;
 
       render(
         <Input {...defaultProps} leftIcon={leftIcon} rightIcon={rightIcon} />,

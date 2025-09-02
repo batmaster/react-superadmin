@@ -2,16 +2,12 @@
 title: ReferenceManyInput
 description: A form input component for managing many-to-many relationships with external data sources
 ---
-
 import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
 import { useState } from 'react';
-
 # ReferenceManyInput
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 A form input component for managing many-to-many relationships with external data sources. This component allows users to select multiple items from a reference resource and manages the junction table operations automatically.
-
 ## Features
-
 - **Many-to-Many Relationships**: Handles complex relationships between resources
 - **Junction Table Management**: Automatically manages the intermediate table
 - **Search and Filter**: Built-in search functionality for large datasets
@@ -19,12 +15,9 @@ A form input component for managing many-to-many relationships with external dat
 - **Loading States**: Shows loading indicators during data fetching
 - **Error Handling**: Displays error messages for failed operations
 - **Accessibility**: Full keyboard navigation and screen reader support
-
 ## Basic Usage
-
 ```tsx
 import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
-
 <ReferenceManyInput
   source='categories'
   reference='categories'
@@ -33,9 +26,7 @@ import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
   placeholder='Select categories...'
 />;
 ```
-
 ## Live Example
-
 <ReferenceManyInput
   source='categories'
   reference='categories'
@@ -44,57 +35,51 @@ import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
   placeholder='Select categories for this post...'
   dataProvider={async (resource, params) => {
     if (resource === 'categories') {
-      return {
-        data: [
-          { id: 1, name: 'Technology' },
-          { id: 2, name: 'Science' },
-          { id: 3, name: 'Health' },
-          { id: 4, name: 'Business' },
-          { id: 5, name: 'Education' },
-        ],
-        total: 5,
-      };
+  return {
+  data: [
+  { id: 1, name: 'Technology' },
+  { id: 2, name: 'Science' },
+  { id: 3, name: 'Health' },
+  { id: 4, name: 'Business' },
+  { id: 5, name: 'Education' },
+  ],
+  total: 5,
+  };
     }
     if (resource === 'post_categories') {
-      return {
-        data: [
-          { id: 1, post_id: 1, category_id: 1 },
-          { id: 2, post_id: 1, category_id: 2 },
-        ],
-        total: 2,
-      };
+  return {
+  data: [
+  { id: 1, post_id: 1, category_id: 1 },
+  { id: 2, post_id: 1, category_id: 2 },
+  ],
+  total: 2,
+  };
     }
     return { data: [], total: 0 };
   }}
 />
-
 ## Props
-
-| Prop            | Type           | Default                         | Description                     |
-| --------------- | -------------- | ------------------------------- | ------------------------------- |
-| `source`        | `string`       | -                               | The form field name             |
-| `reference`     | `string`       | -                               | The reference resource name     |
-| `junctionTable` | `string`       | -                               | The junction table name         |
-| `label`         | `string`       | -                               | The input label                 |
-| `placeholder`   | `string`       | -                               | Placeholder text                |
-| `disabled`      | `boolean`      | `false`                         | Whether the input is disabled   |
-| `readOnly`      | `boolean`      | `false`                         | Whether the input is read-only  |
-| `required`      | `boolean`      | `false`                         | Whether the field is required   |
-| `helperText`    | `string`       | -                               | Helper text below the input     |
-| `error`         | `string`       | -                               | Error message to display        |
-| `showError`     | `boolean`      | `true`                          | Whether to show error messages  |
-| `className`     | `string`       | -                               | Additional CSS classes          |
-| `dataProvider`  | `DataProvider` | -                               | Data provider for fetching data |
-| `perPage`       | `number`       | `1000`                          | Number of items per page        |
-| `sort`          | `Sort`         | `{ field: 'id', order: 'ASC' }` | Sort configuration              |
-| `filter`        | `Filter`       | `{}`                            | Filter configuration            |
-
+| Prop  | Type  | Default  | Description  |
+| ------------------------------- | ------------------------------- |
+| `source`  | `string`  | -  | The form field name  |
+| `reference`  | `string`  | -  | The reference resource name  |
+| `junctionTable` | `string`  | -  | The junction table name  |
+| `label`  | `string`  | -  | The input label  |
+| `placeholder`   | `string`  | -  | Placeholder text  |
+| `disabled`  | `boolean`  | `false`  | Whether the input is disabled   |
+| `readOnly`  | `boolean`  | `false`  | Whether the input is read-only  |
+| `required`  | `boolean`  | `false`  | Whether the field is required   |
+| `helperText`    | `string`  | -  | Helper text below the input  |
+| `error`  | `string`  | -  | Error message to display  |
+| `showError`  | `boolean`  | `true`  | Whether to show error messages  |
+| `className`  | `string`  | -  | Additional CSS classes  |
+| `dataProvider`  | `DataProvider` | -  | Data provider for fetching data |
+| `perPage`  | `number`  | `1000`  | Number of items per page  |
+| `sort`  | `Sort`  | `{ field: 'id', order: 'ASC' }` | Sort configuration  |
+| `filter`  | `Filter`  | `{}`  | Filter configuration  |
 ## Data Provider Interface
-
 The component expects a data provider with the following methods:
-
 ### getList (reference resource)
-
 ```tsx
 await dataProvider(reference, {
   pagination: { page: 1, perPage: 1000 },
@@ -102,9 +87,7 @@ await dataProvider(reference, {
   filter: {},
 });
 ```
-
 ### getList (junction table)
-
 ```tsx
 await dataProvider(junctionTable, {
   pagination: { page: 1, perPage: 1000 },
@@ -112,27 +95,20 @@ await dataProvider(junctionTable, {
   filter: { post_id: 1 },
 });
 ```
-
 ### create (junction table)
-
 ```tsx
 await dataProvider(junctionTable, {
   data: { post_id: 1, category_id: 2 },
 });
 ```
-
 ### delete (junction table)
-
 ```tsx
 await dataProvider(junctionTable, {
   id: 1,
 });
 ```
-
 ## Advanced Usage
-
 ### Custom Filtering
-
 ```tsx
 <ReferenceManyInput
   source='categories'
@@ -142,9 +118,7 @@ await dataProvider(junctionTable, {
   sort={{ field: 'name', order: 'ASC' }}
 />
 ```
-
 ### Custom Styling
-
 ```tsx
 <ReferenceManyInput
   source='categories'
@@ -154,9 +128,7 @@ await dataProvider(junctionTable, {
   label='Categories'
 />
 ```
-
 ### Error Handling
-
 ```tsx
 <ReferenceManyInput
   source='categories'
@@ -166,46 +138,34 @@ await dataProvider(junctionTable, {
   showError={true}
 />
 ```
-
 ## Styling
-
 The component uses Tailwind CSS classes and can be customized with:
-
 ```css
 .custom-reference-input {
   /* Custom styles */
 }
-
 .custom-reference-input .reference-input-container {
   /* Container styles */
 }
-
 .custom-reference-input .reference-input-list {
   /* List styles */
 }
-
 .custom-reference-input .reference-input-item {
   /* Item styles */
 }
 ```
-
 ## Accessibility
-
 - **Keyboard Navigation**: Full keyboard support for selection
 - **Screen Readers**: Proper ARIA labels and descriptions
 - **Focus Management**: Clear focus indicators
 - **Error Announcements**: Screen reader announcements for errors
-
 ## Best Practices
-
 1. **Use Descriptive Labels**: Provide clear, descriptive labels
 2. **Handle Loading States**: Show loading indicators for better UX
 3. **Validate Data**: Implement proper validation for selected items
 4. **Optimize Performance**: Use pagination for large datasets
 5. **Error Recovery**: Provide clear error messages and recovery options
-
 ## Related Components
-
 - [ReferenceInput](./reference-input) - Single reference selection
 - [ReferenceArrayInput](./reference-array-input) - Array of references
 - [SelectInput](./select-input) - Basic select input

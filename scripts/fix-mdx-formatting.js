@@ -17,7 +17,7 @@ function fixMdxFormatting(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
 
     // Remove the "Last Built" line completely for now
-    content = content.replace(/> \*\*🔄 Last Built\*\*: .*\n?/g, '');
+    content = content.replace(/> \*\* Last Built\*\*: .*\n?/g, '');
 
     // Fix duplicated text patterns
     content = content.replace(/([^.])\s+([^.]*)\s+\1\s+\2/g, '$1 $2');
@@ -27,17 +27,17 @@ function fixMdxFormatting(filePath) {
     content = content.replace(/\s+$/gm, '');
 
     fs.writeFileSync(filePath, content, 'utf8');
-    console.log(`✅ Fixed formatting: ${path.basename(filePath)}`);
+    console.log(` Fixed formatting: ${path.basename(filePath)}`);
   } catch (error) {
-    console.error(`❌ Error fixing ${filePath}:`, error.message);
+    console.error(` Error fixing ${filePath}:`, error.message);
   }
 }
 
 function processAllMdxFiles() {
-  console.log('🔧 Fixing MDX formatting issues...\n');
+  console.log(' Fixing MDX formatting issues...\n');
 
   if (!fs.existsSync(DOCS_DIR)) {
-    console.error(`❌ Documentation directory not found: ${DOCS_DIR}`);
+    console.error(` Documentation directory not found: ${DOCS_DIR}`);
     process.exit(1);
   }
 
@@ -49,7 +49,7 @@ function processAllMdxFiles() {
     fixMdxFormatting(filePath);
   });
 
-  console.log(`\n🎉 Completed! Fixed formatting in ${mdxFiles.length} files.`);
+  console.log(`\n Completed! Fixed formatting in ${mdxFiles.length} files.`);
 }
 
 // Run the script

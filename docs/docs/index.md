@@ -15,7 +15,7 @@ keywords: [react, admin, crud, framework, documentation]
 
 A powerful React framework for building CRUD admin interfaces with modern
 
-> **🔄 Last Built**: August 21, 2025 at 9:00 PM
+> ** Last Built**: August 21, 2025 at 9:00 PM
 
 tooling and best practices.
 
@@ -39,12 +39,12 @@ import { Admin, Resource } from '@react-superadmin/core';
 
 ## Key Features
 
-- **🚀 Modern React 18+** - Built with the latest React features
-- **🎨 Tailwind CSS** - Beautiful, responsive design system
-- **📱 Mobile First** - Responsive components that work everywhere
-- **♿ Accessibility** - WCAG compliant components
-- **🔧 TypeScript** - Full type safety and IntelliSense
-- **📚 Comprehensive** - 30+ components and utilities
+- ** Modern React 18+** - Built with the latest React features
+- ** Tailwind CSS** - Beautiful, responsive design system
+- ** Mobile First** - Responsive components that work everywhere
+- ** Accessibility** - WCAG compliant components
+- ** TypeScript** - Full type safety and IntelliSense
+- ** Comprehensive** - 30+ components and utilities
 
 ## Component Library
 

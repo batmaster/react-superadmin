@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Dropdown } from "../../../components/ui/Dropdown";
 
 // Mock icon component
-const MockIcon = () => <span data-testid="icon">🔽</span>;
+const MockIcon = () => <span data-testid="icon"></span>;
 
 const mockItems = [
   { label: "Edit", value: "edit", onClick: jest.fn() },

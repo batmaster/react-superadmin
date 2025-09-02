@@ -12,7 +12,7 @@ description:
 React SuperAdmin uses a multi-environment setup to provide different deployment
 targets for development, testing, and production.
 
-## 🌍 **Environment Overview**
+##  **Environment Overview**
 
 | Environment    | URL                                | Purpose                   | Trigger            | Firebase Project   | Channel   |
 | -------------- | ---------------------------------- | ------------------------- | ------------------ | ------------------ | --------- |
@@ -21,7 +21,7 @@ targets for development, testing, and production.
 | **Staging**    | `https://react-superadmin.web.app` | Pre-production testing    | PR with `staging` label | `react-superadmin` | `staging` |
 | **Local**      | `http://localhost:3000`            | Development               | Local development  | `react-superadmin` | `local`   |
 
-## 🚀 **How It Works**
+##  **How It Works**
 
 ### **Single Project, Multiple Channels**
 
@@ -40,7 +40,7 @@ Each environment has its own:
 - **Channel ID**: Different deployment channels within the project
 - **Deployment Trigger**: Different GitHub events
 
-## 🔧 **Configuration Files**
+##  **Configuration Files**
 
 ### **Environment Configuration** (`docs/config/environments.ts`)
 
@@ -90,7 +90,7 @@ jobs:
 - **Preview**: Open environment for pull request deployments
 - **Staging**: Open environment for staging deployments (requires `staging` label)
 
-## 🚀 **Deployment Process**
+##  **Deployment Process**
 
 ### **Production Deployment**
 1. Push to `main` branch
@@ -152,7 +152,7 @@ the **`react-superadmin`** project with different deployment channels.
    npx firebase projects:list
    ```
 
-## 🔍 **Troubleshooting**
+##  **Troubleshooting**
 
 ### **Common Issues**
 
@@ -179,7 +179,7 @@ The system automatically detects the environment based on:
 - **Preview**: `GITHUB_REF` exists but not main
 - **Local**: None of the above
 
-## 📚 **Best Practices**
+##  **Best Practices**
 
 1. **Always test in preview** before merging to main
 2. **Use staging environment** for major changes
@@ -187,7 +187,7 @@ The system automatically detects the environment based on:
 4. **Keep environment URLs** consistent across configs
 5. **Use descriptive channel names** for easy identification
 
-## 🌐 **Channel URLs**
+##  **Channel URLs**
 
 With Firebase Hosting channels, you can access different environments:
 

@@ -2,68 +2,57 @@
 title: ReferenceInput
 description: A form input component for handling references to other resources with support for single and multiple selections.
 ---
-
 import { ReferenceInput } from '@site/src/components/ui/ReferenceInput';
 import { useState } from 'react';
-
 # ReferenceInput
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 A form input component for handling references to other resources. This component allows users to select values from a referenced resource, supporting both single and multiple selections with optional search functionality.
-
 ## Basic Usage
-
 ```tsx
 import { ReferenceInput } from 'react-superadmin';
-
 function MyForm() {
   const [author, setAuthor] = useState(null);
-
   return (
     <ReferenceInput
-      name='author'
-      label='Author'
-      reference='authors'
-      optionText='name'
-      optionValue='id'
-      value={author}
-      onChange={setAuthor}
-      dataProvider={myDataProvider}
+  name='author'
+  label='Author'
+  reference='authors'
+  optionText='name'
+  optionValue='id'
+  value={author}
+  onChange={setAuthor}
+  dataProvider={myDataProvider}
     />
   );
 }
 ```
-
 ## Props
-
-| Prop                   | Type                                              | Default  | Description                                       |
-| ---------------------- | ------------------------------------------------- | -------- | ------------------------------------------------- |
-| `name`                 | `string`                                          | -        | The name of the field                             |
-| `label`                | `string`                                          | -        | The label to display                              |
-| `reference`            | `string`                                          | -        | The resource to reference                         |
-| `optionText`           | `string`                                          | `"name"` | The field to display from the referenced resource |
-| `optionValue`          | `string`                                          | `"id"`   | The field to use as the value                     |
-| `multiple`             | `boolean`                                         | `false`  | Whether to allow multiple selections              |
-| `required`             | `boolean`                                         | `false`  | Whether the field is required                     |
-| `disabled`             | `boolean`                                         | `false`  | Whether the field is disabled                     |
-| `hidden`               | `boolean`                                         | `false`  | Whether to show the field                         |
-| `value`                | `any`                                             | -        | The current value                                 |
-| `onChange`             | `(value: any) => void`                            | -        | Callback when the value changes                   |
-| `placeholder`          | `string`                                          | -        | The placeholder text                              |
-| `searchable`           | `boolean`                                         | `true`   | Whether to show a search input                    |
-| `autocomplete`         | `boolean`                                         | `false`  | Whether to use autocomplete mode                  |
-| `dataProvider`         | `(resource: string, params: any) => Promise<any>` | -        | The data provider function                        |
-| `filter`               | `any`                                             | -        | The filter to apply to the reference data         |
-| `sort`                 | `any`                                             | -        | The sort to apply to the reference data           |
-| `pagination`           | `any`                                             | -        | The pagination to apply to the reference data     |
-| `size`                 | `"sm" \| "md" \| "lg"`                            | `"md"`   | The size variant                                  |
-| `errors`               | `string[]`                                        | `[]`     | The validation errors                             |
-| `touched`              | `boolean`                                         | `false`  | The touched state                                 |
-| `showValidationErrors` | `boolean`                                         | `true`   | Whether to show validation errors                 |
-
+| Prop  | Type  | Default  | Description  |
+| ------------------------------------------------- |
+| `name`  | `string`  | -  | The name of the field  |
+| `label`  | `string`  | -  | The label to display  |
+| `reference`  | `string`  | -  | The resource to reference  |
+| `optionText`  | `string`  | `"name"` | The field to display from the referenced resource |
+| `optionValue`  | `string`  | `"id"`   | The field to use as the value  |
+| `multiple`  | `boolean`  | `false`  | Whether to allow multiple selections  |
+| `required`  | `boolean`  | `false`  | Whether the field is required  |
+| `disabled`  | `boolean`  | `false`  | Whether the field is disabled  |
+| `hidden`  | `boolean`  | `false`  | Whether to show the field  |
+| `value`  | `any`  | -  | The current value  |
+| `onChange`  | `(value: any) => void`  | -  | Callback when the value changes  |
+| `placeholder`  | `string`  | -  | The placeholder text  |
+| `searchable`  | `boolean`  | `true`   | Whether to show a search input  |
+| `autocomplete`  | `boolean`  | `false`  | Whether to use autocomplete mode  |
+| `dataProvider`  | `(resource: string, params: any) => Promise<any>` | -  | The data provider function  |
+| `filter`  | `any`  | -  | The filter to apply to the reference data  |
+| `sort`  | `any`  | -  | The sort to apply to the reference data  |
+| `pagination`  | `any`  | -  | The pagination to apply to the reference data  |
+| `size`  | `"sm" \| "md" \| "lg"`  | `"md"`   | The size variant  |
+| `errors`  | `string[]`  | `[]`  | The validation errors  |
+| `touched`  | `boolean`  | `false`  | The touched state  |
+| `showValidationErrors` | `boolean`  | `true`   | Whether to show validation errors  |
 ## Examples
-
 ### Single Selection
-
 <ReferenceInput
   name='author'
   label='Author'
@@ -73,16 +62,14 @@ function MyForm() {
   placeholder='Select an author'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'John Doe', email: 'john@example.com' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-      { id: 3, name: 'Bob Johnson', email: 'bob@example.com' },
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+  { id: 3, name: 'Bob Johnson', email: 'bob@example.com' },
     ],
     total: 3,
   })}
 />
-
 ### Multiple Selection
-
 <ReferenceInput
   name='categories'
   label='Categories'
@@ -93,16 +80,14 @@ function MyForm() {
   placeholder='Select categories'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'Technology', slug: 'tech' },
-      { id: 2, name: 'Science', slug: 'science' },
-      { id: 3, name: 'Arts', slug: 'arts' },
+  { id: 1, name: 'Technology', slug: 'tech' },
+  { id: 2, name: 'Science', slug: 'science' },
+  { id: 3, name: 'Arts', slug: 'arts' },
     ],
     total: 3,
   })}
 />
-
 ### Autocomplete Mode
-
 <ReferenceInput
   name='product'
   label='Product'
@@ -113,16 +98,14 @@ function MyForm() {
   placeholder='Search for a product'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'iPhone 15', price: 999 },
-      { id: 2, name: 'MacBook Pro', price: 1999 },
-      { id: 3, name: 'iPad Air', price: 599 },
+  { id: 1, name: 'iPhone 15', price: 999 },
+  { id: 2, name: 'MacBook Pro', price: 1999 },
+  { id: 3, name: 'iPad Air', price: 599 },
     ],
     total: 3,
   })}
 />
-
 ### With Validation
-
 <ReferenceInput
   name='category'
   label='Category'
@@ -134,16 +117,14 @@ function MyForm() {
   touched
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'Technology', slug: 'tech' },
-      { id: 2, name: 'Science', slug: 'science' },
-      { id: 3, name: 'Arts', slug: 'arts' },
+  { id: 1, name: 'Technology', slug: 'tech' },
+  { id: 2, name: 'Science', slug: 'science' },
+  { id: 3, name: 'Arts', slug: 'arts' },
     ],
     total: 3,
   })}
 />
-
 ### With Custom Filtering
-
 <ReferenceInput
   name='activeUsers'
   label='Active Users'
@@ -154,44 +135,35 @@ function MyForm() {
   sort={{ field: 'name', order: 'ASC' }}
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'Alice Johnson', status: 'active' },
-      { id: 2, name: 'Bob Smith', status: 'active' },
-      { id: 3, name: 'Carol Davis', status: 'active' },
+  { id: 1, name: 'Alice Johnson', status: 'active' },
+  { id: 2, name: 'Bob Smith', status: 'active' },
+  { id: 3, name: 'Carol Davis', status: 'active' },
     ],
     total: 3,
   })}
 />
-
 ## Data Provider Integration
-
 The ReferenceInput component integrates with data providers to fetch reference data. The data provider should implement the `getList` method:
-
 ```tsx
 const dataProvider = async (resource, method, params) => {
   if (method === 'getList') {
     // Fetch data from your API
     const response = await fetch(`/api/${resource}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(params),
     });
-
     const data = await response.json();
-
     return {
-      data: data.items,
-      total: data.total,
+  data: data.items,
+  total: data.total,
     };
   }
 };
 ```
-
 ## Customization
-
 ### Styling
-
 You can customize the appearance using CSS classes:
-
 ```tsx
 <ReferenceInput
   name='author'
@@ -205,68 +177,51 @@ You can customize the appearance using CSS classes:
   dataProvider={myDataProvider}
 />
 ```
-
 ### Size Variants
-
 The component supports three size variants:
-
 ```tsx
 // Small
 <ReferenceInput size="sm" {...props} />
-
 // Medium (default)
 <ReferenceInput size="md" {...props} />
-
 // Large
 <ReferenceInput size="lg" {...props} />
 ```
-
 ## Accessibility
-
 The ReferenceInput component includes comprehensive accessibility features:
-
 - Proper ARIA labels and descriptions
 - Keyboard navigation support
 - Screen reader compatibility
 - Focus management
 - Error announcement
-
 ## Integration with Forms
-
 The ReferenceInput component integrates seamlessly with form libraries like React Hook Form:
-
 ```tsx
 import { useForm } from 'react-hook-form';
-
 function MyForm() {
   const { register, handleSubmit, setValue, watch } = useForm();
   const author = watch('author');
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ReferenceInput
-        name='author'
-        label='Author'
-        reference='authors'
-        value={author}
-        onChange={value => setValue('author', value)}
-        dataProvider={myDataProvider}
-      />
-      <button type='submit'>Submit</button>
+  <ReferenceInput
+  name='author'
+  label='Author'
+  reference='authors'
+  value={author}
+  onChange={value => setValue('author', value)}
+  dataProvider={myDataProvider}
+  />
+  <button type='submit'>Submit</button>
     </form>
   );
 }
 ```
-
 ## Error Handling
-
 The component handles various error scenarios:
-
 - Network errors during data fetching
 - Validation errors
 - Missing data provider
 - Empty reference data
-
 ```tsx
 <ReferenceInput
   name='author'
@@ -277,16 +232,12 @@ The component handles various error scenarios:
   dataProvider={myDataProvider}
 />
 ```
-
 ## Performance Considerations
-
 - The component loads reference data on mount
 - Search functionality is debounced in autocomplete mode
 - Options are cached to avoid unnecessary API calls
 - Pagination is supported for large datasets
-
 ## Best Practices
-
 1. **Use meaningful optionText and optionValue**: Choose fields that make sense for your use case
 2. **Implement proper error handling**: Handle network errors and validation errors gracefully
 3. **Optimize data provider calls**: Use caching and pagination for large datasets

@@ -2,71 +2,60 @@
 title: ReferenceArrayInput
 description: A form input component for handling multiple references to other resources with array values and item management.
 ---
-
 import { ReferenceArrayInput } from '@site/src/components/ui/ReferenceArrayInput';
 import { useState } from 'react';
-
 # ReferenceArrayInput
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 A form input component for handling multiple references to other resources. This component allows users to select multiple values from a referenced resource, supporting array values, item management, and various display modes.
-
 ## Basic Usage
-
 ```tsx
 import { ReferenceArrayInput } from 'react-superadmin';
-
 function MyForm() {
   const [categories, setCategories] = useState([]);
-
   return (
     <ReferenceArrayInput
-      name='categories'
-      label='Categories'
-      reference='categories'
-      optionText='name'
-      optionValue='id'
-      value={categories}
-      onChange={setCategories}
-      dataProvider={myDataProvider}
+  name='categories'
+  label='Categories'
+  reference='categories'
+  optionText='name'
+  optionValue='id'
+  value={categories}
+  onChange={setCategories}
+  dataProvider={myDataProvider}
     />
   );
 }
 ```
-
 ## Props
-
-| Prop                   | Type                                                   | Default  | Description                                       |
-| ---------------------- | ------------------------------------------------------ | -------- | ------------------------------------------------- |
-| `name`                 | `string`                                               | -        | The name of the field                             |
-| `label`                | `string`                                               | -        | The label to display                              |
-| `reference`            | `string`                                               | -        | The resource to reference                         |
-| `optionText`           | `string`                                               | `"name"` | The field to display from the referenced resource |
-| `optionValue`          | `string`                                               | `"id"`   | The field to use as the value                     |
-| `required`             | `boolean`                                              | `false`  | Whether the field is required                     |
-| `disabled`             | `boolean`                                              | `false`  | Whether the field is disabled                     |
-| `hidden`               | `boolean`                                              | `false`  | Whether to show the field                         |
-| `value`                | `any[]`                                                | `[]`     | The current array value                           |
-| `onChange`             | `(value: any[]) => void`                               | -        | Callback when the value changes                   |
-| `placeholder`          | `string`                                               | -        | The placeholder text                              |
-| `dataProvider`         | `(resource: string, params: any) => Promise<any>`      | -        | The data provider function                        |
-| `filter`               | `any`                                                  | -        | The filter to apply to the reference data         |
-| `sort`                 | `any`                                                  | -        | The sort to apply to the reference data           |
-| `pagination`           | `any`                                                  | -        | The pagination to apply to the reference data     |
-| `autocomplete`         | `boolean`                                              | `false`  | Whether to use autocomplete mode                  |
-| `size`                 | `"sm" \| "md" \| "lg"`                                 | `"md"`   | The size variant                                  |
-| `errors`               | `string[]`                                             | `[]`     | The validation errors                             |
-| `touched`              | `boolean`                                              | `false`  | The touched state                                 |
-| `showValidationErrors` | `boolean`                                              | `true`   | Whether to show validation errors                 |
-| `maxItems`             | `number`                                               | -        | Maximum number of items that can be selected      |
-| `allowReorder`         | `boolean`                                              | `false`  | Whether to allow reordering of selected items     |
-| `onReorder`            | `(items: any[]) => void`                               | -        | Callback when items are reordered                 |
-| `showAsChips`          | `boolean`                                              | `true`   | Whether to show selected items as chips/tags      |
-| `renderSelectedItem`   | `(item: any, onRemove: () => void) => React.ReactNode` | -        | Custom renderer for selected items                |
-
+| Prop  | Type  | Default  | Description  |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| `name`  | `string`  | -  | The name of the field  |
+| `label`  | `string`  | -  | The label to display  |
+| `reference`  | `string`  | -  | The resource to reference  |
+| `optionText`  | `string`  | `"name"` | The field to display from the referenced resource |
+| `optionValue`  | `string`  | `"id"`   | The field to use as the value  |
+| `required`  | `boolean`  | `false`  | Whether the field is required  |
+| `disabled`  | `boolean`  | `false`  | Whether the field is disabled  |
+| `hidden`  | `boolean`  | `false`  | Whether to show the field  |
+| `value`  | `any[]`  | `[]`  | The current array value  |
+| `onChange`  | `(value: any[]) => void`  | -  | Callback when the value changes  |
+| `placeholder`  | `string`  | -  | The placeholder text  |
+| `dataProvider`  | `(resource: string, params: any) => Promise<any>`  | -  | The data provider function  |
+| `filter`  | `any`  | -  | The filter to apply to the reference data  |
+| `sort`  | `any`  | -  | The sort to apply to the reference data  |
+| `pagination`  | `any`  | -  | The pagination to apply to the reference data  |
+| `autocomplete`  | `boolean`  | `false`  | Whether to use autocomplete mode  |
+| `size`  | `"sm" \| "md" \| "lg"`  | `"md"`   | The size variant  |
+| `errors`  | `string[]`  | `[]`  | The validation errors  |
+| `touched`  | `boolean`  | `false`  | The touched state  |
+| `showValidationErrors` | `boolean`  | `true`   | Whether to show validation errors  |
+| `maxItems`  | `number`  | -  | Maximum number of items that can be selected  |
+| `allowReorder`  | `boolean`  | `false`  | Whether to allow reordering of selected items  |
+| `onReorder`  | `(items: any[]) => void`  | -  | Callback when items are reordered  |
+| `showAsChips`  | `boolean`  | `true`   | Whether to show selected items as chips/tags  |
+| `renderSelectedItem`   | `(item: any, onRemove: () => void) => React.ReactNode` | -  | Custom renderer for selected items  |
 ## Examples
-
 ### Basic Multiple Selection
-
 <ReferenceArrayInput
   name='categories'
   label='Categories'
@@ -76,18 +65,16 @@ function MyForm() {
   placeholder='Select categories'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'Technology', slug: 'tech' },
-      { id: 2, name: 'Science', slug: 'science' },
-      { id: 3, name: 'Arts', slug: 'arts' },
-      { id: 4, name: 'Sports', slug: 'sports' },
-      { id: 5, name: 'Politics', slug: 'politics' },
+  { id: 1, name: 'Technology', slug: 'tech' },
+  { id: 2, name: 'Science', slug: 'science' },
+  { id: 3, name: 'Arts', slug: 'arts' },
+  { id: 4, name: 'Sports', slug: 'sports' },
+  { id: 5, name: 'Politics', slug: 'politics' },
     ],
     total: 5,
   })}
 />
-
 ### With Maximum Items Limit
-
 <ReferenceArrayInput
   name='tags'
   label='Tags'
@@ -98,18 +85,16 @@ function MyForm() {
   placeholder='Select up to 3 tags'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'React', slug: 'react' },
-      { id: 2, name: 'TypeScript', slug: 'typescript' },
-      { id: 3, name: 'Tailwind', slug: 'tailwind' },
-      { id: 4, name: 'Jest', slug: 'jest' },
-      { id: 5, name: 'Vite', slug: 'vite' },
+  { id: 1, name: 'React', slug: 'react' },
+  { id: 2, name: 'TypeScript', slug: 'typescript' },
+  { id: 3, name: 'Tailwind', slug: 'tailwind' },
+  { id: 4, name: 'Jest', slug: 'jest' },
+  { id: 5, name: 'Vite', slug: 'vite' },
     ],
     total: 5,
   })}
 />
-
 ### With Custom Item Renderer
-
 <ReferenceArrayInput
   name='authors'
   label='Authors'
@@ -119,34 +104,32 @@ function MyForm() {
   showAsChips={false}
   renderSelectedItem={(item, onRemove) => (
     <div
-      key={item.id}
-      className='flex items-center justify-between p-3 border rounded-lg bg-gray-50'
+  key={item.id}
+  className='flex items-center justify-between p-3 border rounded-lg bg-gray-50'
     >
-      <div>
-        <div className='font-medium'>{item.name}</div>
-        <div className='text-sm text-gray-500'>{item.email}</div>
-      </div>
-      <button
-        onClick={onRemove}
-        className='text-red-600 hover:text-red-800 p-1'
-        aria-label={`Remove ${item.name}`}
-      >
-        ×
-      </button>
+  <div>
+  <div className='font-medium'>{item.name}</div>
+  <div className='text-sm text-gray-500'>{item.email}</div>
+  </div>
+  <button
+  onClick={onRemove}
+  className='text-red-600 hover:text-red-800 p-1'
+  aria-label={`Remove ${item.name}`}
+  >
+  ×
+  </button>
     </div>
   )}
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'John Doe', email: 'john@example.com' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-      { id: 3, name: 'Bob Johnson', email: 'bob@example.com' },
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+  { id: 3, name: 'Bob Johnson', email: 'bob@example.com' },
     ],
     total: 3,
   })}
 />
-
 ### With Validation
-
 <ReferenceArrayInput
   name='categories'
   label='Categories'
@@ -158,16 +141,14 @@ function MyForm() {
   touched
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'Technology', slug: 'tech' },
-      { id: 2, name: 'Science', slug: 'science' },
-      { id: 3, name: 'Arts', slug: 'arts' },
+  { id: 1, name: 'Technology', slug: 'tech' },
+  { id: 2, name: 'Science', slug: 'science' },
+  { id: 3, name: 'Arts', slug: 'arts' },
     ],
     total: 3,
   })}
 />
-
 ### With Autocomplete Mode
-
 <ReferenceArrayInput
   name='products'
   label='Products'
@@ -178,106 +159,80 @@ function MyForm() {
   placeholder='Search for products'
   dataProvider={async (resource, params) => ({
     data: [
-      { id: 1, name: 'iPhone 15', price: 999 },
-      { id: 2, name: 'MacBook Pro', price: 1999 },
-      { id: 3, name: 'iPad Air', price: 599 },
-      { id: 4, name: 'Apple Watch', price: 399 },
+  { id: 1, name: 'iPhone 15', price: 999 },
+  { id: 2, name: 'MacBook Pro', price: 1999 },
+  { id: 3, name: 'iPad Air', price: 599 },
+  { id: 4, name: 'Apple Watch', price: 399 },
     ],
     total: 4,
   })}
 />
-
 ## Item Management
-
 The ReferenceArrayInput component provides several ways to manage selected items:
-
 ### Adding Items
-
 - Users can select items from the dropdown/autocomplete input
 - Items are automatically added to the selected items list
 - Duplicate items are allowed (can be controlled via custom logic)
-
 ### Removing Items
-
 - Each selected item displays a remove button (×)
 - Clicking the remove button removes the item from the selection
 - The `onChange` callback is called with the updated array
-
 ### Clearing All Items
-
 - A "Clear All" button appears when items are selected
 - Clicking "Clear All" removes all selected items
 - Can be disabled by setting `clearable={false}`
-
 ### Maximum Items Limit
-
 - Set `maxItems` to limit the number of selectable items
 - When the limit is reached, the input is hidden
 - A warning message is displayed
-
 ## Display Modes
-
 ### Chips Mode (Default)
-
 ```tsx
 <ReferenceArrayInput
   showAsChips={true} // default
   // Items are displayed as compact chips with remove buttons
 />
 ```
-
 ### List Mode
-
 ```tsx
 <ReferenceArrayInput
   showAsChips={false}
   // Items are displayed as full-width list items
 />
 ```
-
 ### Custom Renderer
-
 ```tsx
 <ReferenceArrayInput
   renderSelectedItem={(item, onRemove) => (
     <div className='custom-item'>
-      <span>{item.name}</span>
-      <button onClick={onRemove}>Remove</button>
+  <span>{item.name}</span>
+  <button onClick={onRemove}>Remove</button>
     </div>
   )}
 />
 ```
-
 ## Data Provider Integration
-
 The ReferenceArrayInput component integrates with data providers to fetch reference data:
-
 ```tsx
 const dataProvider = async (resource, method, params) => {
   if (method === 'getList') {
     // Fetch data from your API
     const response = await fetch(`/api/${resource}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(params),
     });
-
     const data = await response.json();
-
     return {
-      data: data.items,
-      total: data.total,
+  data: data.items,
+  total: data.total,
     };
   }
 };
 ```
-
 ## Customization
-
 ### Styling
-
 You can customize the appearance using CSS classes:
-
 ```tsx
 <ReferenceArrayInput
   name='categories'
@@ -291,68 +246,51 @@ You can customize the appearance using CSS classes:
   dataProvider={myDataProvider}
 />
 ```
-
 ### Size Variants
-
 The component supports three size variants:
-
 ```tsx
 // Small
 <ReferenceArrayInput size="sm" {...props} />
-
 // Medium (default)
 <ReferenceArrayInput size="md" {...props} />
-
 // Large
 <ReferenceArrayInput size="lg" {...props} />
 ```
-
 ## Accessibility
-
 The ReferenceArrayInput component includes comprehensive accessibility features:
-
 - Proper ARIA labels and descriptions for remove buttons
 - Keyboard navigation support
 - Screen reader compatibility
 - Focus management
 - Error announcement
-
 ## Integration with Forms
-
 The ReferenceArrayInput component integrates seamlessly with form libraries:
-
 ```tsx
 import { useForm } from 'react-hook-form';
-
 function MyForm() {
   const { register, handleSubmit, setValue, watch } = useForm();
   const categories = watch('categories');
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ReferenceArrayInput
-        name='categories'
-        label='Categories'
-        reference='categories'
-        value={categories}
-        onChange={value => setValue('categories', value)}
-        dataProvider={myDataProvider}
-      />
-      <button type='submit'>Submit</button>
+  <ReferenceArrayInput
+  name='categories'
+  label='Categories'
+  reference='categories'
+  value={categories}
+  onChange={value => setValue('categories', value)}
+  dataProvider={myDataProvider}
+  />
+  <button type='submit'>Submit</button>
     </form>
   );
 }
 ```
-
 ## Error Handling
-
 The component handles various error scenarios:
-
 - Network errors during data fetching
 - Validation errors
 - Missing data provider
 - Empty reference data
-
 ```tsx
 <ReferenceArrayInput
   name='categories'
@@ -363,31 +301,25 @@ The component handles various error scenarios:
   dataProvider={myDataProvider}
 />
 ```
-
 ## Performance Considerations
-
 - The component efficiently handles large arrays (100+ items)
 - Selected items are rendered with proper keys for React optimization
 - Data provider calls are debounced in autocomplete mode
 - Pagination is supported for large datasets
-
 ## Best Practices
-
 1. **Use meaningful optionText and optionValue**: Choose fields that make sense for your use case
 2. **Set appropriate maxItems limits**: Prevent users from selecting too many items
 3. **Provide clear labels and placeholders**: Help users understand what they're selecting
 4. **Handle validation properly**: Show clear error messages for required fields
 5. **Test with large datasets**: Ensure performance with many options
 6. **Use custom renderers for complex items**: Display additional information when needed
-
 ## Comparison with ReferenceInput
-
-| Feature             | ReferenceInput        | ReferenceArrayInput |
-| ------------------- | --------------------- | ------------------- |
-| **Selection Type**  | Single                | Multiple            |
-| **Value Type**      | `any`                 | `any[]`             |
-| **Item Management** | None                  | Add/Remove/Clear    |
+| Feature  | ReferenceInput  | ReferenceArrayInput |
+| --------------------- | ------------------- |
+| **Selection Type**  | Single  | Multiple  |
+| **Value Type**  | `any`  | `any[]`  |
+| **Item Management** | None  | Add/Remove/Clear    |
 | **Display Modes**   | Dropdown/Autocomplete | Chips/List/Custom   |
-| **Max Items**       | N/A                   | Configurable        |
-| **Reordering**      | N/A                   | Supported           |
-| **Use Case**        | Single reference      | Multiple references |
+| **Max Items**  | N/A  | Configurable  |
+| **Reordering**  | N/A  | Supported  |
+| **Use Case**  | Single reference  | Multiple references |

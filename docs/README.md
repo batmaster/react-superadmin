@@ -233,11 +233,11 @@ Comprehensive testing is essential for maintaining code quality and reliability.
 
 ### What We Test
 
-- ✅ **Utilities** - Resource creation, validation, formatting
-- ✅ **Hooks** - State management, side effects, error handling
-- ✅ **Components** - Rendering, user interactions, props
-- ✅ **Contexts** - Provider behavior, state updates
-- ✅ **Services** - CRUD operations, data persistence
+-  **Utilities** - Resource creation, validation, formatting
+-  **Hooks** - State management, side effects, error handling
+-  **Components** - Rendering, user interactions, props
+-  **Contexts** - Provider behavior, state updates
+-  **Services** - CRUD operations, data persistence
 
 ### Running Tests
 

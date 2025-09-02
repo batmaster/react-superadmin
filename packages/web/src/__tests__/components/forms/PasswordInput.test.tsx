@@ -49,7 +49,7 @@ describe("PasswordInput", () => {
     });
 
     it("renders with left icon", () => {
-      const leftIcon = <span data-testid="left-icon">🔒</span>;
+      const leftIcon = <span data-testid="left-icon"></span>;
       render(<PasswordInput {...defaultProps} leftIcon={leftIcon} />);
       expect(screen.getByTestId("left-icon")).toBeInTheDocument();
     });

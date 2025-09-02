@@ -7,7 +7,7 @@ const path = require('path');
 function fixLiveExamples() {
   const docsDir = path.join(__dirname, '..', 'docs');
   
-  console.log('🔧 Fixing live examples in all component files...');
+  console.log(' Fixing live examples in all component files...');
 
   // Get all MDX files
   const mdxFiles = fs.readdirSync(docsDir)
@@ -23,14 +23,14 @@ function fixLiveExamples() {
       if (content.includes('React.React.useState')) {
         content = content.replace(/React\.React\.useState/g, 'React.useState');
         modified = true;
-        console.log(`✅ Fixed React.React.useState in: ${path.basename(filePath)}`);
+        console.log(` Fixed React.React.useState in: ${path.basename(filePath)}`);
       }
 
       // Fix tsx live to jsx live
       if (content.includes('```tsx live')) {
         content = content.replace(/```tsx live/g, '```jsx live');
         modified = true;
-        console.log(`✅ Fixed tsx live to jsx live in: ${path.basename(filePath)}`);
+        console.log(` Fixed tsx live to jsx live in: ${path.basename(filePath)}`);
       }
 
       // Add component rendering to examples
@@ -54,7 +54,7 @@ function fixLiveExamples() {
               const afterEnd = content.substring(functionEnd + 1);
               content = beforeEnd + '\n\n' + componentTag + '\n' + afterEnd;
               modified = true;
-              console.log(`✅ Added component rendering for ${functionName} in: ${path.basename(filePath)}`);
+              console.log(` Added component rendering for ${functionName} in: ${path.basename(filePath)}`);
             }
           }
         });
@@ -74,7 +74,7 @@ function fixLiveExamples() {
             const afterFirst = content.substring(firstIndex + tag.length);
             content = beforeFirst + tag + afterFirst.replace(regex, '');
             modified = true;
-            console.log(`✅ Removed duplicate ${tag} in: ${path.basename(filePath)}`);
+            console.log(` Removed duplicate ${tag} in: ${path.basename(filePath)}`);
           }
         });
       }
@@ -85,7 +85,7 @@ function fixLiveExamples() {
     }
   });
 
-  console.log('\n🎉 Live examples fixed successfully!');
+  console.log('\n Live examples fixed successfully!');
 }
 
 // Run the function

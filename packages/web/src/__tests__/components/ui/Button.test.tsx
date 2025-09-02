@@ -122,22 +122,22 @@ describe("Button", () => {
   });
 
   it("should render with left icon", () => {
-    const icon = <span data-testid="left-icon">🚀</span>;
+    const icon = <span data-testid="left-icon"></span>;
     render(<Button leftIcon={icon}>Click me</Button>);
 
     expect(screen.getByTestId("left-icon")).toBeInTheDocument();
   });
 
   it("should render with right icon", () => {
-    const icon = <span data-testid="right-icon">🎯</span>;
+    const icon = <span data-testid="right-icon"></span>;
     render(<Button rightIcon={icon}>Click me</Button>);
 
     expect(screen.getByTestId("right-icon")).toBeInTheDocument();
   });
 
   it("should render with both icons", () => {
-    const leftIcon = <span data-testid="left-icon">🚀</span>;
-    const rightIcon = <span data-testid="right-icon">🎯</span>;
+    const leftIcon = <span data-testid="left-icon"></span>;
+    const rightIcon = <span data-testid="right-icon"></span>;
     render(
       <Button leftIcon={leftIcon} rightIcon={rightIcon}>
         Click me
@@ -149,8 +149,8 @@ describe("Button", () => {
   });
 
   it("should not render icons when loading", () => {
-    const leftIcon = <span data-testid="left-icon">🚀</span>;
-    const rightIcon = <span data-testid="right-icon">🎯</span>;
+    const leftIcon = <span data-testid="left-icon"></span>;
+    const rightIcon = <span data-testid="right-icon"></span>;
     render(
       <Button leftIcon={leftIcon} rightIcon={rightIcon} loading>
         Click me

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 /**
@@ -26,7 +26,7 @@ function getGitCommitDate(filePath) {
   } catch (error) {
     // If file has no git history, use current date
     console.warn(
-      `⚠️  No git history for ${path.basename(filePath)}, using current date`
+      `No git history for ${path.basename(filePath)}, using current date`
     );
     const now = new Date();
     const options = {
@@ -47,17 +47,17 @@ function updateLastBuiltDate(filePath) {
     const commitDate = getGitCommitDate(filePath);
 
     // Check if file already has a "Last Built" line
-    const lastBuiltRegex = /> \*\*🔄 Last Built\*\*: .*$/m;
+    const lastBuiltRegex = /> \*\*Last Built\*\*: .*$/m;
     const hasLastBuilt = lastBuiltRegex.test(content);
 
     if (hasLastBuilt) {
       // Replace existing "Last Built" line
       const updatedContent = content.replace(
         lastBuiltRegex,
-        `> **🔄 Last Built**: ${commitDate}`
+        `> **Last Built**: ${commitDate}`
       );
       fs.writeFileSync(filePath, updatedContent, 'utf8');
-      console.log(`✅ Updated: ${path.basename(filePath)} (${commitDate})`);
+      console.log(`Updated: ${path.basename(filePath)} (${commitDate})`);
     } else {
       // Add "Last Built" line after the frontmatter
       const frontmatterEnd = content.indexOf('---', content.indexOf('---') + 3);
@@ -92,24 +92,24 @@ function updateLastBuiltDate(filePath) {
             '\n\n' +
             firstParagraph +
             '\n\n' +
-            `> **🔄 Last Built**: ${commitDate}` +
+            `> **Last Built**: ${commitDate}` +
             remainingContent;
 
           fs.writeFileSync(filePath, updatedContent, 'utf8');
-          console.log(`✅ Added: ${path.basename(filePath)} (${commitDate})`);
+          console.log(`Added: ${path.basename(filePath)} (${commitDate})`);
         }
       }
     }
   } catch (error) {
-    console.error(`❌ Error updating ${filePath}:`, error.message);
+    console.error(` Error updating ${filePath}:`, error.message);
   }
 }
 
 function processAllMdxFiles() {
-  console.log('🔄 Updating "Last Built" dates using Git commit history...\n');
+  console.log('Updating "Last Built" dates using Git commit history...\n');
 
   if (!fs.existsSync(DOCS_DIR)) {
-    console.error(`❌ Documentation directory not found: ${DOCS_DIR}`);
+    console.error(`Documentation directory not found: ${DOCS_DIR}`);
     process.exit(1);
   }
 
@@ -117,11 +117,11 @@ function processAllMdxFiles() {
   const mdxFiles = files.filter(file => file.endsWith('.mdx'));
 
   if (mdxFiles.length === 0) {
-    console.log('ℹ️  No MDX files found in documentation directory');
+    console.log('No MDX files found in documentation directory');
     return;
   }
 
-  console.log(`📁 Found ${mdxFiles.length} MDX files to process:\n`);
+  console.log(`Found ${mdxFiles.length} MDX files to process:\n`);
 
   mdxFiles.forEach(file => {
     const filePath = path.join(DOCS_DIR, file);
@@ -129,7 +129,7 @@ function processAllMdxFiles() {
   });
 
   console.log(
-    `\n🎉 Completed! Updated ${mdxFiles.length} documentation files with Git commit dates.`
+    `\nCompleted! Updated ${mdxFiles.length} documentation files with Git commit dates.`
   );
 }
 
@@ -138,4 +138,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   processAllMdxFiles();
 }
 
-export { updateLastBuiltDate, getGitCommitDate };
+export { getGitCommitDate, updateLastBuiltDate };

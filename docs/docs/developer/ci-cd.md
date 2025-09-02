@@ -2,7 +2,7 @@
 
 This project uses GitHub Actions for continuous integration, deployment, and code quality management. All workflows are automatically triggered based on repository events.
 
-## 🚀 Workflows Overview
+##  Workflows Overview
 
 ### 1. CI (Continuous Integration)
 
@@ -85,7 +85,7 @@ Automated deployment pipeline:
 - Conditional deployment triggers
 ```
 
-## 🔧 Configuration
+##  Configuration
 
 ### Firebase Setup
 
@@ -123,7 +123,7 @@ Workflows automatically use:
 - **Cache**: npm cache for faster builds
 - **Matrix**: Parallel execution strategies
 
-## 📊 Monitoring & Reporting
+##  Monitoring & Reporting
 
 ### Workflow Status
 
@@ -143,7 +143,7 @@ Track pipeline performance:
 - **Failure rates**: Workflow success metrics
 - **Security scores**: SonarCloud quality gates
 
-## 🛠️ Local Development
+## ️ Local Development
 
 ### Pre-commit Hooks
 
@@ -173,11 +173,11 @@ pnpm run prepare
 
 ```bash
 # What gets tested automatically:
-✅ Dependency installation
-✅ Linting (ESLint)
-✅ Building (TypeScript compilation)
-✅ TypeScript type checking
-✅ All CI commands locally
+ Dependency installation
+ Linting (ESLint)
+ Building (TypeScript compilation)
+ TypeScript type checking
+ All CI commands locally
 ```
 
 **If any test fails, the commit is blocked** until issues are resolved.
@@ -214,10 +214,10 @@ The project includes automated commit hooks that test CI locally:
 
 **Benefits:**
 
-- 🚫 **Prevents broken commits** - CI must pass locally
-- 🔍 **Early error detection** - Catch issues before pushing
-- ⚡ **Faster feedback** - No waiting for GitHub Actions
-- 🎯 **Quality assurance** - Every commit is tested
+-  **Prevents broken commits** - CI must pass locally
+-  **Early error detection** - Catch issues before pushing
+-  **Faster feedback** - No waiting for GitHub Actions
+-  **Quality assurance** - Every commit is tested
 
 ### Main Branch Protection
 
@@ -238,12 +238,12 @@ The main branch has enhanced protection rules:
 
 **Main Branch Rules:**
 
-- 🚫 **No direct pushes** - Must use pull requests
-- ✅ **All CI checks must pass** - Including security audits
-- 📝 **PR requirements** - Meaningful description and conventional commit format
-- 🔒 **Vulnerability blocking** - Security issues prevent merging
+-  **No direct pushes** - Must use pull requests
+-  **All CI checks must pass** - Including security audits
+-  **PR requirements** - Meaningful description and conventional commit format
+-  **Vulnerability blocking** - Security issues prevent merging
 
-## 🔄 Workflow Lifecycle
+##  Workflow Lifecycle
 
 ### Pull Request Flow
 
@@ -261,7 +261,7 @@ The main branch has enhanced protection rules:
 4. **Package Build**: Core and web packages
 5. **Package Publish**: NPM package release
 
-## 📈 Optimization Tips
+##  Optimization Tips
 
 ### Performance Improvements
 
@@ -277,7 +277,7 @@ The main branch has enhanced protection rules:
 - **Cache Utilization**: Reduce build times
 - **Resource Limits**: Optimize runner usage
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -322,7 +322,7 @@ gh workflow list
 gh workflow view ci
 ```
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 ### Planned Features
 
@@ -340,7 +340,7 @@ gh workflow view ci
 - **Accessibility Testing**: Automated a11y checks
 - **Cross-browser Testing**: Browser compatibility validation
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [SonarCloud Integration](https://docs.sonarqube.org/latest/analysis/github-integration/)

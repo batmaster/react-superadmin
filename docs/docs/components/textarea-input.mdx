@@ -5,19 +5,14 @@ sidebar_label: TextareaInput
 description: Multi-line text input with validation and styling support
 keywords: [textarea, input, form, validation, multiline]
 ---
-
 # TextareaInput Component
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 The TextareaInput component provides a multi-line text input field for longer text content. It supports validation states, character counting, and integrates seamlessly with form systems.
-
 ## Import
-
 ```tsx
 // TextareaInput component is available in the live scope
 ```
-
 ## Basic Usage
-
 ```tsx
 <TextareaInput
   id="description"
@@ -27,9 +22,7 @@ The TextareaInput component provides a multi-line text input field for longer te
   rows={4}
 />
 ```
-
 ## Props
-
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `id` | `string` | - | Unique identifier for the textarea |
@@ -49,13 +42,10 @@ The TextareaInput component provides a multi-line text input field for longer te
 | `className` | `string` | - | Additional CSS classes |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Textarea size variant |
 | `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize behavior |
-
 ## Examples
-
 ### Basic Textarea
 ```tsx
 const [bio, setBio] = useState('');
-
 <TextareaInput
   id="bio"
   value={bio}
@@ -64,7 +54,6 @@ const [bio, setBio] = useState('');
   rows={5}
 />
 ```
-
 ### With Character Limit
 ```tsx
 <TextareaInput
@@ -77,12 +66,10 @@ const [bio, setBio] = useState('');
   rows={3}
 />
 ```
-
 ### With Validation
 ```tsx
 const [description, setDescription] = useState('');
 const [errors, setErrors] = useState({});
-
 <TextareaInput
   id="description"
   value={description}
@@ -95,9 +82,7 @@ const [errors, setErrors] = useState({});
   helperText="Description must be at least 50 characters long"
 />
 ```
-
 ## Form Integration
-
 ```tsx
 function ProductForm() {
   const [product, setProduct] = useState({
@@ -105,49 +90,44 @@ function ProductForm() {
     description: '',
     specifications: ''
   });
-
   return (
     <form className="space-y-4">
-      <div>
-        <Label htmlFor="name">Product Name</Label>
-        <Input
-          id="name"
-          value={product.name}
-          onChange={(e) => setProduct(prev => ({ ...prev, name: e.target.value }))}
-          required
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="description">Description</Label>
-        <TextareaInput
-          id="description"
-          value={product.description}
-          onChange={(e) => setProduct(prev => ({ ...prev, description: e.target.value }))}
-          placeholder="Describe your product..."
-          rows={4}
-          required
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="specifications">Technical Specifications</Label>
-        <TextareaInput
-          id="specifications"
-          value={product.specifications}
-          onChange={(e) => setProduct(prev => ({ ...prev, specifications: e.target.value }))}
-          placeholder="List technical specifications..."
-          rows={6}
-          helperText="Include dimensions, materials, features, etc."
-        />
-      </div>
+  <div>
+  <Label htmlFor="name">Product Name</Label>
+  <Input
+  id="name"
+  value={product.name}
+  onChange={(e) => setProduct(prev => ({ ...prev, name: e.target.value }))}
+  required
+  />
+  </div>
+  <div>
+  <Label htmlFor="description">Description</Label>
+  <TextareaInput
+  id="description"
+  value={product.description}
+  onChange={(e) => setProduct(prev => ({ ...prev, description: e.target.value }))}
+  placeholder="Describe your product..."
+  rows={4}
+  required
+  />
+  </div>
+  <div>
+  <Label htmlFor="specifications">Technical Specifications</Label>
+  <TextareaInput
+  id="specifications"
+  value={product.specifications}
+  onChange={(e) => setProduct(prev => ({ ...prev, specifications: e.target.value }))}
+  placeholder="List technical specifications..."
+  rows={6}
+  helperText="Include dimensions, materials, features, etc."
+  />
+  </div>
     </form>
   );
 }
 ```
-
 ## Character Counting
-
 ```tsx
 function CharacterCountTextarea() {
   const [content, setContent] = useState('');
@@ -155,28 +135,24 @@ function CharacterCountTextarea() {
   const remaining = maxLength - content.length;
   const isNearLimit = remaining <= 100;
   const isOverLimit = remaining < 0;
-
   return (
     <div>
-      <TextareaInput
-        id="content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Enter your content..."
-        rows={8}
-        maxLength={maxLength}
-        className={isOverLimit ? 'border-red-500' : isNearLimit ? 'border-yellow-500' : ''}
-      />
-      <div className={`text-sm mt-2 ${isOverLimit ? 'text-red-600' : isNearLimit ? 'text-yellow-600' : 'text-gray-500'}`}>
-        {remaining} characters remaining
-      </div>
-    </div>
+  <TextareaInput
+  id="content"
+  value={content}
+  onChange={(e) => setContent(e.target.value)}
+  placeholder="Enter your content..."
+  rows={8}
+  maxLength={maxLength}
+  className={isOverLimit ? 'border-red-500' : isNearLimit ? 'border-yellow-500' : ''}
+  />
+  <div className={`text-sm mt-2 ${isOverLimit ? 'text-red-600' : isNearLimit ? 'text-yellow-600' : 'text-gray-500'}`}>
+  {remaining} characters remaining
+  </div>
   );
 }
 ```
-
 ## Resize Behavior
-
 ```tsx
 // No resize
 <TextareaInput
@@ -185,7 +161,6 @@ function CharacterCountTextarea() {
   rows={4}
   placeholder="Fixed size textarea"
 />
-
 // Vertical resize only
 <TextareaInput
   id="vertical"
@@ -193,7 +168,6 @@ function CharacterCountTextarea() {
   rows={4}
   placeholder="Vertically resizable"
 />
-
 // Both directions
 <TextareaInput
   id="both"
@@ -202,17 +176,13 @@ function CharacterCountTextarea() {
   placeholder="Fully resizable"
 />
 ```
-
 ## Accessibility
-
 The TextareaInput component includes comprehensive accessibility features:
-
 - Proper ARIA labels and descriptions
 - Error state announcements for screen readers
 - Keyboard navigation support
 - Focus management
 - Screen reader compatibility
-
 ```tsx
 <TextareaInput
   id="accessible-textarea"
@@ -225,20 +195,15 @@ The TextareaInput component includes comprehensive accessibility features:
   helperText="Provide detailed information about your request"
 />
 ```
-
 ## Best Practices
-
 1. **Use appropriate rows** - Set rows based on expected content length
 2. **Provide clear placeholders** - Help users understand what to enter
 3. **Implement character limits** - Prevent overly long submissions
 4. **Show character count** - Help users stay within limits
 5. **Use helper text** - Provide additional context when needed
 6. **Consider resize behavior** - Allow resizing for better user experience
-
 ## Related Components
-
 - [Input](/docs/components/input) - For single-line text input
 - [Form](/docs/components/form) - For form containers and validation
 - [Label](/docs/components/label) - For form field labels
 - [Button](/docs/components/button) - For form submission and actions
-
