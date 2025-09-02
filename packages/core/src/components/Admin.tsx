@@ -95,7 +95,7 @@ export const Admin: React.FC<AdminProps> = ({
 
   return (
     <div className={`react-superadmin ${className}`}>
-      <SuperAdminProvider config={finalConfig}>
+      <SuperAdminProvider config={config}>
         {renderWithI18n(renderWithTheme(renderChildren()))}
       </SuperAdminProvider>
     </div>
