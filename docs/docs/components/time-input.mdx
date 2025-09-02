@@ -2,13 +2,16 @@
 title: TimeInput Component
 description: Specialized time input component with validation, 12/24-hour format, and quick time options
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { TimeInput } from '@react-superadmin/web';
+
 # TimeInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `TimeInput` component is a specialized time input that provides validation, accessibility features, and flexible styling options specifically designed for time input. It supports both 12-hour and 24-hour formats with comprehensive validation and quick time selection options.
+
 ## Overview
+
 The TimeInput component provides:
+
 - **Time Validation**: Built-in time format validation with custom validation support
 - **12/24 Hour Format**: Support for both 12-hour and 24-hour time formats
 - **Quick Time Options**: Predefined time options for common selections
@@ -17,51 +20,58 @@ The TimeInput component provides:
 - **Custom Styling**: Flexible styling options with consistent design
 - **Time Zone Support**: Optional time zone information display
 - **Current Time**: Quick current time selection button
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| ----------------------------------------- |
-| `value`  | `string \| null`  | -  | Current time value (HH:MM format or null) |
-| `onChange`  | `(value: string \| null) => void`  | -  | Callback when time changes  |
-| `label`  | `string`  | -  | Label text for the input  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `error`  | `string`  | -  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `size`  | `'sm' \| 'md' \| 'lg'`  | `'md'`  | Input size variant  |
-| `min`  | `string`  | -  | Minimum allowed time (HH:MM format)  |
-| `max`  | `string`  | -  | Maximum allowed time (HH:MM format)  |
-| `step`  | `number`  | `15`  | Time step in minutes  |
-| `showIcon`  | `boolean`  | `true`  | Whether to show an icon  |
-| `showSeconds`  | `boolean`  | `false`  | Whether to show seconds input  |
-| `use12Hour`  | `boolean`  | `false`  | Whether to use 12-hour format  |
-| `showAMPM`  | `boolean`  | `false`  | Whether to show AM/PM selector  |
-| `placeholder`  | `string`  | -  | Placeholder text  |
-| `showTimePicker`   | `boolean`  | `false`  | Whether to show time picker  |
-| `showQuickOptions` | `boolean`  | `false`  | Whether to show quick time options  |
-| `quickTimeOptions` | `string[]`  | `['09:00', '12:00', '15:00', '18:00']` | Quick time options to display  |
-| `showCurrentTime`  | `boolean`  | `false`  | Whether to show current time button  |
-| `showValidation`   | `boolean`  | `false`  | Whether to show time validation  |
-| `validateTime`  | `(time: string) => string \| null` | -  | Custom validation function  |
-| `showFormatHelp`   | `boolean`  | `false`  | Whether to show time format help  |
-| `showTimeZone`  | `boolean`  | `false`  | Whether to show time zone info  |
-| `timeZone`  | `string`  | -  | Current time zone  |
+
+| Prop               | Type                               | Default                                | Description                               |
+| ------------------ | ---------------------------------- | -------------------------------------- | ----------------------------------------- |
+| `value`            | `string \| null`                   | -                                      | Current time value (HH:MM format or null) |
+| `onChange`         | `(value: string \| null) => void`  | -                                      | Callback when time changes                |
+| `label`            | `string`                           | -                                      | Label text for the input                  |
+| `helperText`       | `string`                           | -                                      | Helper text below the input               |
+| `error`            | `string`                           | -                                      | Error message to display                  |
+| `required`         | `boolean`                          | `false`                                | Whether the field is required             |
+| `disabled`         | `boolean`                          | `false`                                | Whether the input is disabled             |
+| `size`             | `'sm' \| 'md' \| 'lg'`             | `'md'`                                 | Input size variant                        |
+| `min`              | `string`                           | -                                      | Minimum allowed time (HH:MM format)       |
+| `max`              | `string`                           | -                                      | Maximum allowed time (HH:MM format)       |
+| `step`             | `number`                           | `15`                                   | Time step in minutes                      |
+| `showIcon`         | `boolean`                          | `true`                                 | Whether to show an icon                   |
+| `showSeconds`      | `boolean`                          | `false`                                | Whether to show seconds input             |
+| `use12Hour`        | `boolean`                          | `false`                                | Whether to use 12-hour format             |
+| `showAMPM`         | `boolean`                          | `false`                                | Whether to show AM/PM selector            |
+| `placeholder`      | `string`                           | -                                      | Placeholder text                          |
+| `showTimePicker`   | `boolean`                          | `false`                                | Whether to show time picker               |
+| `showQuickOptions` | `boolean`                          | `false`                                | Whether to show quick time options        |
+| `quickTimeOptions` | `string[]`                         | `['09:00', '12:00', '15:00', '18:00']` | Quick time options to display             |
+| `showCurrentTime`  | `boolean`                          | `false`                                | Whether to show current time button       |
+| `showValidation`   | `boolean`                          | `false`                                | Whether to show time validation           |
+| `validateTime`     | `(time: string) => string \| null` | -                                      | Custom validation function                |
+| `showFormatHelp`   | `boolean`                          | `false`                                | Whether to show time format help          |
+| `showTimeZone`     | `boolean`                          | `false`                                | Whether to show time zone info            |
+| `timeZone`         | `string`                           | -                                      | Current time zone                         |
+
 ## Basic Usage
+
 ```jsx
 import { TimeInput } from '@react-superadmin/web';
 function MyForm() {
   const [meetingTime, setMeetingTime] = useState('');
   return (
     <TimeInput
-  label='Meeting Time'
-  value={meetingTime}
-  onChange={setMeetingTime}
-  placeholder='Select meeting time'
+      label='Meeting Time'
+      value={meetingTime}
+      onChange={setMeetingTime}
+      placeholder='Select meeting time'
     />
   );
 }
 ```
+
 ## Examples
+
 ### Basic Time Input
+
 <LiveProvider
   code={`
 function BasicTimeInput() {

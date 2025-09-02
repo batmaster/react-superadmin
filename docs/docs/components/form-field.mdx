@@ -2,43 +2,62 @@
 title: FormField Component
 description: Universal form field component that renders different input types based on field configuration
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { FormField } from '@react-superadmin/web';
+
 # FormField Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `FormField` component is a universal form field renderer that automatically selects and renders the appropriate input component based on the field configuration. It provides a consistent interface for handling different input types while maintaining proper validation and accessibility.
+
 ## Overview
+
 The FormField component provides:
+
 - **Automatic Input Selection**: Renders the correct input type based on field configuration
 - **Consistent Interface**: Unified props interface for all field types
 - **Built-in Validation**: Error display and validation support
 - **Accessibility**: Proper labels, help text, and ARIA attributes
 - **Flexible Configuration**: Supports all common input types
 - **Type Safety**: Full TypeScript support with proper typing
+
 ## Props
-| Prop  | Type  | Required | Description  |
-| ----------------------------------------------------------------- |
-| `field`    | `FieldConfig`  | Yes  | Field configuration object defining the input type and properties |
-| `value`    | `any`  | Yes  | Current value of the field  |
-| `onChange` | `(value: any) => void` | Yes  | Callback function called when the field value changes  |
-| `error`    | `string`  | No  | Error message to display below the field  |
-| `disabled` | `boolean`  | No  | Whether the field is disabled (default: false)  |
+
+| Prop       | Type                   | Required | Description                                                       |
+| ---------- | ---------------------- | -------- | ----------------------------------------------------------------- |
+| `field`    | `FieldConfig`          | Yes      | Field configuration object defining the input type and properties |
+| `value`    | `any`                  | Yes      | Current value of the field                                        |
+| `onChange` | `(value: any) => void` | Yes      | Callback function called when the field value changes             |
+| `error`    | `string`               | No       | Error message to display below the field                          |
+| `disabled` | `boolean`              | No       | Whether the field is disabled (default: false)                    |
+
 ## Field Types
+
 The FormField component supports the following field types:
+
 ### Text Inputs
+
 - `text` - Standard text input
 - `email` - Email input with validation
 - `password` - Password input with masking
+
 ### Numeric Inputs
+
 - `number` - Number input with numeric validation
+
 ### Selection Inputs
+
 - `select` - Dropdown selection with options
 - `boolean` - Checkbox for true/false values
+
 ### Multi-line Inputs
+
 - `textarea` - Multi-line text area
+
 ### Date Inputs
+
 - `date` - Date picker input
+
 ## Basic Usage
+
 ```jsx
 import { FormField } from '@react-superadmin/web';
 const fieldConfig = {
@@ -54,16 +73,19 @@ function MyForm() {
   const [error, setError] = useState('');
   return (
     <FormField
-  field={fieldConfig}
-  value={value}
-  onChange={setValue}
-  error={error}
+      field={fieldConfig}
+      value={value}
+      onChange={setValue}
+      error={error}
     />
   );
 }
 ```
+
 ## Field Configuration
+
 The `FieldConfig` interface defines the structure for field configuration:
+
 ```typescript
 interface FieldConfig {
   name: string;
@@ -83,8 +105,11 @@ interface FieldConfig {
   options?: Array<{ value: string; label: string }>; // For select fields
 }
 ```
+
 ## Examples
+
 ### Text Input Field
+
 <LiveProvider code={`
 function TextFieldExample() {
   const [value, setValue] = React.useState('');

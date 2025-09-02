@@ -2,29 +2,36 @@
 title: Validation Utilities
 description: Form validation utilities with built-in rules and custom validation support
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { validateField, validateForm } from '@react-superadmin/core';
+
 # Validation Utilities
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The validation utilities provide a comprehensive form validation system with built-in validation rules and support for custom validation functions. These utilities are designed to work seamlessly with form components and provide consistent validation across your application.
+
 ## Overview
+
 The validation utilities provide:
+
 - **Built-in Validation Rules**: Common validation patterns (required, min, max, pattern)
 - **Custom Validation**: Support for custom validation functions
 - **Field-level Validation**: Validate individual fields with specific rules
 - **Form-level Validation**: Validate entire forms with multiple fields
 - **Type Safety**: Full TypeScript support with proper typing
 - **Flexible Configuration**: Easy to configure and extend validation rules
+
 ## Validation Rules
+
 The system supports the following built-in validation rules:
-| Rule Type  | Description  | Example  |
+| Rule Type | Description | Example |
 | ---------------------------------------------------------------------------------- |
-| `required` | Field must have a value    | `{ type: 'required', message: 'This field is required' }`  |
-| `min`  | Minimum length or value    | `{ type: 'min', value: 3, message: 'Must be at least 3 characters' }`  |
-| `max`  | Maximum length or value    | `{ type: 'max', value: 100, message: 'Must be less than 100 characters' }`  |
-| `pattern`  | Regular expression pattern | `{ type: 'pattern', value: '^[a-zA-Z]+$', message: 'Only letters allowed' }`  |
-| `custom`   | Custom validation function | `{ type: 'custom', value: (val) => val.includes('@'), message: 'Must contain @' }` |
+| `required` | Field must have a value | `{ type: 'required', message: 'This field is required' }` |
+| `min` | Minimum length or value | `{ type: 'min', value: 3, message: 'Must be at least 3 characters' }` |
+| `max` | Maximum length or value | `{ type: 'max', value: 100, message: 'Must be less than 100 characters' }` |
+| `pattern` | Regular expression pattern | `{ type: 'pattern', value: '^[a-zA-Z]+$', message: 'Only letters allowed' }` |
+| `custom` | Custom validation function | `{ type: 'custom', value: (val) => val.includes('@'), message: 'Must contain @' }` |
+
 ## Basic Usage
+
 ```jsx
 import { validateField, validateForm } from '@react-superadmin/core';
 // Field configuration with validation rules
@@ -35,9 +42,9 @@ const fieldConfig = {
   validation: [
     { type: 'required', message: 'Email is required' },
     {
-  type: 'pattern',
-  value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-  message: 'Invalid email format',
+      type: 'pattern',
+      value: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+      message: 'Invalid email format',
     },
   ],
 };
@@ -49,8 +56,11 @@ const formData = { email: 'invalid-email' };
 const errors = validateForm(formData, [fieldConfig]);
 console.log(errors); // { email: 'Invalid email format' }
 ```
+
 ## Examples
+
 ### Basic Field Validation
+
 <LiveProvider code={`
 function BasicValidationExample() {
   const fieldConfig = {

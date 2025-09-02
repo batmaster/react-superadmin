@@ -2,13 +2,16 @@
 title: ImageInput Component
 description: Advanced image input component with drag and drop, preview, validation, and compression capabilities
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { ImageInput } from '@react-superadmin/web';
+
 # ImageInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `ImageInput` component is a comprehensive image upload solution that provides drag and drop functionality, image preview, validation, compression, and extensive customization options. It's designed to handle image uploads with a modern, user-friendly interface.
+
 ## Overview
+
 The ImageInput component provides:
+
 - **Drag & Drop Support**: Intuitive image upload with visual feedback
 - **Image Preview**: Real-time preview of uploaded images
 - **File Validation**: Type, size, and custom validation rules
@@ -17,59 +20,66 @@ The ImageInput component provides:
 - **Progress Tracking**: Upload progress visualization
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Customizable UI**: Extensive styling and behavior options
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| --------------------------------------------------- | ---------------------------------------- |
-| `value`  | `string \| File \| null`  | -  | Current image value (URL or File object) |
-| `onChange`  | `(value: string \| File \| null) => void` | -  | Change handler  |
-| `label`  | `string`  | -  | Label text for the input  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `error`  | `string`  | -  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `inputSize`  | `'sm' \| 'md' \| 'lg'`  | `'md'`  | Input size variant  |
-| `placeholder`  | `string`  | `'Choose an image or drag and drop'`  | Placeholder text  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `loadingText`  | `string`  | `'Uploading...'`  | Loading text to display  |
-| `showPreview`  | `boolean`  | `true`  | Whether to show image preview  |
-| `showInfo`  | `boolean`  | `false`  | Whether to show image info  |
-| `multiple`  | `boolean`  | `false`  | Whether to allow multiple file selection |
-| `accept`  | `string`  | `'image/*'`  | Accepted file types  |
-| `maxSize`  | `number`  | -  | Maximum file size in bytes  |
-| `maxSizeText`  | `string`  | -  | Maximum file size text  |
-| `showDragDrop`  | `boolean`  | `true`  | Whether to show drag and drop area  |
-| `dragDropText`  | `string`  | `'Drag and drop an image here, or click to browse'` | Drag and drop text  |
-| `showFileSize`  | `boolean`  | `true`  | Whether to show file size  |
-| `showDimensions`  | `boolean`  | `true`  | Whether to show image dimensions  |
-| `showRemoveButton`    | `boolean`  | `true`  | Whether to show remove button  |
-| `showDownloadButton`  | `boolean`  | `false`  | Whether to show download button  |
-| `showPreviewButton`   | `boolean`  | `true`  | Whether to show preview button  |
-| `enableCompression`   | `boolean`  | `false`  | Whether to enable image compression  |
-| `compressionQuality`  | `number`  | `0.8`  | Image compression quality (0-1)  |
-| `maxDimensions`  | `{ width: number; height: number }`  | -  | Maximum image dimensions  |
-| `maintainAspectRatio` | `boolean`  | `true`  | Whether to maintain aspect ratio  |
-| `aspectRatio`  | `number`  | `16/9`  | Aspect ratio (width/height)  |
-| `showProgress`  | `boolean`  | `false`  | Whether to show upload progress  |
-| `onUpload`  | `(file: File) => Promise<string>`  | -  | Custom upload handler  |
-| `validate`  | `(file: File) => string \| null`  | -  | Custom validation function  |
+
+| Prop                  | Type                                      | Default                                             | Description                              |
+| --------------------- | ----------------------------------------- | --------------------------------------------------- | ---------------------------------------- |
+| `value`               | `string \| File \| null`                  | -                                                   | Current image value (URL or File object) |
+| `onChange`            | `(value: string \| File \| null) => void` | -                                                   | Change handler                           |
+| `label`               | `string`                                  | -                                                   | Label text for the input                 |
+| `helperText`          | `string`                                  | -                                                   | Helper text below the input              |
+| `error`               | `string`                                  | -                                                   | Error message to display                 |
+| `required`            | `boolean`                                 | `false`                                             | Whether the field is required            |
+| `disabled`            | `boolean`                                 | `false`                                             | Whether the input is disabled            |
+| `inputSize`           | `'sm' \| 'md' \| 'lg'`                    | `'md'`                                              | Input size variant                       |
+| `placeholder`         | `string`                                  | `'Choose an image or drag and drop'`                | Placeholder text                         |
+| `loading`             | `boolean`                                 | `false`                                             | Whether to show a loading state          |
+| `loadingText`         | `string`                                  | `'Uploading...'`                                    | Loading text to display                  |
+| `showPreview`         | `boolean`                                 | `true`                                              | Whether to show image preview            |
+| `showInfo`            | `boolean`                                 | `false`                                             | Whether to show image info               |
+| `multiple`            | `boolean`                                 | `false`                                             | Whether to allow multiple file selection |
+| `accept`              | `string`                                  | `'image/*'`                                         | Accepted file types                      |
+| `maxSize`             | `number`                                  | -                                                   | Maximum file size in bytes               |
+| `maxSizeText`         | `string`                                  | -                                                   | Maximum file size text                   |
+| `showDragDrop`        | `boolean`                                 | `true`                                              | Whether to show drag and drop area       |
+| `dragDropText`        | `string`                                  | `'Drag and drop an image here, or click to browse'` | Drag and drop text                       |
+| `showFileSize`        | `boolean`                                 | `true`                                              | Whether to show file size                |
+| `showDimensions`      | `boolean`                                 | `true`                                              | Whether to show image dimensions         |
+| `showRemoveButton`    | `boolean`                                 | `true`                                              | Whether to show remove button            |
+| `showDownloadButton`  | `boolean`                                 | `false`                                             | Whether to show download button          |
+| `showPreviewButton`   | `boolean`                                 | `true`                                              | Whether to show preview button           |
+| `enableCompression`   | `boolean`                                 | `false`                                             | Whether to enable image compression      |
+| `compressionQuality`  | `number`                                  | `0.8`                                               | Image compression quality (0-1)          |
+| `maxDimensions`       | `{ width: number; height: number }`       | -                                                   | Maximum image dimensions                 |
+| `maintainAspectRatio` | `boolean`                                 | `true`                                              | Whether to maintain aspect ratio         |
+| `aspectRatio`         | `number`                                  | `16/9`                                              | Aspect ratio (width/height)              |
+| `showProgress`        | `boolean`                                 | `false`                                             | Whether to show upload progress          |
+| `onUpload`            | `(file: File) => Promise<string>`         | -                                                   | Custom upload handler                    |
+| `validate`            | `(file: File) => string \| null`          | -                                                   | Custom validation function               |
+
 ## Basic Usage
+
 ```jsx
 import { ImageInput } from '@react-superadmin/web';
 function MyForm() {
   const [image, setImage] = useState(null);
   return (
     <ImageInput
-  label='Profile Picture'
-  value={image}
-  onChange={setImage}
-  accept='image/*'
-  showPreview={true}
+      label='Profile Picture'
+      value={image}
+      onChange={setImage}
+      accept='image/*'
+      showPreview={true}
     />
   );
 }
 ```
+
 ## Examples
+
 ### Basic Image Upload
+
 <LiveProvider
   code={`
 function BasicImageUpload() {

@@ -2,39 +2,46 @@
 title: TextField Component
 description: Versatile text display component with formatting, truncation, and link detection capabilities
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { TextField } from '@react-superadmin/core';
+
 # TextField Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `TextField` component is a versatile text display component that supports different text formats, truncation, link detection, and accessibility features. It's designed to handle various text display needs in admin interfaces.
+
 ## Overview
+
 The TextField component provides:
+
 - **Multiple Text Formats**: Plain text, rich text, and markdown support
 - **Smart Truncation**: Automatic text truncation with ellipsis and tooltips
 - **Link Detection**: Automatic detection and rendering of URLs
 - **Accessibility**: ARIA attributes and keyboard navigation support
 - **Custom Rendering**: Flexible custom rendering capabilities
 - **Whitespace Control**: Options to preserve line breaks and whitespace
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| -------------------------------------------------------------- |
-| `children`  | `ReactNode`  | `undefined` | Text content to display  |
-| `value`  | `string`  | `undefined` | Text value to display (alternative to children)  |
-| `format`  | `TextFormat`  | `"plain"`   | Format of the text content (`"plain"`, `"rich"`, `"markdown"`) |
-| `maxLength`  | `number`  | `undefined` | Maximum number of characters before truncating  |
-| `showEllipsis`  | `boolean`  | `true`  | Whether to show ellipsis when text is truncated  |
-| `detectLinks`  | `boolean`  | `false`  | Whether to detect and render links automatically  |
-| `openLinksInNewTab`  | `boolean`  | `true`  | Whether to open links in a new tab  |
-| `className`  | `string`  | `undefined` | CSS class names for the container  |
-| `textClassName`  | `string`  | `undefined` | CSS class names for the text content  |
-| `required`  | `boolean`  | `false`  | Whether the field is required (for accessibility)  |
-| `render`  | `(text: string) => ReactNode` | `undefined` | Custom renderer for the text content  |
-| `preserveLineBreaks`    | `boolean`  | `false`  | Whether to preserve line breaks  |
-| `preserveWhitespace`    | `boolean`  | `false`  | Whether to preserve whitespace  |
-| `linkClassName`  | `string`  | `undefined` | Custom styling for links  |
-| `showTooltipOnTruncate` | `boolean`  | `false`  | Whether to show a tooltip on truncated text  |
-| `tooltipContent`  | `string`  | `undefined` | Custom tooltip content  |
+
+| Prop                    | Type                          | Default     | Description                                                    |
+| ----------------------- | ----------------------------- | ----------- | -------------------------------------------------------------- |
+| `children`              | `ReactNode`                   | `undefined` | Text content to display                                        |
+| `value`                 | `string`                      | `undefined` | Text value to display (alternative to children)                |
+| `format`                | `TextFormat`                  | `"plain"`   | Format of the text content (`"plain"`, `"rich"`, `"markdown"`) |
+| `maxLength`             | `number`                      | `undefined` | Maximum number of characters before truncating                 |
+| `showEllipsis`          | `boolean`                     | `true`      | Whether to show ellipsis when text is truncated                |
+| `detectLinks`           | `boolean`                     | `false`     | Whether to detect and render links automatically               |
+| `openLinksInNewTab`     | `boolean`                     | `true`      | Whether to open links in a new tab                             |
+| `className`             | `string`                      | `undefined` | CSS class names for the container                              |
+| `textClassName`         | `string`                      | `undefined` | CSS class names for the text content                           |
+| `required`              | `boolean`                     | `false`     | Whether the field is required (for accessibility)              |
+| `render`                | `(text: string) => ReactNode` | `undefined` | Custom renderer for the text content                           |
+| `preserveLineBreaks`    | `boolean`                     | `false`     | Whether to preserve line breaks                                |
+| `preserveWhitespace`    | `boolean`                     | `false`     | Whether to preserve whitespace                                 |
+| `linkClassName`         | `string`                      | `undefined` | Custom styling for links                                       |
+| `showTooltipOnTruncate` | `boolean`                     | `false`     | Whether to show a tooltip on truncated text                    |
+| `tooltipContent`        | `string`                      | `undefined` | Custom tooltip content                                         |
+
 ## Basic Usage
+
 ```tsx
 import { TextField } from '@react-superadmin/core';
 // Basic text display
@@ -48,8 +55,11 @@ import { TextField } from '@react-superadmin/core';
   showEllipsis
 />
 ```
+
 ## Live Examples
+
 ### Basic Text Display
+
 <LiveProvider code={`
 import React from 'react';
 import { TextField } from '@react-superadmin/core';

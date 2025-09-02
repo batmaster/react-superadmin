@@ -2,13 +2,16 @@
 title: FileInput Component
 description: Advanced file input component with drag and drop, validation, preview, and upload capabilities
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { FileInput } from '@react-superadmin/web';
+
 # FileInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `FileInput` component is a comprehensive file upload solution that provides drag and drop functionality, file validation, preview capabilities, and upload progress tracking. It's designed to handle both single and multiple file uploads with extensive customization options.
+
 ## Overview
+
 The FileInput component provides:
+
 - **Drag & Drop Support**: Intuitive file upload with visual feedback
 - **File Validation**: Type, size, and custom validation rules
 - **File Preview**: Visual representation of uploaded files
@@ -17,43 +20,47 @@ The FileInput component provides:
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Custom Styling**: Extensive customization options
 - **File Management**: Remove, download, and preview files
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| ------------------------------------------------ | ---------------------------------------- |
-| `value`  | `File \| File[] \| null`  | `undefined`  | Current file value  |
-| `onChange`  | `(value: File \| File[] \| null) => void` | **Required**  | Change handler  |
-| `label`  | `string`  | `undefined`  | Label text for the input  |
-| `helperText`  | `string`  | `undefined`  | Helper text below the input  |
-| `error`  | `string`  | `undefined`  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `inputSize`  | `"sm" \| "md" \| "lg"`  | `"md"`  | Input size variant  |
-| `placeholder`  | `string`  | `"Choose files or drag and drop"`  | Placeholder text  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `loadingText`  | `string`  | `"Uploading..."`  | Loading text to display  |
-| `showPreview`  | `boolean`  | `true`  | Whether to show file preview  |
-| `showInfo`  | `boolean`  | `false`  | Whether to show file info  |
-| `multiple`  | `boolean`  | `false`  | Whether to allow multiple file selection |
-| `accept`  | `string`  | `undefined`  | Accepted file types  |
-| `maxSize`  | `number`  | `undefined`  | Maximum file size in bytes  |
-| `maxSizeText`  | `string`  | `undefined`  | Maximum file size text  |
-| `showDragDrop`  | `boolean`  | `true`  | Whether to show drag and drop area  |
-| `dragDropText`  | `string`  | `"Drag and drop files here, or click to browse"` | Drag and drop text  |
-| `showFileSize`  | `boolean`  | `true`  | Whether to show file size  |
-| `showFileType`  | `boolean`  | `true`  | Whether to show file type  |
-| `showRemoveButton`  | `boolean`  | `true`  | Whether to show remove button  |
-| `showDownloadButton`   | `boolean`  | `false`  | Whether to show download button  |
-| `showPreviewButton`    | `boolean`  | `true`  | Whether to show preview button  |
-| `showHelp`  | `boolean`  | `false`  | Whether to show help text  |
-| `showProgress`  | `boolean`  | `false`  | Whether to show upload progress  |
-| `onUpload`  | `(file: File) => Promise<string>`  | `undefined`  | Custom upload handler  |
-| `showValidationErrors` | `boolean`  | `true`  | Whether to show validation errors  |
-| `validate`  | `(file: File) => string \| null`  | `undefined`  | Custom validation function  |
-| `maxFiles`  | `number`  | `undefined`  | Maximum number of files allowed  |
-| `showFileList`  | `boolean`  | `true`  | Whether to show file list  |
-| `allowReorder`  | `boolean`  | `false`  | Whether to allow file reordering  |
-| `showFileCount`  | `boolean`  | `false`  | Whether to show file count  |
+
+| Prop                   | Type                                      | Default                                          | Description                              |
+| ---------------------- | ----------------------------------------- | ------------------------------------------------ | ---------------------------------------- |
+| `value`                | `File \| File[] \| null`                  | `undefined`                                      | Current file value                       |
+| `onChange`             | `(value: File \| File[] \| null) => void` | **Required**                                     | Change handler                           |
+| `label`                | `string`                                  | `undefined`                                      | Label text for the input                 |
+| `helperText`           | `string`                                  | `undefined`                                      | Helper text below the input              |
+| `error`                | `string`                                  | `undefined`                                      | Error message to display                 |
+| `required`             | `boolean`                                 | `false`                                          | Whether the field is required            |
+| `disabled`             | `boolean`                                 | `false`                                          | Whether the input is disabled            |
+| `inputSize`            | `"sm" \| "md" \| "lg"`                    | `"md"`                                           | Input size variant                       |
+| `placeholder`          | `string`                                  | `"Choose files or drag and drop"`                | Placeholder text                         |
+| `loading`              | `boolean`                                 | `false`                                          | Whether to show a loading state          |
+| `loadingText`          | `string`                                  | `"Uploading..."`                                 | Loading text to display                  |
+| `showPreview`          | `boolean`                                 | `true`                                           | Whether to show file preview             |
+| `showInfo`             | `boolean`                                 | `false`                                          | Whether to show file info                |
+| `multiple`             | `boolean`                                 | `false`                                          | Whether to allow multiple file selection |
+| `accept`               | `string`                                  | `undefined`                                      | Accepted file types                      |
+| `maxSize`              | `number`                                  | `undefined`                                      | Maximum file size in bytes               |
+| `maxSizeText`          | `string`                                  | `undefined`                                      | Maximum file size text                   |
+| `showDragDrop`         | `boolean`                                 | `true`                                           | Whether to show drag and drop area       |
+| `dragDropText`         | `string`                                  | `"Drag and drop files here, or click to browse"` | Drag and drop text                       |
+| `showFileSize`         | `boolean`                                 | `true`                                           | Whether to show file size                |
+| `showFileType`         | `boolean`                                 | `true`                                           | Whether to show file type                |
+| `showRemoveButton`     | `boolean`                                 | `true`                                           | Whether to show remove button            |
+| `showDownloadButton`   | `boolean`                                 | `false`                                          | Whether to show download button          |
+| `showPreviewButton`    | `boolean`                                 | `true`                                           | Whether to show preview button           |
+| `showHelp`             | `boolean`                                 | `false`                                          | Whether to show help text                |
+| `showProgress`         | `boolean`                                 | `false`                                          | Whether to show upload progress          |
+| `onUpload`             | `(file: File) => Promise<string>`         | `undefined`                                      | Custom upload handler                    |
+| `showValidationErrors` | `boolean`                                 | `true`                                           | Whether to show validation errors        |
+| `validate`             | `(file: File) => string \| null`          | `undefined`                                      | Custom validation function               |
+| `maxFiles`             | `number`                                  | `undefined`                                      | Maximum number of files allowed          |
+| `showFileList`         | `boolean`                                 | `true`                                           | Whether to show file list                |
+| `allowReorder`         | `boolean`                                 | `false`                                          | Whether to allow file reordering         |
+| `showFileCount`        | `boolean`                                 | `false`                                          | Whether to show file count               |
+
 ## Basic Usage
+
 ```tsx
 import { FileInput } from '@react-superadmin/web';
 // Basic single file upload
@@ -77,8 +84,11 @@ import { FileInput } from '@react-superadmin/web';
   maxFiles={5}
 />
 ```
+
 ## Live Examples
+
 ### Basic File Upload
+
 <LiveProvider code={`
 import React, { useState } from 'react';
 import { FileInput } from '@react-superadmin/web';

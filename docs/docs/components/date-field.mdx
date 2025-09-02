@@ -1,14 +1,23 @@
 ---
 title: DateField
 description: Advanced date display component with formatting, validation, and interactive features
+imports:
+  LiveProvider: 'react-live'
+  LiveEditor: 'react-live'
+  LiveError: 'react-live'
+  LivePreview: 'react-live'
+  DateField: '@react-superadmin/web'
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { DateField } from '@react-superadmin/web';
+
 # DateField
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `DateField` component is a comprehensive date display solution that provides advanced formatting, validation, and interactive features. It supports various display styles, date formats, relative time display, and metadata.
+
 ## Overview
+
 The `DateField` component provides:
+
 - **Multiple Display Styles**: Text, badge, icon, button, and relative styles
 - **Advanced Formatting**: Short, long, time, datetime, and custom formats
 - **Relative Time**: Smart relative time display (e.g., "2 hours ago")
@@ -17,50 +26,54 @@ The `DateField` component provides:
 - **Metadata Display**: Day of week, date status, range validation
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Customization**: Extensive styling and behavior options
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| --------------------------------------------------------------------- | --------------------------------------------------- |
-| `value`  | `string \| Date \| number \| null`  | -  | The date value to display  |
-| `record`  | `Record<string, any>`  | -  | The source record containing the field data  |
-| `source`  | `string`  | -  | The source field name in the record  |
-| `className`  | `string`  | -  | Custom CSS classes for the field container  |
-| `labelClassName`  | `string`  | -  | Custom CSS classes for the field label  |
-| `valueClassName`  | `string`  | -  | Custom CSS classes for the date value  |
-| `showLabel`  | `boolean`  | `true`  | Whether to show the field label  |
-| `label`  | `string`  | -  | Custom label text  |
-| `style`  | `"text" \| "badge" \| "icon" \| "button" \| "relative"`  | `"text"`  | Display style for the date  |
-| `format`  | `"short" \| "long" \| "relative" \| "time" \| "datetime" \| "custom"` | `"short"`  | Date format type  |
-| `customFormat`  | `string`  | -  | Custom date format string (for Intl.DateTimeFormat) |
-| `locale`  | `string`  | `"en-US"`  | Locale for date formatting  |
-| `timezone`  | `string`  | -  | Timezone for date formatting  |
-| `showTime`  | `boolean`  | `false`  | Whether to show time along with date  |
-| `showRelative`  | `boolean`  | `false`  | Whether to show relative time  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `loadingText`  | `string`  | `"Loading..."`  | Loading text  |
-| `disabled`  | `boolean`  | `false`  | Whether the field is disabled  |
-| `emptyText`  | `string`  | `"No date"`  | Custom empty state text  |
-| `showEmpty`  | `boolean`  | `true`  | Whether to show the empty state  |
-| `validateDate`  | `boolean`  | `true`  | Whether to validate date format  |
-| `validationErrorMessage` | `string`  | `"Invalid date format"` | Custom validation error message  |
-| `showValidation`  | `boolean`  | `false`  | Whether to show date validation status  |
-| `icon`  | `React.ReactNode`  | -  | Custom icon for the date  |
-| `showPreview`  | `boolean`  | `false`  | Whether to show date preview on hover  |
-| `previewContent`  | `React.ReactNode`  | -  | Custom preview content  |
-| `onClick`  | `(value, record) => void`  | -  | Click handler for the date  |
-| `clickable`  | `boolean`  | `false`  | Whether the date is clickable  |
-| `showTooltip`  | `boolean`  | `false`  | Whether to show a tooltip  |
-| `tooltipContent`  | `string`  | -  | Custom tooltip content  |
-| `animate`  | `boolean`  | `false`  | Whether to animate date changes  |
-| `validDateClassName`  | `string`  | -  | Custom CSS classes for valid dates  |
-| `invalidDateClassName`   | `string`  | -  | Custom CSS classes for invalid dates  |
-| `showMetadata`  | `boolean`  | `false`  | Whether to show date metadata  |
-| `showAccessibility`  | `boolean`  | `false`  | Whether to show date accessibility features  |
-| `showStatus`  | `boolean`  | `false`  | Whether to show date status indicators  |
-| `dateStatus`  | `"past" \| "present" \| "future"`  | -  | Whether the date is in the past, present, or future |
-| `showRange`  | `boolean`  | `false`  | Whether to show date range indicators  |
-| `minDate`  | `string \| Date`  | -  | Minimum date for range validation  |
-| `maxDate`  | `string \| Date`  | -  | Maximum date for range validation  |
+
+| Prop                     | Type                                                                  | Default                 | Description                                         |
+| ------------------------ | --------------------------------------------------------------------- | ----------------------- | --------------------------------------------------- |
+| `value`                  | `string \| Date \| number \| null`                                    | -                       | The date value to display                           |
+| `record`                 | `Record<string, any>`                                                 | -                       | The source record containing the field data         |
+| `source`                 | `string`                                                              | -                       | The source field name in the record                 |
+| `className`              | `string`                                                              | -                       | Custom CSS classes for the field container          |
+| `labelClassName`         | `string`                                                              | -                       | Custom CSS classes for the field label              |
+| `valueClassName`         | `string`                                                              | -                       | Custom CSS classes for the date value               |
+| `showLabel`              | `boolean`                                                             | `true`                  | Whether to show the field label                     |
+| `label`                  | `string`                                                              | -                       | Custom label text                                   |
+| `style`                  | `"text" \| "badge" \| "icon" \| "button" \| "relative"`               | `"text"`                | Display style for the date                          |
+| `format`                 | `"short" \| "long" \| "relative" \| "time" \| "datetime" \| "custom"` | `"short"`               | Date format type                                    |
+| `customFormat`           | `string`                                                              | -                       | Custom date format string (for Intl.DateTimeFormat) |
+| `locale`                 | `string`                                                              | `"en-US"`               | Locale for date formatting                          |
+| `timezone`               | `string`                                                              | -                       | Timezone for date formatting                        |
+| `showTime`               | `boolean`                                                             | `false`                 | Whether to show time along with date                |
+| `showRelative`           | `boolean`                                                             | `false`                 | Whether to show relative time                       |
+| `loading`                | `boolean`                                                             | `false`                 | Whether to show a loading state                     |
+| `loadingText`            | `string`                                                              | `"Loading..."`          | Loading text                                        |
+| `disabled`               | `boolean`                                                             | `false`                 | Whether the field is disabled                       |
+| `emptyText`              | `string`                                                              | `"No date"`             | Custom empty state text                             |
+| `showEmpty`              | `boolean`                                                             | `true`                  | Whether to show the empty state                     |
+| `validateDate`           | `boolean`                                                             | `true`                  | Whether to validate date format                     |
+| `validationErrorMessage` | `string`                                                              | `"Invalid date format"` | Custom validation error message                     |
+| `showValidation`         | `boolean`                                                             | `false`                 | Whether to show date validation status              |
+| `icon`                   | `React.ReactNode`                                                     | -                       | Custom icon for the date                            |
+| `showPreview`            | `boolean`                                                             | `false`                 | Whether to show date preview on hover               |
+| `previewContent`         | `React.ReactNode`                                                     | -                       | Custom preview content                              |
+| `onClick`                | `(value, record) => void`                                             | -                       | Click handler for the date                          |
+| `clickable`              | `boolean`                                                             | `false`                 | Whether the date is clickable                       |
+| `showTooltip`            | `boolean`                                                             | `false`                 | Whether to show a tooltip                           |
+| `tooltipContent`         | `string`                                                              | -                       | Custom tooltip content                              |
+| `animate`                | `boolean`                                                             | `false`                 | Whether to animate date changes                     |
+| `validDateClassName`     | `string`                                                              | -                       | Custom CSS classes for valid dates                  |
+| `invalidDateClassName`   | `string`                                                              | -                       | Custom CSS classes for invalid dates                |
+| `showMetadata`           | `boolean`                                                             | `false`                 | Whether to show date metadata                       |
+| `showAccessibility`      | `boolean`                                                             | `false`                 | Whether to show date accessibility features         |
+| `showStatus`             | `boolean`                                                             | `false`                 | Whether to show date status indicators              |
+| `dateStatus`             | `"past" \| "present" \| "future"`                                     | -                       | Whether the date is in the past, present, or future |
+| `showRange`              | `boolean`                                                             | `false`                 | Whether to show date range indicators               |
+| `minDate`                | `string \| Date`                                                      | -                       | Minimum date for range validation                   |
+| `maxDate`                | `string \| Date`                                                      | -                       | Maximum date for range validation                   |
+
 ## Basic Usage
+
 ```jsx
 import { DateField } from '@react-superadmin/web';
 // Basic date display
@@ -72,8 +85,11 @@ import { DateField } from '@react-superadmin/web';
   label="Created Date"
 />
 ```
+
 ## Examples
+
 ### Basic Date Display
+
 <LiveProvider
   code={`
 function BasicDateExample() {

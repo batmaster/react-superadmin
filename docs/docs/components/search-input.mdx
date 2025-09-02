@@ -2,13 +2,16 @@
 title: SearchInput Component
 description: Advanced search input with suggestions, history, debouncing, and analytics
 ---
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { SearchInput } from '@react-superadmin/web';
+
 # SearchInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `SearchInput` component is a comprehensive search input that provides suggestions, search history, debouncing, analytics, and advanced search options. It's designed to offer a modern search experience with extensive customization and functionality.
+
 ## Overview
+
 The SearchInput component provides:
+
 - **Debounced Search**: Automatic search with configurable delay
 - **Search Suggestions**: Dropdown with filtered suggestions
 - **Search History**: Recent searches with quick access
@@ -17,39 +20,43 @@ The SearchInput component provides:
 - **Multiple Variants**: Outline, filled, and minimal styles
 - **Keyboard Navigation**: Full keyboard support
 - **Accessibility**: Screen reader support and ARIA attributes
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| ------------------------------------------------------------------------------ | ------------------------------------------- |
-| `value`  | `string`  | `''`  | Current search value  |
-| `onChange`  | `(value: string) => void`  | -  | Change handler  |
-| `onSearch`  | `(value: string) => void`  | -  | Search submission handler  |
-| `onClear`  | `() => void`  | -  | Clear search handler  |
-| `label`  | `string`  | -  | Label text for the input  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `error`  | `string`  | -  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `inputSize`  | `'sm' \| 'md' \| 'lg'`  | `'md'`  | Input size variant  |
-| `variant`  | `'outline' \| 'filled' \| 'minimal'`  | `'outline'`   | Input style variant  |
-| `placeholder`  | `string`  | `'Search...'` | Placeholder text  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `showClearButton`  | `boolean`  | `true`  | Whether to show a clear button  |
-| `showSearchButton`  | `boolean`  | `true`  | Whether to show a search button  |
-| `showFilterButton`  | `boolean`  | `false`  | Whether to show a filter button  |
-| `showSuggestions`  | `boolean`  | `false`  | Whether to show search suggestions  |
-| `suggestions`  | `string[]`  | `[]`  | Search suggestions to display  |
-| `debounce`  | `boolean`  | `true`  | Whether to enable debounced search  |
-| `debounceMs`  | `number`  | `300`  | Debounce delay in milliseconds  |
-| `minSearchLength`  | `number`  | `1`  | Minimum characters before triggering search |
-| `showSearchCount`  | `boolean`  | `false`  | Whether to show search count/results  |
-| `searchCount`  | `number`  | -  | Current search result count  |
-| `showHistory`  | `boolean`  | `false`  | Whether to show search history  |
-| `searchHistory`  | `string[]`  | `[]`  | Search history items  |
-| `showAdvancedSearch`   | `boolean`  | `false`  | Whether to show advanced search options  |
-| `advancedSearchFields` | `Array<{name: string, label: string, type: string, options?: Array}>`  | `[]`  | Advanced search fields  |
-| `showAnalytics`  | `boolean`  | `false`  | Whether to show search analytics  |
-| `analytics`  | `{totalSearches: number, popularSearches: string[], recentSearches: string[]}` | -  | Search analytics data  |
+
+| Prop                   | Type                                                                           | Default       | Description                                 |
+| ---------------------- | ------------------------------------------------------------------------------ | ------------- | ------------------------------------------- |
+| `value`                | `string`                                                                       | `''`          | Current search value                        |
+| `onChange`             | `(value: string) => void`                                                      | -             | Change handler                              |
+| `onSearch`             | `(value: string) => void`                                                      | -             | Search submission handler                   |
+| `onClear`              | `() => void`                                                                   | -             | Clear search handler                        |
+| `label`                | `string`                                                                       | -             | Label text for the input                    |
+| `helperText`           | `string`                                                                       | -             | Helper text below the input                 |
+| `error`                | `string`                                                                       | -             | Error message to display                    |
+| `required`             | `boolean`                                                                      | `false`       | Whether the field is required               |
+| `disabled`             | `boolean`                                                                      | `false`       | Whether the input is disabled               |
+| `inputSize`            | `'sm' \| 'md' \| 'lg'`                                                         | `'md'`        | Input size variant                          |
+| `variant`              | `'outline' \| 'filled' \| 'minimal'`                                           | `'outline'`   | Input style variant                         |
+| `placeholder`          | `string`                                                                       | `'Search...'` | Placeholder text                            |
+| `loading`              | `boolean`                                                                      | `false`       | Whether to show a loading state             |
+| `showClearButton`      | `boolean`                                                                      | `true`        | Whether to show a clear button              |
+| `showSearchButton`     | `boolean`                                                                      | `true`        | Whether to show a search button             |
+| `showFilterButton`     | `boolean`                                                                      | `false`       | Whether to show a filter button             |
+| `showSuggestions`      | `boolean`                                                                      | `false`       | Whether to show search suggestions          |
+| `suggestions`          | `string[]`                                                                     | `[]`          | Search suggestions to display               |
+| `debounce`             | `boolean`                                                                      | `true`        | Whether to enable debounced search          |
+| `debounceMs`           | `number`                                                                       | `300`         | Debounce delay in milliseconds              |
+| `minSearchLength`      | `number`                                                                       | `1`           | Minimum characters before triggering search |
+| `showSearchCount`      | `boolean`                                                                      | `false`       | Whether to show search count/results        |
+| `searchCount`          | `number`                                                                       | -             | Current search result count                 |
+| `showHistory`          | `boolean`                                                                      | `false`       | Whether to show search history              |
+| `searchHistory`        | `string[]`                                                                     | `[]`          | Search history items                        |
+| `showAdvancedSearch`   | `boolean`                                                                      | `false`       | Whether to show advanced search options     |
+| `advancedSearchFields` | `Array<{name: string, label: string, type: string, options?: Array}>`          | `[]`          | Advanced search fields                      |
+| `showAnalytics`        | `boolean`                                                                      | `false`       | Whether to show search analytics            |
+| `analytics`            | `{totalSearches: number, popularSearches: string[], recentSearches: string[]}` | -             | Search analytics data                       |
+
 ## Basic Usage
+
 ```jsx
 import { SearchInput } from '@react-superadmin/web';
 function MySearch() {
@@ -59,16 +66,19 @@ function MySearch() {
   };
   return (
     <SearchInput
-  value={searchValue}
-  onChange={setSearchValue}
-  onSearch={handleSearch}
-  placeholder='Search products...'
+      value={searchValue}
+      onChange={setSearchValue}
+      onSearch={handleSearch}
+      placeholder='Search products...'
     />
   );
 }
 ```
+
 ## Examples
+
 ### Basic Search Input
+
 <LiveProvider
   code={`
 function BasicSearch() {
