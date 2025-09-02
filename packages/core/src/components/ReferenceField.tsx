@@ -261,10 +261,9 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
 
   // Determine what to display
   const displayData = isMultiple ? data : [data];
-  const limitedData = maxItems ? displayData.slice(0, maxItems) : displayData;
-
-  // Type assertion for limitedData to ensure type safety
-  const typedLimitedData = limitedData as ReferenceData[];
+  const limitedData = maxItems
+    ? (displayData as ReferenceData[]).slice(0, maxItems)
+    : (displayData as ReferenceData[]);
 
   // Custom renderer takes precedence
   if (render) {
@@ -283,7 +282,7 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
 
   // Default rendering based on source field
   const renderReference = (item: ReferenceData) => {
-    const displayValue = item[source] || item.id || "Unknown";
+    const displayValue = String(item[source] || item.id || "Unknown");
 
     if (showLink && linkRenderer) {
       return linkRenderer(item.id, item);
@@ -319,15 +318,15 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
         >
           <div className={cn("reference-field-content", contentClassName)}>
             <ul className="reference-list">
-              {typedLimitedData.map((item: ReferenceData, index: number) => (
+              {limitedData.map((item: ReferenceData, index: number) => (
                 <li key={item.id || index} className="reference-item">
                   {renderReference(item)}
                 </li>
               ))}
             </ul>
-            {maxItems && displayData.length > maxItems && (
+            {maxItems && (displayData as ReferenceData[]).length > maxItems && (
               <span className="reference-more">
-                +{displayData.length - maxItems} more
+                +{(displayData as ReferenceData[]).length - maxItems} more
               </span>
             )}
           </div>
@@ -342,17 +341,17 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
         aria-required={required || undefined}
       >
         <div className={cn("reference-field-content", contentClassName)}>
-          {typedLimitedData.map((item: ReferenceData, index: number) => (
+          {limitedData.map((item: ReferenceData, index: number) => (
             <React.Fragment key={item.id || index}>
               {renderReference(item)}
-              {index < typedLimitedData.length - 1 && (
+              {index < limitedData.length - 1 && (
                 <span className="reference-separator">{separator}</span>
               )}
             </React.Fragment>
           ))}
-          {maxItems && displayData.length > maxItems && (
+          {maxItems && (displayData as ReferenceData[]).length > maxItems && (
             <span className="reference-more">
-              +{displayData.length - maxItems} more
+              +{(displayData as ReferenceData[]).length - maxItems} more
             </span>
           )}
         </div>
