@@ -23,6 +23,8 @@ const sidebars: SidebarsConfig = {
         'features/components-reference',
         'features/hooks-reference',
         'features/implementation-checklist',
+        'features/react-admin-comparison',
+        'features/missing-components-plan',
       ],
     },
     {
