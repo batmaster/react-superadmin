@@ -5,7 +5,13 @@ import { createAdmin, createResource } from "../../utils";
 
 // Mock the SuperAdminProvider
 jest.mock("../../contexts/SuperAdminContext", () => ({
-  SuperAdminProvider: ({ children, config }: any) => (
+  SuperAdminProvider: ({
+    children,
+    config,
+  }: {
+    children: React.ReactNode;
+    config: unknown;
+  }) => (
     <div
       data-testid="super-admin-provider"
       data-config={JSON.stringify(config)}

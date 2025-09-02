@@ -269,13 +269,13 @@ describe("TextField Component", () => {
 
   describe("Edge Cases", () => {
     it("handles null and undefined values gracefully", () => {
-      render(<TextField value={null as any} />);
+      render(<TextField value={null as unknown as string} />);
       const textContainer1 = screen
         .getByTestId("text-field")
         .querySelector(".text-content");
       expect(textContainer1?.textContent).toBe("");
 
-      render(<TextField value={undefined as any} />);
+      render(<TextField value={undefined as unknown as string} />);
       const textContainer2 = screen
         .getAllByTestId("text-field")[1]
         .querySelector(".text-content");
