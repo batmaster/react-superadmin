@@ -367,7 +367,7 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
       aria-required={required || undefined}
     >
       <div className={cn("reference-field-content", contentClassName)}>
-        {renderReference(typedLimitedData[0])}
+        {renderReference(limitedData[0])}
       </div>
     </div>
   );
