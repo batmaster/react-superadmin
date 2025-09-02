@@ -1,0 +1,487 @@
+---
+title: Resource Component
+description: Define and configure CRUD operations on data resources within the admin system
+---
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { Resource, createResource } from '@react-superadmin/core';
+import { Admin } from '@react-superadmin/core';
+
+# Resource Component
+
+The `Resource` component is a core building block of React SuperAdmin that allows you to define and configure individual resources within your admin system. It handles CRUD operations, field configurations, permissions, and custom views for each data resource.
+
+## Overview
+
+The Resource component serves as a container for all operations related to a specific data entity (like users, products, orders, etc.). It provides:
+
+- **Field Configuration**: Define the structure and behavior of your data fields
+- **Permission Management**: Control access to different operations (create, read, update, delete)
+- **Custom Views**: Configure different ways to display and interact with your data
+- **Route Integration**: Work seamlessly with React Router for navigation
+- **Data Provider Integration**: Connect to your backend APIs
+
+## Props
+
+| Prop             | Type                                                            | Default      | Description                           |
+| ---------------- | --------------------------------------------------------------- | ------------ | ------------------------------------- |
+| `config`         | `ResourceConfig`                                                | **Required** | Resource configuration object         |
+| `actions`        | `ReactNode`                                                     | `undefined`  | Custom actions for this resource      |
+| `routes`         | `ReactNode`                                                     | `undefined`  | Custom routes for this resource       |
+| `dataProvider`   | `any`                                                           | `undefined`  | Resource-level data provider override |
+| `authRules`      | `PermissionConfig`                                              | `undefined`  | Resource-level authentication rules   |
+| `fieldRenderers` | `Record<string, (field: FieldConfig, value: any) => ReactNode>` | `undefined`  | Custom field renderers                |
+| `options`        | `ResourceOptions`                                               | `undefined`  | Resource-level configuration options  |
+| `children`       | `ReactNode`                                                     | `undefined`  | Child components (typically routes)   |
+| `className`      | `string`                                                        | `""`         | Additional CSS classes                |
+
+## Basic Usage
+
+```tsx
+import { Resource, createResource } from '@react-superadmin/core';
+
+// Define a resource configuration
+const userResource = createResource({
+  name: 'users',
+  label: 'Users',
+  fields: [
+    { name: 'name', label: 'Name', type: 'text', required: true },
+    { name: 'email', label: 'Email', type: 'email', required: true },
+    {
+      name: 'role',
+      label: 'Role',
+      type: 'select',
+      options: [
+        { value: 'admin', label: 'Administrator' },
+        { value: 'user', label: 'User' },
+      ],
+    },
+  ],
+});
+
+// Use the resource in your admin
+function App() {
+  return (
+    <Admin config={adminConfig}>
+      <Resource config={userResource}>
+        <Route path='/users' element={<UserList />} />
+        <Route path='/users/create' element={<UserCreate />} />
+        <Route path='/users/:id' element={<UserShow />} />
+        <Route path='/users/:id/edit' element={<UserEdit />} />
+      </Resource>
+    </Admin>
+  );
+}
+```
+
+## Live Example
+
+<LiveProvider code={`
+import React from 'react';
+import { Resource, createResource } from '@react-superadmin/core';
+
+const productResource = createResource({
+name: 'products',
+label: 'Products',
+fields: [
+{ name: 'name', label: 'Product Name', type: 'text', required: true },
+{ name: 'price', label: 'Price', type: 'number', required: true },
+{ name: 'category', label: 'Category', type: 'select', options: [
+{ value: 'electronics', label: 'Electronics' },
+{ value: 'clothing', label: 'Clothing' },
+{ value: 'books', label: 'Books' }
+]},
+{ name: 'inStock', label: 'In Stock', type: 'boolean' }
+],
+permissions: {
+create: true,
+read: true,
+update: true,
+delete: false
+}
+});
+
+function ProductResourceExample() {
+return (
+
+<div className="p-6 bg-white rounded-lg shadow">
+<Resource config={productResource}>
+<div className="mb-4">
+<h3 className="text-lg font-semibold">Resource Configuration</h3>
+<p className="text-gray-600">This resource defines a product entity with 4 fields and restricted delete permissions.</p>
+</div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <h4 className="font-medium">Fields</h4>
+            <ul className="text-sm text-gray-600">
+              <li>• Product Name (text, required)</li>
+              <li>• Price (number, required)</li>
+              <li>• Category (select with options)</li>
+              <li>• In Stock (boolean)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium">Permissions</h4>
+            <ul className="text-sm text-gray-600">
+              <li>• Create: ✅</li>
+              <li>• Read: ✅</li>
+              <li>• Update: ✅</li>
+              <li>• Delete: ❌</li>
+            </ul>
+          </div>
+        </div>
+      </Resource>
+    </div>
+
+);
+}
+
+render(<ProductResourceExample />);
+`}>
+
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+
+## Field Configuration
+
+The `fields` array in your resource configuration defines the structure of your data:
+
+```tsx
+const resourceConfig = createResource({
+  name: 'posts',
+  label: 'Blog Posts',
+  fields: [
+    // Text field
+    {
+      name: 'title',
+      label: 'Title',
+      type: 'text',
+      required: true,
+      validation: {
+        minLength: 3,
+        maxLength: 100,
+      },
+    },
+
+    // Rich text field
+    {
+      name: 'content',
+      label: 'Content',
+      type: 'richtext',
+      required: true,
+    },
+
+    // Date field
+    {
+      name: 'publishedAt',
+      label: 'Published Date',
+      type: 'date',
+      defaultValue: new Date(),
+    },
+
+    // Reference field
+    {
+      name: 'author',
+      label: 'Author',
+      type: 'reference',
+      reference: 'users',
+      displayField: 'name',
+    },
+
+    // Array field
+    {
+      name: 'tags',
+      label: 'Tags',
+      type: 'array',
+      itemType: 'text',
+    },
+  ],
+});
+```
+
+## Permission Management
+
+Control access to different operations using the `permissions` configuration:
+
+```tsx
+const restrictedResource = createResource({
+  name: 'sensitive-data',
+  label: 'Sensitive Data',
+  fields: [...],
+  permissions: {
+    create: false,    // No one can create
+    read: true,       // Everyone can read
+    update: (user) => user.role === 'admin',  // Only admins can update
+    delete: false    // No one can delete
+  }
+});
+```
+
+## Custom Field Renderers
+
+Override default field rendering with custom components:
+
+```tsx
+const customRenderers = {
+  // Custom image field renderer
+  avatar: (field, value) => (
+    <img src={value} alt='Avatar' className='w-8 h-8 rounded-full' />
+  ),
+
+  // Custom status field renderer
+  status: (field, value) => (
+    <span
+      className={`px-2 py-1 rounded text-xs ${
+        value === 'active'
+          ? 'bg-green-100 text-green-800'
+          : 'bg-red-100 text-red-800'
+      }`}
+    >
+      {value}
+    </span>
+  ),
+};
+
+<Resource config={userResource} fieldRenderers={customRenderers}>
+  {/* routes */}
+</Resource>;
+```
+
+## Resource Options
+
+Configure resource-specific behavior:
+
+```tsx
+<Resource
+  config={userResource}
+  options={{
+    operations: {
+      create: true,
+      read: true,
+      update: true,
+      delete: false,
+    },
+    validation: {
+      email: {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email address',
+      },
+    },
+    settings: {
+      pagination: {
+        defaultPageSize: 25,
+        pageSizeOptions: [10, 25, 50, 100],
+      },
+      sorting: {
+        defaultSort: 'createdAt',
+        defaultOrder: 'desc',
+      },
+    },
+  }}
+>
+  {/* routes */}
+</Resource>
+```
+
+## Integration with Routes
+
+The Resource component works seamlessly with React Router:
+
+```tsx
+import { Routes, Route } from 'react-router-dom';
+import { Resource } from '@react-superadmin/core';
+import { UserList, UserCreate, UserShow, UserEdit } from './components';
+
+function UserRoutes() {
+  return (
+    <Resource config={userResource}>
+      <Routes>
+        <Route path='/' element={<UserList />} />
+        <Route path='/create' element={<UserCreate />} />
+        <Route path='/:id' element={<UserShow />} />
+        <Route path='/:id/edit' element={<UserEdit />} />
+      </Routes>
+    </Resource>
+  );
+}
+```
+
+## Advanced Configuration
+
+### Custom Actions
+
+Add custom actions to your resource:
+
+```tsx
+<Resource config={userResource}>
+  <div className='resource-actions'>
+    <button className='btn btn-primary'>Export Users</button>
+    <button className='btn btn-secondary'>Bulk Actions</button>
+  </div>
+
+  {/* routes */}
+</Resource>
+```
+
+### Multiple Resources
+
+Define multiple resources in your admin:
+
+```tsx
+function App() {
+  return (
+    <Admin config={adminConfig}>
+      <Resource config={userResource}>
+        <UserRoutes />
+      </Resource>
+
+      <Resource config={productResource}>
+        <ProductRoutes />
+      </Resource>
+
+      <Resource config={orderResource}>
+        <OrderRoutes />
+      </Resource>
+    </Admin>
+  );
+}
+```
+
+## Best Practices
+
+### 1. Resource Naming
+
+Use consistent, plural nouns for resource names:
+
+```tsx
+// ✅ Good
+const usersResource = createResource({ name: 'users', ... });
+const productsResource = createResource({ name: 'products', ... });
+
+// ❌ Avoid
+const userResource = createResource({ name: 'user', ... });
+const productResource = createResource({ name: 'product', ... });
+```
+
+### 2. Field Organization
+
+Group related fields and use logical ordering:
+
+```tsx
+const userResource = createResource({
+  name: 'users',
+  label: 'Users',
+  fields: [
+    // Basic Information
+    { name: 'firstName', label: 'First Name', type: 'text', required: true },
+    { name: 'lastName', label: 'Last Name', type: 'text', required: true },
+    { name: 'email', label: 'Email', type: 'email', required: true },
+
+    // Contact Information
+    { name: 'phone', label: 'Phone', type: 'tel' },
+    { name: 'address', label: 'Address', type: 'textarea' },
+
+    // Account Settings
+    { name: 'role', label: 'Role', type: 'select', options: [...] },
+    { name: 'isActive', label: 'Active', type: 'boolean' },
+
+    // Metadata
+    { name: 'createdAt', label: 'Created', type: 'date', readOnly: true },
+    { name: 'updatedAt', label: 'Updated', type: 'date', readOnly: true }
+  ]
+});
+```
+
+### 3. Permission Strategy
+
+Implement a clear permission strategy:
+
+```tsx
+// Define permission levels
+const PERMISSIONS = {
+  PUBLIC: { read: true, create: false, update: false, delete: false },
+  USER: {
+    read: true,
+    create: true,
+    update: (user, resource) => user.id === resource.userId,
+    delete: false,
+  },
+  ADMIN: { read: true, create: true, update: true, delete: true },
+};
+
+// Apply permissions based on user role
+const getResourcePermissions = userRole => {
+  return PERMISSIONS[userRole] || PERMISSIONS.PUBLIC;
+};
+```
+
+### 4. Field Validation
+
+Use comprehensive validation rules:
+
+```tsx
+const productResource = createResource({
+  name: 'products',
+  label: 'Products',
+  fields: [
+    {
+      name: 'name',
+      label: 'Product Name',
+      type: 'text',
+      required: true,
+      validation: {
+        minLength: 3,
+        maxLength: 100,
+        pattern: /^[a-zA-Z0-9\s\-_]+$/,
+        message:
+          'Product name must be 3-100 characters and contain only letters, numbers, spaces, hyphens, and underscores',
+      },
+    },
+    {
+      name: 'price',
+      label: 'Price',
+      type: 'number',
+      required: true,
+      validation: {
+        min: 0,
+        max: 999999.99,
+        step: 0.01,
+        message: 'Price must be a positive number with up to 2 decimal places',
+      },
+    },
+  ],
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Resource not found**: Ensure the resource name matches exactly in your routes and data provider
+2. **Permission denied**: Check that your user has the required permissions for the operation
+3. **Field not rendering**: Verify the field name matches the configuration and check for custom renderers
+4. **Validation errors**: Review your validation rules and ensure they're compatible with your data
+
+### Debug Mode
+
+Enable debug mode to see resource information:
+
+```tsx
+// Debug information is automatically shown in development mode
+// You can also access resource information programmatically:
+
+const { resources } = useSuperAdmin();
+const currentResource = resources.find(r => r.name === 'users');
+console.log('Current resource:', currentResource);
+```
+
+## Related Components
+
+- [`Admin`](./admin.mdx) - Main admin wrapper component
+- [`TextField`](./text-field.mdx) - Text display component
+- [`ReferenceField`](./reference-field.mdx) - Reference field display component
+- [`Form`](./form.mdx) - Form handling component
+- [`Layout`](./layout.mdx) - Layout management component
