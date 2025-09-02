@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { SuperAdminProvider } from "../contexts/SuperAdminContext";
-import { AdminConfig } from "../types";
+import { AdminConfig, DataProvider } from "../types";
 
 export interface AdminProps {
   /** Configuration for the admin application */
@@ -61,9 +61,9 @@ export const Admin: React.FC<AdminProps> = ({
   className = "",
 }) => {
   // Merge custom providers with config
-  const finalConfig = {
+  const finalConfig: AdminConfig = {
     ...config,
-    dataProvider: dataProvider || config.dataProvider,
+    dataProvider: (dataProvider as DataProvider) || config.dataProvider,
     authProvider: authProvider || config.authProvider,
     i18nProvider: I18nProvider || config.i18nProvider,
   };
@@ -98,7 +98,7 @@ export const Admin: React.FC<AdminProps> = ({
 
   return (
     <div className={`react-superadmin ${className}`}>
-      <SuperAdminProvider config={config}>
+      <SuperAdminProvider config={finalConfig}>
         {renderWithI18n(renderWithTheme(renderChildren()))}
       </SuperAdminProvider>
     </div>

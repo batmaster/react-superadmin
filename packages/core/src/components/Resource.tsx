@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   FieldConfig,
   PermissionConfig,
@@ -113,7 +113,7 @@ export const Resource: React.FC<ResourceProps> = ({
   }, [config.name]);
 
   // Check if user has permission to access this resource
-  const _hasPermission = (operation: keyof PermissionConfig): boolean => {
+  const hasPermission = (operation: keyof PermissionConfig): boolean => {
     const permissions = finalConfig.permissions;
     return permissions?.[operation] ?? true;
   };
@@ -124,7 +124,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Render custom field if renderer exists
-  const _renderField = (fieldName: string, value: unknown): ReactNode => {
+  const renderField = (fieldName: string, value: unknown): ReactNode => {
     const field = getFieldConfig(fieldName);
     if (!field) return String(value);
 
@@ -174,7 +174,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Check if a specific view is available
-  const _hasView = (viewName: string): boolean => {
+  const hasView = (viewName: string): boolean => {
     return getAvailableViews().some((view) => view.name === viewName);
   };
 
