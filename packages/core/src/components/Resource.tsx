@@ -1,5 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
-import { useSuperAdmin } from "../contexts/SuperAdminContext";
+import React, { ReactNode, useMemo } from "react";
 import {
   FieldConfig,
   PermissionConfig,
@@ -15,13 +14,13 @@ export interface ResourceProps {
   /** Custom routes for this resource */
   routes?: ReactNode;
   /** Resource-level data provider override */
-  dataProvider?: any;
+  dataProvider?: unknown;
   /** Resource-level authentication rules */
   authRules?: PermissionConfig;
   /** Custom field renderers */
   fieldRenderers?: Record<
     string,
-    (field: FieldConfig, value: any) => ReactNode
+    (field: FieldConfig, value: unknown) => ReactNode
   >;
   /** Resource-level configuration options */
   options?: {
@@ -34,9 +33,9 @@ export interface ResourceProps {
       list?: boolean;
     };
     /** Custom validation rules */
-    validation?: Record<string, any>;
+    validation?: Record<string, unknown>;
     /** Resource-specific settings */
-    settings?: Record<string, any>;
+    settings?: Record<string, unknown>;
   };
   /** Children components */
   children?: ReactNode;
@@ -114,7 +113,7 @@ export const Resource: React.FC<ResourceProps> = ({
   }, [config.name]);
 
   // Check if user has permission to access this resource
-  const hasPermission = (operation: keyof PermissionConfig): boolean => {
+  const _hasPermission = (operation: keyof PermissionConfig): boolean => {
     const permissions = finalConfig.permissions;
     return permissions?.[operation] ?? true;
   };
@@ -125,7 +124,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Render custom field if renderer exists
-  const renderField = (fieldName: string, value: unknown): ReactNode => {
+  const _renderField = (fieldName: string, value: unknown): ReactNode => {
     const field = getFieldConfig(fieldName);
     if (!field) return String(value);
 
@@ -175,7 +174,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Check if a specific view is available
-  const hasView = (viewName: string): boolean => {
+  const _hasView = (viewName: string): boolean => {
     return getAvailableViews().some((view) => view.name === viewName);
   };
 

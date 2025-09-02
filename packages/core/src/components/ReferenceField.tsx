@@ -3,7 +3,7 @@ import { cn } from "../utils/cn";
 
 export interface ReferenceData {
   id: string | number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ReferenceFieldProps {
