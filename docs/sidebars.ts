@@ -29,7 +29,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '🏗️ App Configuration',
+      label: 'App Configuration',
       items: [
         'components/admin',
         'components/resource',
@@ -38,7 +38,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '📋 List Page',
+      label: 'List Page',
       items: [
         'components/resource-list',
         'components/data-table',
@@ -65,7 +65,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '✏️ Creation & Edition Pages',
+      label: 'Creation & Edition Pages',
       items: [
         'components/resource-form',
         'components/simple-form',
@@ -88,7 +88,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '👁️ Show Page',
+      label: 'Show Page',
       items: [
         'components/show',
         'components/show-base',
@@ -101,7 +101,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '🏷️ Fields',
+      label: 'Fields',
       items: [
         'components/array-field',
         'components/boolean-field',
@@ -124,7 +124,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '⌨️ Inputs',
+      label: 'Inputs',
       items: [
         'components/array-input',
         'components/autocomplete-input',
@@ -165,7 +165,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '🎨 Other UI components',
+      label: 'Other UI components',
       items: [
         'components/layout',
         'components/container-layout',
@@ -188,7 +188,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '🎨 Theming',
+      label: 'Theming',
       items: [
         'components/box-stack-grid',
         'components/toggle-theme-button',
@@ -196,14 +196,14 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '⚙️ Preferences',
+      label: 'Preferences',
       items: [
         'components/configurable',
       ],
     },
     {
       type: 'category',
-      label: '🌐 I18N Provider and Translations',
+      label: 'I18N Provider and Translations',
       items: [
         'components/translate',
         'components/locales-menu-button',
@@ -211,7 +211,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '⚡ Realtime',
+      label: 'Realtime',
       items: [
         'components/list-live-update',
         'components/edit-live',
