@@ -1,0 +1,452 @@
+---
+title: ReferenceManyInput
+description: A form component for handling many-to-many reference relationships with junction table support
+---
+
+import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
+
+# ReferenceManyInput
+
+A form component for handling many-to-many reference relationships with automatic junction table management.
+
+## Overview
+
+The `ReferenceManyInput` component is designed for scenarios where you need to manage many-to-many relationships between resources. It automatically handles the creation and deletion of junction table records, making it easy to manage complex relationships.
+
+## Basic Usage
+
+```tsx
+import { ReferenceManyInput } from '@react-superadmin/forms';
+
+function PostForm() {
+  return (
+    <ReferenceManyInput
+      name='tags'
+      label='Tags'
+      reference='tags'
+      optionText='name'
+      optionValue='id'
+      useJunctionTable={true}
+      junctionTable='post_tags'
+      foreignKey='post_id'
+      target='tag_id'
+    />
+  );
+}
+```
+
+## Props
+
+| Prop                   | Type                                              | Default                   | Description                                                  |
+| ---------------------- | ------------------------------------------------- | ------------------------- | ------------------------------------------------------------ |
+| `name`                 | `string`                                          | -                         | The name of the field                                        |
+| `label`                | `string`                                          | -                         | The label to display                                         |
+| `reference`            | `string`                                          | -                         | The resource to reference                                    |
+| `optionText`           | `string`                                          | `"name"`                  | The field to display from the referenced resource            |
+| `optionValue`          | `string`                                          | `"id"`                    | The field to use as the value                                |
+| `required`             | `boolean`                                         | `false`                   | Whether the field is required                                |
+| `disabled`             | `boolean`                                         | `false`                   | Whether the field is disabled                                |
+| `hidden`               | `boolean`                                         | `false`                   | Whether to show the field                                    |
+| `source`               | `string`                                          | -                         | The source field name                                        |
+| `validate`             | `any`                                             | -                         | The validation rules                                         |
+| `defaultValue`         | `any[]`                                           | `[]`                      | The default value                                            |
+| `value`                | `any[]`                                           | -                         | The current value                                            |
+| `onChange`             | `(value: any[]) => void`                          | -                         | Callback when the value changes                              |
+| `onFocus`              | `() => void`                                      | -                         | Callback when the field is focused                           |
+| `onBlur`               | `() => void`                                      | -                         | Callback when the field is blurred                           |
+| `placeholder`          | `string`                                          | -                         | The placeholder text                                         |
+| `className`            | `string`                                          | -                         | Custom CSS class name                                        |
+| `labelClassName`       | `string`                                          | -                         | Custom CSS class name for the label                          |
+| `inputClassName`       | `string`                                          | -                         | Custom CSS class name for the input                          |
+| `errorClassName`       | `string`                                          | -                         | Custom CSS class name for error messages                     |
+| `helperText`           | `string`                                          | -                         | Helper text to display                                       |
+| `helperClassName`      | `string`                                          | -                         | Custom CSS class name for helper text                        |
+| `showValidationErrors` | `boolean`                                         | `true`                    | Whether to show validation errors                            |
+| `errors`               | `string[]`                                        | `[]`                      | The validation errors                                        |
+| `touched`              | `boolean`                                         | `false`                   | The touched state                                            |
+| `loading`              | `boolean`                                         | `false`                   | The loading state                                            |
+| `dataProvider`         | `(resource: string, params: any) => Promise<any>` | -                         | The data provider function                                   |
+| `filter`               | `any`                                             | -                         | The filter to apply to the reference data                    |
+| `sort`                 | `any`                                             | -                         | The sort to apply to the reference data                      |
+| `pagination`           | `any`                                             | -                         | The pagination to apply to the reference data                |
+| `autocomplete`         | `boolean`                                         | `false`                   | Whether to use autocomplete mode                             |
+| `minSearchLength`      | `number`                                          | `2`                       | The minimum characters to trigger search                     |
+| `maxSuggestions`       | `number`                                          | `10`                      | The maximum number of suggestions to show                    |
+| `allowCreate`          | `boolean`                                         | `false`                   | Whether to allow creating new options                        |
+| `onCreate`             | `(value: string) => void`                         | -                         | Callback when creating a new option                          |
+| `size`                 | `"sm" \| "md" \| "lg"`                            | `"md"`                    | The size variant                                             |
+| `clearable`            | `boolean`                                         | `true`                    | Whether to show a clear button                               |
+| `icon`                 | `React.ReactNode`                                 | -                         | The icon to display                                          |
+| `showLoadingSpinner`   | `boolean`                                         | `true`                    | Whether to show loading spinner                              |
+| `emptyText`            | `string`                                          | `"No options available"`  | The empty state text                                         |
+| `noOptionsText`        | `string`                                          | `"No options found"`      | The no options text                                          |
+| `loadingText`          | `string`                                          | `"Loading..."`            | The loading text                                             |
+| `errorText`            | `string`                                          | `"Error loading options"` | The error text                                               |
+| `maxItems`             | `number`                                          | -                         | The maximum number of items that can be selected             |
+| `allowReorder`         | `boolean`                                         | `false`                   | Whether to allow reordering items                            |
+| `onReorder`            | `(items: any[]) => void`                          | -                         | Callback when items are reordered                            |
+| `showAsChips`          | `boolean`                                         | `true`                    | Whether to display items as chips                            |
+| `renderSelectedItem`   | `(item: any) => React.ReactNode`                  | -                         | Custom renderer for selected items                           |
+| `useJunctionTable`     | `boolean`                                         | `false`                   | Whether to use junction table for many-to-many relationships |
+| `junctionTable`        | `string`                                          | -                         | The name of the junction table                               |
+| `foreignKey`           | `string`                                          | -                         | The foreign key field name                                   |
+| `target`               | `string`                                          | -                         | The target field name in the junction table                  |
+| `junctionTableKeys`    | `{ foreignKey: string; target: string }`          | -                         | Custom junction table key names                              |
+
+## Examples
+
+### Basic Many-to-Many Relationship
+
+```tsx
+<ReferenceManyInput
+  name='categories'
+  label='Categories'
+  reference='categories'
+  optionText='name'
+  optionValue='id'
+  useJunctionTable={true}
+  junctionTable='post_categories'
+  foreignKey='post_id'
+  target='category_id'
+  dataProvider={dataProvider}
+/>
+```
+
+### With Maximum Items Limit
+
+```tsx
+<ReferenceManyInput
+  name='tags'
+  label='Tags'
+  reference='tags'
+  optionText='name'
+  optionValue='id'
+  maxItems={5}
+  useJunctionTable={true}
+  junctionTable='post_tags'
+  foreignKey='post_id'
+  target='tag_id'
+  dataProvider={dataProvider}
+/>
+```
+
+### Custom Item Renderer
+
+```tsx
+<ReferenceManyInput
+  name='authors'
+  label='Authors'
+  reference='authors'
+  optionText='name'
+  optionValue='id'
+  renderSelectedItem={item => (
+    <div className='flex items-center'>
+      <img src={item.avatar} className='w-6 h-6 rounded-full mr-2' />
+      <span>{item.name}</span>
+    </div>
+  )}
+  useJunctionTable={true}
+  junctionTable='post_authors'
+  foreignKey='post_id'
+  target='author_id'
+  dataProvider={dataProvider}
+/>
+```
+
+### With Validation
+
+```tsx
+<ReferenceManyInput
+  name='technologies'
+  label='Technologies'
+  reference='technologies'
+  optionText='name'
+  optionValue='id'
+  required={true}
+  validate={value => !value?.length && 'At least one technology is required'}
+  useJunctionTable={true}
+  junctionTable='project_technologies'
+  foreignKey='project_id'
+  target='technology_id'
+  dataProvider={dataProvider}
+/>
+```
+
+### With Autocomplete
+
+```tsx
+<ReferenceManyInput
+  name='skills'
+  label='Skills'
+  reference='skills'
+  optionText='name'
+  optionValue='id'
+  autocomplete={true}
+  minSearchLength={2}
+  maxSuggestions={20}
+  useJunctionTable={true}
+  junctionTable='user_skills'
+  foreignKey='user_id'
+  target='skill_id'
+  dataProvider={dataProvider}
+/>
+```
+
+## Junction Table Management
+
+The component automatically handles junction table operations:
+
+- **Loading**: Fetches existing relationships from the junction table
+- **Creating**: Creates new junction records when items are added
+- **Deleting**: Removes junction records when items are removed
+- **Error Handling**: Gracefully handles junction table errors
+
+### Junction Table Configuration
+
+```tsx
+// Standard configuration
+<ReferenceManyInput
+  useJunctionTable={true}
+  junctionTable="post_tags"
+  foreignKey="post_id"
+  target="tag_id"
+/>
+
+// Custom key names
+<ReferenceManyInput
+  useJunctionTable={true}
+  junctionTable="post_tags"
+  junctionTableKeys={{
+    foreignKey: "post_id",
+    target: "tag_id"
+  }}
+/>
+```
+
+## Item Management
+
+### Adding Items
+
+Items can be added through the nested `ReferenceInput` component. The component automatically:
+
+- Validates against `maxItems` limit
+- Prevents duplicate items
+- Creates junction table records (if `useJunctionTable` is true)
+
+### Removing Items
+
+Items can be removed by:
+
+- Clicking the remove button on individual items
+- Using the "Clear All" button to remove all items
+
+### Reordering Items
+
+When `allowReorder` is enabled, items can be reordered using drag and drop:
+
+```tsx
+<ReferenceManyInput
+  allowReorder={true}
+  onReorder={items => console.log('Reordered:', items)}
+  // ... other props
+/>
+```
+
+## Display Modes
+
+### Chips Mode (Default)
+
+Items are displayed as removable chips:
+
+```tsx
+<ReferenceManyInput
+  showAsChips={true}
+  // ... other props
+/>
+```
+
+### List Mode
+
+Items are displayed as a list with remove buttons:
+
+```tsx
+<ReferenceManyInput
+  showAsChips={false}
+  // ... other props
+/>
+```
+
+## Data Provider Integration
+
+The component integrates with data providers for fetching reference data:
+
+```tsx
+const dataProvider = {
+  getList: async (resource, params) => {
+    // Fetch reference data
+    const response = await fetch(`/api/${resource}`, {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+    return response.json();
+  },
+  create: async (resource, params) => {
+    // Create junction record
+    const response = await fetch(`/api/${resource}`, {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+    return response.json();
+  },
+  delete: async (resource, params) => {
+    // Delete junction record
+    const response = await fetch(`/api/${resource}/${params.id}`, {
+      method: 'DELETE',
+    });
+    return response.json();
+  },
+};
+```
+
+## Customization
+
+### Custom Styling
+
+```tsx
+<ReferenceManyInput
+  className='custom-container'
+  labelClassName='custom-label'
+  inputClassName='custom-input'
+  errorClassName='custom-error'
+  helperClassName='custom-helper'
+  // ... other props
+/>
+```
+
+### Custom Item Renderer
+
+```tsx
+<ReferenceManyInput
+  renderSelectedItem={item => (
+    <div className='custom-item'>
+      <span className='item-name'>{item.name}</span>
+      <span className='item-description'>{item.description}</span>
+    </div>
+  )}
+  // ... other props
+/>
+```
+
+## Accessibility
+
+The component includes proper ARIA attributes:
+
+- `aria-label` for remove buttons
+- `aria-describedby` for helper text and errors
+- `aria-invalid` for validation state
+- Keyboard navigation support
+
+## Form Integration
+
+The component integrates seamlessly with form libraries:
+
+```tsx
+import { useFormik } from 'formik';
+
+function MyForm() {
+  const formik = useFormik({
+    initialValues: { tags: [] },
+    onSubmit: values => console.log(values),
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <ReferenceManyInput
+        name='tags'
+        value={formik.values.tags}
+        onChange={formik.setFieldValue}
+        errors={formik.errors.tags}
+        touched={formik.touched.tags}
+        // ... other props
+      />
+    </form>
+  );
+}
+```
+
+## Error Handling
+
+The component handles various error scenarios:
+
+- **Data Loading Errors**: Displays error message and retry option
+- **Junction Table Errors**: Gracefully handles missing or invalid junction tables
+- **Validation Errors**: Shows validation messages when appropriate
+- **Network Errors**: Provides fallback behavior for network issues
+
+## Performance Considerations
+
+- **Lazy Loading**: Reference data is loaded only when needed
+- **Debounced Search**: Search requests are debounced to reduce API calls
+- **Efficient Updates**: Only necessary junction table operations are performed
+- **Memory Management**: Large arrays are handled efficiently
+
+## Best Practices
+
+1. **Always provide `dataProvider`**: Required for fetching reference data
+2. **Use appropriate `maxItems`**: Prevents performance issues with large selections
+3. **Handle errors gracefully**: Implement proper error boundaries
+4. **Validate junction table configuration**: Ensure table and field names are correct
+5. **Use meaningful labels**: Help users understand the relationship
+6. **Consider UX**: Use `showAsChips` for better visual representation
+
+## Comparison with Other Components
+
+| Component             | Use Case                   | Junction Table | Multiple Selection |
+| --------------------- | -------------------------- | -------------- | ------------------ |
+| `ReferenceInput`      | Single reference           | No             | No                 |
+| `ReferenceArrayInput` | Multiple references        | No             | Yes                |
+| `ReferenceManyInput`  | Many-to-many relationships | Yes            | Yes                |
+
+## Migration from Other Components
+
+### From ReferenceArrayInput
+
+```tsx
+// Before
+<ReferenceArrayInput
+  name="tags"
+  reference="tags"
+  // ... other props
+/>
+
+// After (if you need junction table)
+<ReferenceManyInput
+  name="tags"
+  reference="tags"
+  useJunctionTable={true}
+  junctionTable="post_tags"
+  foreignKey="post_id"
+  target="tag_id"
+  // ... other props
+/>
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Junction table not found**: Ensure the table exists and field names are correct
+2. **Data not loading**: Check `dataProvider` implementation and network connectivity
+3. **Items not saving**: Verify junction table permissions and data provider methods
+4. **Performance issues**: Consider using `maxItems` and optimizing data provider queries
+
+### Debug Mode
+
+Enable debug logging to troubleshoot issues:
+
+```tsx
+<ReferenceManyInput
+  debug={true}
+  // ... other props
+/>
+```

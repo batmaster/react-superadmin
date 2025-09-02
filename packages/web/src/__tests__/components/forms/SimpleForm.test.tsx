@@ -30,8 +30,14 @@ const getFieldByLabel = (labelText: string) => {
     return fieldContainer as HTMLElement;
   }
 
-  // Find the label element with the exact text
-  const label = screen.queryByText(labelText);
+  // Handle labels with asterisks (required fields)
+  let actualLabelText = labelText;
+  if (labelText.includes(" *")) {
+    actualLabelText = labelText.replace(" *", "");
+  }
+
+  // Find the label element with the exact text (without asterisk)
+  const label = screen.queryByText(actualLabelText);
   if (!label) {
     // Try to find by name attribute as fallback
     const fieldName = labelText.toLowerCase().replace(/\s+/g, "");
@@ -985,7 +991,7 @@ describe("SimpleForm", () => {
       expect(mockOnSubmit).toHaveBeenCalledWith({
         name: "Jane Doe",
         email: "jane@example.com",
-        age: 25,
+        age: 25, // Number inputs are converted to numbers
         role: "user",
         newsletter: false,
       });
