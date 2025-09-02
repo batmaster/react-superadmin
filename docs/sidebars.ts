@@ -18,13 +18,13 @@ const sidebars: SidebarsConfig = {
       label: 'Features',
       items: [
         'features',
+        'features/react-admin-comparison',
+        'features/missing-components-plan',
         'features/data-providers',
-        'features/roadmap',
         'features/components-reference',
         'features/hooks-reference',
         'features/implementation-checklist',
-        'features/react-admin-comparison',
-        'features/missing-components-plan',
+        'features/roadmap',
       ],
     },
     {
