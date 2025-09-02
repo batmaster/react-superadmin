@@ -12,16 +12,22 @@ jest.mock("@react-superadmin/core", () => ({
 // Mock the services
 jest.mock("../../../services/mockService", () => ({
   userService: {
-    list: jest.fn(),
-    delete: jest.fn(),
+    instance: {
+      list: jest.fn(),
+      delete: jest.fn(),
+    },
   },
   postService: {
-    list: jest.fn(),
-    delete: jest.fn(),
+    instance: {
+      list: jest.fn(),
+      delete: jest.fn(),
+    },
   },
   productService: {
-    list: jest.fn(),
-    delete: jest.fn(),
+    instance: {
+      list: jest.fn(),
+      delete: jest.fn(),
+    },
   },
 }));
 
@@ -208,15 +214,15 @@ describe("ResourceList", () => {
     const { userService, postService, productService } = jest.requireMock(
       "../../../services/mockService",
     );
-    userService.list.mockResolvedValue({
+    userService.instance.list.mockResolvedValue({
       data: mockUserData,
       total: 2,
     });
-    postService.list.mockResolvedValue({
+    postService.instance.list.mockResolvedValue({
       data: mockPostData,
       total: 1,
     });
-    productService.list.mockResolvedValue({
+    productService.instance.list.mockResolvedValue({
       data: mockProductData,
       total: 1,
     });
@@ -270,7 +276,7 @@ describe("ResourceList", () => {
   describe("Data Loading", () => {
     it("shows loading state initially", () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockImplementation(() => new Promise(() => {})); // Never resolves
+      userService.instance.list.mockImplementation(() => new Promise(() => {})); // Never resolves
 
       renderWithRouter(<ResourceList resourceName="users" />);
 
@@ -279,7 +285,7 @@ describe("ResourceList", () => {
 
     it("loads and displays user data correctly", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -294,7 +300,7 @@ describe("ResourceList", () => {
 
     it("loads and displays post data correctly", async () => {
       const { postService } = jest.requireMock("../../../services/mockService");
-      postService.list.mockResolvedValue({
+      postService.instance.list.mockResolvedValue({
         data: mockPostData,
         total: 1,
       });
@@ -311,7 +317,7 @@ describe("ResourceList", () => {
       const { productService } = jest.requireMock(
         "../../../services/mockService",
       );
-      productService.list.mockResolvedValue({
+      productService.instance.list.mockResolvedValue({
         data: mockProductData,
         total: 1,
       });
@@ -326,7 +332,7 @@ describe("ResourceList", () => {
 
     it("shows error state when data loading fails", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockRejectedValue(new Error("Failed to load"));
+      userService.instance.list.mockRejectedValue(new Error("Failed to load"));
 
       renderWithRouter(<ResourceList resourceName="users" />);
 
@@ -341,7 +347,7 @@ describe("ResourceList", () => {
   describe("Search Functionality", () => {
     it("calls search service when search query changes", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -354,7 +360,7 @@ describe("ResourceList", () => {
       });
 
       await waitFor(() => {
-        expect(userService.list).toHaveBeenCalledWith({
+        expect(userService.instance.list).toHaveBeenCalledWith({
           page: 1,
           perPage: 10,
           search: "john",
@@ -398,7 +404,7 @@ describe("ResourceList", () => {
 
     it("navigates to view page when row is clicked", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -415,7 +421,7 @@ describe("ResourceList", () => {
 
     it("navigates to edit page when edit button is clicked", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -434,7 +440,7 @@ describe("ResourceList", () => {
   describe("Delete Functionality", () => {
     it("shows delete confirmation modal when delete button is clicked", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -452,11 +458,11 @@ describe("ResourceList", () => {
 
     it("deletes item when confirmed", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
-      userService.delete.mockResolvedValue(undefined);
+      userService.instance.delete.mockResolvedValue(undefined);
 
       renderWithRouter(<ResourceList resourceName="users" />);
 
@@ -469,18 +475,18 @@ describe("ResourceList", () => {
       fireEvent.click(confirmDeleteButton);
 
       await waitFor(() => {
-        expect(userService.delete).toHaveBeenCalledWith(1);
+        expect(userService.instance.delete).toHaveBeenCalledWith(1);
         expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
       });
     });
 
     it("shows error when delete fails", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
-      userService.delete.mockRejectedValue(new Error("Delete failed"));
+      userService.instance.delete.mockRejectedValue(new Error("Delete failed"));
 
       renderWithRouter(<ResourceList resourceName="users" />);
 
@@ -501,7 +507,7 @@ describe("ResourceList", () => {
 
     it("closes modal when cancel is clicked", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -523,7 +529,7 @@ describe("ResourceList", () => {
   describe("Pagination", () => {
     it("changes page when pagination controls are clicked", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 25, // More than one page
       });
@@ -535,7 +541,7 @@ describe("ResourceList", () => {
         fireEvent.click(nextButton);
       });
 
-      expect(userService.list).toHaveBeenCalledWith({
+      expect(userService.instance.list).toHaveBeenCalledWith({
         page: 2,
         perPage: 10,
         search: "",
@@ -544,7 +550,7 @@ describe("ResourceList", () => {
 
     it("shows correct pagination info", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 25,
       });
@@ -562,7 +568,7 @@ describe("ResourceList", () => {
   describe("Data Formatting", () => {
     it("formats status with appropriate badge colors", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -577,7 +583,7 @@ describe("ResourceList", () => {
 
     it("formats dates correctly", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -594,7 +600,7 @@ describe("ResourceList", () => {
       const { productService } = jest.requireMock(
         "../../../services/mockService",
       );
-      productService.list.mockResolvedValue({
+      productService.instance.list.mockResolvedValue({
         data: mockProductData,
         total: 1,
       });
@@ -610,7 +616,7 @@ describe("ResourceList", () => {
       const { productService } = jest.requireMock(
         "../../../services/mockService",
       );
-      productService.list.mockResolvedValue({
+      productService.instance.list.mockResolvedValue({
         data: mockProductData,
         total: 1,
       });
@@ -627,7 +633,7 @@ describe("ResourceList", () => {
   describe("Column Configuration", () => {
     it("renders correct columns for users", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: mockUserData,
         total: 2,
       });
@@ -646,7 +652,7 @@ describe("ResourceList", () => {
 
     it("renders correct columns for posts", async () => {
       const { postService } = jest.requireMock("../../../services/mockService");
-      postService.list.mockResolvedValue({
+      postService.instance.list.mockResolvedValue({
         data: mockPostData,
         total: 1,
       });
@@ -667,7 +673,7 @@ describe("ResourceList", () => {
       const { productService } = jest.requireMock(
         "../../../services/mockService",
       );
-      productService.list.mockResolvedValue({
+      productService.instance.list.mockResolvedValue({
         data: mockProductData,
         total: 1,
       });
@@ -688,7 +694,7 @@ describe("ResourceList", () => {
   describe("Edge Cases", () => {
     it("handles empty data gracefully", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: [],
         total: 0,
       });
@@ -703,7 +709,7 @@ describe("ResourceList", () => {
 
     it("handles null/undefined values in data", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.list.mockResolvedValue({
+      userService.instance.list.mockResolvedValue({
         data: [
           {
             id: 1,

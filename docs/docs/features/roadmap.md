@@ -12,7 +12,7 @@ organized by priority and category. The roadmap is inspired by
 [React Admin](https://marmelab.com/react-admin/documentation.html) and adapted
 for our framework's needs.
 
-## 🚀 High Priority (Phase 1)
+##  High Priority (Phase 1)
 
 ### Core Framework Components
 
@@ -39,7 +39,7 @@ for our framework's needs.
 - [ ] **Login/Logout Flows** - Complete authentication UI
 - [ ] **User Management** - User CRUD operations
 
-## 📋 Medium Priority (Phase 2)
+##  Medium Priority (Phase 2)
 
 ### List Pages & Data Display
 
@@ -71,7 +71,7 @@ for our framework's needs.
 - [ ] **Delete Operations** - Single and bulk delete
 - [ ] **Bulk Actions** - Mass operations on selected records
 
-## 🎨 Lower Priority (Phase 3)
+##  Lower Priority (Phase 3)
 
 ### Advanced UI Components
 
@@ -96,7 +96,7 @@ for our framework's needs.
 - [ ] **Progress Indicators** - Status and progress displays
 - [ ] **Timeline Components** - Chronological data display
 
-## 🔧 Developer Experience
+##  Developer Experience
 
 ### TypeScript & Development
 
@@ -119,7 +119,7 @@ for our framework's needs.
 - [ ] **Best Practices** - Coding guidelines and patterns
 - [ ] **Migration Guides** - Upgrade instructions
 
-## 🌐 Internationalization & Theming
+##  Internationalization & Theming
 
 ### Multi-language Support
 
@@ -135,7 +135,7 @@ for our framework's needs.
 - [ ] **Custom CSS** - Component styling overrides
 - [ ] **Brand Integration** - Logo, colors, and branding
 
-## 📱 Advanced Features
+##  Advanced Features
 
 ### Real-time & Performance
 
@@ -151,9 +151,9 @@ for our framework's needs.
 - [ ] **Webhook Integration** - External service notifications
 - [ ] **API Rate Limiting** - Request throttling
 
-## 📊 Progress Tracking
+##  Progress Tracking
 
-### Completed Features ✅
+### Completed Features 
 
 - [x] Basic project structure
 - [x] Core package setup
@@ -168,21 +168,21 @@ for our framework's needs.
 - [x] Basic CRUD operations structure
 - [x] BooleanInput (checkbox, radio, toggle)
 
-### In Progress 🚧
+### In Progress 
 
 - [ ] Enhanced form validation system
 - [ ] Advanced filtering capabilities
 - [ ] Improved TypeScript definitions
 - [ ] Component testing coverage
 
-### Next Up 📋
+### Next Up 
 
 - [ ] Authentication system implementation
 - [ ] Role-based access control
 - [ ] Advanced data grid features
 - [ ] Form wizard and multi-step forms
 
-## 🎯 Implementation Guidelines
+##  Implementation Guidelines
 
 ### Component Development
 

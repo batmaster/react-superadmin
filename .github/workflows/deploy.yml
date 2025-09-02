@@ -2,7 +2,7 @@ name: Deploy Documentation
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - 'docs/**'
       - 'packages/**'
@@ -10,7 +10,7 @@ on:
       - 'firebase.json'
       - '.firebaserc'
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - 'docs/**'
       - 'packages/**'
@@ -20,7 +20,7 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  PNPM_VERSION: '8'
+  PNPM_VERSION: '10.14.0'
 
 jobs:
   deploy-docs-production:
@@ -36,30 +36,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+          standalone: true
       - name: Setup pnpm cache
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
-      - name: Build documentation
+        run: pnpm install --no-frozen-lockfile
+      - name: Build packages
         run: |
-          cd docs
-          pnpm install --frozen-lockfile
-          pnpm build
-          ls -la build/
-      - name: Deploy to Firebase Production Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          channelId: live
+          pnpm build:core
+          pnpm build:web
+      - name: Build documentation
+        run: pnpm docs:build
+      - name: Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Production
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:react-superadmin" --non-interactive
 
   deploy-docs-preview:
     runs-on: ubuntu-latest
@@ -74,34 +74,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+          standalone: true
       - name: Setup pnpm cache
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       - name: Build documentation
-        run: |
-          cd docs
-          pnpm install --frozen-lockfile
-          pnpm build
-          ls -la build/
+        run: pnpm docs:build
       - name: Deploy to Firebase Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: react-superadmin
+          target: preview
           channelId: pr-${{ github.event.number }}
 
   deploy-docs-staging:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.labels.*.name == 'staging'
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'staging')
     environment:
       name: staging
       url: https://react-superadmin.web.app
@@ -112,27 +110,54 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+          standalone: true
       - name: Setup pnpm cache
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       - name: Build documentation
+        run: pnpm docs:build
+      - name: Setup Firebase credentials
         run: |
-          cd docs
-          pnpm install --frozen-lockfile
-          pnpm build
-          ls -la build/
-      - name: Deploy to Firebase Staging Channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Staging
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:react-superadmin-staging" --non-interactive
+
+  build-docs-develop:
+    name: Build Docs (develop)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm (standalone)
+        uses: pnpm/action-setup@v4
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
-          projectId: react-superadmin
-          channelId: staging
+          version: ${{ env.PNPM_VERSION }}
+          standalone: true
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Setup pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Build documentation
+        run: pnpm docs:build
+      - name: Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+      - name: Deploy to Firebase Develop
+        run: npx firebase-tools@latest deploy --project react-superadmin --only "hosting:react-superadmin-develop" --non-interactive

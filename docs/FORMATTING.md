@@ -3,13 +3,13 @@
 This document explains how code formatting works in the React SuperAdmin project
 and how to use it effectively.
 
-## 🎯 Overview
+##  Overview
 
 The project uses **Prettier** for automatic code formatting and **ESLint** for
 code quality checks. All code is automatically formatted before commits,
 ensuring consistency across the entire codebase.
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Install Dependencies
 
@@ -57,7 +57,7 @@ pnpm docs:build
 pnpm docs:build:check
 ```
 
-## 🔧 Configuration Files
+##  Configuration Files
 
 ### Root Configuration
 
@@ -75,7 +75,7 @@ pnpm docs:build:check
 
 - **`.vscode/settings.json`** - Editor configuration for formatting
 
-## 📝 Prettier Rules
+##  Prettier Rules
 
 The project uses these Prettier settings:
 
@@ -95,7 +95,7 @@ The project uses these Prettier settings:
 }
 ```
 
-## 📁 File Types Covered
+##  File Types Covered
 
 | File Type  | Extension                | Formatter         | Parser     |
 | ---------- | ------------------------ | ----------------- | ---------- |
@@ -107,7 +107,7 @@ The project uses these Prettier settings:
 | HTML       | `.html`                  | Prettier          | HTML       |
 | YAML       | `.yml`, `.yaml`          | Prettier          | YAML       |
 
-## 🔄 Automatic Formatting
+##  Automatic Formatting
 
 ### Pre-commit Hooks
 
@@ -135,7 +135,7 @@ With the Prettier extension installed, VS Code will:
 - **Format on Paste**: Format code when you paste it
 - **Set Prettier as Default**: Use Prettier for all supported file types
 
-## 🚫 Ignored Files
+##  Ignored Files
 
 The following files and directories are excluded from formatting:
 
@@ -152,7 +152,7 @@ The following files and directories are excluded from formatting:
 - **Logs**: `*.log`, `npm-debug.log*`
 - **Cache**: `.npm`, `.eslintcache`, `.cache`
 
-## 🛠️ Troubleshooting
+## ️ Troubleshooting
 
 ### Common Issues
 
@@ -218,7 +218,7 @@ pnpm docs:validate
 pnpm docs:build:check
 ```
 
-## 📚 Best Practices
+##  Best Practices
 
 ### 1. Commit Workflow
 
@@ -247,7 +247,7 @@ git commit -m "feat: add new feature"
 - **Run tests before committing** - CI will catch failures
 - **Keep dependencies updated** - use `pnpm update` regularly
 
-## 🔗 Related Documentation
+##  Related Documentation
 
 - [Contributing Guide](../CONTRIBUTING.md) - General contribution guidelines
 - [Commit Guidelines](../COMMIT_GUIDELINES.md) - Commit message format
@@ -267,4 +267,4 @@ If you encounter formatting issues:
 
 **Remember**: The goal is to have consistent, readable code across the entire
 project. Prettier handles the formatting automatically, so you can focus on
-writing great code! 🚀
+writing great code! 

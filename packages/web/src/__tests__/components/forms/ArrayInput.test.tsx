@@ -1,6 +1,6 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 import { ArrayInput } from "../../../components/forms/ArrayInput";
 import { Input } from "../../../components/forms/Input";
 
@@ -459,17 +459,21 @@ describe("ArrayInput", () => {
         />,
       );
 
-      // All falsy values should render as empty strings in inputs
-      const emptyInputs = screen.getAllByDisplayValue("");
-      expect(emptyInputs).toHaveLength(5);
+      const allInputs = screen.getAllByRole("textbox");
 
       // Verify that we have 5 items total
-      const allInputs = screen.getAllByRole("textbox");
       expect(allInputs).toHaveLength(5);
 
-      // Debug: log what we actually have
-      console.log("Empty inputs found:", emptyInputs.length);
-      console.log("All inputs found:", allInputs.length);
+      // Check that all values are properly converted to strings
+      expect(allInputs[0]).toHaveValue("false");
+      expect(allInputs[1]).toHaveValue("0");
+      expect(allInputs[2]).toHaveValue("");
+      expect(allInputs[3]).toHaveValue("");
+      expect(allInputs[4]).toHaveValue("");
+
+      // Verify that null and undefined values render as empty strings
+      const emptyInputs = screen.getAllByDisplayValue("");
+      expect(emptyInputs).toHaveLength(3); // null, undefined, and empty string
     });
   });
 

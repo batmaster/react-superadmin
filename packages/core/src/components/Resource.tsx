@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect } from "react";
-import { useSuperAdmin } from "../contexts/SuperAdminContext";
 import {
   FieldConfig,
   PermissionConfig,
@@ -15,13 +14,13 @@ export interface ResourceProps {
   /** Custom routes for this resource */
   routes?: ReactNode;
   /** Resource-level data provider override */
-  dataProvider?: any;
+  dataProvider?: unknown;
   /** Resource-level authentication rules */
   authRules?: PermissionConfig;
   /** Custom field renderers */
   fieldRenderers?: Record<
     string,
-    (field: FieldConfig, value: any) => ReactNode
+    (field: FieldConfig, value: unknown) => ReactNode
   >;
   /** Resource-level configuration options */
   options?: {
@@ -34,9 +33,9 @@ export interface ResourceProps {
       list?: boolean;
     };
     /** Custom validation rules */
-    validation?: Record<string, any>;
+    validation?: Record<string, unknown>;
     /** Resource-specific settings */
-    settings?: Record<string, any>;
+    settings?: Record<string, unknown>;
   };
   /** Children components */
   children?: ReactNode;
@@ -93,8 +92,6 @@ export const Resource: React.FC<ResourceProps> = ({
   children,
   className = "",
 }) => {
-  const { resources: _resources } = useSuperAdmin();
-
   // Merge resource-level options with config
   const finalConfig: ResourceConfig = {
     ...config,
@@ -127,9 +124,9 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Render custom field if renderer exists
-  const _renderField = (fieldName: string, value: any): ReactNode => {
+  const _renderField = (fieldName: string, value: unknown): ReactNode => {
     const field = getFieldConfig(fieldName);
-    if (!field) return value;
+    if (!field) return String(value);
 
     const customRenderer = fieldRenderers?.[fieldName];
     if (customRenderer) {
@@ -141,7 +138,10 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Default field rendering
-  const renderDefaultField = (field: FieldConfig, value: any): ReactNode => {
+  const renderDefaultField = (
+    field: FieldConfig,
+    value: unknown,
+  ): ReactNode => {
     if (value === null || value === undefined) {
       return <span className="text-gray-400">-</span>;
     }
@@ -158,10 +158,10 @@ export const Resource: React.FC<ResourceProps> = ({
           </span>
         );
       case "date":
-        return <span>{new Date(value).toLocaleDateString()}</span>;
+        return <span>{new Date(String(value)).toLocaleDateString()}</span>;
       case "select": {
         const option = field.options?.find((opt) => opt.value === value);
-        return <span>{option?.label || value}</span>;
+        return <span>{option?.label || String(value)}</span>;
       }
       default:
         return <span>{String(value)}</span>;

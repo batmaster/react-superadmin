@@ -2,14 +2,14 @@
 
 Use this checklist to verify your code formatting setup is working correctly.
 
-## ✅ Pre-Installation Checklist
+##  Pre-Installation Checklist
 
 - [ ] Node.js 18+ installed
 - [ ] pnpm installed globally (`npm install -g pnpm`)
 - [ ] VS Code with Prettier extension installed
 - [ ] VS Code with ESLint extension installed
 
-## ✅ Project Setup Checklist
+##  Project Setup Checklist
 
 - [ ] Dependencies installed (`pnpm install`)
 - [ ] Husky hooks installed (`pnpm prepare`)
@@ -18,7 +18,7 @@ Use this checklist to verify your code formatting setup is working correctly.
 - [ ] `.lintstagedrc.js` file exists in project root
 - [ ] `.husky/pre-commit` file exists and is executable
 
-## ✅ VS Code Configuration Checklist
+##  VS Code Configuration Checklist
 
 - [ ] Prettier extension installed
 - [ ] ESLint extension installed
@@ -26,7 +26,7 @@ Use this checklist to verify your code formatting setup is working correctly.
 - [ ] Format on save enabled
 - [ ] `.vscode/settings.json` exists in project
 
-## ✅ Functionality Test Checklist
+##  Functionality Test Checklist
 
 ### Manual Formatting
 - [ ] `pnpm format` command works
@@ -69,7 +69,7 @@ Use this checklist to verify your code formatting setup is working correctly.
 5. Run `pnpm format:check` again
 6. **Expected**: No formatting issues found
 
-## 🚨 Common Issues & Solutions
+##  Common Issues & Solutions
 
 | Issue | Solution |
 |-------|----------|
@@ -79,7 +79,7 @@ Use this checklist to verify your code formatting setup is working correctly.
 | VS Code not formatting on save | Check `.vscode/settings.json` |
 | Formatting conflicts | Run `pnpm format:fix` |
 
-## 📋 Quick Commands Reference
+##  Quick Commands Reference
 
 ```bash
 # Format all files
@@ -107,7 +107,7 @@ pnpm lint
 pnpm test
 ```
 
-## 🎯 Success Criteria
+##  Success Criteria
 
 Your formatting setup is working correctly when:
 
@@ -119,4 +119,4 @@ Your formatting setup is working correctly when:
 
 ---
 
-**Need help?** Check the [full formatting guide](FORMATTING.md) or open an issue! 🚀 
+**Need help?** Check the [full formatting guide](FORMATTING.md) or open an issue!  

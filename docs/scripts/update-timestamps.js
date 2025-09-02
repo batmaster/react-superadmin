@@ -15,7 +15,7 @@ function updateBuildTimestamps() {
     hour12: true,
   });
 
-  console.log(`🔄 Updating build timestamps to: ${currentTime}`);
+  console.log(` Updating build timestamps to: ${currentTime}`);
 
   // Files to update with timestamps
   const filesToUpdate = [
@@ -36,7 +36,7 @@ function updateBuildTimestamps() {
 
       if (secondDash !== -1) {
         // Remove any existing timestamps
-        const timestampPattern = /> \*\*🔄 Last Built\*\*: .*\n/g;
+        const timestampPattern = /> \*\* Last Built\*\*: .*\n/g;
         content = content.replace(timestampPattern, '');
 
         // Insert timestamp after frontmatter
@@ -45,22 +45,22 @@ function updateBuildTimestamps() {
 
         const newContent =
           beforeContent +
-          '\n\n> **🔄 Last Built**: ' +
+          '\n\n> ** Last Built**: ' +
           currentTime +
           '\n' +
           afterContent;
 
         fs.writeFileSync(filePath, newContent, 'utf8');
-        console.log(`✅ Updated: ${file}`);
+        console.log(` Updated: ${file}`);
       } else {
-        console.log(`⚠️  Could not find frontmatter in: ${file}`);
+        console.log(`️  Could not find frontmatter in: ${file}`);
       }
     } else {
-      console.log(`⚠️  File not found: ${file}`);
+      console.log(`️  File not found: ${file}`);
     }
   });
 
-  console.log('\n🎉 Build timestamps updated successfully!');
+  console.log('\n Build timestamps updated successfully!');
 }
 
 // Run the function

@@ -1,0 +1,368 @@
+---
+title: ImageInput Component
+description: Advanced image input component with drag and drop, preview, validation, and compression capabilities
+---
+
+# ImageInput Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `ImageInput` component is a comprehensive image upload solution that provides drag and drop functionality, image preview, validation, compression, and extensive customization options. It's designed to handle image uploads with a modern, user-friendly interface.
+
+## Overview
+
+The ImageInput component provides:
+
+- **Drag & Drop Support**: Intuitive image upload with visual feedback
+- **Image Preview**: Real-time preview of uploaded images
+- **File Validation**: Type, size, and custom validation rules
+- **Image Compression**: Automatic compression to reduce file sizes
+- **Multiple Formats**: Support for various image formats
+- **Progress Tracking**: Upload progress visualization
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Customizable UI**: Extensive styling and behavior options
+
+## Props
+
+| Prop                  | Type                                      | Default                                             | Description                              |
+| --------------------- | ----------------------------------------- | --------------------------------------------------- | ---------------------------------------- |
+| `value`               | `string \| File \| null`                  | -                                                   | Current image value (URL or File object) |
+| `onChange`            | `(value: string \| File \| null) => void` | -                                                   | Change handler                           |
+| `label`               | `string`                                  | -                                                   | Label text for the input                 |
+| `helperText`          | `string`                                  | -                                                   | Helper text below the input              |
+| `error`               | `string`                                  | -                                                   | Error message to display                 |
+| `required`            | `boolean`                                 | `false`                                             | Whether the field is required            |
+| `disabled`            | `boolean`                                 | `false`                                             | Whether the input is disabled            |
+| `inputSize`           | `'sm' \| 'md' \| 'lg'`                    | `'md'`                                              | Input size variant                       |
+| `placeholder`         | `string`                                  | `'Choose an image or drag and drop'`                | Placeholder text                         |
+| `loading`             | `boolean`                                 | `false`                                             | Whether to show a loading state          |
+| `loadingText`         | `string`                                  | `'Uploading...'`                                    | Loading text to display                  |
+| `showPreview`         | `boolean`                                 | `true`                                              | Whether to show image preview            |
+| `showInfo`            | `boolean`                                 | `false`                                             | Whether to show image info               |
+| `multiple`            | `boolean`                                 | `false`                                             | Whether to allow multiple file selection |
+| `accept`              | `string`                                  | `'image/*'`                                         | Accepted file types                      |
+| `maxSize`             | `number`                                  | -                                                   | Maximum file size in bytes               |
+| `maxSizeText`         | `string`                                  | -                                                   | Maximum file size text                   |
+| `showDragDrop`        | `boolean`                                 | `true`                                              | Whether to show drag and drop area       |
+| `dragDropText`        | `string`                                  | `'Drag and drop an image here, or click to browse'` | Drag and drop text                       |
+| `showFileSize`        | `boolean`                                 | `true`                                              | Whether to show file size                |
+| `showDimensions`      | `boolean`                                 | `true`                                              | Whether to show image dimensions         |
+| `showRemoveButton`    | `boolean`                                 | `true`                                              | Whether to show remove button            |
+| `showDownloadButton`  | `boolean`                                 | `false`                                             | Whether to show download button          |
+| `showPreviewButton`   | `boolean`                                 | `true`                                              | Whether to show preview button           |
+| `enableCompression`   | `boolean`                                 | `false`                                             | Whether to enable image compression      |
+| `compressionQuality`  | `number`                                  | `0.8`                                               | Image compression quality (0-1)          |
+| `maxDimensions`       | `{ width: number; height: number }`       | -                                                   | Maximum image dimensions                 |
+| `maintainAspectRatio` | `boolean`                                 | `true`                                              | Whether to maintain aspect ratio         |
+| `aspectRatio`         | `number`                                  | `16/9`                                              | Aspect ratio (width/height)              |
+| `showProgress`        | `boolean`                                 | `false`                                             | Whether to show upload progress          |
+| `onUpload`            | `(file: File) => Promise<string>`         | -                                                   | Custom upload handler                    |
+| `validate`            | `(file: File) => string \| null`          | -                                                   | Custom validation function               |
+
+## Basic Usage
+
+```jsx
+import { ImageInput } from '@react-superadmin/web';
+function MyForm() {
+  const [image, setImage] = useState(null);
+  return (
+    <ImageInput
+      label='Profile Picture'
+      value={image}
+      onChange={setImage}
+      accept='image/*'
+      showPreview={true}
+    />
+  );
+}
+```
+
+## Examples
+
+### Basic Image Upload
+
+<LiveProvider
+  code={`
+function BasicImageUpload() {
+  const [image, setImage] = React.useState(null);
+ return (
+    <ImageInput
+  label="Profile Picture"
+  value={image}
+  onChange={setImage}
+  accept="image/*"
+  showPreview={true}
+  helperText="Upload a profile picture (JPG, PNG, GIF)"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Image Upload with Validation
+<LiveProvider
+  code={`
+function ValidatedImageUpload() {
+  const [image, setImage] = React.useState(null);
+  const [error, setError] = React.useState('');
+ const validateImage = (file) => {
+    if (file.size > 5 * 1024) {
+  return 'Image size must be less than 5MB';
+    }
+    if (!file.type.startsWith('image/')) {
+  return 'Please select a valid image file';
+    }
+    return null;
+  };
+ const handleChange = (newImage) => {
+    setImage(newImage);
+    if (newImage instanceof File) {
+  const validationError = validateImage(newImage);
+  setError(validationError || '');
+    } else {
+  setError('');
+  };
+ return (
+    <ImageInput
+  label="Product Image"
+  value={image}
+  onChange={handleChange}
+  error={error}
+  accept="image/jpeg,image/png"
+  maxSize={5 * 1024}
+  showPreview={true}
+  showInfo={true}
+  helperText="Upload a product image (max 5MB, JPG or PNG)"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Image Upload with Compression
+<LiveProvider
+  code={`
+function CompressedImageUpload() {
+  const [image, setImage] = React.useState(null);
+ return (
+    <ImageInput
+  label="Optimized Image"
+  value={image}
+  onChange={setImage}
+  accept="image/*"
+  enableCompression={true}
+  compressionQuality={0.7}
+  maxDimensions={{ width: 1920, height: 1080 }}
+  showPreview={true}
+  showInfo={true}
+  helperText="Image will be automatically compressed and resized"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Custom Drag and Drop
+<LiveProvider
+  code={`
+function CustomDragDrop() {
+  const [image, setImage] = React.useState(null);
+ return (
+    <ImageInput
+  label="Upload Image"
+  value={image}
+  onChange={setImage}
+  accept="image/*"
+  showDragDrop={true}
+  dragDropText="Drop your image here or click to browse files"
+  dragDropClassName="border-2 border-dashed border-blue-300 bg-blue-50 p-8 text-center"
+  showPreview={true}
+  showRemoveButton={true}
+  showDownloadButton={true}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Multiple Image Upload
+<LiveProvider
+  code={`
+function MultipleImageUpload() {
+  const [images, setImages] = React.useState([]);
+ const handleChange = (newImage) => {
+    if (newImage) {
+  setImages(prev => [...prev, newImage]);
+  };
+ const removeImage = (index) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
+  };
+ return (
+    <div className="space-y-4">
+  <ImageInput
+  label="Add Images"
+  value={null}
+  onChange={handleChange}
+  accept="image/*"
+  multiple={true}
+  showPreview={false}
+  helperText="Upload multiple images for your gallery"
+  />
+ {images.length > 0 && (
+  <div className="grid grid-cols-3 gap-4">
+  {images.map((image, index) => (
+  <div key={index} className="relative">
+  <img
+  src={image instanceof File ? URL.createObjectURL(image) : image}
+  alt={\`Image \${index + 1}\`}
+  className="w-full h-32 object-cover rounded"
+  />
+  <button
+  onClick={() => removeImage(index)}
+  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+  >
+  ×
+  </button>
+  </div>
+  ))}
+  </div>
+  )}
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## File Validation
+The ImageInput component provides built-in validation for:
+### File Type Validation
+```jsx
+<ImageInput
+  accept='image/jpeg,image/png,image/gif'
+  // Only allows JPEG, PNG, and GIF files
+/>
+```
+### File Size Validation
+```jsx
+<ImageInput
+  maxSize={5 * 1024} // 5MB
+  maxSizeText='Maximum file size: 5MB'
+/>
+```
+### Custom Validation
+```jsx
+<ImageInput
+  validate={file => {
+    // Check image dimensions
+    return new Promise(resolve => {
+  const img = new Image();
+  img.onload = () => {
+  if (img.width < 800 || img.height < 600) {
+  resolve('Image must be at least 800x600 pixels');
+  } else {
+  resolve(null);
+  };
+  img.src = URL.createObjectURL(file);
+    });
+  }}
+/>
+```
+## Image Compression
+The component supports automatic image compression:
+```jsx
+<ImageInput
+  enableCompression={true}
+  compressionQuality={0.8} // 80% quality
+  maxDimensions={{ width: 1920, height: 1080 }}
+  maintainAspectRatio={true}
+/>
+```
+## Custom Upload Handler
+You can provide a custom upload handler for server-side processing:
+```jsx
+<ImageInput
+  onUpload={async file => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await fetch('/api/upload', {
+  method: 'POST',
+  body: formData,
+    });
+    const result = await response.json();
+    return result.url; // Return the uploaded image URL
+  }}
+  showProgress={true}
+/>
+```
+## Styling and Customization
+The component provides extensive styling options:
+```jsx
+<ImageInput
+  className='custom-container'
+  inputClassName='custom-input'
+  previewClassName='custom-preview'
+  dragDropClassName='custom-drag-drop'
+  buttonClassName='custom-button'
+/>
+```
+## Accessibility Features
+The ImageInput component includes several accessibility features:
+- **Keyboard Navigation**: Full keyboard support for all interactions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Error Announcements**: Screen reader announcements for validation errors
+- **Drag and Drop Feedback**: Visual and auditory feedback for drag operations
+## Integration with Forms
+The ImageInput component works seamlessly with form components:
+```jsx
+import { SimpleForm, ImageInput } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'name',
+    label: 'Product Name',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'image',
+    label: 'Product Image',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+  <ImageInput
+  label={field.label}
+  value={value}
+  onChange={onChange}
+  error={error}
+  accept='image/*'
+  showPreview={true}
+  />
+    ),
+  },
+];
+function ProductForm() {
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+  };
+  return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
+}
+```
+## Related Components
+- [`FileInput`](./file-input.mdx) - General file upload component
+- [`RichTextInput`](./rich-text-input.mdx) - Rich text editor with image upload (Coming Soon)
+- [`MarkdownInput`](./markdown-input.mdx) - Markdown editor with image upload (Coming Soon)
+- [`SimpleForm`](./simple-form.mdx) - Simple form with field rendering
+- [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation

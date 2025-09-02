@@ -1,0 +1,309 @@
+---
+title: NumberInput
+description: A form component for handling numeric input with formatting and validation
+---
+
+import { NumberInput } from '@site/src/components/ui/NumberInput';
+
+# NumberInput
+
+A form component for handling numeric input with step controls, number formatting, and validation.
+
+## Overview
+
+The `NumberInput` component provides enhanced number input functionality with step controls, number formatting, and validation. It supports different number formats including integers, decimals, and currency.
+
+## Basic Usage
+
+```tsx
+import { NumberInput } from '@react-superadmin/forms';
+
+function ProductForm() {
+  return (
+    <NumberInput
+      name='price'
+      label='Price'
+      format='currency'
+      currency='USD'
+      min={0}
+      step={0.01}
+      required
+    />
+  );
+}
+```
+
+## Props
+
+| Prop                    | Type                                   | Default     | Description                              |
+| ----------------------- | -------------------------------------- | ----------- | ---------------------------------------- |
+| `name`                  | `string`                               | -           | The name of the field                    |
+| `label`                 | `string`                               | -           | The label to display                     |
+| `value`                 | `number \| string`                     | `""`        | The current value                        |
+| `onChange`              | `(value: number \| string) => void`    | -           | Callback when the value changes          |
+| `onFocus`               | `() => void`                           | -           | Callback when the field is focused       |
+| `onBlur`                | `() => void`                           | -           | Callback when the field is blurred       |
+| `required`              | `boolean`                              | `false`     | Whether the field is required            |
+| `disabled`              | `boolean`                              | `false`     | Whether the field is disabled            |
+| `hidden`                | `boolean`                              | `false`     | Whether to show the field                |
+| `placeholder`           | `string`                               | -           | The placeholder text                     |
+| `min`                   | `number`                               | -           | The minimum value allowed                |
+| `max`                   | `number`                               | -           | The maximum value allowed                |
+| `step`                  | `number`                               | `1`         | The step increment/decrement             |
+| `format`                | `"integer" \| "decimal" \| "currency"` | `"decimal"` | The number format to use                 |
+| `locale`                | `string`                               | `"en-US"`   | The locale for number formatting         |
+| `currency`              | `string`                               | `"USD"`     | The currency code for currency format    |
+| `decimals`              | `number`                               | `2`         | The number of decimal places             |
+| `showThousandSeparator` | `boolean`                              | `true`      | Whether to show thousand separators      |
+| `showStepControls`      | `boolean`                              | `true`      | Whether to show step controls            |
+| `className`             | `string`                               | `""`        | Custom CSS class name                    |
+| `labelClassName`        | `string`                               | `""`        | Custom CSS class name for the label      |
+| `inputClassName`        | `string`                               | `""`        | Custom CSS class name for the input      |
+| `errorClassName`        | `string`                               | `""`        | Custom CSS class name for error messages |
+| `helperText`            | `string`                               | -           | Helper text to display                   |
+| `helperClassName`       | `string`                               | `""`        | Custom CSS class name for helper text    |
+| `showValidationErrors`  | `boolean`                              | `true`      | Whether to show validation errors        |
+| `errors`                | `string[]`                             | `[]`        | The validation errors                    |
+| `touched`               | `boolean`                              | `false`     | The touched state                        |
+| `size`                  | `"sm" \| "md" \| "lg"`                 | `"md"`      | The size variant                         |
+| `clearable`             | `boolean`                              | `true`      | Whether to show a clear button           |
+| `icon`                  | `React.ReactNode`                      | -           | The icon to display                      |
+| `showLoadingSpinner`    | `boolean`                              | `true`      | Whether to show loading spinner          |
+
+## Examples
+
+### Basic Number Input
+
+```tsx
+<NumberInput
+  name='quantity'
+  label='Quantity'
+  placeholder='Enter quantity'
+  min={0}
+  step={1}
+/>
+```
+
+### Currency Input
+
+```tsx
+<NumberInput
+  name='price'
+  label='Price'
+  format='currency'
+  currency='USD'
+  min={0}
+  step={0.01}
+  decimals={2}
+  required
+/>
+```
+
+### Integer Input with Custom Formatting
+
+```tsx
+<NumberInput
+  name='population'
+  label='Population'
+  format='integer'
+  showThousandSeparator={true}
+  step={1000}
+  min={0}
+/>
+```
+
+### Decimal Input with Custom Decimals
+
+```tsx
+<NumberInput
+  name='rating'
+  label='Rating'
+  format='decimal'
+  decimals={1}
+  min={0}
+  max={5}
+  step={0.1}
+/>
+```
+
+### With Validation
+
+```tsx
+<NumberInput
+  name='age'
+  label='Age'
+  format='integer'
+  min={0}
+  max={120}
+  errors={['Age must be between 0 and 120']}
+  touched={true}
+  required
+/>
+```
+
+### With Helper Text
+
+```tsx
+<NumberInput
+  name='discount'
+  label='Discount'
+  format='decimal'
+  decimals={2}
+  min={0}
+  max={100}
+  helperText='Enter discount percentage (0-100)'
+  step={5}
+/>
+```
+
+### Custom Styling
+
+```tsx
+<NumberInput
+  name='custom'
+  label='Custom Styled'
+  className='my-custom-class'
+  labelClassName='my-label-class'
+  inputClassName='my-input-class'
+  size='lg'
+/>
+```
+
+## Number Formatting
+
+The component supports three number formats:
+
+### Integer Format
+
+```tsx
+<NumberInput
+  name='count'
+  format='integer'
+  showThousandSeparator={true} // Shows 1,234,567
+  showThousandSeparator={false} // Shows 1234567
+/>
+```
+
+### Decimal Format
+
+```tsx
+<NumberInput
+  name='percentage'
+  format='decimal'
+  decimals={2} // Shows 12.34
+  decimals={4} // Shows 12.3400
+/>
+```
+
+### Currency Format
+
+```tsx
+<NumberInput
+  name='price'
+  format='currency'
+  currency='USD' // Shows $1,234.56
+  currency='EUR' // Shows €1.234,56 (with German locale)
+  locale='de-DE' // Uses German formatting
+/>
+```
+
+## Step Controls
+
+The component includes built-in step controls for incrementing and decrementing values:
+
+```tsx
+<NumberInput
+  name='quantity'
+  showStepControls={true} // Shows up/down buttons
+  step={5} // Increment/decrement by 5
+  min={0} // Won't go below 0
+  max={100} // Won't go above 100
+/>
+```
+
+### Keyboard Navigation
+
+Users can also use arrow keys to step values:
+
+- `Arrow Up`: Increment by step value
+- `Arrow Down`: Decrement by step value
+
+## Validation
+
+The component integrates with form validation systems:
+
+```tsx
+<NumberInput
+  name='age'
+  errors={['Age must be positive']}
+  touched={true}
+  showValidationErrors={true}
+  min={0}
+  required
+/>
+```
+
+## Accessibility
+
+The component includes proper accessibility features:
+
+- ARIA labels for step controls
+- ARIA attributes for validation states
+- Keyboard navigation support
+- Screen reader friendly
+
+## Integration with Forms
+
+The component works seamlessly with form libraries:
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <NumberInput
+        name='price'
+        label='Price'
+        format='currency'
+        onChange={value => {
+          // Handle value changes
+        }}
+      />
+    </form>
+  );
+}
+```
+
+## Performance
+
+The component is optimized for performance:
+
+- Uses `useCallback` for event handlers
+- Efficient number formatting
+- Minimal re-renders
+- Debounced input handling
+
+## Best Practices
+
+1. **Always provide a `name` prop** for form integration
+2. **Use appropriate `min` and `max` values** to prevent invalid input
+3. **Choose the right format** for your use case (integer, decimal, currency)
+4. **Provide helpful `helperText`** for complex inputs
+5. **Use `step` values** that make sense for your data
+6. **Handle validation errors** appropriately
+7. **Consider accessibility** when customizing the component
+
+## Comparison with HTML Input
+
+| Feature             | HTML Input | NumberInput |
+| ------------------- | ---------- | ----------- |
+| Number formatting   |          |           |
+| Step controls       | Basic      | Advanced    |
+| Validation display  | Manual     | Built-in    |
+| Currency support    |          |           |
+| Thousand separators |          |           |
+| Accessibility       | Basic      | Enhanced    |
+| Custom styling      | Limited    | Extensive   |

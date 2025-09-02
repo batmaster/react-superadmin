@@ -12,7 +12,7 @@ admin interfaces quickly and efficiently.
 
 ## Core Features
 
-### 🗄️ Data Providers
+### ️ Data Providers
 
 Flexible data abstraction layer that works with any backend - from mock data to
 real databases.
@@ -24,7 +24,7 @@ real databases.
 
 [Learn more about Data Providers](./features/data-providers)
 
-### 🔐 Authentication & Authorization
+###  Authentication & Authorization
 
 Built-in security features for protecting your admin interface.
 
@@ -33,7 +33,7 @@ Built-in security features for protecting your admin interface.
 - **Protected Routes**: Guard sensitive areas
 - **User Management**: Handle user accounts and roles
 
-### 🎨 Theming & Customization
+###  Theming & Customization
 
 Flexible theming system to match your brand.
 
@@ -42,7 +42,7 @@ Flexible theming system to match your brand.
 - **Dark Mode**: Built-in dark/light theme support
 - **Component Styling**: Consistent design system
 
-### 📱 Responsive Design
+###  Responsive Design
 
 Mobile-first approach that works on all devices.
 
@@ -178,7 +178,7 @@ Extend functionality with plugins.
 - **Hooks**: Custom React hooks
 - **Components**: Reusable UI components
 
-## 🗺️ Features Roadmap
+## ️ Features Roadmap
 
 React SuperAdmin follows a structured development approach with clear phases and
 priorities. Our roadmap is inspired by
@@ -187,11 +187,11 @@ for modern development needs.
 
 ### Development Phases
 
-- **🚀 Phase 1 (High Priority)**: Core framework, data management,
+- ** Phase 1 (High Priority)**: Core framework, data management,
   authentication, basic forms
-- **📋 Phase 2 (Medium Priority)**: Advanced data display, complex forms, CRUD
+- ** Phase 2 (Medium Priority)**: Advanced data display, complex forms, CRUD
   pages, navigation
-- **🎨 Phase 3 (Lower Priority)**: Data visualization, real-time features,
+- ** Phase 3 (Lower Priority)**: Data visualization, real-time features,
   advanced theming, i18n
 
 ### Current Status

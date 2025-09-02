@@ -1,22 +1,22 @@
-import React, { forwardRef, useState, useCallback, useRef } from "react";
 import {
   Bold,
+  Code,
+  Eye,
+  EyeOff,
+  Image,
   Italic,
+  Link,
   List,
   ListOrdered,
   Quote,
-  Code,
-  Link,
-  Image,
-  Eye,
-  EyeOff,
 } from "lucide-react";
+import React, { forwardRef, useCallback, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface MarkdownInputProps
   extends Omit<
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    "onChange" | "value"
+    "onChange" | "value" | "autoSave"
   > {
   /** Current markdown value */
   value?: string;
@@ -457,7 +457,10 @@ export const MarkdownInput = forwardRef<
                 } else if (ref) {
                   ref.current = node;
                 }
-                textareaRef.current = node;
+                // Use a different approach to avoid readonly property issue
+                if (textareaRef) {
+                  (textareaRef as any).current = node;
+                }
               }}
               id={inputId}
               value={value}

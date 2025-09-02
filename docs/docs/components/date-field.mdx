@@ -1,0 +1,422 @@
+---
+title: DateField
+description: Advanced date display component with formatting, validation, and interactive features
+imports:
+  LiveProvider: 'react-live'
+  LiveEditor: 'react-live'
+  LiveError: 'react-live'
+  LivePreview: 'react-live'
+  DateField: '@react-superadmin/web'
+---
+
+# DateField
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `DateField` component is a comprehensive date display solution that provides advanced formatting, validation, and interactive features. It supports various display styles, date formats, relative time display, and metadata.
+
+## Overview
+
+The `DateField` component provides:
+
+- **Multiple Display Styles**: Text, badge, icon, button, and relative styles
+- **Advanced Formatting**: Short, long, time, datetime, and custom formats
+- **Relative Time**: Smart relative time display (e.g., "2 hours ago")
+- **Validation**: Built-in date validation with custom error messages
+- **Interactive Features**: Clickable dates, tooltips, previews
+- **Metadata Display**: Day of week, date status, range validation
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Customization**: Extensive styling and behavior options
+
+## Props
+
+| Prop                     | Type                                                                  | Default                 | Description                                         |
+| ------------------------ | --------------------------------------------------------------------- | ----------------------- | --------------------------------------------------- |
+| `value`                  | `string \| Date \| number \| null`                                    | -                       | The date value to display                           |
+| `record`                 | `Record<string, any>`                                                 | -                       | The source record containing the field data         |
+| `source`                 | `string`                                                              | -                       | The source field name in the record                 |
+| `className`              | `string`                                                              | -                       | Custom CSS classes for the field container          |
+| `labelClassName`         | `string`                                                              | -                       | Custom CSS classes for the field label              |
+| `valueClassName`         | `string`                                                              | -                       | Custom CSS classes for the date value               |
+| `showLabel`              | `boolean`                                                             | `true`                  | Whether to show the field label                     |
+| `label`                  | `string`                                                              | -                       | Custom label text                                   |
+| `style`                  | `"text" \| "badge" \| "icon" \| "button" \| "relative"`               | `"text"`                | Display style for the date                          |
+| `format`                 | `"short" \| "long" \| "relative" \| "time" \| "datetime" \| "custom"` | `"short"`               | Date format type                                    |
+| `customFormat`           | `string`                                                              | -                       | Custom date format string (for Intl.DateTimeFormat) |
+| `locale`                 | `string`                                                              | `"en-US"`               | Locale for date formatting                          |
+| `timezone`               | `string`                                                              | -                       | Timezone for date formatting                        |
+| `showTime`               | `boolean`                                                             | `false`                 | Whether to show time along with date                |
+| `showRelative`           | `boolean`                                                             | `false`                 | Whether to show relative time                       |
+| `loading`                | `boolean`                                                             | `false`                 | Whether to show a loading state                     |
+| `loadingText`            | `string`                                                              | `"Loading..."`          | Loading text                                        |
+| `disabled`               | `boolean`                                                             | `false`                 | Whether the field is disabled                       |
+| `emptyText`              | `string`                                                              | `"No date"`             | Custom empty state text                             |
+| `showEmpty`              | `boolean`                                                             | `true`                  | Whether to show the empty state                     |
+| `validateDate`           | `boolean`                                                             | `true`                  | Whether to validate date format                     |
+| `validationErrorMessage` | `string`                                                              | `"Invalid date format"` | Custom validation error message                     |
+| `showValidation`         | `boolean`                                                             | `false`                 | Whether to show date validation status              |
+| `icon`                   | `React.ReactNode`                                                     | -                       | Custom icon for the date                            |
+| `showPreview`            | `boolean`                                                             | `false`                 | Whether to show date preview on hover               |
+| `previewContent`         | `React.ReactNode`                                                     | -                       | Custom preview content                              |
+| `onClick`                | `(value, record) => void`                                             | -                       | Click handler for the date                          |
+| `clickable`              | `boolean`                                                             | `false`                 | Whether the date is clickable                       |
+| `showTooltip`            | `boolean`                                                             | `false`                 | Whether to show a tooltip                           |
+| `tooltipContent`         | `string`                                                              | -                       | Custom tooltip content                              |
+| `animate`                | `boolean`                                                             | `false`                 | Whether to animate date changes                     |
+| `validDateClassName`     | `string`                                                              | -                       | Custom CSS classes for valid dates                  |
+| `invalidDateClassName`   | `string`                                                              | -                       | Custom CSS classes for invalid dates                |
+| `showMetadata`           | `boolean`                                                             | `false`                 | Whether to show date metadata                       |
+| `showAccessibility`      | `boolean`                                                             | `false`                 | Whether to show date accessibility features         |
+| `showStatus`             | `boolean`                                                             | `false`                 | Whether to show date status indicators              |
+| `dateStatus`             | `"past" \| "present" \| "future"`                                     | -                       | Whether the date is in the past, present, or future |
+| `showRange`              | `boolean`                                                             | `false`                 | Whether to show date range indicators               |
+| `minDate`                | `string \| Date`                                                      | -                       | Minimum date for range validation                   |
+| `maxDate`                | `string \| Date`                                                      | -                       | Maximum date for range validation                   |
+
+## Basic Usage
+
+```jsx
+import { DateField } from '@react-superadmin/web';
+// Basic date display
+<DateField value="2024-01-15" label="Created Date" />
+// With record and source
+<DateField
+  record={{ createdAt: "2024-01-15T10:30:00Z" }}
+  source="createdAt"
+  label="Created Date"
+/>
+```
+
+## Examples
+
+### Basic Date Display
+
+<LiveProvider
+  code={`
+function BasicDateExample() {
+  return (
+    <div className="space-y-4">
+  <DateField value="2024-01-15" label="Created Date" />
+  <DateField value="2024-12-25T10:30:00Z" label="Event Date" />
+  <DateField value={new Date()} label="Current Date" />
+  <DateField value={null} label="Empty Date" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Different Display Styles
+<LiveProvider
+  code={`
+function DisplayStylesExample() {
+  const date = "2024-01-15T10:30:00Z";
+ return (
+    <div className="space-y-4">
+  <DateField value={date} label="Text Style" style="text" />
+  <DateField value={date} label="Badge Style" style="badge" />
+  <DateField value={date} label="Button Style" style="button" clickable />
+  <DateField value={date} label="Icon Style" style="icon" />
+  <DateField value={date} label="Relative Style" style="relative" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Date Formatting
+<LiveProvider
+  code={`
+function DateFormattingExample() {
+  const date = "2024-01-15T10:30:00Z";
+ return (
+    <div className="space-y-4">
+  <DateField value={date} label="Short Format" format="short" />
+  <DateField value={date} label="Long Format" format="long" />
+  <DateField value={date} label="Time Only" format="time" />
+  <DateField value={date} label="Date & Time" format="datetime" />
+  <DateField value={date} label="Relative Time" format="relative" showRelative />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Validation and Error States
+<LiveProvider
+  code={`
+function ValidationExample() {
+  return (
+    <div className="space-y-4">
+  <DateField value="2024-01-15" label="Valid Date" />
+  <DateField value="invalid-date" label="Invalid Date" showValidation />
+  <DateField value="2024-13-45" label="Invalid Format" showValidation />
+  <DateField value="" label="Empty Value" showValidation />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Interactive Features
+<LiveProvider
+  code={`
+function InteractiveExample() {
+  const handleClick = (value, record) => {
+    alert('Clicked: ' + value);
+  };
+ return (
+    <div className="space-y-4">
+  <DateField  value="2024-01-15T10:30:00Z"  label="Clickable Date"  clickable  onClick={handleClick}
+  showTooltip
+  tooltipContent="Click to view details"
+  />
+  <DateField  value="2024-01-15T10:30:00Z"  label="With Preview"  showPreview  previewContent="This is a custom preview"
+  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Status and Metadata
+<LiveProvider
+  code={`
+function StatusMetadataExample() {
+  return (
+    <div className="space-y-4">
+  <DateField  value="2024-01-15T10:30:00Z"  label="Past Date"  showStatus  dateStatus="past"
+  />
+  <DateField  value={new Date().toISOString()}  label="Today"  showStatus  dateStatus="present"
+  />
+  <DateField  value="2025-01-15T10:30:00Z"  label="Future Date"  showStatus  dateStatus="future"
+  />
+  <DateField  value="2024-01-15T10:30:00Z"  label="With Metadata"  showMetadata  showTime  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Range Validation
+<LiveProvider
+  code={`
+function RangeValidationExample() {
+  const minDate = "2024-01-01";
+  const maxDate = "2024-12-31";
+ return (
+    <div className="space-y-4">
+  <DateField  value="2024-06-15"  label="In Range"  showRange  minDate={minDate}  maxDate={maxDate}
+  />
+  <DateField  value="2023-12-15"  label="Out of Range (Past)"  showRange  minDate={minDate}  maxDate={maxDate}
+  />
+  <DateField  value="2025-01-15"  label="Out of Range (Future)"  showRange  minDate={minDate}  maxDate={maxDate}
+  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## Date Formatting
+The component supports various date formatting options:
+### Short Format
+```jsx
+<DateField value='2024-01-15T10:30:00Z' format='short' />
+// Output: "Jan 15, 2024"
+```
+### Long Format
+```jsx
+<DateField value='2024-01-15T10:30:00Z' format='long' />
+// Output: "Monday, January 15, 2024"
+```
+### Time Only
+```jsx
+<DateField value='2024-01-15T10:30:00Z' format='time' />
+// Output: "10:30 AM"
+```
+### Date and Time
+```jsx
+<DateField value='2024-01-15T10:30:00Z' format='datetime' />
+// Output: "Jan 15, 2024, 10:30 AM"
+```
+### Relative Time
+```jsx
+<DateField value='2024-01-15T10:30:00Z' format='relative' showRelative />
+// Output: "2 hours ago" or "3 days ago"
+```
+### Custom Format
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  format='custom'
+  customFormat='{"year": "numeric", "month": "long", "day": "numeric", "weekday": "long"}'
+/>
+// Output: "Monday, January 15, 2024"
+```
+## Display Styles
+### Text Style (Default)
+```jsx
+<DateField value='2024-01-15T10:30:00Z' style='text' />
+```
+### Badge Style
+```jsx
+<DateField value='2024-01-15T10:30:00Z' style='badge' />
+```
+### Button Style
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  style='button'
+  clickable
+  onClick={value => console.log(value)}
+/>
+```
+### Icon Style
+```jsx
+<DateField value='2024-01-15T10:30:00Z' style='icon' icon={<span></span>} />
+```
+### Relative Style
+```jsx
+<DateField value='2024-01-15T10:30:00Z' style='relative' showRelative />
+```
+## Validation
+The component includes built-in date validation:
+```jsx
+<DateField
+  value='invalid-date'
+  validateDate
+  showValidation
+  validationErrorMessage='Please enter a valid date'
+/>
+```
+## Interactive Features
+### Clickable Dates
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  clickable
+  onClick={(value, record) => {
+    console.log('Clicked:', value);
+    console.log('Record:', record);
+  }}
+/>
+```
+### Tooltips
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  showTooltip
+  tooltipContent='Click to view detailed information'
+/>
+```
+### Preview on Hover
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  showPreview
+  previewContent={
+  <div>Detailed Information</div>
+  <div>Date: January 15, 2024</div>
+  <div>Time: 10:30 AM</div>
+  <div>Day: Monday</div>
+    </div>
+  }
+/>
+```
+## Status Indicators
+### Date Status
+```jsx
+<DateField value='2024-01-15T10:30:00Z' showStatus dateStatus='past' />
+```
+### Range Validation
+```jsx
+<DateField
+  value='2024-06-15'
+  showRange
+  minDate='2024-01-01'
+  maxDate='2024-12-31'
+/>
+```
+## Integration with Forms
+The `DateField` works seamlessly with form components:
+```jsx
+import { SimpleForm } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'startDate',
+    label: 'Start Date',
+    type: 'date',
+    validation: [{ type: 'required', message: 'Start date is required' }],
+  },
+  {
+    name: 'endDate',
+    label: 'End Date',
+    type: 'date',
+    validation: [
+  { type: 'required', message: 'End date is required' },
+  {
+  type: 'custom',
+  value: (value, formData) =>
+  new Date(value) > new Date(formData.startDate),
+  message: 'End date must be after start date',
+  },
+    ],
+  },
+];
+function DateRangeForm() {
+  return (
+    <SimpleForm fields={formFields} onSubmit={values => console.log(values)} />
+  );
+}
+```
+## Accessibility
+The component includes comprehensive accessibility features:
+- **Keyboard Navigation**: Full keyboard support for interactive elements
+- **Screen Reader Support**: Proper ARIA labels and roles
+- **Focus Management**: Clear focus indicators
+- **Semantic HTML**: Proper semantic structure
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  showAccessibility
+  aria-label='Event date'
+/>
+```
+## Styling
+The component supports extensive customization through CSS classes:
+```jsx
+<DateField
+  value='2024-01-15T10:30:00Z'
+  className='custom-container'
+  labelClassName='custom-label'
+  valueClassName='custom-value'
+  validDateClassName='text-green-600'
+  invalidDateClassName='text-red-600'
+/>
+```
+## Related Components
+- [`TextField`](./text-field.mdx) - Text display with formatting options
+- [`NumberField`](./number-field.mdx) - Number display with formatting
+- [`BooleanField`](./boolean-field.mdx) - Boolean value display
+- [`Resource`](./resource.mdx) - Resource definition for data management

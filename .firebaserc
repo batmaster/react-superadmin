@@ -1,5 +1,23 @@
 {
   "projects": {
     "default": "react-superadmin"
+  },
+  "targets": {
+    "react-superadmin": {
+      "hosting": {
+        "production": [
+          "react-superadmin"
+        ],
+        "preview": [
+          "react-superadmin-preview"
+        ],
+        "staging": [
+          "react-superadmin-staging"
+        ],
+        "develop": [
+          "react-superadmin-develop"
+        ]
+      }
+    }
   }
 }

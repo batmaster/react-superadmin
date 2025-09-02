@@ -1,0 +1,442 @@
+---
+title: BooleanField
+description: Advanced boolean display component with multiple styles and interactive features
+imports:
+  LiveProvider: 'react-live'
+  LiveEditor: 'react-live'
+  LiveError: 'react-live'
+  LivePreview: 'react-live'
+  BooleanField: '@react-superadmin/web'
+---
+
+# BooleanField
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `BooleanField` component is a versatile boolean display solution that provides multiple display styles, custom text/icons, and interactive features. It supports various visual representations of boolean values with extensive customization options.
+
+## Overview
+
+The `BooleanField` component provides:
+
+- **Multiple Display Styles**: Text, icon, badge, toggle, and checkbox styles
+- **Custom Text/Icons**: Customizable text and icons for true, false, and null values
+- **Color Variants**: Multiple color schemes (default, primary, success, warning, error, info)
+- **Interactive Features**: Clickable values, tooltips, animations
+- **Size Options**: Small, medium, and large sizes
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Customization**: Extensive styling and behavior options
+
+## Props
+
+| Prop             | Type                                                                    | Default        | Description                                 |
+| ---------------- | ----------------------------------------------------------------------- | -------------- | ------------------------------------------- |
+| `value`          | `boolean \| null`                                                       | -              | The boolean value to display                |
+| `record`         | `Record<string, any>`                                                   | -              | The source record containing the field data |
+| `source`         | `string`                                                                | -              | The source field name in the record         |
+| `className`      | `string`                                                                | -              | Custom CSS classes for the field container  |
+| `labelClassName` | `string`                                                                | -              | Custom CSS classes for the field label      |
+| `valueClassName` | `string`                                                                | -              | Custom CSS classes for the boolean value    |
+| `showLabel`      | `boolean`                                                               | `true`         | Whether to show the field label             |
+| `label`          | `string`                                                                | -              | Custom label text                           |
+| `style`          | `"text" \| "icon" \| "badge" \| "toggle" \| "checkbox"`                 | `"text"`       | Display style for the boolean value         |
+| `trueText`       | `string`                                                                | `"Yes"`        | Custom text for true values                 |
+| `falseText`      | `string`                                                                | `"No"`         | Custom text for false values                |
+| `nullText`       | `string`                                                                | `"Unknown"`    | Custom text for null/undefined values       |
+| `trueIcon`       | `React.ReactNode`                                                       | -              | Custom icon for true values                 |
+| `falseIcon`      | `React.ReactNode`                                                       | -              | Custom icon for false values                |
+| `nullIcon`       | `React.ReactNode`                                                       | -              | Custom icon for null/undefined values       |
+| `variant`        | `"default" \| "primary" \| "success" \| "warning" \| "error" \| "info"` | `"default"`    | Color variant for the boolean display       |
+| `size`           | `"sm" \| "md" \| "lg"`                                                  | `"md"`         | Size of the boolean display                 |
+| `loading`        | `boolean`                                                               | `false`        | Whether to show a loading state             |
+| `loadingText`    | `string`                                                                | `"Loading..."` | Loading text                                |
+| `disabled`       | `boolean`                                                               | `false`        | Whether the field is disabled               |
+| `emptyText`      | `string`                                                                | `"No data"`    | Custom empty state text                     |
+| `showEmpty`      | `boolean`                                                               | `true`         | Whether to show the empty state             |
+| `onClick`        | `(value, record) => void`                                               | -              | Click handler for the boolean value         |
+| `clickable`      | `boolean`                                                               | `false`        | Whether the boolean value is clickable      |
+| `showTooltip`    | `boolean`                                                               | `false`        | Whether to show a tooltip on hover          |
+| `tooltipContent` | `string`                                                                | -              | Custom tooltip content                      |
+| `animate`        | `boolean`                                                               | `false`        | Whether to animate value changes            |
+| `trueClassName`  | `string`                                                                | -              | Custom CSS classes for true values          |
+| `falseClassName` | `string`                                                                | -              | Custom CSS classes for false values         |
+| `nullClassName`  | `string`                                                                | -              | Custom CSS classes for null values          |
+
+## Basic Usage
+
+```jsx
+import { BooleanField } from '@react-superadmin/web';
+// Basic boolean display
+<BooleanField value={true} label="Active Status" />
+// With record and source
+<BooleanField
+  record={{ isActive: true }}
+  source="isActive"
+  label="Active Status"
+/>
+```
+
+## Examples
+
+### Basic Boolean Display
+
+<LiveProvider
+  code={`
+function BasicBooleanExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField value={true} label="Active Status" />
+  <BooleanField value={false} label="Inactive Status" />
+  <BooleanField value={null} label="Unknown Status" />
+  <BooleanField value={undefined} label="No Data" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Different Display Styles
+<LiveProvider
+  code={`
+function DisplayStylesExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField value={true} label="Text Style" style="text" />
+  <BooleanField value={true} label="Icon Style" style="icon" />
+  <BooleanField value={true} label="Badge Style" style="badge" />
+  <BooleanField value={true} label="Toggle Style" style="toggle" />
+  <BooleanField value={true} label="Checkbox Style" style="checkbox" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Color Variants
+<LiveProvider
+  code={`
+function ColorVariantsExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField value={true} label="Default" variant="default" />
+  <BooleanField value={true} label="Primary" variant="primary" />
+  <BooleanField value={true} label="Success" variant="success" />
+  <BooleanField value={true} label="Warning" variant="warning" />
+  <BooleanField value={true} label="Error" variant="error" />
+  <BooleanField value={true} label="Info" variant="info" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Size Options
+<LiveProvider
+  code={`
+function SizeOptionsExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField value={true} label="Small" size="sm" />
+  <BooleanField value={true} label="Medium" size="md" />
+  <BooleanField value={true} label="Large" size="lg" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Custom Text and Icons
+<LiveProvider
+  code={`
+function CustomTextIconsExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField  value={true}  label="Custom Text"  trueText="Enabled"  falseText="Disabled"  nullText="Not Set"
+  />
+  <BooleanField  value={true}  label="Custom Icons"  style="icon"
+  trueIcon={<span></span>}
+  falseIcon={<span></span>}
+  nullIcon={<span></span>}
+  />
+  <BooleanField  value={true}  label="Mixed Custom"  trueText="Online"  falseText="Offline"  trueIcon={<span>🟢</span>}
+  falseIcon={<span></span>}
+  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Interactive Features
+<LiveProvider
+  code={`
+function InteractiveExample() {
+  const handleClick = (value, record) => {
+    alert('Clicked: ' + value);
+  };
+ return (
+    <div className="space-y-4">
+  <BooleanField  value={true}  label="Clickable"  clickable  onClick={handleClick}
+  showTooltip
+  tooltipContent="Click to toggle status"
+  />
+  <BooleanField  value={false}  label="Animated"  animate  style="toggle"
+  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Different Values with Same Style
+<LiveProvider
+  code={`
+function DifferentValuesExample() {
+  return (
+    <div className="space-y-4">
+  <BooleanField value={true} label="True Value" style="badge" />
+  <BooleanField value={false} label="False Value" style="badge" />
+  <BooleanField value={null} label="Null Value" style="badge" />
+  <BooleanField value={undefined} label="Undefined Value" style="badge" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## Display Styles
+### Text Style (Default)
+```jsx
+<BooleanField value={true} style='text' />
+// Displays as a colored text badge
+```
+### Icon Style
+```jsx
+<BooleanField value={true} style='icon' />
+// Displays as an icon (checkmark for true, X for false)
+```
+### Badge Style
+```jsx
+<BooleanField value={true} style='badge' />
+// Displays as a small rounded badge
+```
+### Toggle Style
+```jsx
+<BooleanField value={true} style='toggle' />
+// Displays as a toggle switch
+```
+### Checkbox Style
+```jsx
+<BooleanField value={true} style='checkbox' />
+// Displays as a checkbox
+```
+## Color Variants
+### Default Variant
+```jsx
+<BooleanField value={true} variant='default' />
+// Green for true, gray for false
+```
+### Primary Variant
+```jsx
+<BooleanField value={true} variant='primary' />
+// Blue colors
+```
+### Success Variant
+```jsx
+<BooleanField value={true} variant='success' />
+// Green colors
+```
+### Warning Variant
+```jsx
+<BooleanField value={true} variant='warning' />
+// Yellow colors
+```
+### Error Variant
+```jsx
+<BooleanField value={true} variant='error' />
+// Red colors
+```
+### Info Variant
+```jsx
+<BooleanField value={true} variant='info' />
+// Cyan colors
+```
+## Custom Text and Icons
+### Custom Text
+```jsx
+<BooleanField
+  value={true}
+  trueText='Enabled'
+  falseText='Disabled'
+  nullText='Not Set'
+/>
+```
+### Custom Icons
+```jsx
+<BooleanField
+  value={true}
+  style='icon'
+  trueIcon={<span></span>}
+  falseIcon={<span></span>}
+  nullIcon={<span></span>}
+/>
+```
+### Mixed Custom
+```jsx
+<BooleanField
+  value={true}
+  trueText='Online'
+  falseText='Offline'
+  trueIcon={<span>🟢</span>}
+  falseIcon={<span></span>}
+/>
+```
+## Interactive Features
+### Clickable Values
+```jsx
+<BooleanField
+  value={true}
+  clickable
+  onClick={(value, record) => {
+    console.log('Clicked:', value);
+    console.log('Record:', record);
+  }}
+/>
+```
+### Tooltips
+```jsx
+<BooleanField
+  value={true}
+  showTooltip
+  tooltipContent='Click to toggle status'
+/>
+```
+### Animations
+```jsx
+<BooleanField value={true} animate style='toggle' />
+```
+## Size Options
+### Small Size
+```jsx
+<BooleanField value={true} size='sm' />
+```
+### Medium Size (Default)
+```jsx
+<BooleanField value={true} size='md' />
+```
+### Large Size
+```jsx
+<BooleanField value={true} size='lg' />
+```
+## Integration with Forms
+The `BooleanField` works seamlessly with form components:
+```jsx
+import { SimpleForm } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'isActive',
+    label: 'Active Status',
+    type: 'boolean',
+    validation: [{ type: 'required', message: 'Status is required' }],
+  },
+  {
+    name: 'isPremium',
+    label: 'Premium User',
+    type: 'boolean',
+    validation: [{ type: 'required', message: 'Premium status is required' }],
+  },
+];
+function StatusForm() {
+  return (
+    <SimpleForm fields={formFields} onSubmit={values => console.log(values)} />
+  );
+}
+```
+## Accessibility
+The component includes comprehensive accessibility features:
+- **Keyboard Navigation**: Full keyboard support for interactive elements
+- **Screen Reader Support**: Proper ARIA labels and roles
+- **Focus Management**: Clear focus indicators
+- **Semantic HTML**: Proper semantic structure
+```jsx
+<BooleanField value={true} showAccessibility aria-label='Active status' />
+```
+## Styling
+The component supports extensive customization through CSS classes:
+```jsx
+<BooleanField
+  value={true}
+  className='custom-container'
+  labelClassName='custom-label'
+  valueClassName='custom-value'
+  trueClassName='text-green-600 bg-green-50'
+  falseClassName='text-red-600 bg-red-50'
+  nullClassName='text-gray-600 bg-gray-50'
+/>
+```
+## Common Use Cases
+### Status Indicators
+```jsx
+<BooleanField
+  value={user.isActive}
+  label='User Status'
+  trueText='Active'
+  falseText='Inactive'
+  variant='success'
+/>
+```
+### Feature Flags
+```jsx
+<BooleanField
+  value={feature.isEnabled}
+  label='Feature Status'
+  trueText='Enabled'
+  falseText='Disabled'
+  style='toggle'
+/>
+```
+### Permission Checks
+```jsx
+<BooleanField
+  value={user.hasPermission}
+  label='Permission'
+  trueText='Granted'
+  falseText='Denied'
+  variant='primary'
+/>
+```
+### Configuration Settings
+```jsx
+<BooleanField
+  value={config.isDebugMode}
+  label='Debug Mode'
+  trueText='On'
+  falseText='Off'
+  style='badge'
+/>
+```
+## Related Components
+- [`TextField`](./text-field.mdx) - Text display with formatting options
+- [`NumberField`](./number-field.mdx) - Number display with formatting
+- [`DateField`](./date-field.mdx) - Date/time display with formatting
+- [`Resource`](./resource.mdx) - Resource definition for data management

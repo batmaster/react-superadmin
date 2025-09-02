@@ -1,6 +1,10 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getEnvironmentUrl } from './config/environments';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const config: Config = {
   title: 'React SuperAdmin',
@@ -72,6 +76,33 @@ const config: Config = {
         docsDir: ['docs'],
       },
     ],
+    // Inline plugin to alias monorepo packages for MDX/live examples
+    function resolveMonorepoPackages() {
+      return {
+        name: 'resolve-monorepo-packages',
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                // Avoid importing Node Prisma client during docs build
+                '@prisma/client': path.resolve(
+                  __dirname,
+                  './src/shims/prismaClientStub.js'
+                ),
+                '@react-superadmin/web': path.resolve(
+                  __dirname,
+                  '../packages/web/src'
+                ),
+                '@react-superadmin/core': path.resolve(
+                  __dirname,
+                  '../packages/core/src'
+                ),
+              },
+            },
+          };
+        },
+      };
+    },
   ],
 
   themeConfig: {

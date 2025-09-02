@@ -1,0 +1,66 @@
+# React SuperAdmin Project Rules
+
+## General Guidelines
+
+### NO EMOJIS
+- **Never use emojis** in code, comments, documentation, or commit messages
+- Simply remove emojis entirely - no replacements like [OK], [FAIL], etc.
+- Only allow `x` or `✓` in tables for checkmarks
+- All other emojis must be removed from all files
+
+### Code Style
+- Use TypeScript with strict mode
+- Prefer ES modules over CommonJS
+- Use descriptive variable and function names
+- Add JSDoc comments for public APIs
+- Keep functions small and focused
+
+### Documentation
+- Write clear, concise documentation
+- Use proper Markdown/MDX formatting
+- Include code examples for all components
+- Keep documentation up-to-date with code changes
+
+### Git Practices
+- Use conventional commit messages
+- Keep commits focused and atomic
+- Write descriptive commit messages
+- Use feature branches for new development
+
+### Testing
+- Aim for 90%+ test coverage
+- Write tests for all public APIs
+- Use descriptive test names
+- Test both success and error cases
+
+### Performance
+- Optimize bundle size
+- Use lazy loading where appropriate
+- Minimize re-renders
+- Profile and optimize critical paths
+
+## Project-Specific Rules
+
+### React SuperAdmin Framework
+- Components should be reusable and composable
+- Use TypeScript interfaces for all props
+- Implement proper error boundaries
+- Follow accessibility best practices
+- Use semantic HTML elements
+
+### Documentation System
+- Keep "Last Built" dates accurate and meaningful
+- Use Git commit dates for file modification tracking
+- Maintain consistent formatting across all docs
+- Include live examples where possible
+- Last Built script must run in CI before docs deployment
+
+### Build System
+- Ensure all builds pass CI checks
+- Keep dependencies up-to-date
+- Use pnpm for package management
+- Maintain clean build outputs
+description:
+globs:
+alwaysApply: true
+---

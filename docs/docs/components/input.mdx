@@ -5,28 +5,21 @@ sidebar_label: Input
 description: Versatile text input component with validation and styling support
 keywords: [input, text, form, validation, field]
 ---
-
 # Input Component
-
+ ** Last Built**: September 2, 2025 at 4:19 PM
 The Input component is a versatile text input field that provides a consistent interface for user data entry. It supports various input types, validation states, and integrates seamlessly with form systems.
-
 ## Import
-
 ```tsx
 // Input component is available in the live scope
 ```
-
 ## Basic Usage
-
 ```jsx live
-<Input 
-  type="text" 
-  placeholder="Enter your name" 
+<Input
+  type="text"
+  placeholder="Enter your name"
 />
 ```
-
 ## Props
-
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `type` | `string` | `'text'` | HTML input type (text, email, password, etc.) |
@@ -45,11 +38,8 @@ The Input component is a versatile text input field that provides a consistent i
 | `helperText` | `string` | - | Helper text below the input |
 | `leftIcon` | `ReactNode` | - | Icon to display on the left side |
 | `rightIcon` | `ReactNode` | - | Icon to display on the right side |
-
 ## Input Types
-
 The Input component supports all standard HTML input types:
-
 ```jsx live
 <div className="space-y-4">
   <Input type="text" placeholder="Enter text" />
@@ -61,11 +51,8 @@ The Input component supports all standard HTML input types:
   <Input type="tel" placeholder="Enter phone number" />
 </div>
 ```
-
 ## Sizes
-
 The Input component comes in three size variants:
-
 ```jsx live
 <div className="space-y-4">
   <Input size="sm" placeholder="Small input" />
@@ -73,11 +60,8 @@ The Input component comes in three size variants:
   <Input size="lg" placeholder="Large input" />
 </div>
 ```
-
 ## Variants
-
 Different visual states for different input conditions:
-
 ```jsx live
 <div className="space-y-4">
   <Input placeholder="Normal input" />
@@ -85,42 +69,32 @@ Different visual states for different input conditions:
   <Input variant="error" placeholder="Invalid input" error="This field is required" />
 </div>
 ```
-
 ## With Icons
-
 You can add icons to the left or right side of the input:
-
 ```tsx
 import { SearchIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
-
 // Left icon
-<Input 
+<Input
   leftIcon={<SearchIcon className="w-5 h-5" />}
   placeholder="Search users..."
 />
-
 // Right icon
-<Input 
+<Input
   type="password"
   rightIcon={<EyeIcon className="w-5 h-5" />}
   placeholder="Enter password"
 />
-
 // Both icons
-<Input 
+<Input
   leftIcon={<SearchIcon className="w-5 h-5" />}
   rightIcon={<EyeIcon className="w-5 h-5" />}
   placeholder="Search with icon"
 />
 ```
-
 ## Form Integration
-
 The Input component works seamlessly with form libraries and validation:
-
 ```tsx
 import { useState } from 'react';
-
 function FormExample() {
   const [formData, setFormData] = useState({
     name: '',
@@ -128,15 +102,12 @@ function FormExample() {
     password: ''
   });
   const [errors, setErrors] = useState({});
-
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
-    }
+  setErrors(prev => ({ ...prev, [field]: '' }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validation logic here
@@ -144,107 +115,88 @@ function FormExample() {
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.email) newErrors.email = 'Email is required';
     if (!formData.password) newErrors.password = 'Password is required';
-    
-    setErrors(newErrors);
-    
-    if (Object.keys(newErrors).length === 0) {
-      // Submit form
-      console.log('Form submitted:', formData);
-    }
+ setErrors(newErrors);
+ if (Object.keys(newErrors).length === 0) {
+  // Submit form
+  console.log('Form submitted:', formData);
   };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Input
-          type="text"
-          placeholder="Enter your name"
-          value={formData.name}
-          onChange={(e) => handleChange('name', e.target.value)}
-          error={errors.name}
-          required
-        />
-      </div>
-
-      <div>
-        <Input
-          type="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={(e) => handleChange('email', e.target.value)}
-          error={errors.email}
-          required
-        />
-      </div>
-
-      <div>
-        <Input
-          type="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={(e) => handleChange('password', e.target.value)}
-          error={errors.password}
-          required
-        />
-      </div>
-
-      <Button type="submit">Submit</Button>
+  <div>
+  <Input
+  type="text"
+  placeholder="Enter your name"
+  value={formData.name}
+  onChange={(e) => handleChange('name', e.target.value)}
+  error={errors.name}
+  required
+  />
+  </div>
+  <div>
+  <Input
+  type="email"
+  placeholder="Enter your email"
+  value={formData.email}
+  onChange={(e) => handleChange('email', e.target.value)}
+  error={errors.email}
+  required
+  />
+  </div>
+  <div>
+  <Input
+  type="password"
+  placeholder="Enter your password"
+  value={formData.password}
+  onChange={(e) => handleChange('password', e.target.value)}
+  error={errors.password}
+  required
+  />
+  </div>
+  <Button type="submit">Submit</Button>
     </form>
   );
 }
 ```
-
 ## Validation States
-
 The Input component provides clear visual feedback for validation states:
-
 ```tsx
 function ValidationExample() {
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(null);
-
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-    
-    if (value === '') {
-      setIsValid(null);
+ if (value === '') {
+  setIsValid(null);
     } else {
-      setIsValid(validateEmail(value));
-    }
+  setIsValid(validateEmail(value));
   };
-
   return (
     <div>
-      <Input
-        type="email"
-        placeholder="Enter email address"
-        value={email}
-        onChange={handleEmailChange}
-        variant={isValid === null ? 'default' : isValid ? 'success' : 'error'}
-        error={isValid === false ? 'Please enter a valid email address' : ''}
-        helperText={isValid === true ? 'Email format is valid' : ''}
-      />
+  <Input
+  type="email"
+  placeholder="Enter email address"
+  value={email}
+  onChange={handleEmailChange}
+  variant={isValid === null ? 'default' : isValid ? 'success' : 'error'}
+  error={isValid === false ? 'Please enter a valid email address' : ''}
+  helperText={isValid === true ? 'Email format is valid' : ''}
+  />
     </div>
   );
 }
 ```
-
 ## Accessibility
-
 The Input component includes comprehensive accessibility features:
-
 - Proper ARIA labels and descriptions
 - Error state announcements for screen readers
 - Keyboard navigation support
 - Focus management
 - Screen reader compatibility
-
 ```tsx
 <Input
   id="username"
@@ -256,113 +208,100 @@ The Input component includes comprehensive accessibility features:
   helperText="Username must be at least 3 characters long"
 />
 ```
-
 ## Custom Styling
-
 You can customize the appearance using Tailwind CSS classes:
-
 ```tsx
 <Input
   className="border-2 border-blue-300 focus:border-blue-500 focus:ring-blue-200"
   placeholder="Custom styled input"
 />
-
 <Input
   className="bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500"
   placeholder="Gray themed input"
 />
 ```
-
 ## Examples
-
 ### Search Input with Clear Button
 ```tsx
 function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showClear, setShowClear] = useState(false);
-
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
     setShowClear(value.length > 0);
   };
-
   const handleClear = () => {
     setSearchTerm('');
     setShowClear(false);
   };
-
   return (
     <div className="relative">
-      <Input
-        type="search"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleChange}
-        leftIcon={<SearchIcon className="w-5 h-5" />}
-        rightIcon={
-          showClear && (
-            <button
-              onClick={handleClear}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <XIcon className="w-5 h-5" />
-            </button>
-          )
-        }
-      />
+  <Input
+  type="search"
+  placeholder="Search..."
+  value={searchTerm}
+  onChange={handleChange}
+  leftIcon={<SearchIcon className="w-5 h-5" />}
+  rightIcon={
+  showClear && (
+  <button
+  onClick={handleClear}
+  className="text-gray-400 hover:text-gray-600"
+  >
+  <XIcon className="w-5 h-5" />
+  </button>
+  )
+  }
+  />
     </div>
   );
 }
 ```
-
 ### Password Input with Toggle
 ```tsx
 function PasswordInput() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
   return (
     <Input
-      type={showPassword ? 'text' : 'password'}
-      placeholder="Enter password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      rightIcon={
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="text-gray-400 hover:text-gray-600"
-        >
-          {showPassword ? (
-            <EyeOffIcon className="w-5 h-5" />
-          ) : (
-            <EyeIcon className="w-5 h-5" />
-          )}
-        </button>
-      }
+  type={showPassword ? 'text' : 'password'}
+  placeholder="Enter password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  rightIcon={
+  <button
+  type="button"
+  onClick={() => setShowPassword(!showPassword)}
+  className="text-gray-400 hover:text-gray-600"
+  >
+  {showPassword ? (
+  <EyeOffIcon className="w-5 h-5" />
+  ) : (
+  <EyeIcon className="w-5 h-5" />
+  )}
+  </button>
+  }
     />
   );
 }
 ```
-
 ### Form Field with Label
 ```tsx
 function FormField({ label, error, helperText, ...inputProps }) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={inputProps.id}>{label}</Label>
-      <Input {...inputProps} />
-      {helperText && (
-        <p className="text-sm text-gray-600">{helperText}</p>
-      )}
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
+  <Label htmlFor={inputProps.id}>{label}</Label>
+  <Input {...inputProps} />
+  {helperText && (
+  <p className="text-sm text-gray-600">{helperText}</p>
+  )}
+  {error && (
+  <p className="text-sm text-red-600">{error}</p>
+  )}
     </div>
   );
 }
-
 // Usage
 <FormField
   id="username"
@@ -372,20 +311,16 @@ function FormField({ label, error, helperText, ...inputProps }) {
   error={errors.username}
 />
 ```
-
 ## Best Practices
-
 1. **Always provide labels** - Use the Label component or aria-label for accessibility
 2. **Use appropriate input types** - Leverage HTML5 input types for better UX
 3. **Provide clear error messages** - Help users understand what went wrong
 4. **Use helper text sparingly** - Only when additional context is needed
 5. **Consider validation timing** - Validate on blur or submit, not on every keystroke
 6. **Test with screen readers** - Ensure all states are properly announced
-
 ## Related Components
-
-- [Label](/docs/components/label) - For form field labels
-- [Button](/docs/components/button) - For form submission and actions
-- [Form](/docs/components/form) - For form containers and validation
-- [SelectInput](/docs/components/select-input) - For dropdown selection
-- [DateInput](/docs/components/date-input) - For date selection
+- [Label](/components/label) - For form field labels
+- [Button](/components/button) - For form submission and actions
+- [Form](/components/form) - For form containers and validation
+- [SelectInput](/components/select-input) - For dropdown selection
+- [DateInput](/components/date-input) - For date selection

@@ -1,0 +1,315 @@
+---
+title: RichTextInput Component
+description: Advanced rich text editor with formatting toolbar, preview mode, and markdown support
+---
+# RichTextInput Component
+ ** Last Built**: September 2, 2025 at 4:19 PM
+The `RichTextInput` component is a comprehensive rich text editor that provides a toolbar for formatting options, preview mode, and markdown support. It's designed to offer a full-featured text editing experience with modern UI and extensive customization options.
+## Overview
+The RichTextInput component provides:
+- **Formatting Toolbar**: Complete set of text formatting options
+- **Preview Mode**: Toggle between edit and preview modes
+- **Markdown Support**: Built-in markdown syntax with live preview
+- **Auto-save**: Automatic content saving with configurable intervals
+- **Statistics**: Word count, character count, and reading time estimates
+- **Fullscreen Mode**: Distraction-free editing experience
+- **Keyboard Shortcuts**: Standard text editor shortcuts
+- **Accessibility**: Full keyboard navigation and screen reader support
+## Props
+| Prop  | Type  | Default  | Description  |
+| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `value`  | `string`  | `''`  | Current rich text value  |
+| `onChange`  | `(value: string) => void` | -  | Change handler  |
+| `label`  | `string`  | -  | Label text for the input  |
+| `helperText`  | `string`  | -  | Helper text below the input  |
+| `error`  | `string`  | -  | Error message to display  |
+| `required`  | `boolean`  | `false`  | Whether the field is required  |
+| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
+| `inputSize`  | `'sm' \| 'md' \| 'lg'`    | `'md'`  | Input size variant  |
+| `placeholder`  | `string`  | `'Enter your content...'`  | Placeholder text  |
+| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
+| `loadingText`  | `string`  | `'Loading...'`  | Loading text to display  |
+| `showPreview`  | `boolean`  | `false`  | Whether to show the preview mode  |
+| `showToolbar`  | `boolean`  | `true`  | Whether to show the toolbar  |
+| `showCharacterCount` | `boolean`  | `false`  | Whether to show character count  |
+| `maxLength`  | `number`  | -  | Maximum character length  |
+| `showLineNumbers`    | `boolean`  | `false`  | Whether to show line numbers  |
+| `spellCheck`  | `boolean`  | `true`  | Whether to enable spell checking  |
+| `autoSave`  | `boolean`  | `false`  | Whether to enable auto-save  |
+| `autoSaveInterval`   | `number`  | `30000`  | Auto-save interval in milliseconds    |
+| `toolbarItems`  | `string[]`  | `['bold', 'italic', 'underline', 'strikethrough', 'list', 'listOrdered', 'quote', 'code', 'link', 'image', 'align']` | Custom toolbar items  |
+| `fullscreen`  | `boolean`  | `false`  | Whether to enable fullscreen mode  |
+| `showWordCount`  | `boolean`  | `false`  | Whether to show word count  |
+| `showReadingTime`    | `boolean`  | `false`  | Whether to show reading time estimate |
+## Basic Usage
+```jsx
+import { RichTextInput } from '@react-superadmin/web';
+function MyForm() {
+  const [content, setContent] = useState('');
+  return (
+    <RichTextInput
+  label='Article Content'
+  value={content}
+  onChange={setContent}
+  placeholder='Write your article...'
+  showPreview={true}
+    />
+  );
+}
+```
+## Examples
+### Basic Rich Text Editor
+<LiveProvider
+  code={`
+function BasicRichTextEditor() {
+  const [content, setContent] = React.useState('');
+ return (
+    <RichTextInput
+  label="Content"
+  value={content}
+  onChange={setContent}
+  placeholder="Start writing your content..."
+  showToolbar={true}
+  showPreview={true}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Rich Text Editor with Statistics
+<LiveProvider
+  code={`
+function RichTextWithStats() {
+  const [content, setContent] = React.useState('');
+ return (
+    <RichTextInput
+  label="Article"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  showPreview={true}
+  showCharacterCount={true}
+  showWordCount={true}
+  showReadingTime={true}
+  maxLength={5000}
+  helperText="Write your article with rich formatting options"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Auto-saving Rich Text Editor
+<LiveProvider
+  code={`
+function AutoSavingRichText() {
+  const [content, setContent] = React.useState('');
+ return (
+    <RichTextInput
+  label="Draft Content"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  autoSave={true}
+  autoSaveInterval={10000} // 10 seconds
+  showCharacterCount={true}
+  helperText="Content will be automatically saved every 10 seconds"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Custom Toolbar Configuration
+<LiveProvider
+  code={`
+function CustomToolbarRichText() {
+  const [content, setContent] = React.useState('');
+ const customToolbarItems = [
+    'bold',
+    'italic',
+    'underline',
+    'list',
+    'listOrdered',
+    'quote',
+    'code'
+  ];
+ return (
+    <RichTextInput
+  label="Simple Editor"
+  value={content}
+  onChange={setContent}
+  toolbarItems={customToolbarItems}
+  showPreview={true}
+  helperText="Customized toolbar with essential formatting options"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Fullscreen Rich Text Editor
+<LiveProvider
+  code={`
+function FullscreenRichText() {
+  const [content, setContent] = React.useState('');
+ return (
+    <RichTextInput
+  label="Full Article"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  showPreview={true}
+  fullscreen={true}
+  showWordCount={true}
+  showReadingTime={true}
+  helperText="Click the fullscreen button for distraction-free editing"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## Formatting Options
+The RichTextInput component supports the following formatting options:
+### Text Formatting
+- **Bold**: `**text**` → **text**
+- **Italic**: `*text*` → _text_
+- **Underline**: `<u>text</u>` → <u>text</u>
+- **Strikethrough**: `~~text~~` → ~~text~~
+### Lists
+- **Bullet List**: `- item` → • item
+- **Numbered List**: `1. item` → 1. item
+### Block Elements
+- **Quote**: `> text` → blockquote
+- **Code**: `` `code` `` → inline code
+- **Code Block**: `code block`
+### Alignment
+- **Left**: Default alignment
+- **Center**: Center-aligned text
+- **Right**: Right-aligned text
+- **Justify**: Justified text
+## Keyboard Shortcuts
+The component supports standard text editor shortcuts:
+| Shortcut | Action  |
+| ---------- |
+| `Ctrl+B` | Bold  |
+| `Ctrl+I` | Italic  |
+| `Ctrl+U` | Underline  |
+| `Ctrl+Z` | Undo  |
+| `Ctrl+Y` | Redo  |
+| `Ctrl+A` | Select all |
+## Auto-save Functionality
+The component includes built-in auto-save functionality:
+```jsx
+<RichTextInput
+  autoSave={true}
+  autoSaveInterval={30000} // 30 seconds
+  onAutoSave={content => {
+    // Custom auto-save logic
+    localStorage.setItem('draft', content);
+  }}
+/>
+```
+## Statistics and Analytics
+The component provides various statistics:
+```jsx
+<RichTextInput
+  showCharacterCount={true}
+  showWordCount={true}
+  showReadingTime={true}
+  maxLength={5000}
+/>
+```
+## Custom Toolbar Items
+You can customize the toolbar by specifying which items to show:
+```jsx
+const customToolbarItems = [
+  'bold',
+  'italic',
+  'underline',
+  'list',
+  'listOrdered',
+  'quote',
+  'code',
+];
+<RichTextInput toolbarItems={customToolbarItems} showToolbar={true} />;
+```
+## Preview Mode
+The component supports a preview mode that renders markdown:
+```jsx
+<RichTextInput showPreview={true} previewClassName='prose max-w-none' />
+```
+## Integration with Forms
+The RichTextInput component works seamlessly with form components:
+```jsx
+import { SimpleForm, RichTextInput } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'title',
+    label: 'Title',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'content',
+    label: 'Content',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+  <RichTextInput
+  label={field.label}
+  value={value}
+  onChange={onChange}
+  error={error}
+  showPreview={true}
+  showToolbar={true}
+  />
+    ),
+  },
+];
+function ArticleForm() {
+  const handleSubmit = values => {
+    console.log('Article submitted:', values);
+  };
+  return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
+}
+```
+## Accessibility Features
+The RichTextInput component includes several accessibility features:
+- **Keyboard Navigation**: Full keyboard support for all toolbar actions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Toolbar Accessibility**: Accessible toolbar buttons with proper labels
+- **Preview Mode**: Screen reader announcements for mode changes
+## Styling and Customization
+The component provides extensive styling options:
+```jsx
+<RichTextInput
+  className='custom-container'
+  inputClassName='custom-input'
+  toolbarClassName='custom-toolbar'
+  previewClassName='custom-preview'
+  editorClassName='custom-editor'
+/>
+```
+## Related Components
+- [`MarkdownInput`](./markdown-input.mdx) - Markdown editor with preview (Coming Soon)
+- [`TextareaInput`](./textarea-input.mdx) - Basic multi-line text input
+- [`SimpleForm`](./simple-form.mdx) - Simple form with field rendering
+- [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation

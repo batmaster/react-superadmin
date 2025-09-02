@@ -1,0 +1,12 @@
+name: Docs Build (develop) [removed]
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    if: false
+    name: Do not use this workflow. Use deploy.yml.
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'This workflow is intentionally disabled.'

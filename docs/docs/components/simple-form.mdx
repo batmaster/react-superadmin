@@ -3,11 +3,9 @@ title: SimpleForm
 description: A flexible and customizable form component for building simple to complex forms with validation and multiple field types.
 ---
 
-import { SimpleForm } from '@react-superadmin/web';
-import { useState } from 'react';
-
 # SimpleForm
 
+** Last Built**: September 2, 2025 at 4:19 PM
 A powerful and flexible form component that provides a simple way to create forms with various field types, validation, and customizable layouts.
 
 ## Overview
@@ -29,44 +27,40 @@ The `SimpleForm` component is designed to handle common form scenarios with mini
 
 ```tsx
 import { SimpleForm } from '@react-superadmin/web';
-
 const MyForm = () => {
   const fields = [
     {
-      name: 'name',
-      label: 'Full Name',
-      type: 'text',
-      required: true,
-      placeholder: 'Enter your full name',
+  name: 'name',
+  label: 'Full Name',
+  type: 'text',
+  required: true,
+  placeholder: 'Enter your full name',
     },
     {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
-      required: true,
-      placeholder: 'Enter your email',
+  name: 'email',
+  label: 'Email Address',
+  type: 'email',
+  required: true,
+  placeholder: 'Enter your email',
     },
     {
-      name: 'age',
-      label: 'Age',
-      type: 'number',
-      validation: {
-        min: 18,
-        max: 100,
-      },
-    },
+  name: 'age',
+  label: 'Age',
+  type: 'number',
+  validation: {
+  min: 18,
+  max: 100,
+  },
   ];
-
   const handleSubmit = values => {
     console.log('Form submitted:', values);
     // Handle form submission
   };
-
   return (
     <SimpleForm
-      fields={fields}
-      onSubmit={handleSubmit}
-      title='User Registration'
+  fields={fields}
+  onSubmit={handleSubmit}
+  title='User Registration'
     />
   );
 };
@@ -77,92 +71,88 @@ const MyForm = () => {
 ```tsx live
 function SimpleFormExample() {
   const [submittedValues, setSubmittedValues] = useState(null);
-
   const fields = [
     {
-      name: 'firstName',
-      label: 'First Name',
-      type: 'text',
-      required: true,
-      placeholder: 'Enter first name',
-      validation: {
-        minLength: 2,
-        maxLength: 50,
-      },
+  name: 'firstName',
+  label: 'First Name',
+  type: 'text',
+  required: true,
+  placeholder: 'Enter first name',
+  validation: {
+  minLength: 2,
+  maxLength: 50,
+  },
+    {
+  name: 'lastName',
+  label: 'Last Name',
+  type: 'text',
+  required: true,
+  placeholder: 'Enter last name',
+  validation: {
+  minLength: 2,
+  maxLength: 50,
+  },
+    {
+  name: 'email',
+  label: 'Email Address',
+  type: 'email',
+  required: true,
+  placeholder: 'Enter email address',
     },
     {
-      name: 'lastName',
-      label: 'Last Name',
-      type: 'text',
-      required: true,
-      placeholder: 'Enter last name',
-      validation: {
-        minLength: 2,
-        maxLength: 50,
-      },
+  name: 'age',
+  label: 'Age',
+  type: 'number',
+  validation: {
+  min: 18,
+  max: 100,
+  },
+  helperText: 'Must be between 18 and 100 years old',
     },
     {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
-      required: true,
-      placeholder: 'Enter email address',
+  name: 'role',
+  label: 'Role',
+  type: 'select',
+  required: true,
+  options: [
+  { value: 'admin', label: 'Administrator' },
+  { value: 'user', label: 'Regular User' },
+  { value: 'moderator', label: 'Moderator' },
+  ],
     },
     {
-      name: 'age',
-      label: 'Age',
-      type: 'number',
-      validation: {
-        min: 18,
-        max: 100,
-      },
-      helperText: 'Must be between 18 and 100 years old',
-    },
-    {
-      name: 'role',
-      label: 'Role',
-      type: 'select',
-      required: true,
-      options: [
-        { value: 'admin', label: 'Administrator' },
-        { value: 'user', label: 'Regular User' },
-        { value: 'moderator', label: 'Moderator' },
-      ],
-    },
-    {
-      name: 'newsletter',
-      label: 'Subscribe to Newsletter',
-      type: 'checkbox',
-      defaultValue: false,
+  name: 'newsletter',
+  label: 'Subscribe to Newsletter',
+  type: 'checkbox',
+  defaultValue: false,
     },
   ];
-
   const handleSubmit = values => {
     setSubmittedValues(values);
   };
-
   return (
-    <div className='space-y-6'>
-      <SimpleForm
-        fields={fields}
-        onSubmit={handleSubmit}
-        title='User Registration Form'
-        submitText='Create User'
-        layout='grid'
-        columns={2}
-      />
-
-      {submittedValues && (
-        <div className='mt-6 p-4 bg-green-50 border border-green-200 rounded-md'>
-          <h3 className='text-lg font-medium text-green-800 mb-2'>
-            Form Submitted Successfully!
-          </h3>
-          <pre className='text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto'>
-            {JSON.stringify(submittedValues, null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
+    <BrowserOnly fallback={<div />}>
+  {() => (
+  <div className='space-y-6'>
+  <SimpleForm
+  fields={fields}
+  onSubmit={handleSubmit}
+  title='User Registration Form'
+  submitText='Create User'
+  layout='grid'
+  columns={2}
+  />
+  {submittedValues && (
+  <div className='mt-6 p-4 bg-green-50 border border-green-200 rounded-md'>
+  <h3 className='text-lg font-medium text-green-800 mb-2'>
+  Form Submitted Successfully!
+  </h3>
+  <pre className='text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto'>
+  {JSON.stringify(submittedValues, null, 2)}
+  </pre>
+  </div>
+  )}
+    </BrowserOnly>
   );
 }
 ```
@@ -179,10 +169,9 @@ const fields = [
     type: 'text',
     required: true,
     validation: {
-      pattern: '^[a-zA-Z0-9_]{3,20}$',
-      message:
-        'Username must be 3-20 characters and contain only letters, numbers, and underscores',
-    },
+  pattern: '^[a-zA-Z0-9_]{3,20}$',
+  message:
+  'Username must be 3-20 characters and contain only letters, numbers, and underscores',
   },
   {
     name: 'password',
@@ -190,12 +179,11 @@ const fields = [
     type: 'password',
     required: true,
     validation: {
-      minLength: 8,
-      pattern:
-        '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]',
-      message:
-        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-    },
+  minLength: 8,
+  pattern:
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]',
+  message:
+  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
   },
 ];
 ```
@@ -243,7 +231,6 @@ const fields = [
   onSubmit={handleSubmit}
   layout="horizontal"
 />
-
 // Grid layout with 3 columns
 <SimpleForm
   fields={fields}
@@ -251,7 +238,6 @@ const fields = [
   layout="grid"
   columns={3}
 />
-
 // Vertical layout (default)
 <SimpleForm
   fields={fields}
@@ -624,7 +610,6 @@ The form automatically adapts to different screen sizes:
 
 ```tsx
 import { useFormik } from 'formik';
-
 const MyForm = () => {
   const formik = useFormik({
     initialValues: {
@@ -635,7 +620,6 @@ const MyForm = () => {
       console.log(values);
     },
   });
-
   const fields = [
     {
       name: 'name',
@@ -650,7 +634,6 @@ const MyForm = () => {
       required: true,
     },
   ];
-
   return (
     <SimpleForm
       fields={fields}
@@ -665,7 +648,6 @@ const MyForm = () => {
 
 ```tsx
 import { useReducer } from 'react';
-
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'SET_FIELD':
@@ -676,15 +658,12 @@ const formReducer = (state, action) => {
       return state;
   }
 };
-
 const MyForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialValues);
-
   const handleSubmit = values => {
     // Handle submission
     console.log(values);
   };
-
   return (
     <SimpleForm fields={fields} onSubmit={handleSubmit} initialValues={state} />
   );
@@ -732,7 +711,6 @@ Enable console logging to debug form behavior:
   <input type="email" name="email" required />
   <button type="submit">Submit</button>
 </form>
-
 // After: SimpleForm component
 <SimpleForm
   fields={[

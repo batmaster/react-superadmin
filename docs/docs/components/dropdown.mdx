@@ -3,11 +3,9 @@ title: Dropdown
 description: A fully accessible dropdown menu component with keyboard navigation and customizable styling
 ---
 
-import { Dropdown } from '@site/src/components/ui/Dropdown';
-import { Badge } from '@site/src/components/ui/Badge';
-
 # Dropdown
 
+** Last Built**: September 2, 2025 at 4:19 PM
 A clean, accessible dropdown menu component that follows Headless UI design principles. Features keyboard navigation, proper ARIA attributes, and flexible customization options.
 
 ## Basic Usage
@@ -47,19 +45,19 @@ Add icons to your dropdown items for better visual communication:
       label: 'Edit Profile',
       value: 'edit',
       onClick: () => alert('Edit Profile clicked'),
-      icon: <span>✏️</span>,
+      icon: <span>️</span>,
     },
     {
       label: 'Settings',
       value: 'settings',
       onClick: () => alert('Settings clicked'),
-      icon: <span>⚙️</span>,
+      icon: <span>️</span>,
     },
     {
       label: 'Logout',
       value: 'logout',
       onClick: () => alert('Logout clicked'),
-      icon: <span>🚪</span>,
+      icon: <span></span>,
     },
   ]}
 />
@@ -135,7 +133,6 @@ Control how the dropdown menu aligns with the trigger:
     ]}
     align='left'
   />
-
   <Dropdown
     trigger={
       <button className='px-4 py-2 bg-green-600 text-white rounded-md'>
@@ -148,7 +145,6 @@ Control how the dropdown menu aligns with the trigger:
     ]}
     align='center'
   />
-
   <Dropdown
     trigger={
       <button className='px-4 py-2 bg-purple-600 text-white rounded-md'>
@@ -182,7 +178,6 @@ Choose from different menu widths:
     ]}
     size='sm'
   />
-
   <Dropdown
     trigger={
       <button className='px-4 py-2 bg-green-600 text-white rounded-md'>
@@ -203,7 +198,6 @@ Choose from different menu widths:
     ]}
     size='md'
   />
-
   <Dropdown
     trigger={
       <button className='px-4 py-2 bg-purple-600 text-white rounded-md'>
@@ -296,26 +290,26 @@ Control dropdown behavior with advanced options:
       label: 'Profile',
       value: 'profile',
       onClick: () => alert('Profile'),
-      icon: <span>👤</span>,
+      icon: <span></span>,
     },
     {
       label: 'Settings',
       value: 'settings',
       onClick: () => alert('Settings'),
-      icon: <span>⚙️</span>,
+      icon: <span>️</span>,
     },
     { divider: true },
     {
       label: 'Help',
       value: 'help',
       onClick: () => alert('Help'),
-      icon: <span>❓</span>,
+      icon: <span></span>,
     },
     {
       label: 'Logout',
       value: 'logout',
       onClick: () => alert('Logout'),
-      icon: <span>🚪</span>,
+      icon: <span></span>,
     },
   ]}
   align='right'
@@ -360,7 +354,6 @@ Control dropdown behavior with advanced options:
     ]}
     size='sm'
   />
-
   <Badge variant='success'>Active</Badge>
 </div>
 ```

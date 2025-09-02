@@ -1,0 +1,317 @@
+---
+title: MarkdownInput Component
+description: Advanced markdown editor with live preview, toolbar, and syntax highlighting
+---
+# MarkdownInput Component
+ ** Last Built**: September 2, 2025 at 4:19 PM
+The `MarkdownInput` component is a comprehensive markdown editor that provides a toolbar for formatting options, live preview mode, and extensive customization options. It's designed to offer a full-featured markdown editing experience with modern UI and excellent developer experience.
+## Overview
+The MarkdownInput component provides:
+- **Markdown Toolbar**: Complete set of markdown formatting options
+- **Live Preview**: Toggle between edit and preview modes
+- **Syntax Highlighting**: Optional syntax highlighting for better readability
+- **Auto-save**: Automatic content saving with configurable intervals
+- **Statistics**: Word count, character count, and reading time estimates
+- **Fullscreen Mode**: Distraction-free editing experience
+- **Custom Toolbar**: Extensible toolbar with custom actions
+- **Accessibility**: Full keyboard navigation and screen reader support
+## Props
+| Prop  | Type  | Default  | Description  |
+| ----------------------------------------------------------------- | ------------------------------------- |
+| `value`  | `string`  | `''`  | Current markdown value  |
+| `onChange`  | `(value: string) => void`  | -  | Change handler  |
+| `label`  | `string`  | -  | Label text for the input  |
+| `helperText`  | `string`  | -  | Helper text below the input  |
+| `error`  | `string`  | -  | Error message to display  |
+| `required`  | `boolean`  | `false`  | Whether the field is required  |
+| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
+| `inputSize`  | `'sm' \| 'md' \| 'lg'`  | `'md'`  | Input size variant  |
+| `placeholder`  | `string`  | `'Write your markdown here...'` | Placeholder text  |
+| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
+| `showPreview`  | `boolean`  | `true`  | Whether to show the preview mode  |
+| `showToolbar`  | `boolean`  | `true`  | Whether to show the toolbar  |
+| `showCharacterCount` | `boolean`  | `false`  | Whether to show character count  |
+| `maxLength`  | `number`  | -  | Maximum character length  |
+| `showLineNumbers`    | `boolean`  | `false`  | Whether to show line numbers  |
+| `spellCheck`  | `boolean`  | `true`  | Whether to enable spell checking  |
+| `autoSave`  | `boolean`  | `false`  | Whether to enable auto-save  |
+| `autoSaveInterval`   | `number`  | `30000`  | Auto-save interval in milliseconds    |
+| `toolbarItems`  | `Array<{icon: React.ReactNode, title: string, action: Function}>` | `[]`  | Custom toolbar items  |
+| `fullscreen`  | `boolean`  | `false`  | Whether to enable fullscreen mode  |
+| `syntaxHighlighting` | `boolean`  | `false`  | Whether to enable syntax highlighting |
+| `showWordCount`  | `boolean`  | `false`  | Whether to show word count  |
+| `showReadingTime`    | `boolean`  | `false`  | Whether to show reading time estimate |
+| `showHelp`  | `boolean`  | `false`  | Whether to show markdown help  |
+## Basic Usage
+```jsx
+import { MarkdownInput } from '@react-superadmin/web';
+function MyForm() {
+  const [content, setContent] = useState('');
+  return (
+    <MarkdownInput
+  label='Article Content'
+  value={content}
+  onChange={setContent}
+  placeholder='Write your markdown content...'
+  showPreview={true}
+    />
+  );
+}
+```
+## Examples
+### Basic Markdown Editor
+<LiveProvider
+  code={`
+function BasicMarkdownEditor() {
+  const [content, setContent] = React.useState('');
+ return (
+    <MarkdownInput
+  label="Content"
+  value={content}
+  onChange={setContent}
+  placeholder="Start writing your markdown..."
+  showToolbar={true}
+  showPreview={true}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Markdown Editor with Statistics
+<LiveProvider
+  code={`
+function MarkdownWithStats() {
+  const [content, setContent] = React.useState('');
+ return (
+    <MarkdownInput
+  label="Article"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  showPreview={true}
+  showCharacterCount={true}
+  showWordCount={true}
+  showReadingTime={true}
+  maxLength={5000}
+  helperText="Write your article with markdown formatting"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Auto-saving Markdown Editor
+<LiveProvider
+  code={`
+function AutoSavingMarkdown() {
+  const [content, setContent] = React.useState('');
+ return (
+    <MarkdownInput
+  label="Draft Content"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  autoSave={true}
+  autoSaveInterval={10000} // 10 seconds
+  showCharacterCount={true}
+  helperText="Content will be automatically saved every 10 seconds"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Custom Toolbar Markdown Editor
+<LiveProvider
+  code={`
+function CustomToolbarMarkdown() {
+  const [content, setContent] = React.useState('');
+ const customToolbarItems = [
+    {
+  icon: <span className="text-lg"></span>,
+  title: "Custom Action",
+  action: (text, selection) => {
+  const before = text.substring(0, selection.start);
+  const selected = text.substring(selection.start, selection.end);
+  const after = text.substring(selection.end);
+  return \`\${before} \${selected} \${after}\`;
+  }
+  ];
+ return (
+    <MarkdownInput
+  label="Custom Editor"
+  value={content}
+  onChange={setContent}
+  toolbarItems={customToolbarItems}
+  showPreview={true}
+  helperText="Custom toolbar with emoji formatting"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Fullscreen Markdown Editor
+<LiveProvider
+  code={`
+function FullscreenMarkdown() {
+  const [content, setContent] = React.useState('');
+ return (
+    <MarkdownInput
+  label="Full Article"
+  value={content}
+  onChange={setContent}
+  showToolbar={true}
+  showPreview={true}
+  fullscreen={true}
+  showWordCount={true}
+  showReadingTime={true}
+  helperText="Click the fullscreen button for distraction-free editing"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## Markdown Formatting
+The MarkdownInput component supports standard markdown syntax:
+### Text Formatting
+- **Bold**: `**text**` → **text**
+- **Italic**: `*text*` → _text_
+- **Code**: `` `code` `` → `code`
+### Lists
+- **Bullet List**: `- item` → • item
+- **Numbered List**: `1. item` → 1. item
+### Block Elements
+- **Quote**: `> text` → blockquote
+- **Code Block**: `code block`
+- **Link**: `[text](url)` → link
+- **Image**: `![alt](url)` → image
+## Default Toolbar Actions
+The component includes these default toolbar actions:
+| Action  | Icon  | Description  |
+| ----------------------------- |
+| Bold  | **B** | Wraps selected text with `**` |
+| Italic  | _I_   | Wraps selected text with `*`  |
+| Unordered List | •  | Adds `- ` to each line  |
+| Ordered List   | 1.    | Adds numbered bullets  |
+| Blockquote  | >  | Adds `> ` to each line  |
+| Code Block  | ` `   | Wraps in triple backticks  |
+| Link  |     | Creates `[text](url)`  |
+| Image  | ️    | Creates `![alt](url)`  |
+## Custom Toolbar Items
+You can extend the toolbar with custom actions:
+```jsx
+const customToolbarItems = [
+  {
+    icon: <span></span>,
+    title: 'Highlight',
+    action: (text, selection) => {
+  const before = text.substring(0, selection.start);
+  const selected = text.substring(selection.start, selection.end);
+  const after = text.substring(selection.end);
+  return `${before}==${selected}==${after}`;
+  },
+];
+<MarkdownInput toolbarItems={customToolbarItems} showToolbar={true} />;
+```
+## Auto-save Functionality
+The component includes built-in auto-save functionality:
+```jsx
+<MarkdownInput
+  autoSave={true}
+  autoSaveInterval={30000} // 30 seconds
+  onAutoSave={content => {
+    // Custom auto-save logic
+    localStorage.setItem('draft', content);
+  }}
+/>
+```
+## Statistics and Analytics
+The component provides various statistics:
+```jsx
+<MarkdownInput
+  showCharacterCount={true}
+  showWordCount={true}
+  showReadingTime={true}
+  maxLength={5000}
+/>
+```
+## Preview Mode
+The component supports a preview mode that renders markdown:
+```jsx
+<MarkdownInput showPreview={true} previewClassName='prose max-w-none' />
+```
+## Integration with Forms
+The MarkdownInput component works seamlessly with form components:
+```jsx
+import { SimpleForm, MarkdownInput } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'title',
+    label: 'Title',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'content',
+    label: 'Content',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+  <MarkdownInput
+  label={field.label}
+  value={value}
+  onChange={onChange}
+  error={error}
+  showPreview={true}
+  showToolbar={true}
+  />
+    ),
+  },
+];
+function ArticleForm() {
+  const handleSubmit = values => {
+    console.log('Article submitted:', values);
+  };
+  return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
+}
+```
+## Accessibility Features
+The MarkdownInput component includes several accessibility features:
+- **Keyboard Navigation**: Full keyboard support for all toolbar actions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Toolbar Accessibility**: Accessible toolbar buttons with proper labels
+- **Preview Mode**: Screen reader announcements for mode changes
+## Styling and Customization
+The component provides extensive styling options:
+```jsx
+<MarkdownInput
+  className='custom-container'
+  textareaClassName='custom-textarea'
+  toolbarClassName='custom-toolbar'
+  previewClassName='custom-preview'
+  labelClassName='custom-label'
+/>
+```
+## Related Components
+- [`RichTextInput`](./rich-text-input.mdx) - Rich text editor with formatting toolbar
+- [`TextareaInput`](./textarea-input.mdx) - Basic multi-line text input
+- [`SimpleForm`](./simple-form.mdx) - Simple form with field rendering
+- [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation

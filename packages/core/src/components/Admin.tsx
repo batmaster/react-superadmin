@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { SuperAdminProvider } from "../contexts/SuperAdminContext";
-import { AdminConfig } from "../types";
+import { AdminConfig, DataProvider } from "../types";
 
 export interface AdminProps {
   /** Configuration for the admin application */
@@ -10,11 +10,11 @@ export interface AdminProps {
   /** Custom theme provider */
   themeProvider?: React.ComponentType<{ children: ReactNode }>;
   /** Custom data provider */
-  dataProvider?: any;
+  dataProvider?: unknown;
   /** Custom auth provider */
-  authProvider?: any;
+  authProvider?: unknown;
   /** Custom i18n provider */
-  i18nProvider?: any;
+  i18nProvider?: unknown;
   /** Children components */
   children: ReactNode;
   /** Additional CSS classes */
@@ -61,9 +61,9 @@ export const Admin: React.FC<AdminProps> = ({
   className = "",
 }) => {
   // Merge custom providers with config
-  const finalConfig = {
+  const finalConfig: AdminConfig = {
     ...config,
-    dataProvider: dataProvider || config.dataProvider,
+    dataProvider: (dataProvider as DataProvider) || config.dataProvider,
     authProvider: authProvider || config.authProvider,
     i18nProvider: I18nProvider || config.i18nProvider,
   };
@@ -88,7 +88,10 @@ export const Admin: React.FC<AdminProps> = ({
   // Wrap with i18n provider if provided
   const renderWithI18n = (content: ReactNode) => {
     if (I18nProvider) {
-      return <I18nProvider>{content}</I18nProvider>;
+      const I18nProviderComponent = I18nProvider as React.ComponentType<{
+        children: ReactNode;
+      }>;
+      return <I18nProviderComponent>{content}</I18nProviderComponent>;
     }
     return content;
   };

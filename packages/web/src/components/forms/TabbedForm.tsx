@@ -66,6 +66,7 @@ export interface TabbedFormProps {
   onCancel?: () => void;
   initialValues?: Record<string, any>;
   title?: string;
+  description?: string;
   submitText?: string;
   cancelText?: string;
   loading?: boolean;
@@ -143,6 +144,7 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
   onCancel,
   initialValues = {},
   title,
+  description,
   submitText = "Save",
   cancelText = "Cancel",
   loading = false,
@@ -344,6 +346,13 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       setIsSubmitting(true);
       setSubmitted(true);
 
+      // Set all fields as touched when validating the entire form
+      const newTouched: Record<string, boolean> = {};
+      allFields.forEach((field) => {
+        newTouched[field.name] = true;
+      });
+      setTouched(newTouched);
+
       // Validate all fields
       const newErrors = validateAll();
       if (Object.keys(newErrors).length > 0) {
@@ -456,15 +465,23 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       const fieldValue = values[field.name];
       const fieldError = errors[field.name];
       const fieldTouched = touched[field.name];
+      // Show error if it exists and either field is touched OR we're showing all errors (form validation)
+      const showError =
+        fieldError && (fieldTouched || Object.keys(errors).length > 0);
 
       // For now, render a basic input - this would be replaced with actual input components
       return (
         <div key={field.name} className={field.className || ""}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor={field.name}
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             {field.label}
             {field.required && <span className="text-red-500 ml-1">*</span>}
           </label>
           <input
+            id={field.name}
+            name={field.name}
             type={field.type === "boolean" ? "checkbox" : field.type}
             value={field.type === "boolean" ? undefined : fieldValue || ""}
             checked={field.type === "boolean" ? Boolean(fieldValue) : undefined}
@@ -488,7 +505,7 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
           {field.helperText && !fieldError && (
             <p className="mt-1 text-sm text-gray-500">{field.helperText}</p>
           )}
-          {fieldError && fieldTouched && (
+          {fieldError && showError && (
             <p className="mt-1 text-sm text-red-600">{fieldError}</p>
           )}
         </div>
@@ -530,6 +547,9 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       {title && (
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+          {description && (
+            <p className="text-sm text-gray-600 mt-1">{description}</p>
+          )}
         </div>
       )}
 

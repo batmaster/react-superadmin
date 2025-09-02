@@ -1,26 +1,25 @@
-import { createAdmin } from '../../utils/createAdmin';
-import { createResource } from '../../utils/createResource';
-import { AdminConfig } from '../../types';
+import { createAdmin } from "../../utils/createAdmin";
+import { createResource } from "../../utils/createResource";
 
-describe('createAdmin', () => {
-  it('should create admin config with default values', () => {
+describe("createAdmin", () => {
+  it("should create admin config with default values", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
-      fields: [{ name: 'name', label: 'Name', type: 'text' as const }],
+      name: "users",
+      label: "Users",
+      fields: [{ name: "name", label: "Name", type: "text" as const }],
     });
 
     const adminConfig = createAdmin({
-      title: 'Test Admin',
+      title: "Test Admin",
       resources: [userResource],
     });
 
     expect(adminConfig).toEqual({
-      title: 'Test Admin',
+      title: "Test Admin",
       resources: [userResource],
       theme: {
-        primaryColor: '#3b82f6',
-        secondaryColor: '#6b7280',
+        primaryColor: "#3b82f6",
+        secondaryColor: "#6b7280",
         darkMode: false,
       },
       layout: {
@@ -35,38 +34,38 @@ describe('createAdmin', () => {
     });
   });
 
-  it('should override default theme when provided', () => {
+  it("should override default theme when provided", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
+      name: "users",
+      label: "Users",
       fields: [],
     });
 
     const adminConfig = createAdmin({
-      title: 'Custom Admin',
+      title: "Custom Admin",
       resources: [userResource],
       theme: {
-        primaryColor: '#ef4444',
+        primaryColor: "#ef4444",
         darkMode: true,
       },
     });
 
     expect(adminConfig.theme).toEqual({
-      primaryColor: '#ef4444',
-      secondaryColor: '#6b7280',
+      primaryColor: "#ef4444",
+      secondaryColor: "#6b7280",
       darkMode: true,
     });
   });
 
-  it('should override default layout when provided', () => {
+  it("should override default layout when provided", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
+      name: "users",
+      label: "Users",
       fields: [],
     });
 
     const adminConfig = createAdmin({
-      title: 'Custom Admin',
+      title: "Custom Admin",
       resources: [userResource],
       layout: {
         sidebar: false,
@@ -82,15 +81,15 @@ describe('createAdmin', () => {
     });
   });
 
-  it('should override default auth when provided', () => {
+  it("should override default auth when provided", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
+      name: "users",
+      label: "Users",
       fields: [],
     });
 
     const adminConfig = createAdmin({
-      title: 'Secure Admin',
+      title: "Secure Admin",
       resources: [userResource],
       auth: {
         enabled: true,
@@ -102,54 +101,54 @@ describe('createAdmin', () => {
     });
   });
 
-  it('should handle multiple resources', () => {
+  it("should handle multiple resources", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
+      name: "users",
+      label: "Users",
       fields: [],
     });
 
     const postResource = createResource({
-      name: 'posts',
-      label: 'Posts',
+      name: "posts",
+      label: "Posts",
       fields: [],
     });
 
     const adminConfig = createAdmin({
-      title: 'Multi Resource Admin',
+      title: "Multi Resource Admin",
       resources: [userResource, postResource],
     });
 
     expect(adminConfig.resources).toHaveLength(2);
-    expect(adminConfig.resources[0].name).toBe('users');
-    expect(adminConfig.resources[1].name).toBe('posts');
+    expect(adminConfig.resources[0].name).toBe("users");
+    expect(adminConfig.resources[1].name).toBe("posts");
   });
 
-  it('should handle empty resources array', () => {
+  it("should handle empty resources array", () => {
     const adminConfig = createAdmin({
-      title: 'Empty Admin',
+      title: "Empty Admin",
       resources: [],
     });
 
     expect(adminConfig.resources).toEqual([]);
-    expect(adminConfig.title).toBe('Empty Admin');
+    expect(adminConfig.title).toBe("Empty Admin");
   });
 
-  it('should preserve all provided options', () => {
+  it("should preserve all provided options", () => {
     const userResource = createResource({
-      name: 'users',
-      label: 'Users',
+      name: "users",
+      label: "Users",
       fields: [],
     });
 
     const adminConfig = createAdmin({
-      title: 'Full Admin',
+      title: "Full Admin",
       resources: [userResource],
       theme: {
-        primaryColor: '#10b981',
-        secondaryColor: '#f59e0b',
+        primaryColor: "#10b981",
+        secondaryColor: "#f59e0b",
         darkMode: true,
-        customCSS: 'body { background: red; }',
+        customCSS: "body { background: red; }",
       },
       layout: {
         sidebar: false,
@@ -159,13 +158,13 @@ describe('createAdmin', () => {
       },
       auth: {
         enabled: true,
-        loginUrl: '/login',
-        logoutUrl: '/logout',
+        loginUrl: "/login",
+        logoutUrl: "/logout",
       },
     });
 
-    expect(adminConfig.theme.customCSS).toBe('body { background: red; }');
+    expect(adminConfig.theme.customCSS).toBe("body { background: red; }");
     expect(adminConfig.layout.sidebar).toBe(false);
-    expect(adminConfig.auth.loginUrl).toBe('/login');
+    expect(adminConfig.auth.loginUrl).toBe("/login");
   });
 });

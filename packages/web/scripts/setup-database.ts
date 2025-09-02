@@ -10,7 +10,7 @@ const prisma = new PrismaClient({
 
 async function setupDatabase() {
   try {
-    console.log("🚀 Setting up database...");
+    console.log(" Setting up database...");
 
     // Create initial categories
     const categories = await Promise.all([
@@ -48,7 +48,7 @@ async function setupDatabase() {
       }),
     ]);
 
-    console.log("✅ Categories created:", categories.length);
+    console.log(" Categories created:", categories.length);
 
     // Create initial users
     const users = await Promise.all([
@@ -96,7 +96,7 @@ async function setupDatabase() {
       }),
     ]);
 
-    console.log("✅ Users created:", users.length);
+    console.log(" Users created:", users.length);
 
     // Create initial posts
     const posts = await Promise.all([
@@ -138,7 +138,7 @@ async function setupDatabase() {
       }),
     ]);
 
-    console.log("✅ Posts created:", posts.length);
+    console.log(" Posts created:", posts.length);
 
     // Create initial products
     const products = await Promise.all([
@@ -177,16 +177,16 @@ async function setupDatabase() {
       }),
     ]);
 
-    console.log("✅ Products created:", products.length);
+    console.log(" Products created:", products.length);
 
-    console.log("🎉 Database setup completed successfully!");
-    console.log(`📊 Summary:`);
+    console.log(" Database setup completed successfully!");
+    console.log(` Summary:`);
     console.log(`   - Categories: ${categories.length}`);
     console.log(`   - Users: ${users.length}`);
     console.log(`   - Posts: ${posts.length}`);
     console.log(`   - Products: ${products.length}`);
   } catch (error) {
-    console.error("❌ Error setting up database:", error);
+    console.error(" Error setting up database:", error);
     throw error;
   } finally {
     await prisma.$disconnect();
@@ -197,11 +197,11 @@ async function setupDatabase() {
 if (require.main === module) {
   setupDatabase()
     .then(() => {
-      console.log("✅ Database setup completed");
+      console.log(" Database setup completed");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("❌ Database setup failed:", error);
+      console.error(" Database setup failed:", error);
       process.exit(1);
     });
 }

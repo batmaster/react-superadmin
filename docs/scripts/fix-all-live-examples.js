@@ -7,7 +7,7 @@ const path = require('path');
 function fixAllLiveExamples() {
   const docsDir = path.join(__dirname, '..', 'docs');
 
-  console.log('🔧 Fixing ALL live examples comprehensively...');
+  console.log(' Fixing ALL live examples comprehensively...');
 
   // Get all MDX files
   const mdxFiles = fs
@@ -20,20 +20,20 @@ function fixAllLiveExamples() {
       let content = fs.readFileSync(filePath, 'utf8');
       let modified = false;
 
-      console.log(`\n📁 Processing: ${path.basename(filePath)}`);
+      console.log(`\n Processing: ${path.basename(filePath)}`);
 
       // 1. Fix React.React.useState to React.useState
       if (content.includes('React.React.useState')) {
         content = content.replace(/React\.React\.useState/g, 'React.useState');
         modified = true;
-        console.log(`  ✅ Fixed React.React.useState`);
+        console.log(`   Fixed React.React.useState`);
       }
 
       // 2. Fix tsx live to jsx live
       if (content.includes('```tsx live')) {
         content = content.replace(/```tsx live/g, '```jsx live');
         modified = true;
-        console.log(`  ✅ Fixed tsx live to jsx live`);
+        console.log(`   Fixed tsx live to jsx live`);
       }
 
       // 3. Fix useState to React.useState (for components without React import)
@@ -43,7 +43,7 @@ function fixAllLiveExamples() {
       ) {
         content = content.replace(/useState\(/g, 'React.useState(');
         modified = true;
-        console.log(`  ✅ Fixed useState to React.useState`);
+        console.log(`   Fixed useState to React.useState`);
       }
 
       // 4. Add component rendering to ALL example functions
@@ -78,7 +78,7 @@ function fixAllLiveExamples() {
               const afterEnd = content.substring(functionEnd + 1);
               content = beforeEnd + '\n\n' + componentTag + '\n' + afterEnd;
               modified = true;
-              console.log(`  ✅ Added component rendering for ${functionName}`);
+              console.log(`   Added component rendering for ${functionName}`);
             }
           }
         });
@@ -114,7 +114,7 @@ function fixAllLiveExamples() {
         if (content.match(fix.pattern)) {
           content = content.replace(fix.pattern, fix.replacement);
           modified = true;
-          console.log(`  ✅ Fixed component syntax`);
+          console.log(`   Fixed component syntax`);
         }
       });
 
@@ -126,14 +126,14 @@ function fixAllLiveExamples() {
 
       if (modified) {
         fs.writeFileSync(filePath, content, 'utf8');
-        console.log(`  💾 File updated`);
+        console.log(`   File updated`);
       } else {
         console.log(`  ⏭️  No changes needed`);
       }
     }
   });
 
-  console.log('\n🎉 ALL live examples fixed successfully!');
+  console.log('\n ALL live examples fixed successfully!');
 }
 
 // Run the function

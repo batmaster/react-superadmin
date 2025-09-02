@@ -1,0 +1,448 @@
+---
+title: SearchInput Component
+description: Advanced search input with suggestions, history, debouncing, and analytics
+---
+
+# SearchInput Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `SearchInput` component is a comprehensive search input that provides suggestions, search history, debouncing, analytics, and advanced search options. It's designed to offer a modern search experience with extensive customization and functionality.
+
+## Overview
+
+The SearchInput component provides:
+
+- **Debounced Search**: Automatic search with configurable delay
+- **Search Suggestions**: Dropdown with filtered suggestions
+- **Search History**: Recent searches with quick access
+- **Advanced Search**: Multi-field search with filters
+- **Search Analytics**: Statistics and popular searches
+- **Multiple Variants**: Outline, filled, and minimal styles
+- **Keyboard Navigation**: Full keyboard support
+- **Accessibility**: Screen reader support and ARIA attributes
+
+## Props
+
+| Prop                   | Type                                                                           | Default       | Description                                 |
+| ---------------------- | ------------------------------------------------------------------------------ | ------------- | ------------------------------------------- |
+| `value`                | `string`                                                                       | `''`          | Current search value                        |
+| `onChange`             | `(value: string) => void`                                                      | -             | Change handler                              |
+| `onSearch`             | `(value: string) => void`                                                      | -             | Search submission handler                   |
+| `onClear`              | `() => void`                                                                   | -             | Clear search handler                        |
+| `label`                | `string`                                                                       | -             | Label text for the input                    |
+| `helperText`           | `string`                                                                       | -             | Helper text below the input                 |
+| `error`                | `string`                                                                       | -             | Error message to display                    |
+| `required`             | `boolean`                                                                      | `false`       | Whether the field is required               |
+| `disabled`             | `boolean`                                                                      | `false`       | Whether the input is disabled               |
+| `inputSize`            | `'sm' \| 'md' \| 'lg'`                                                         | `'md'`        | Input size variant                          |
+| `variant`              | `'outline' \| 'filled' \| 'minimal'`                                           | `'outline'`   | Input style variant                         |
+| `placeholder`          | `string`                                                                       | `'Search...'` | Placeholder text                            |
+| `loading`              | `boolean`                                                                      | `false`       | Whether to show a loading state             |
+| `showClearButton`      | `boolean`                                                                      | `true`        | Whether to show a clear button              |
+| `showSearchButton`     | `boolean`                                                                      | `true`        | Whether to show a search button             |
+| `showFilterButton`     | `boolean`                                                                      | `false`       | Whether to show a filter button             |
+| `showSuggestions`      | `boolean`                                                                      | `false`       | Whether to show search suggestions          |
+| `suggestions`          | `string[]`                                                                     | `[]`          | Search suggestions to display               |
+| `debounce`             | `boolean`                                                                      | `true`        | Whether to enable debounced search          |
+| `debounceMs`           | `number`                                                                       | `300`         | Debounce delay in milliseconds              |
+| `minSearchLength`      | `number`                                                                       | `1`           | Minimum characters before triggering search |
+| `showSearchCount`      | `boolean`                                                                      | `false`       | Whether to show search count/results        |
+| `searchCount`          | `number`                                                                       | -             | Current search result count                 |
+| `showHistory`          | `boolean`                                                                      | `false`       | Whether to show search history              |
+| `searchHistory`        | `string[]`                                                                     | `[]`          | Search history items                        |
+| `showAdvancedSearch`   | `boolean`                                                                      | `false`       | Whether to show advanced search options     |
+| `advancedSearchFields` | `Array<{name: string, label: string, type: string, options?: Array}>`          | `[]`          | Advanced search fields                      |
+| `showAnalytics`        | `boolean`                                                                      | `false`       | Whether to show search analytics            |
+| `analytics`            | `{totalSearches: number, popularSearches: string[], recentSearches: string[]}` | -             | Search analytics data                       |
+
+## Basic Usage
+
+```jsx
+import { SearchInput } from '@react-superadmin/web';
+function MySearch() {
+  const [searchValue, setSearchValue] = useState('');
+  const handleSearch = value => {
+    console.log('Searching for:', value);
+  };
+  return (
+    <SearchInput
+      value={searchValue}
+      onChange={setSearchValue}
+      onSearch={handleSearch}
+      placeholder='Search products...'
+    />
+  );
+}
+```
+
+## Examples
+
+### Basic Search Input
+
+<LiveProvider
+  code={`
+function BasicSearch() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const handleSearch = (value) => {
+    console.log('Searching for:', value);
+  };
+ return (
+    <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Search products..."
+  showClearButton={true}
+  showSearchButton={true}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Search with Suggestions
+<LiveProvider
+  code={`
+function SearchWithSuggestions() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const suggestions = [
+    'React components',
+    'React hooks',
+    'React context',
+    'React state',
+    'React props'
+  ];
+ const handleSearch = (value) => {
+    console.log('Searching for:', value);
+  };
+ return (
+    <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Search documentation..."
+  showSuggestions={true}
+  suggestions={suggestions}
+  minSearchLength={2}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Search with History
+<LiveProvider
+  code={`
+function SearchWithHistory() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const searchHistory = [
+    'React components',
+    'TypeScript',
+    'JavaScript',
+    'CSS styling'
+  ];
+ const handleSearch = (value) => {
+    console.log('Searching for:', value);
+  };
+ return (
+    <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Search with history..."
+  showHistory={true}
+  searchHistory={searchHistory}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Advanced Search
+<LiveProvider
+  code={`
+function AdvancedSearch() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const advancedSearchFields = [
+    {
+  name: 'category',
+  label: 'Category',
+  type: 'select',
+  options: [
+  { value: 'components', label: 'Components' },
+  { value: 'hooks', label: 'Hooks' },
+  { value: 'utils', label: 'Utilities' }
+  ]
+    },
+    {
+  name: 'date',
+  label: 'Date',
+  type: 'date'
+    },
+    {
+  name: 'author',
+  label: 'Author',
+  type: 'text'
+    }
+  ];
+ const handleSearch = (value) => {
+    console.log('Advanced search for:', value);
+  };
+ return (
+    <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Advanced search..."
+  showFilterButton={true}
+  showAdvancedSearch={true}
+  advancedSearchFields={advancedSearchFields}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Search with Analytics
+<LiveProvider
+  code={`
+function SearchWithAnalytics() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const analytics = {
+    totalSearches: 1250,
+    popularSearches: ['React', 'TypeScript', 'JavaScript', 'CSS'],
+    recentSearches: ['React hooks', 'useState', 'useEffect']
+  };
+ const handleSearch = (value) => {
+    console.log('Searching for:', value);
+  };
+ return (
+    <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Search with analytics..."
+  showAnalytics={true}
+  analytics={analytics}
+  showSearchCount={true}
+  searchCount={42}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+### Different Variants
+<LiveProvider
+  code={`
+function SearchVariants() {
+  const [searchValue, setSearchValue] = React.useState('');
+ const handleSearch = (value) => {
+    console.log('Searching for:', value);
+  };
+ return (
+    <div className="space-y-4">
+  <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Outline variant..."
+  variant="outline"
+  />
+ <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Filled variant..."
+  variant="filled"
+  />
+ <SearchInput
+  value={searchValue}
+  onChange={setSearchValue}
+  onSearch={handleSearch}
+  placeholder="Minimal variant..."
+  variant="minimal"
+  />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+## Debounced Search
+The component supports debounced search to reduce API calls:
+```jsx
+<SearchInput
+  debounce={true}
+  debounceMs={500} // 500ms delay
+  minSearchLength={3} // Start searching after 3 characters
+  onChange={value => {
+    // This will be called after the debounce delay
+    console.log('Debounced search:', value);
+  }}
+/>
+```
+## Search Suggestions
+You can provide search suggestions that appear as the user types:
+```jsx
+const suggestions = [
+  'React components',
+  'React hooks',
+  'React context',
+  'React state',
+  'React props',
+];
+<SearchInput
+  showSuggestions={true}
+  suggestions={suggestions}
+  minSearchLength={2}
+  onSearch={value => {
+    console.log('Selected suggestion:', value);
+  }}
+/>;
+```
+## Search History
+The component can display recent searches:
+```jsx
+const searchHistory = [
+  'React components',
+  'TypeScript',
+  'JavaScript',
+  'CSS styling',
+];
+<SearchInput
+  showHistory={true}
+  searchHistory={searchHistory}
+  onSearch={value => {
+    // Add to history
+    const newHistory = [value, ...searchHistory.filter(h => h !== value)].slice(
+  0,
+  10
+    );
+    setSearchHistory(newHistory);
+  }}
+/>;
+```
+## Advanced Search
+You can enable advanced search with multiple fields:
+```jsx
+const advancedSearchFields = [
+  {
+    name: 'category',
+    label: 'Category',
+    type: 'select',
+    options: [
+  { value: 'components', label: 'Components' },
+  { value: 'hooks', label: 'Hooks' },
+  { value: 'utils', label: 'Utilities' },
+    ],
+  },
+  {
+    name: 'date',
+    label: 'Date',
+    type: 'date',
+  },
+  {
+    name: 'author',
+    label: 'Author',
+    type: 'text',
+  },
+];
+<SearchInput
+  showAdvancedSearch={true}
+  advancedSearchFields={advancedSearchFields}
+  showFilterButton={true}
+/>;
+```
+## Search Analytics
+The component can display search analytics:
+```jsx
+const analytics = {
+  totalSearches: 1250,
+  popularSearches: ['React', 'TypeScript', 'JavaScript', 'CSS'],
+  recentSearches: ['React hooks', 'useState', 'useEffect'],
+};
+<SearchInput
+  showAnalytics={true}
+  analytics={analytics}
+  showSearchCount={true}
+  searchCount={42}
+/>;
+```
+## Keyboard Navigation
+The component supports full keyboard navigation:
+- **Enter**: Submit search
+- **Escape**: Close dropdowns
+- **Arrow Down/Up**: Navigate suggestions
+- **Tab**: Navigate between elements
+## Integration with Forms
+The SearchInput component works seamlessly with form components:
+```jsx
+import { SimpleForm, SearchInput } from '@react-superadmin/web';
+const formFields = [
+  {
+    name: 'search',
+    label: 'Search',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+  <SearchInput
+  label={field.label}
+  value={value}
+  onChange={onChange}
+  error={error}
+  showSuggestions={true}
+  suggestions={['Option 1', 'Option 2', 'Option 3']}
+  />
+    ),
+  },
+];
+function SearchForm() {
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+  };
+  return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
+}
+```
+## Accessibility Features
+The SearchInput component includes several accessibility features:
+- **Keyboard Navigation**: Full keyboard support for all interactions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Dropdown Accessibility**: Accessible suggestion and history dropdowns
+- **Search Announcements**: Screen reader announcements for search results
+## Styling and Customization
+The component provides extensive styling options:
+```jsx
+<SearchInput
+  className='custom-container'
+  inputClassName='custom-input'
+  searchButtonClassName='custom-search-button'
+  clearButtonClassName='custom-clear-button'
+  suggestionsClassName='custom-suggestions'
+  historyClassName='custom-history'
+  advancedSearchClassName='custom-advanced-search'
+/>
+```
+## Related Components
+- [`AutocompleteInput`](./autocomplete-input.mdx) - Autocomplete input with suggestions
+- [`TextInput`](./text-input.mdx) - Basic text input component
+- [`SimpleForm`](./simple-form.mdx) - Simple form with field rendering
+- [`ResourceList`](./resource-list.mdx) - Resource list with search functionality

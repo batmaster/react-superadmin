@@ -1,0 +1,448 @@
+---
+title: TextField Component
+description: Versatile text display component with formatting, truncation, and link detection capabilities
+---
+
+# TextField Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `TextField` component is a versatile text display component that supports different text formats, truncation, link detection, and accessibility features. It's designed to handle various text display needs in admin interfaces.
+
+## Overview
+
+The TextField component provides:
+
+- **Multiple Text Formats**: Plain text, rich text, and markdown support
+- **Smart Truncation**: Automatic text truncation with ellipsis and tooltips
+- **Link Detection**: Automatic detection and rendering of URLs
+- **Accessibility**: ARIA attributes and keyboard navigation support
+- **Custom Rendering**: Flexible custom rendering capabilities
+- **Whitespace Control**: Options to preserve line breaks and whitespace
+
+## Props
+
+| Prop                    | Type                          | Default     | Description                                                    |
+| ----------------------- | ----------------------------- | ----------- | -------------------------------------------------------------- |
+| `children`              | `ReactNode`                   | `undefined` | Text content to display                                        |
+| `value`                 | `string`                      | `undefined` | Text value to display (alternative to children)                |
+| `format`                | `TextFormat`                  | `"plain"`   | Format of the text content (`"plain"`, `"rich"`, `"markdown"`) |
+| `maxLength`             | `number`                      | `undefined` | Maximum number of characters before truncating                 |
+| `showEllipsis`          | `boolean`                     | `true`      | Whether to show ellipsis when text is truncated                |
+| `detectLinks`           | `boolean`                     | `false`     | Whether to detect and render links automatically               |
+| `openLinksInNewTab`     | `boolean`                     | `true`      | Whether to open links in a new tab                             |
+| `className`             | `string`                      | `undefined` | CSS class names for the container                              |
+| `textClassName`         | `string`                      | `undefined` | CSS class names for the text content                           |
+| `required`              | `boolean`                     | `false`     | Whether the field is required (for accessibility)              |
+| `render`                | `(text: string) => ReactNode` | `undefined` | Custom renderer for the text content                           |
+| `preserveLineBreaks`    | `boolean`                     | `false`     | Whether to preserve line breaks                                |
+| `preserveWhitespace`    | `boolean`                     | `false`     | Whether to preserve whitespace                                 |
+| `linkClassName`         | `string`                      | `undefined` | Custom styling for links                                       |
+| `showTooltipOnTruncate` | `boolean`                     | `false`     | Whether to show a tooltip on truncated text                    |
+| `tooltipContent`        | `string`                      | `undefined` | Custom tooltip content                                         |
+
+## Basic Usage
+
+```tsx
+import { TextField } from '@react-superadmin/core';
+// Basic text display
+<TextField value="This is some text content" />
+// With children
+<TextField>This is some text content</TextField>
+// With truncation
+<TextField
+  value="Very long text that will be truncated"
+  maxLength={20}
+  showEllipsis
+/>
+```
+
+## Live Examples
+
+### Basic Text Display
+
+<LiveProvider code={`
+import React from 'react';
+import { TextField } from '@react-superadmin/core';
+function BasicTextFieldExample() {
+return (
+<div className="space-y-4">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Basic Text</h3>
+<TextField value="This is a simple text field with basic content." />
+</div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">With Children</h3>
+  <TextField>This text is passed as children instead of value prop.</TextField>
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Required Field</h3>
+  <TextField value="This field is marked as required" required />
+  </div>
+);
+}
+render(<BasicTextFieldExample />);
+`}>
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+### Text Truncation
+<LiveProvider code={`
+import React from 'react';
+import { TextField } from '@react-superadmin/core';
+function TruncationExample() {
+const longText = "This is a very long text that demonstrates the truncation feature. It will be cut off at a certain length and show ellipsis to indicate there's more content.";
+return (
+<div className="space-y-4">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Original Text</h3>
+<TextField value={longText} />
+</div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Truncated (50 chars)</h3>
+  <TextField value={longText} maxLength={50} />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Truncated (30 chars, no ellipsis)</h3>
+  <TextField value={longText} maxLength={30} showEllipsis={false} />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">With Tooltip on Truncate</h3>
+  <TextField
+  value={longText}
+  maxLength={40}
+  showTooltipOnTruncate
+  tooltipContent="Full text: This is a very long text that demonstrates the truncation feature."
+  />
+  </div>
+);
+}
+render(<TruncationExample />);
+`}>
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+### Link Detection
+<LiveProvider code={`
+import React from 'react';
+import { TextField } from '@react-superadmin/core';
+function LinkDetectionExample() {
+const textWithLinks = "Visit our website at https://example.com for more information. You can also check out our documentation at https://docs.example.com.";
+return (
+<div className="space-y-4">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Without Link Detection</h3>
+<TextField value={textWithLinks} />
+</div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">With Link Detection</h3>
+  <TextField
+  value={textWithLinks}
+  detectLinks
+  openLinksInNewTab
+  />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Custom Link Styling</h3>
+  <TextField
+  value={textWithLinks}
+  detectLinks
+  linkClassName="text-green-600 hover:text-green-800 font-medium"
+  />
+  </div>
+);
+}
+render(<LinkDetectionExample />);
+`}>
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+### Text Formats
+<LiveProvider code={`
+import React from 'react';
+import { TextField } from '@react-superadmin/core';
+function TextFormatsExample() {
+const plainText = "This is plain text content.";
+const markdownText = "# Heading 1\n## Heading 2\n### Heading 3\n\nThis is a paragraph with **bold** and _italic_ text.\n\n- List item 1\n- List item 2\n- List item 3\n\n1. Numbered item 1\n2. Numbered item 2\n3. Numbered item 3";
+const richText = "<h1>Rich Text Heading</h1><p>This is <strong>bold</strong> and <em>italic</em> text with a <a href='https://example.com'>link</a>.</p><ul><li>List item 1</li><li>List item 2</li></ul>";
+return (
+<div className="space-y-6">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Plain Text (Default)</h3>
+<TextField value={plainText} format="plain" />
+</div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Markdown Format</h3>
+  <TextField value={markdownText} format="markdown" />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Rich Text Format</h3>
+  <TextField value={richText} format="rich" />
+  </div>
+);
+}
+render(<TextFormatsExample />);
+`}>
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+### Custom Rendering
+<LiveProvider code={`
+import React from 'react';
+import { TextField } from '@react-superadmin/core';
+function CustomRenderingExample() {
+const text = "This text will be rendered with custom styling.";
+return (
+<div className="space-y-4">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Default Rendering</h3>
+<TextField value={text} />
+</div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Custom Renderer (Bold)</h3>
+  <TextField
+  value={text}
+  render={(text) => <span className="font-bold text-blue-600">{text}</span>}
+  />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Custom Renderer (Highlighted)</h3>
+  <TextField
+  value={text}
+  render={(text) => (
+  <span className="bg-yellow-200 px-2 py-1 rounded">
+  {text}
+  </span>
+  )}
+  />
+  </div>
+  <div>
+  <h3 className="text-sm font-medium text-gray-700 mb-2">Custom Renderer (Code Style)</h3>
+  <TextField
+  value={text}
+  render={(text) => (
+  <code className="bg-gray-100 px-2 py-1 rounded font-mono text-sm">
+  {text}
+  </code>
+  )}
+  />
+  </div>
+);
+}
+render(<CustomRenderingExample />);
+`}>
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+## Text Formats
+### Plain Text
+The default format that displays text as-is:
+```tsx
+<TextField value='Simple text content' format='plain' />
+```
+### Markdown
+Supports basic markdown syntax:
+```tsx
+const markdownText = `
+# Main Heading
+## Sub Heading
+This is a paragraph with **bold** and *italic* text.
+- List item 1
+- List item 2
+1. Numbered item 1
+2. Numbered item 2
+`;
+<TextField value={markdownText} format='markdown' />;
+```
+**Supported Markdown Features:**
+- Headings (`#`, `##`, `###`)
+- Lists (`-`, `1.`)
+- Line breaks
+- Link detection (when `detectLinks` is enabled)
+### Rich Text
+Displays HTML content:
+```tsx
+const richText = '<h1>Title</h1><p>This is <strong>bold</strong> text.</p>';
+<TextField value={richText} format='rich' />;
+```
+## Advanced Features
+### Truncation with Tooltips
+Show a tooltip when text is truncated:
+```tsx
+<TextField
+  value='Very long text that will be truncated and show a tooltip on hover'
+  maxLength={30}
+  showTooltipOnTruncate
+  tooltipContent='Custom tooltip content'
+/>
+```
+### Preserving Whitespace
+Control how whitespace is handled:
+```tsx
+// Preserve line breaks
+<TextField
+  value="Line 1\nLine 2\nLine 3"
+  preserveLineBreaks
+/>
+// Preserve all whitespace
+<TextField
+  value="   Indented text   "
+  preserveWhitespace
+/>
+```
+### Custom Link Styling
+Style detected links:
+```tsx
+<TextField
+  value='Visit https://example.com for more info'
+  detectLinks
+  linkClassName='text-green-600 hover:text-green-800 font-medium'
+/>
+```
+## Accessibility
+The TextField component includes several accessibility features:
+- **ARIA Attributes**: `aria-required` when the `required` prop is true
+- **Semantic HTML**: Proper heading tags for markdown content
+- **Keyboard Navigation**: Links are keyboard accessible
+- **Screen Reader Support**: Proper text content for screen readers
+```tsx
+<TextField value='Important information' required className='text-red-600' />
+```
+## Best Practices
+### 1. Content Length
+Consider the context when setting `maxLength`:
+```tsx
+// For table cells
+<TextField value={description} maxLength={50} />
+// For detailed views
+<TextField value={description} maxLength={200} />
+// For full content
+<TextField value={description} />
+```
+### 2. Link Detection
+Use link detection appropriately:
+```tsx
+// For user-generated content
+<TextField value={userComment} detectLinks />
+// For controlled content
+<TextField value={controlledText} />
+```
+### 3. Custom Rendering
+Use custom renderers for specific use cases:
+```tsx
+// Highlight search terms
+<TextField
+  value={text}
+  render={(text) => {
+    const highlighted = text.replace(
+  new RegExp(searchTerm, 'gi'),
+  match => `<mark>${match}</mark>`
+    );
+    return <span dangerouslySetInnerHTML={{ __html: highlighted }} />;
+  }}
+/>
+// Format numbers
+<TextField
+  value={number.toString()}
+  render={(text) => (
+    <span className="font-mono">
+  {parseFloat(text).toLocaleString()}
+    </span>
+  )}
+/>
+```
+### 4. Performance
+For large text content, consider performance implications:
+```tsx
+// For large markdown content
+<TextField
+  value={largeMarkdownContent}
+  format='markdown'
+  maxLength={1000} // Limit processing
+/>;
+// For dynamic content, use memoization
+const MemoizedTextField = React.memo(TextField);
+```
+## Integration Examples
+### In Data Tables
+```tsx
+function UserTable() {
+  return (
+    <table>
+  <thead>
+  <tr>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Bio</th>
+  </tr>
+  </thead>
+  <tbody>
+  {users.map(user => (
+  <tr key={user.id}>
+  <td>{user.name}</td>
+  <td>{user.email}</td>
+  <td>
+  <TextField
+  value={user.bio}
+  maxLength={50}
+  showTooltipOnTruncate
+  />
+  </td>
+  </tr>
+  ))}
+  </tbody>
+    </table>
+  );
+}
+```
+### In Forms
+```tsx
+function UserProfile({ user }) {
+  return (
+    <div className='space-y-4'>
+  <div>
+  <label>Name</label>
+  <TextField value={user.name} />
+  </div>
+  <div>
+  <label>Bio</label>
+  <TextField value={user.bio} format='markdown' detectLinks />
+  </div>
+  <div>
+  <label>Website</label>
+  <TextField value={user.website} detectLinks openLinksInNewTab />
+  </div>
+  );
+}
+```
+### In Cards
+```tsx
+function ProductCard({ product }) {
+  return (
+    <div className='card'>
+  <h3>{product.name}</h3>
+  <TextField value={product.description} maxLength={100} showEllipsis />
+  <TextField value={product.features} format='markdown' maxLength={200} />
+    </div>
+  );
+}
+```
+## Troubleshooting
+### Common Issues
+1. **Text not truncating**: Ensure `maxLength` is set and text is longer than the limit
+2. **Links not detected**: Check that `detectLinks` is true and text contains valid URLs
+3. **Markdown not rendering**: Verify `format="markdown"` is set and text contains valid markdown
+4. **Tooltip not showing**: Ensure `showTooltipOnTruncate` is true and text is actually truncated
+### Performance Considerations
+- **Large content**: Consider using `maxLength` to limit processing
+- **Frequent updates**: Use `React.memo` for components that re-render frequently
+- **Markdown processing**: For complex markdown, consider using a dedicated library
+## Related Components
+- [`ReferenceField`](./reference-field.mdx) - Display referenced data
+- [`NumberField`](./number-field.mdx) - Display numeric data (Coming Soon)
+- [`DateField`](./date-field.mdx) - Display date/time data (Coming Soon)
+- [`BooleanField`](./boolean-field.mdx) - Display boolean values (Coming Soon)

@@ -13,7 +13,7 @@ React SuperAdmin is a **CRUD admin framework** that helps you build complete
 admin webapps quickly. It provides pre-built admin interfaces, data management,
 and CRUD operations - not just UI components.
 
-## 🎯 **What You Get**
+##  **What You Get**
 
 - **Complete Admin Interface**: Pre-built layouts, navigation, and dashboards
 - **CRUD Operations**: Create, Read, Update, Delete for any data model
@@ -22,7 +22,7 @@ and CRUD operations - not just UI components.
   CRUD
 - **Admin Components**: Tables, forms, filters, pagination - all pre-built
 
-## 📦 **Installation**
+##  **Installation**
 
 ### **1. Install the Framework**
 
@@ -72,7 +72,7 @@ module.exports = {
 @tailwind utilities;
 ```
 
-## 🚀 **Quick Start - Build Your First Admin**
+##  **Quick Start - Build Your First Admin**
 
 ### **1. Define Your Resources**
 
@@ -120,14 +120,14 @@ export default App;
 
 ### **3. That's It! You Now Have:**
 
-✅ **Complete User Management Interface**  
-✅ **List View** with search, filters, pagination  
-✅ **Create/Edit Forms** with validation  
-✅ **Delete Operations** with confirmation  
-✅ **Responsive Admin Layout**  
-✅ **Navigation and Breadcrumbs**
+ **Complete User Management Interface**  
+ **List View** with search, filters, pagination  
+ **Create/Edit Forms** with validation  
+ **Delete Operations** with confirmation  
+ **Responsive Admin Layout**  
+ **Navigation and Breadcrumbs**
 
-## 🔧 **Data Provider Setup**
+##  **Data Provider Setup**
 
 ### **Mock Data (Development)**
 
@@ -171,7 +171,7 @@ const customDataProvider: DataProvider = {
 };
 ```
 
-## 📊 **Adding More Resources**
+##  **Adding More Resources**
 
 ```tsx
 // src/resources/products.ts
@@ -194,7 +194,7 @@ const adminConfig = createAdmin({
 });
 ```
 
-## 🎨 **Customizing the Admin Interface**
+##  **Customizing the Admin Interface**
 
 ### **Custom Layout**
 
@@ -230,7 +230,7 @@ export const usersResource = createResource({
 });
 ```
 
-## 🚨 **Common Issues**
+##  **Common Issues**
 
 ### **Admin Not Rendering**
 
@@ -255,14 +255,14 @@ config.
 
 **Solution**: Verify Tailwind CSS is properly configured and imported.
 
-## 📚 **Next Steps**
+##  **Next Steps**
 
 1. **Build Your First Resource**: Start with a simple resource like Users
 2. **Connect Real Data**: Set up API data provider
 3. **Customize Fields**: Add custom field types for your needs
 4. **Extend Admin**: Add custom layouts, components, and logic
 
-## 🎯 **Remember**
+##  **Remember**
 
 This is **NOT** a UI component library. It's a **complete admin framework** that
 gives you:

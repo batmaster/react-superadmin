@@ -328,13 +328,13 @@ test.describe('Admin Panel', () => {
 ### 1. Test Behavior, Not Implementation
 
 ```tsx
-// ❌ Bad: Testing implementation details
+//  Bad: Testing implementation details
 test('sets internal state correctly', () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current._internalState).toBe(0);
 });
 
-// ✅ Good: Testing behavior
+//  Good: Testing behavior
 test('increments counter when increment is called', () => {
   const { result } = renderHook(() => useCounter());
   act(() => result.current.increment());
@@ -345,12 +345,12 @@ test('increments counter when increment is called', () => {
 ### 2. Use Meaningful Test Descriptions
 
 ```tsx
-// ❌ Bad: Vague descriptions
+//  Bad: Vague descriptions
 test('works correctly', () => {
   // test implementation
 });
 
-// ✅ Good: Clear descriptions
+//  Good: Clear descriptions
 test('displays error message when API call fails', () => {
   // test implementation
 });

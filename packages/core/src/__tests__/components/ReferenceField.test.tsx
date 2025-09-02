@@ -10,7 +10,6 @@ const mockDataProvider = {
 
 // Mock data
 const mockUser = { id: "123", name: "John Doe", email: "john@example.com" };
-const mockPost = { id: "456", title: "Sample Post", content: "Post content" };
 const mockUsers = [
   { id: "123", name: "John Doe" },
   { id: "456", name: "Jane Smith" },
@@ -341,7 +340,7 @@ describe("ReferenceField Component", () => {
     it("uses custom renderer when provided", async () => {
       mockDataProvider.getOne.mockResolvedValue(mockUser);
 
-      const customRender = (data: any) => (
+      const customRender = (data: unknown) => (
         <span data-testid="custom-render" className="custom-user">
           {data.name.toUpperCase()}
         </span>
@@ -367,7 +366,7 @@ describe("ReferenceField Component", () => {
     it("uses custom renderer for multiple references", async () => {
       mockDataProvider.getMany.mockResolvedValue(mockUsers);
 
-      const customRender = (data: any[]) => (
+      const customRender = (data: unknown[]) => (
         <div data-testid="custom-multiple-render">
           {data.map((user) => (
             <span key={user.id} className="user-tag">
@@ -419,7 +418,7 @@ describe("ReferenceField Component", () => {
     it("uses custom link renderer when provided", async () => {
       mockDataProvider.getOne.mockResolvedValue(mockUser);
 
-      const customLinkRenderer = (id: string | number, data: any) => (
+      const customLinkRenderer = (id: string | number, data: unknown) => (
         <a
           href={`/custom/${id}`}
           className="custom-link"
@@ -669,7 +668,11 @@ describe("ReferenceField Component", () => {
   describe("Edge Cases", () => {
     it("handles null and undefined values gracefully", () => {
       const { unmount } = render(
-        <ReferenceField value={null as any} reference="users" source="name" />,
+        <ReferenceField
+          value={null as unknown as string}
+          reference="users"
+          source="name"
+        />,
       );
 
       expect(screen.getByTestId("reference-field-empty")).toBeInTheDocument();
@@ -678,7 +681,7 @@ describe("ReferenceField Component", () => {
 
       render(
         <ReferenceField
-          value={undefined as any}
+          value={undefined as unknown as string}
           reference="users"
           source="name"
         />,

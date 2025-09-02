@@ -12,7 +12,7 @@ React SuperAdmin, organized by category and functionality. The reference is
 based on [React Admin](https://marmelab.com/react-admin/documentation.html) and
 adapted for our framework's architecture.
 
-## 🗄️ Data Management Hooks
+## ️ Data Management Hooks
 
 ### Core Data Hooks
 
@@ -39,7 +39,7 @@ adapted for our framework's architecture.
 - **`useGetLocks`** - Get record lock information
 - **`useGetLocksLive`** - Real-time lock information
 
-## 🔐 Authentication & Security Hooks
+##  Authentication & Security Hooks
 
 ### Authentication Hooks
 
@@ -56,7 +56,7 @@ adapted for our framework's architecture.
 - **`usePermissions`** - Get user permissions and roles
 - **`useRefreshAuth`** - Refresh authentication tokens
 
-## 📝 Form & Input Hooks
+##  Form & Input Hooks
 
 ### Form Management Hooks
 
@@ -83,7 +83,7 @@ adapted for our framework's architecture.
 - **`useRegisterMutationMiddleware`** - Register form middleware
 - **`useUnique`** - Ensure unique field values
 
-## 📊 List & Table Hooks
+##  List & Table Hooks
 
 ### List Management Hooks
 
@@ -125,7 +125,7 @@ adapted for our framework's architecture.
 - **`useResourceDefinition`** - Resource configuration
 - **`useResourcePermissions`** - Resource-level permissions
 
-## 🎨 UI & Theming Hooks
+##  UI & Theming Hooks
 
 ### Theme Hooks
 
@@ -143,7 +143,7 @@ adapted for our framework's architecture.
 - **`useFooter`** - Footer configuration
 - **`useResponsive`** - Responsive behavior
 
-## 🔔 Notification & Feedback Hooks
+##  Notification & Feedback Hooks
 
 ### Notification Hooks
 
@@ -159,7 +159,7 @@ adapted for our framework's architecture.
 - **`useLoading`** - Loading state management
 - **`useProgress`** - Progress tracking
 
-## 🔄 Real-time & Live Hooks
+##  Real-time & Live Hooks
 
 ### Live Update Hooks
 
@@ -176,7 +176,7 @@ adapted for our framework's architecture.
 - **`useGetLock`** - Get record lock status
 - **`useGetLockLive`** - Real-time lock status
 
-## 📱 Preferences & Storage Hooks
+##  Preferences & Storage Hooks
 
 ### Preference Hooks
 
@@ -209,7 +209,7 @@ adapted for our framework's architecture.
 - **`useTestEnvironment`** - Test environment setup
 - **`useTestHelpers`** - Test helper functions
 
-## 🌐 Internationalization Hooks
+##  Internationalization Hooks
 
 ### i18n Hooks
 
@@ -225,7 +225,7 @@ adapted for our framework's architecture.
 - **`useTextDirection`** - Text direction detection
 - **`useLayoutDirection`** - Layout direction
 
-## 🔧 Utility & Helper Hooks
+##  Utility & Helper Hooks
 
 ### Context Hooks
 
@@ -249,7 +249,7 @@ adapted for our framework's architecture.
 - **`useUpdateEffect`** - Update-only effect
 - **`useDeepCompareEffect`** - Deep comparison effect
 
-## 🎯 Implementation Priority
+##  Implementation Priority
 
 ### Phase 1: Core Hooks (High Priority)
 
@@ -272,7 +272,7 @@ adapted for our framework's architecture.
 3. **Testing Hooks** - Quality assurance
 4. **Utility Hooks** - Helper functions
 
-## 🔧 Hook Development Guidelines
+##  Hook Development Guidelines
 
 ### Design Principles
 
@@ -305,7 +305,7 @@ adapted for our framework's architecture.
 - **Caching** - Implement intelligent caching strategies
 - **Debouncing** - Debounce expensive operations
 
-## 📚 Usage Examples
+##  Usage Examples
 
 ### Basic Data Hook Usage
 
