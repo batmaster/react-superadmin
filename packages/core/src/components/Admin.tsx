@@ -88,7 +88,10 @@ export const Admin: React.FC<AdminProps> = ({
   // Wrap with i18n provider if provided
   const renderWithI18n = (content: ReactNode) => {
     if (I18nProvider) {
-      return <I18nProvider>{content}</I18nProvider>;
+      const I18nProviderComponent = I18nProvider as React.ComponentType<{
+        children: ReactNode;
+      }>;
+      return <I18nProviderComponent>{content}</I18nProviderComponent>;
     }
     return content;
   };
