@@ -96,6 +96,7 @@ const sidebars: SidebarsConfig = {
         'components/sidebar',
         'components/footer',
         'components/admin-layout',
+        'components/breadcrumb',
       ],
     },
     {

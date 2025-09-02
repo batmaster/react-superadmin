@@ -1,0 +1,157 @@
+---
+id: breadcrumb
+title: Breadcrumb Component
+sidebar_label: Breadcrumb
+description: Modern, accessible breadcrumb navigation component
+keywords: [breadcrumb, navigation, breadcrumbs, path]
+---
+
+# Breadcrumb Component
+
+**Last Built**: September 2, 2025 at 4:19 PM
+
+The `<Breadcrumb>` component provides modern, accessible breadcrumb navigation that helps users understand their current location within your application hierarchy.
+
+## Overview
+
+Our breadcrumb component is designed to be:
+- **Accessible** - Proper ARIA labels and semantic HTML
+- **Responsive** - Adapts to different screen sizes
+- **Customizable** - Multiple variants and styling options
+- **Smart** - Automatic truncation for long paths
+- **Interactive** - Hover effects and focus states
+
+## Basic Usage
+
+```jsx live
+import { Breadcrumb } from '@react-superadmin/web';
+
+<Breadcrumb
+  items={[
+    { label: 'Home', href: '/' },
+    { label: 'Components', href: '/components' },
+    { label: 'Modal', active: true }
+  ]}
+  showHomeIcon={true}
+/>
+```
+
+## Advanced Usage
+
+### With Icons and Custom Separators
+
+```jsx live
+import { Breadcrumb } from '@react-superadmin/web';
+import { Home, Folder, File } from 'lucide-react';
+
+<Breadcrumb
+  items={[
+    { label: 'Home', href: '/', icon: <Home /> },
+    { label: 'Documents', href: '/documents', icon: <Folder /> },
+    { label: 'Report.pdf', active: true, icon: <File /> }
+  ]}
+  separator={<span className="text-gray-400">/</span>}
+  variant="primary"
+/>
+```
+
+### Truncated Breadcrumbs
+
+```jsx live
+import { Breadcrumb } from '@react-superadmin/web';
+
+<Breadcrumb
+  items={[
+    { label: 'Home', href: '/' },
+    { label: 'Products', href: '/products' },
+    { label: 'Electronics', href: '/products/electronics' },
+    { label: 'Computers', href: '/products/electronics/computers' },
+    { label: 'Laptops', href: '/products/electronics/computers/laptops' },
+    { label: 'Gaming Laptops', href: '/products/electronics/computers/laptops/gaming' },
+    { label: 'Alienware', active: true }
+  ]}
+  maxItems={4}
+  showTooltips={true}
+  variant="secondary"
+/>
+```
+
+### Different Sizes and Variants
+
+```jsx live
+import { Breadcrumb } from '@react-superadmin/web';
+
+<div className="space-y-4">
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Settings', active: true }
+    ]}
+    size="sm"
+    variant="muted"
+  />
+  
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Settings', active: true }
+    ]}
+    size="md"
+    variant="primary"
+  />
+  
+  <Breadcrumb
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Settings', active: true }
+    ]}
+    size="lg"
+    variant="secondary"
+  />
+</div>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `BreadcrumbItem[]` | - | Array of breadcrumb items |
+| `separator` | `ReactNode` | `<ChevronRight />` | Separator between items |
+| `showHomeIcon` | `boolean` | `true` | Show home icon for first item |
+| `maxItems` | `number` | - | Maximum items to show (truncates) |
+| `showTooltips` | `boolean` | `true` | Show tooltips for truncated items |
+| `className` | `string` | - | Additional CSS classes |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
+| `variant` | `'default' \| 'primary' \| 'secondary' \| 'muted'` | `'default'` | Color variant |
+
+## BreadcrumbItem Interface
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `label` | `string` | Text to display |
+| `href` | `string` | URL to navigate to (optional) |
+| `active` | `boolean` | Whether this is the current page |
+| `icon` | `ReactNode` | Icon to display before label |
+| `className` | `string` | Additional CSS classes |
+
+## Accessibility Features
+
+- **Semantic HTML** - Uses `<nav>` and `<ol>` elements
+- **ARIA Labels** - Proper `aria-label` and `aria-current` attributes
+- **Keyboard Navigation** - Focus management and keyboard support
+- **Screen Reader Support** - Clear navigation context
+- **High Contrast** - Works with high contrast themes
+
+## Best Practices
+
+1. **Keep it Simple** - Don't show more than 5-7 levels
+2. **Use Clear Labels** - Make each level descriptive
+3. **Provide Context** - Help users understand where they are
+4. **Make it Clickable** - All items except the current page should be links
+5. **Test Accessibility** - Ensure screen readers can navigate properly
+
+## Related Components
+
+- [Header](/components/header) - For top navigation
+- [Sidebar](/components/sidebar) - For side navigation
+- [AdminLayout](/components/admin-layout) - For complete layout structure

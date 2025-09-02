@@ -375,7 +375,7 @@ adapted for our framework's architecture.
 | Component            | Planning | Planned | Implemented | Test | Docs | Description              |
 | -------------------- | -------- | ------- | ----------- | ---- | ---- | ------------------------ |
 | **Title**            |        |       | TODO        | TODO | TODO | Page title component     |
-| **Breadcrumb**       |        |       | TODO        | TODO | TODO | Navigation path display  |
+| **Breadcrumb**       |        |       | Done        | TODO | Done | Navigation path display  |
 | **Search**           |        |       | TODO        | TODO | TODO | Global search component  |
 | **SearchWithResult** |        |       | TODO        | TODO | TODO | Search with live results |
 
