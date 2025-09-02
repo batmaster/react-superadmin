@@ -10,11 +10,11 @@ export interface AdminProps {
   /** Custom theme provider */
   themeProvider?: React.ComponentType<{ children: ReactNode }>;
   /** Custom data provider */
-  dataProvider?: any;
+  dataProvider?: unknown;
   /** Custom auth provider */
-  authProvider?: any;
+  authProvider?: unknown;
   /** Custom i18n provider */
-  i18nProvider?: any;
+  i18nProvider?: unknown;
   /** Children components */
   children: ReactNode;
   /** Additional CSS classes */

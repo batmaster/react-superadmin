@@ -112,7 +112,7 @@ export interface ReferenceFieldProps {
  * />
  */
 export const ReferenceField: React.FC<ReferenceFieldProps> = ({
-  children,
+  children: _children,
   value,
   reference,
   source = "id",
@@ -142,11 +142,11 @@ export const ReferenceField: React.FC<ReferenceFieldProps> = ({
   const [error, setError] = useState<Error | null>(null);
 
   // Memoize derived values to prevent infinite re-renders
-  const { isMultiple, referenceIds, validIds } = useMemo(() => {
+  const { isMultiple, validIds } = useMemo(() => {
     const isMultiple = Array.isArray(value);
     const referenceIds = isMultiple ? value : [value];
     const validIds = referenceIds.filter((id) => id != null && id !== "");
-    return { isMultiple, referenceIds, validIds };
+    return { isMultiple, validIds };
   }, [value]);
 
   // Fetch reference data

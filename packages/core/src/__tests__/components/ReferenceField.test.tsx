@@ -340,7 +340,7 @@ describe("ReferenceField Component", () => {
     it("uses custom renderer when provided", async () => {
       mockDataProvider.getOne.mockResolvedValue(mockUser);
 
-      const customRender = (data: any) => (
+      const customRender = (data: unknown) => (
         <span data-testid="custom-render" className="custom-user">
           {data.name.toUpperCase()}
         </span>
@@ -366,7 +366,7 @@ describe("ReferenceField Component", () => {
     it("uses custom renderer for multiple references", async () => {
       mockDataProvider.getMany.mockResolvedValue(mockUsers);
 
-      const customRender = (data: any[]) => (
+      const customRender = (data: unknown[]) => (
         <div data-testid="custom-multiple-render">
           {data.map((user) => (
             <span key={user.id} className="user-tag">
@@ -418,7 +418,7 @@ describe("ReferenceField Component", () => {
     it("uses custom link renderer when provided", async () => {
       mockDataProvider.getOne.mockResolvedValue(mockUser);
 
-      const customLinkRenderer = (id: string | number, data: any) => (
+      const customLinkRenderer = (id: string | number, data: unknown) => (
         <a
           href={`/custom/${id}`}
           className="custom-link"
