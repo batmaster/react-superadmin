@@ -4,3 +4,5 @@ export { Label } from './Label';
 export { ArrayInputExample } from './ArrayInputExample';
 export { ArrayInputWithValidation } from './ArrayInputWithValidation';
 export { ArrayInputComplex } from './ArrayInputComplex';
+export { AutocompleteInput } from './AutocompleteInput';
+export { SelectInput } from './SelectInput';
