@@ -2,16 +2,23 @@
 title: Admin Component
 description: Main application wrapper that provides core context and configuration
 ---
-# Admin Component
- ** Last Built**: September 2, 2025 at 4:19 PM
-The `<Admin>` component is the main application wrapper for React SuperAdmin applications. It provides the core context, configuration, and provider management for the entire admin interface.
+
+# &lt;Admin&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
+The `&lt;Admin&gt;` component is the main application wrapper for React SuperAdmin applications. It provides the core context, configuration, and provider management for the entire admin interface.
+
 ## Overview
+
 The Admin component serves as the root wrapper that:
+
 - Provides the SuperAdmin context to all child components
 - Manages data providers, authentication, and internationalization
 - Handles theme and layout configuration
 - Merges custom providers with default configurations
+
 ## Basic Usage
+
 ```tsx
 import { Admin } from '@react-superadmin/core';
 import { createAdmin, createResource } from '@react-superadmin/core';
@@ -19,13 +26,13 @@ const config = createAdmin({
   title: 'My Admin Panel',
   resources: [
     createResource({
-  name: 'users',
-  label: 'Users',
-  fields: [
-  { name: 'id', label: 'ID', type: 'text' },
-  { name: 'name', label: 'Name', type: 'text' },
-  { name: 'email', label: 'Email', type: 'email' },
-  ],
+      name: 'users',
+      label: 'Users',
+      fields: [
+        { name: 'id', label: 'ID', type: 'text' },
+        { name: 'name', label: 'Name', type: 'text' },
+        { name: 'email', label: 'Email', type: 'email' },
+      ],
     }),
   ],
   theme: { primaryColor: '#3b82f6' },
@@ -34,19 +41,24 @@ function App() {
   return <Admin config={config}>{/* Your admin interface components */}</Admin>;
 }
 ```
+
 ## Props
-| Prop  | Type  | Required | Default | Description  |
-| ---------------------------------------- | ---------------------------------------------- |
-| `config`  | `AdminConfig`  |   | -  | Configuration object for the admin application |
-| `layout`  | `ComponentType<{ children: ReactNode }>` |   | -  | Custom layout component to override default    |
-| `themeProvider` | `ComponentType<{ children: ReactNode }>` |   | -  | Custom theme provider  |
-| `dataProvider`  | `any`  |   | -  | Custom data provider  |
-| `authProvider`  | `any`  |   | -  | Custom authentication provider  |
-| `i18nProvider`  | `any`  |   | -  | Custom internationalization provider  |
-| `children`  | `ReactNode`  |   | -  | Child components to render  |
-| `className`  | `string`  |   | -  | Additional CSS classes  |
+
+| Prop            | Type                                     | Required | Default | Description                                    |
+| --------------- | ---------------------------------------- | -------- | ------- | ---------------------------------------------- |
+| `config`        | `AdminConfig`                            |          | -       | Configuration object for the admin application |
+| `layout`        | `ComponentType<{ children: ReactNode }>` |          | -       | Custom layout component to override default    |
+| `themeProvider` | `ComponentType<{ children: ReactNode }>` |          | -       | Custom theme provider                          |
+| `dataProvider`  | `any`                                    |          | -       | Custom data provider                           |
+| `authProvider`  | `any`                                    |          | -       | Custom authentication provider                 |
+| `i18nProvider`  | `any`                                    |          | -       | Custom internationalization provider           |
+| `children`      | `ReactNode`                              |          | -       | Child components to render                     |
+| `className`     | `string`                                 |          | -       | Additional CSS classes                         |
+
 ## Configuration
+
 The `AdminConfig` object supports:
+
 ```tsx
 interface AdminConfig {
   title: string; // Application title
@@ -59,8 +71,11 @@ interface AdminConfig {
   i18nProvider?: any; // i18n provider
 }
 ```
+
 ## Provider Management
+
 The Admin component automatically merges custom providers with configuration:
+
 ```tsx
 <Admin
   config={config}
@@ -71,20 +86,28 @@ The Admin component automatically merges custom providers with configuration:
   {/* Providers are merged with config */}
 </Admin>
 ```
+
 ## Error Handling
+
 The component includes comprehensive error handling:
+
 - Validates required configuration
 - Checks provider compatibility
 - Provides meaningful error messages
 - Graceful fallbacks for missing providers
+
 ## Examples
+
 ### Minimal Configuration
+
 ```tsx
 <Admin config={minimalConfig}>
   <div>Simple admin interface</div>
 </Admin>
 ```
+
 ### With Custom Providers
+
 ```tsx
 <Admin
   config={config}
@@ -92,25 +115,31 @@ The component includes comprehensive error handling:
   authProvider={jwtAuthProvider}
   themeProvider={DarkThemeProvider}
 >
-  <AdminLayout>
+  &lt;AdminLayout&gt;
     <Resource name='users' />
   </AdminLayout>
 </Admin>
 ```
+
 ### With Custom Layout
+
 ```tsx
 <Admin config={config} layout={CustomLayout}>
-  <CustomLayout>
+  &lt;CustomLayout&gt;
     <Resource name='products' />
   </CustomLayout>
 </Admin>
 ```
+
 ## Best Practices
+
 1. **Always provide a title** - Helps with accessibility and branding
 2. **Use resource definitions** - Define your data structure upfront
 3. **Customize providers** - Override defaults only when necessary
 4. **Handle errors gracefully** - Provide fallback UI for error states
 5. **Test configurations** - Ensure your config works in development
+
 ## Related Components
-- [`<Layout>`](./layout) - Basic layout structure
-- [`<Resource>`](../features/components-reference) - Resource definition
+
+- [`&lt;Layout&gt;`](./layout) - Basic layout structure
+- [`&lt;Resource&gt;`](../features/components-reference) - Resource definition

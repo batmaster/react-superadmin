@@ -1,95 +1,142 @@
 ---
 id: button
 title: Button Component
-sidebar_label: Button
+sidebar_label: <Button> (IMP)
 description: Versatile button component with multiple variants and states
 keywords: [button, component, ui, action, form]
 ---
-# Button Component
+
+# &lt;Button&gt; Component
+
 The Button component is a versatile, accessible button element that suppo
 rts multiple variants, sizes, and states for various use cases in your application. rts multiple variants, sizes, and states for various use cases in your application.
+
 ## Basic Usage
+
 ```jsx live
-<Button>Click me</Button>
+&lt;Button&gt;Click me</Button>
 ```
+
 **Code:**
+
 ```tsx
-<Button>Click me</Button>
+&lt;Button&gt;Click me</Button>
 ```
+
 ## Variants
+
 ### Primary (Default)
+
 ```jsx live
 <Button variant='primary'>Primary Button</Button>
 ```
+
 ### Secondary
+
 ```jsx live
 <Button variant='secondary'>Secondary Button</Button>
 ```
+
 ### Success
+
 ```jsx live
 <Button variant='success'>Success Button</Button>
 ```
+
 ### Warning
+
 ```jsx live
 <Button variant='warning'>Warning Button</Button>
 ```
+
 ### Danger
+
 ```jsx live
 <Button variant='danger'>Danger Button</Button>
 ```
+
 ### Ghost
+
 ```jsx live
 <Button variant='ghost'>Ghost Button</Button>
 ```
+
 ## Sizes
+
 ### Extra Small
+
 ```jsx live
 <Button size='xs'>Extra Small</Button>
 ```
+
 ### Small
+
 ```jsx live
 <Button size='sm'>Small</Button>
 ```
+
 ### Medium (Default)
+
 ```jsx live
 <Button size='md'>Medium</Button>
 ```
+
 ### Large
+
 ```jsx live
 <Button size='lg'>Large</Button>
 ```
+
 ### Extra Large
+
 ```jsx live
 <Button size='xl'>Extra Large</Button>
 ```
+
 ## States
+
 ### Loading State
+
 ```jsx live
 <Button loading>Loading...</Button>
 ```
+
 ### Disabled State
+
 ```jsx live
 <Button disabled>Disabled</Button>
 ```
+
 ## With Icons
+
 ### Left Icon
+
 ```jsx live
 <Button leftIcon=''>Launch</Button>
 ```
+
 ### Right Icon
+
 ```jsx live
 <Button rightIcon='→'>Continue</Button>
 ```
+
 ## Full Width
+
 ```jsx live
 <Button fullWidth>Full Width Button</Button>
 ```
+
 ## Rounded Variant
+
 ```tsx
 <Button rounded>Rounded Button</Button>
 ```
+
 ## Interactive Demo
+
 Try clicking the buttons below to see them in action:
+
 ```jsx live
 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
   <Button variant='primary' onClick={() => alert('Primary clicked!')}>
@@ -109,24 +156,30 @@ Try clicking the buttons below to see them in action:
   </Button>
 </div>
 ```
+
 ## API Reference
+
 ### Props
-| Prop  | Type  | Default   | Description  |
-| ------------------------------------------------------------------------- | ---------------------------- |
-| children  | ReactNode  | -  | Button content  |
-| variant   | 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'ghost' | 'primary' | Button style variant  |
-| size  | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'  | 'md'  | Button size  |
-| loading   | boolean  | false  | Shows loading spinner  |
-| disabled  | boolean  | false  | Disables the button  |
-| leftIcon  | string  | -  | Icon to display on the left  |
-| rightIcon | string  | -  | Icon to display on the right |
-| fullWidth | boolean  | false  | Makes button full width  |
-| rounded   | boolean  | false  | Applies rounded corners  |
-| onClick   | (event: MouseEvent) => void  | -  | Click handler  |
-| type  | 'button' \| 'submit' \| 'reset'  | 'button'  | HTML button type  |
-| className | string  | -  | Additional CSS classes  |
+
+| Prop      | Type                                                                      | Default   | Description                  |
+| --------- | ------------------------------------------------------------------------- | --------- | ---------------------------- |
+| children  | ReactNode                                                                 | -         | Button content               |
+| variant   | 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'ghost' | 'primary' | Button style variant         |
+| size      | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'                                      | 'md'      | Button size                  |
+| loading   | boolean                                                                   | false     | Shows loading spinner        |
+| disabled  | boolean                                                                   | false     | Disables the button          |
+| leftIcon  | string                                                                    | -         | Icon to display on the left  |
+| rightIcon | string                                                                    | -         | Icon to display on the right |
+| fullWidth | boolean                                                                   | false     | Makes button full width      |
+| rounded   | boolean                                                                   | false     | Applies rounded corners      |
+| onClick   | (event: MouseEvent) => void                                               | -         | Click handler                |
+| type      | 'button' \| 'submit' \| 'reset'                                           | 'button'  | HTML button type             |
+| className | string                                                                    | -         | Additional CSS classes       |
+
 ## CSS Classes
+
 The Button component uses the following CSS classes:
+
 - `.btn` - Base button class
 - `.btn--{variant}` - Variant-specific classes (e.g., `.btn--primary`)
 - `.btn--{size}` - Size-specific classes (e.g., `.btn--lg`)
@@ -134,26 +187,33 @@ The Button component uses the following CSS classes:
 - `.btn--disabled` - Disabled state class
 - `.btn--full-width` - Full width class
 - `.btn--rounded` - Rounded variant class
+
 ## Accessibility
+
 - Proper ARIA labels and roles
 - Keyboard navigation support
 - Focus management
 - Screen reader compatibility
 - Loading state announcements
+
 ## Best Practices
+
 1. **Use semantic variants**: Choose variants that match the button's purpose
 2. **Provide clear labels**: Button text should clearly indicate the action
 3. **Handle loading states**: Show loading indicators for async operations
 4. **Consider button hierarchy**: Use primary variants for main actions
 5. **Test keyboard navigation**: Ensure all buttons are accessible via keyboard
+
 ## Implementation
+
 Ready to use the Button component in your project?
+
 1. **Install the package**: `pnpm add @react-superadmin/web`
 2. **Import and use**:
    ```tsx
    // Component is available in the live scope
    function MyComponent() {
-  return <Button variant='primary'>Get Started</Button>;
+     return <Button variant='primary'>Get Started</Button>;
    }
    ```
 3. **Customize**: Use the props and variants shown above to match your design system

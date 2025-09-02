@@ -2,10 +2,14 @@
 title: ReferenceManyInput
 description: A form input component for managing many-to-many relationships with external data sources
 ---
+
 # ReferenceManyInput
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+** Last Built**: September 2, 2025 at 4:19 PM
 A form input component for managing many-to-many relationships with external data sources. This component allows users to select multiple items from a reference resource and manages the junction table operations automatically.
+
 ## Features
+
 - **Many-to-Many Relationships**: Handles complex relationships between resources
 - **Junction Table Management**: Automatically manages the intermediate table
 - **Search and Filter**: Built-in search functionality for large datasets
@@ -13,9 +17,11 @@ A form input component for managing many-to-many relationships with external dat
 - **Loading States**: Shows loading indicators during data fetching
 - **Error Handling**: Displays error messages for failed operations
 - **Accessibility**: Full keyboard navigation and screen reader support
+
 ## Basic Usage
+
 ```tsx
-import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
+import { ReferenceManyInput } from '@site/src/docs/docs/components/ui/ReferenceManyInput';
 <ReferenceManyInput
   source='categories'
   reference='categories'
@@ -24,7 +30,9 @@ import { ReferenceManyInput } from '@site/src/components/ui/ReferenceManyInput';
   placeholder='Select categories...'
 />;
 ```
+
 ## Live Example
+
 <ReferenceManyInput
   source='categories'
   reference='categories'

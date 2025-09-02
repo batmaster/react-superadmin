@@ -1,15 +1,20 @@
 ---
 id: autocomplete-input
 title: AutocompleteInput Component
-sidebar_label: AutocompleteInput
+sidebar_label: <AutocompleteInput> (IMP)
 description: Searchable select input with async data fetching and filtering
 keywords: [autocomplete, search, select, input, async, filtering]
 ---
-# AutocompleteInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;AutocompleteInput&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 A powerful and accessible autocomplete input component with search functionality, keyboard navigation, and comprehensive validation support.
+
 ## Overview
+
 The `AutocompleteInput` component provides a modern, accessible autocomplete interface that supports:
+
 - Real-time search and filtering of options
 - Keyboard navigation (arrow keys, enter, escape)
 - Custom value support for free-text input
@@ -17,7 +22,9 @@ The `AutocompleteInput` component provides a modern, accessible autocomplete int
 - Accessibility features (ARIA, screen readers)
 - Flexible styling and theming
 - Multiple size and variant options
+
 ## Basic Usage
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -37,19 +44,21 @@ function BasicAutocompleteExample() {
   ];
   return (
     <div className='max-w-md space-y-4'>
-  <AutocompleteInput
-  label='Select Country'
-  value={selectedCountry}
-  onChange={setSelectedCountry}
-  options={countries}
-  placeholder='Type to search countries...'
-  helperText='Start typing to see matching countries'
-  />
+      <AutocompleteInput
+        label='Select Country'
+        value={selectedCountry}
+        onChange={setSelectedCountry}
+        options={countries}
+        placeholder='Type to search countries...'
+        helperText='Start typing to see matching countries'
+      />
     </div>
   );
 }
 ```
+
 ## With Search and Filtering
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -69,20 +78,22 @@ function SearchableAutocompleteExample() {
   ];
   return (
     <div className='max-w-md space-y-4'>
-  <AutocompleteInput
-  label='Search Products'
-  value={selectedProduct}
-  onChange={setSelectedProduct}
-  options={products}
-  placeholder='Type to search products...'
-  maxSuggestions={5}
-  helperText='Type to filter through available products'
-  />
+      <AutocompleteInput
+        label='Search Products'
+        value={selectedProduct}
+        onChange={setSelectedProduct}
+        options={products}
+        placeholder='Type to search products...'
+        maxSuggestions={5}
+        helperText='Type to filter through available products'
+      />
     </div>
   );
 }
 ```
+
 ## With Custom Values
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -95,20 +106,22 @@ function CustomValueAutocompleteExample() {
   ];
   return (
     <div className='max-w-md space-y-4'>
-  <AutocompleteInput
-  label='Custom Value Input'
-  value={selectedValue}
-  onChange={setSelectedValue}
-  options={predefinedOptions}
-  placeholder='Type to search or enter custom value...'
-  allowCustomValue={true}
-  helperText='You can select from predefined options or enter your own value'
-  />
+      <AutocompleteInput
+        label='Custom Value Input'
+        value={selectedValue}
+        onChange={setSelectedValue}
+        options={predefinedOptions}
+        placeholder='Type to search or enter custom value...'
+        allowCustomValue={true}
+        helperText='You can select from predefined options or enter your own value'
+      />
     </div>
   );
 }
 ```
+
 ## With Validation and Error States
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -143,7 +156,9 @@ function ValidationAutocompleteExample() {
   );
 }
 ```
+
 ## With Loading States
+
 ```tsx
 import React, { useState, useEffect } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -156,11 +171,11 @@ function LoadingAutocompleteExample() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
     setOptions([
-  { value: 'loaded1', label: 'Loaded Option 1' },
-  { value: 'loaded2', label: 'Loaded Option 2' },
-  { value: 'loaded3', label: 'Loaded Option 3' },
-  { value: 'loaded4', label: 'Loaded Option 4' },
-  { value: 'loaded5', label: 'Loaded Option 5' },
+      { value: 'loaded1', label: 'Loaded Option 1' },
+      { value: 'loaded2', label: 'Loaded Option 2' },
+      { value: 'loaded3', label: 'Loaded Option 3' },
+      { value: 'loaded4', label: 'Loaded Option 4' },
+      { value: 'loaded5', label: 'Loaded Option 5' },
     ]);
     setLoading(false);
   };
@@ -169,20 +184,22 @@ function LoadingAutocompleteExample() {
   }, []);
   return (
     <div className='max-w-md space-y-4'>
-  <AutocompleteInput
-  label='Loading Example'
-  value={selectedValue}
-  onChange={setSelectedValue}
-  options={options}
-  placeholder='Options are loading...'
-  loading={loading}
-  helperText='This demonstrates the loading state'
-  />
+      <AutocompleteInput
+        label='Loading Example'
+        value={selectedValue}
+        onChange={setSelectedValue}
+        options={options}
+        placeholder='Options are loading...'
+        loading={loading}
+        helperText='This demonstrates the loading state'
+      />
     </div>
   );
 }
 ```
+
 ## With Different Sizes and Variants
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -197,47 +214,49 @@ function StylingAutocompleteExample() {
   ];
   return (
     <div className='max-w-md space-y-6'>
-  <AutocompleteInput
-  label='Small Size'
-  value={selectedValue1}
-  onChange={setSelectedValue1}
-  options={options}
-  placeholder='Small input...'
-  size='sm'
-  helperText='Small size variant'
-  />
-  <AutocompleteInput
-  label='Medium Size (Default)'
-  value={selectedValue2}
-  onChange={setSelectedValue2}
-  options={options}
-  placeholder='Medium input...'
-  size='md'
-  helperText='Medium size variant (default)'
-  />
-  <AutocompleteInput
-  label='Large Size'
-  value={selectedValue3}
-  onChange={setSelectedValue3}
-  options={options}
-  placeholder='Large input...'
-  size='lg'
-  helperText='Large size variant'
-  />
-  <AutocompleteInput
-  label='Filled Variant'
-  value={selectedValue1}
-  onChange={setSelectedValue1}
-  options={options}
-  placeholder='Filled variant...'
-  variant='filled'
-  helperText='Filled variant with background color'
-  />
+      <AutocompleteInput
+        label='Small Size'
+        value={selectedValue1}
+        onChange={setSelectedValue1}
+        options={options}
+        placeholder='Small input...'
+        size='sm'
+        helperText='Small size variant'
+      />
+      <AutocompleteInput
+        label='Medium Size (Default)'
+        value={selectedValue2}
+        onChange={setSelectedValue2}
+        options={options}
+        placeholder='Medium input...'
+        size='md'
+        helperText='Medium size variant (default)'
+      />
+      <AutocompleteInput
+        label='Large Size'
+        value={selectedValue3}
+        onChange={setSelectedValue3}
+        options={options}
+        placeholder='Large input...'
+        size='lg'
+        helperText='Large size variant'
+      />
+      <AutocompleteInput
+        label='Filled Variant'
+        value={selectedValue1}
+        onChange={setSelectedValue1}
+        options={options}
+        placeholder='Filled variant...'
+        variant='filled'
+        helperText='Filled variant with background color'
+      />
     </div>
   );
 }
 ```
+
 ## With Disabled Options
+
 ```tsx
 import React, { useState } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -252,40 +271,45 @@ function DisabledOptionsAutocompleteExample() {
   ];
   return (
     <div className='max-w-md space-y-4'>
-  <AutocompleteInput
-  label='With Disabled Options'
-  value={selectedValue}
-  onChange={setSelectedValue}
-  options={options}
-  placeholder='Select an option...'
-  helperText='Some options are disabled and cannot be selected'
-  />
+      <AutocompleteInput
+        label='With Disabled Options'
+        value={selectedValue}
+        onChange={setSelectedValue}
+        options={options}
+        placeholder='Select an option...'
+        helperText='Some options are disabled and cannot be selected'
+      />
     </div>
   );
 }
 ```
+
 ## API Reference
+
 ### Props
-| Prop  | Type  | Default  | Description  |
-| ------------------------------------- |
-| `label`  | `string`  | -  | Label text displayed above the input  |
-| `value`  | `string \| number`  | -  | Current selected value  |
-| `onChange`  | `(value: string \| number) => void` | -  | Callback when value changes  |
-| `options`  | `AutocompleteOption[]`  | -  | Array of available options  |
-| `placeholder`  | `string`  | `"Select an option..."` | Placeholder text for the input  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `error`  | `string`  | -  | Error message to display  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `className`  | `string`  | -  | Additional CSS classes  |
-| `size`  | `"sm" \| "md" \| "lg"`  | `"md"`  | Size variant of the input  |
-| `variant`  | `"outline" \| "filled"`  | `"outline"`  | Visual variant of the input  |
-| `allowCustomValue`  | `boolean`  | `false`  | Allow custom values not in options    |
-| `maxSuggestions`    | `number`  | `10`  | Maximum number of suggestions to show |
-| `loading`  | `boolean`  | `false`  | Show loading state  |
-| `noOptionsMessage`  | `string`  | `"No options found"`    | Message when no options match  |
-| `searchPlaceholder` | `string`  | `"Search options..."`   | Placeholder for search input  |
+
+| Prop                | Type                                | Default                 | Description                           |
+| ------------------- | ----------------------------------- | ----------------------- | ------------------------------------- |
+| `label`             | `string`                            | -                       | Label text displayed above the input  |
+| `value`             | `string \| number`                  | -                       | Current selected value                |
+| `onChange`          | `(value: string \| number) => void` | -                       | Callback when value changes           |
+| `options`           | `AutocompleteOption[]`              | -                       | Array of available options            |
+| `placeholder`       | `string`                            | `"Select an option..."` | Placeholder text for the input        |
+| `disabled`          | `boolean`                           | `false`                 | Whether the input is disabled         |
+| `required`          | `boolean`                           | `false`                 | Whether the field is required         |
+| `error`             | `string`                            | -                       | Error message to display              |
+| `helperText`        | `string`                            | -                       | Helper text below the input           |
+| `className`         | `string`                            | -                       | Additional CSS classes                |
+| `size`              | `"sm" \| "md" \| "lg"`              | `"md"`                  | Size variant of the input             |
+| `variant`           | `"outline" \| "filled"`             | `"outline"`             | Visual variant of the input           |
+| `allowCustomValue`  | `boolean`                           | `false`                 | Allow custom values not in options    |
+| `maxSuggestions`    | `number`                            | `10`                    | Maximum number of suggestions to show |
+| `loading`           | `boolean`                           | `false`                 | Show loading state                    |
+| `noOptionsMessage`  | `string`                            | `"No options found"`    | Message when no options match         |
+| `searchPlaceholder` | `string`                            | `"Search options..."`   | Placeholder for search input          |
+
 ### AutocompleteOption Interface
+
 ```tsx
 interface AutocompleteOption {
   value: string | number;
@@ -293,20 +317,27 @@ interface AutocompleteOption {
   disabled?: boolean;
 }
 ```
+
 ### Accessibility Features
+
 - **Keyboard Navigation**: Full keyboard support with arrow keys, enter, escape, and tab
 - **ARIA Attributes**: Proper ARIA labels, descriptions, and states
 - **Screen Reader Support**: Compatible with screen readers and assistive technologies
 - **Focus Management**: Proper focus handling and keyboard navigation
 - **Clear Indicators**: Visual and programmatic indicators for required fields and errors
+
 ### Styling and Theming
+
 The component uses Tailwind CSS classes and supports:
+
 - Multiple size variants (sm, md, lg)
 - Visual variants (outline, filled)
 - Custom CSS classes via className prop
 - Responsive design
 - Dark mode compatibility (with proper CSS variables)
+
 ### Best Practices
+
 1. **Always provide meaningful labels** for accessibility
 2. **Use helper text** to provide additional context
 3. **Set appropriate maxSuggestions** to avoid overwhelming users
@@ -314,31 +345,47 @@ The component uses Tailwind CSS classes and supports:
 5. **Provide clear error messages** for validation failures
 6. **Use disabled options** sparingly and provide clear feedback
 7. **Test keyboard navigation** thoroughly for accessibility compliance
+
 ## Features
+
 ### Search and Filtering
+
 The component provides real-time search functionality:
+
 - **Instant Filtering**: Options are filtered as you type
 - **Case-Insensitive**: Search is not case-sensitive
 - **Partial Matching**: Finds options containing the search term
 - **Max Suggestions**: Configurable limit on displayed options
+
 ### Keyboard Navigation
+
 Full keyboard support for accessibility:
+
 - **Arrow Keys**: Navigate through options
 - **Enter**: Select highlighted option or custom value
 - **Escape**: Close dropdown
 - **Tab**: Move to next form element
+
 ### Custom Value Support
+
 When `allowCustomValue` is enabled:
+
 - Users can type values not in the options list
 - Custom values are passed to `onChange` callback
 - Maintains flexibility for user input
+
 ### Loading States
+
 Built-in loading support:
+
 - Shows loading message in dropdown
 - Prevents option selection during loading
 - Integrates with data fetching operations
+
 ## Integration Examples
+
 ### With Form Libraries
+
 ```tsx
 import { useForm, Controller } from 'react-hook-form';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -346,26 +393,28 @@ function FormExample() {
   const { control, handleSubmit } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-  <Controller
-  name='category'
-  control={control}
-  rules={{ required: 'Category is required' }}
-  render={({ field, fieldState }) => (
-  <AutocompleteInput
-  label='Category'
-  value={field.value}
-  onChange={field.onChange}
-  options={categoryOptions}
-  error={fieldState.error?.message}
-  required
-  />
-  )}
-  />
+      <Controller
+        name='category'
+        control={control}
+        rules={{ required: 'Category is required' }}
+        render={({ field, fieldState }) => (
+          <AutocompleteInput
+            label='Category'
+            value={field.value}
+            onChange={field.onChange}
+            options={categoryOptions}
+            error={fieldState.error?.message}
+            required
+          />
+        )}
+      />
     </form>
   );
 }
 ```
+
 ### With Data Providers
+
 ```tsx
 import { useGetList } from '@react-superadmin/core';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -373,20 +422,22 @@ function DataProviderExample() {
   const { data: users, isLoading } = useGetList('users');
   const userOptions =
     users?.map(user => ({
-  value: user.id,
-  label: user.name,
+      value: user.id,
+      label: user.name,
     })) || [];
   return (
     <AutocompleteInput
-  label='Select User'
-  options={userOptions}
-  loading={isLoading}
-  placeholder='Search for users...'
+      label='Select User'
+      options={userOptions}
+      loading={isLoading}
+      placeholder='Search for users...'
     />
   );
 }
 ```
+
 ### With Async Data Fetching
+
 ```tsx
 import React, { useState, useEffect } from 'react';
 import { AutocompleteInput } from '@react-superadmin/web';
@@ -417,12 +468,16 @@ function AsyncExample() {
   );
 }
 ```
+
 ## Performance Considerations
+
 - **Option Filtering**: Large option lists are filtered efficiently
 - **Max Suggestions**: Limit displayed options to prevent performance issues
 - **Debounced Search**: Consider debouncing search input for API calls
 - **Virtual Scrolling**: For very large lists, consider virtual scrolling
+
 ## Related Components
+
 - [Input](./input) - Basic text input component
 - [SelectInput](./select-input) - Dropdown selection component
 - [FormField](./form) - Form field wrapper with validation

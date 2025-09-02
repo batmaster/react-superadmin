@@ -2,29 +2,38 @@
 title: Resource Component
 description: Define and configure CRUD operations on data resources within the admin system
 ---
-# Resource Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;Resource&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `Resource` component is a core building block of React SuperAdmin that allows you to define and configure individual resources within your admin system. It handles CRUD operations, field configurations, permissions, and custom views for each data resource.
+
 ## Overview
+
 The Resource component serves as a container for all operations related to a specific data entity (like users, products, orders, etc.). It provides:
+
 - **Field Configuration**: Define the structure and behavior of your data fields
 - **Permission Management**: Control access to different operations (create, read, update, delete)
 - **Custom Views**: Configure different ways to display and interact with your data
 - **Route Integration**: Work seamlessly with React Router for navigation
 - **Data Provider Integration**: Connect to your backend APIs
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| --------------------------------------------------------------- | ------------------------------------- |
-| `config`  | `ResourceConfig`  | **Required** | Resource configuration object  |
-| `actions`  | `ReactNode`  | `undefined`  | Custom actions for this resource  |
-| `routes`  | `ReactNode`  | `undefined`  | Custom routes for this resource  |
-| `dataProvider`   | `any`  | `undefined`  | Resource-level data provider override |
-| `authRules`  | `PermissionConfig`  | `undefined`  | Resource-level authentication rules   |
-| `fieldRenderers` | `Record<string, (field: FieldConfig, value: any) => ReactNode>` | `undefined`  | Custom field renderers  |
-| `options`  | `ResourceOptions`  | `undefined`  | Resource-level configuration options  |
-| `children`  | `ReactNode`  | `undefined`  | Child components (typically routes)   |
-| `className`  | `string`  | `""`  | Additional CSS classes  |
+
+| Prop             | Type                                                            | Default      | Description                           |
+| ---------------- | --------------------------------------------------------------- | ------------ | ------------------------------------- |
+| `config`         | `ResourceConfig`                                                | **Required** | Resource configuration object         |
+| `actions`        | `ReactNode`                                                     | `undefined`  | Custom actions for this resource      |
+| `routes`         | `ReactNode`                                                     | `undefined`  | Custom routes for this resource       |
+| `dataProvider`   | `any`                                                           | `undefined`  | Resource-level data provider override |
+| `authRules`      | `PermissionConfig`                                              | `undefined`  | Resource-level authentication rules   |
+| `fieldRenderers` | `Record<string, (field: FieldConfig, value: any) => ReactNode>` | `undefined`  | Custom field renderers                |
+| `options`        | `ResourceOptions`                                               | `undefined`  | Resource-level configuration options  |
+| `children`       | `ReactNode`                                                     | `undefined`  | Child components (typically routes)   |
+| `className`      | `string`                                                        | `""`         | Additional CSS classes                |
+
 ## Basic Usage
+
 ```tsx
 import { Resource, createResource } from '@react-superadmin/core';
 // Define a resource configuration
@@ -35,13 +44,13 @@ const userResource = createResource({
     { name: 'name', label: 'Name', type: 'text', required: true },
     { name: 'email', label: 'Email', type: 'email', required: true },
     {
-  name: 'role',
-  label: 'Role',
-  type: 'select',
-  options: [
-  { value: 'admin', label: 'Administrator' },
-  { value: 'user', label: 'User' },
-  ],
+      name: 'role',
+      label: 'Role',
+      type: 'select',
+      options: [
+        { value: 'admin', label: 'Administrator' },
+        { value: 'user', label: 'User' },
+      ],
     },
   ],
 });
@@ -49,17 +58,19 @@ const userResource = createResource({
 function App() {
   return (
     <Admin config={adminConfig}>
-  <Resource config={userResource}>
-  <Route path='/users' element={<UserList />} />
-  <Route path='/users/create' element={<UserCreate />} />
-  <Route path='/users/:id' element={<UserShow />} />
-  <Route path='/users/:id/edit' element={<UserEdit />} />
-  </Resource>
+      <Resource config={userResource}>
+        <Route path='/users' element={<UserList />} />
+        <Route path='/users/create' element={<UserCreate />} />
+        <Route path='/users/:id' element={<UserShow />} />
+        <Route path='/users/:id/edit' element={<UserEdit />} />
+      </Resource>
     </Admin>
   );
 }
 ```
+
 ## Live Example
+
 <LiveProvider code={`
 import React from 'react';
 import { Resource, createResource } from '@react-superadmin/core';
@@ -249,7 +260,7 @@ import { UserList, UserCreate, UserShow, UserEdit } from './components';
 function UserRoutes() {
   return (
     <Resource config={userResource}>
-  <Routes>
+  &lt;Routes&gt;
   <Route path='/' element={<UserList />} />
   <Route path='/create' element={<UserCreate />} />
   <Route path='/:id' element={<UserShow />} />

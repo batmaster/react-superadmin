@@ -1,76 +1,97 @@
 ---
 id: input
 title: Input Component
-sidebar_label: Input
+sidebar_label: <Input> (IMP)
 description: Versatile text input component with validation and styling support
 keywords: [input, text, form, validation, field]
 ---
-# Input Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;Input&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The Input component is a versatile text input field that provides a consistent interface for user data entry. It supports various input types, validation states, and integrates seamlessly with form systems.
+
 ## Import
+
 ```tsx
 // Input component is available in the live scope
 ```
+
 ## Basic Usage
+
 ```jsx live
-<Input
-  type="text"
-  placeholder="Enter your name"
-/>
+<Input type='text' placeholder='Enter your name' />
 ```
+
 ## Props
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `string` | `'text'` | HTML input type (text, email, password, etc.) |
-| `value` | `string` | - | Current input value |
-| `onChange` | `(e: ChangeEvent<HTMLInputElement>) => void` | - | Change handler function |
-| `placeholder` | `string` | - | Placeholder text |
-| `disabled` | `boolean` | `false` | Whether the input is disabled |
-| `readOnly` | `boolean` | `false` | Whether the input is read-only |
-| `required` | `boolean` | `false` | Whether the input is required |
-| `name` | `string` | - | Input name attribute |
-| `id` | `string` | - | Input ID attribute |
-| `className` | `string` | - | Additional CSS classes |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Input size variant |
-| `variant` | `'default' \| 'error' \| 'success'` | `'default'` | Visual state variant |
-| `error` | `string` | - | Error message to display |
-| `helperText` | `string` | - | Helper text below the input |
-| `leftIcon` | `ReactNode` | - | Icon to display on the left side |
-| `rightIcon` | `ReactNode` | - | Icon to display on the right side |
+
+| Prop          | Type                                               | Default     | Description                                   |
+| ------------- | -------------------------------------------------- | ----------- | --------------------------------------------- |
+| `type`        | `string`                                           | `'text'`    | HTML input type (text, email, password, etc.) |
+| `value`       | `string`                                           | -           | Current input value                           |
+| `onChange`    | `(e: ChangeEvent&lt;HTMLInputElement&gt;) => void` | -           | Change handler function                       |
+| `placeholder` | `string`                                           | -           | Placeholder text                              |
+| `disabled`    | `boolean`                                          | `false`     | Whether the input is disabled                 |
+| `readOnly`    | `boolean`                                          | `false`     | Whether the input is read-only                |
+| `required`    | `boolean`                                          | `false`     | Whether the input is required                 |
+| `name`        | `string`                                           | -           | Input name attribute                          |
+| `id`          | `string`                                           | -           | Input ID attribute                            |
+| `className`   | `string`                                           | -           | Additional CSS classes                        |
+| `size`        | `'sm' \| 'md' \| 'lg'`                             | `'md'`      | Input size variant                            |
+| `variant`     | `'default' \| 'error' \| 'success'`                | `'default'` | Visual state variant                          |
+| `error`       | `string`                                           | -           | Error message to display                      |
+| `helperText`  | `string`                                           | -           | Helper text below the input                   |
+| `leftIcon`    | `ReactNode`                                        | -           | Icon to display on the left side              |
+| `rightIcon`   | `ReactNode`                                        | -           | Icon to display on the right side             |
+
 ## Input Types
+
 The Input component supports all standard HTML input types:
+
 ```jsx live
-<div className="space-y-4">
-  <Input type="text" placeholder="Enter text" />
-  <Input type="email" placeholder="Enter email" />
-  <Input type="password" placeholder="Enter password" />
-  <Input type="number" placeholder="Enter number" />
-  <Input type="search" placeholder="Search..." />
-  <Input type="url" placeholder="Enter URL" />
-  <Input type="tel" placeholder="Enter phone number" />
+<div className='space-y-4'>
+  <Input type='text' placeholder='Enter text' />
+  <Input type='email' placeholder='Enter email' />
+  <Input type='password' placeholder='Enter password' />
+  <Input type='number' placeholder='Enter number' />
+  <Input type='search' placeholder='Search...' />
+  <Input type='url' placeholder='Enter URL' />
+  <Input type='tel' placeholder='Enter phone number' />
 </div>
 ```
+
 ## Sizes
+
 The Input component comes in three size variants:
+
 ```jsx live
-<div className="space-y-4">
-  <Input size="sm" placeholder="Small input" />
-  <Input size="md" placeholder="Medium input (default)" />
-  <Input size="lg" placeholder="Large input" />
+<div className='space-y-4'>
+  <Input size='sm' placeholder='Small input' />
+  <Input size='md' placeholder='Medium input (default)' />
+  <Input size='lg' placeholder='Large input' />
 </div>
 ```
+
 ## Variants
+
 Different visual states for different input conditions:
+
 ```jsx live
-<div className="space-y-4">
-  <Input placeholder="Normal input" />
-  <Input variant="success" placeholder="Valid input" />
-  <Input variant="error" placeholder="Invalid input" error="This field is required" />
+<div className='space-y-4'>
+  <Input placeholder='Normal input' />
+  <Input variant='success' placeholder='Valid input' />
+  <Input
+    variant='error'
+    placeholder='Invalid input'
+    error='This field is required'
+  />
 </div>
 ```
+
 ## With Icons
+
 You can add icons to the left or right side of the input:
+
 ```tsx
 import { SearchIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
 // Left icon
@@ -91,8 +112,11 @@ import { SearchIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
   placeholder="Search with icon"
 />
 ```
+
 ## Form Integration
+
 The Input component works seamlessly with form libraries and validation:
+
 ```tsx
 import { useState } from 'react';
 function FormExample() {
@@ -157,8 +181,11 @@ function FormExample() {
   );
 }
 ```
+
 ## Validation States
+
 The Input component provides clear visual feedback for validation states:
+
 ```tsx
 function ValidationExample() {
   const [email, setEmail] = useState('');
@@ -190,26 +217,33 @@ function ValidationExample() {
   );
 }
 ```
+
 ## Accessibility
+
 The Input component includes comprehensive accessibility features:
+
 - Proper ARIA labels and descriptions
 - Error state announcements for screen readers
 - Keyboard navigation support
 - Focus management
 - Screen reader compatibility
+
 ```tsx
 <Input
-  id="username"
-  name="username"
-  aria-describedby="username-help username-error"
+  id='username'
+  name='username'
+  aria-describedby='username-help username-error'
   aria-invalid={!!errors.username}
-  placeholder="Enter username"
+  placeholder='Enter username'
   error={errors.username}
-  helperText="Username must be at least 3 characters long"
+  helperText='Username must be at least 3 characters long'
 />
 ```
+
 ## Custom Styling
+
 You can customize the appearance using Tailwind CSS classes:
+
 ```tsx
 <Input
   className="border-2 border-blue-300 focus:border-blue-500 focus:ring-blue-200"
@@ -220,13 +254,16 @@ You can customize the appearance using Tailwind CSS classes:
   placeholder="Gray themed input"
 />
 ```
+
 ## Examples
+
 ### Search Input with Clear Button
+
 ```tsx
 function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showClear, setShowClear] = useState(false);
-  const handleChange = (e) => {
+  const handleChange = e => {
     const value = e.target.value;
     setSearchTerm(value);
     setShowClear(value.length > 0);
@@ -236,89 +273,93 @@ function SearchInput() {
     setShowClear(false);
   };
   return (
-    <div className="relative">
-  <Input
-  type="search"
-  placeholder="Search..."
-  value={searchTerm}
-  onChange={handleChange}
-  leftIcon={<SearchIcon className="w-5 h-5" />}
-  rightIcon={
-  showClear && (
-  <button
-  onClick={handleClear}
-  className="text-gray-400 hover:text-gray-600"
-  >
-  <XIcon className="w-5 h-5" />
-  </button>
-  )
-  }
-  />
+    <div className='relative'>
+      <Input
+        type='search'
+        placeholder='Search...'
+        value={searchTerm}
+        onChange={handleChange}
+        leftIcon={<SearchIcon className='w-5 h-5' />}
+        rightIcon={
+          showClear && (
+            <button
+              onClick={handleClear}
+              className='text-gray-400 hover:text-gray-600'
+            >
+              <XIcon className='w-5 h-5' />
+            </button>
+          )
+        }
+      />
     </div>
   );
 }
 ```
+
 ### Password Input with Toggle
+
 ```tsx
 function PasswordInput() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
-  type={showPassword ? 'text' : 'password'}
-  placeholder="Enter password"
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  rightIcon={
-  <button
-  type="button"
-  onClick={() => setShowPassword(!showPassword)}
-  className="text-gray-400 hover:text-gray-600"
-  >
-  {showPassword ? (
-  <EyeOffIcon className="w-5 h-5" />
-  ) : (
-  <EyeIcon className="w-5 h-5" />
-  )}
-  </button>
-  }
+      type={showPassword ? 'text' : 'password'}
+      placeholder='Enter password'
+      value={password}
+      onChange={e => setPassword(e.target.value)}
+      rightIcon={
+        <button
+          type='button'
+          onClick={() => setShowPassword(!showPassword)}
+          className='text-gray-400 hover:text-gray-600'
+        >
+          {showPassword ? (
+            <EyeOffIcon className='w-5 h-5' />
+          ) : (
+            <EyeIcon className='w-5 h-5' />
+          )}
+        </button>
+      }
     />
   );
 }
 ```
+
 ### Form Field with Label
+
 ```tsx
 function FormField({ label, error, helperText, ...inputProps }) {
   return (
-    <div className="space-y-2">
-  <Label htmlFor={inputProps.id}>{label}</Label>
-  <Input {...inputProps} />
-  {helperText && (
-  <p className="text-sm text-gray-600">{helperText}</p>
-  )}
-  {error && (
-  <p className="text-sm text-red-600">{error}</p>
-  )}
+    <div className='space-y-2'>
+      <Label htmlFor={inputProps.id}>{label}</Label>
+      <Input {...inputProps} />
+      {helperText && <p className='text-sm text-gray-600'>{helperText}</p>}
+      {error && <p className='text-sm text-red-600'>{error}</p>}
     </div>
   );
 }
 // Usage
 <FormField
-  id="username"
-  label="Username"
-  placeholder="Enter username"
-  helperText="Username must be unique"
+  id='username'
+  label='Username'
+  placeholder='Enter username'
+  helperText='Username must be unique'
   error={errors.username}
-/>
+/>;
 ```
+
 ## Best Practices
+
 1. **Always provide labels** - Use the Label component or aria-label for accessibility
 2. **Use appropriate input types** - Leverage HTML5 input types for better UX
 3. **Provide clear error messages** - Help users understand what went wrong
 4. **Use helper text sparingly** - Only when additional context is needed
 5. **Consider validation timing** - Validate on blur or submit, not on every keystroke
 6. **Test with screen readers** - Ensure all states are properly announced
+
 ## Related Components
+
 - [Label](/components/label) - For form field labels
 - [Button](/components/button) - For form submission and actions
 - [Form](/components/form) - For form containers and validation

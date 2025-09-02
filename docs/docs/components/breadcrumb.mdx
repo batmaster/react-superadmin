@@ -1,20 +1,21 @@
 ---
 id: breadcrumb
 title: Breadcrumb Component
-sidebar_label: Breadcrumb
+sidebar_label: <Breadcrumb> (IMP)
 description: Modern, accessible breadcrumb navigation component
 keywords: [breadcrumb, navigation, breadcrumbs, path]
 ---
 
-# Breadcrumb Component
+# &lt;Breadcrumb&gt; Component
 
 **Last Built**: September 2, 2025 at 4:19 PM
 
-The `<Breadcrumb>` component provides modern, accessible breadcrumb navigation that helps users understand their current location within your application hierarchy.
+The `&lt;Breadcrumb&gt;` component provides modern, accessible breadcrumb navigation that helps users understand their current location within your application hierarchy.
 
 ## Overview
 
 Our breadcrumb component is designed to be:
+
 - **Accessible** - Proper ARIA labels and semantic HTML
 - **Responsive** - Adapts to different screen sizes
 - **Customizable** - Multiple variants and styling options
@@ -30,10 +31,10 @@ import { Breadcrumb } from '@react-superadmin/web';
   items={[
     { label: 'Home', href: '/' },
     { label: 'Components', href: '/components' },
-    { label: 'Modal', active: true }
+    { label: 'Modal', active: true },
   ]}
   showHomeIcon={true}
-/>
+/>;
 ```
 
 ## Advanced Usage
@@ -48,11 +49,11 @@ import { Home, Folder, File } from 'lucide-react';
   items={[
     { label: 'Home', href: '/', icon: <Home /> },
     { label: 'Documents', href: '/documents', icon: <Folder /> },
-    { label: 'Report.pdf', active: true, icon: <File /> }
+    { label: 'Report.pdf', active: true, icon: <File /> },
   ]}
-  separator={<span className="text-gray-400">/</span>}
-  variant="primary"
-/>
+  separator={<span className='text-gray-400'>/</span>}
+  variant='primary'
+/>;
 ```
 
 ### Truncated Breadcrumbs
@@ -67,13 +68,16 @@ import { Breadcrumb } from '@react-superadmin/web';
     { label: 'Electronics', href: '/products/electronics' },
     { label: 'Computers', href: '/products/electronics/computers' },
     { label: 'Laptops', href: '/products/electronics/computers/laptops' },
-    { label: 'Gaming Laptops', href: '/products/electronics/computers/laptops/gaming' },
-    { label: 'Alienware', active: true }
+    {
+      label: 'Gaming Laptops',
+      href: '/products/electronics/computers/laptops/gaming',
+    },
+    { label: 'Alienware', active: true },
   ]}
   maxItems={4}
   showTooltips={true}
-  variant="secondary"
-/>
+  variant='secondary'
+/>;
 ```
 
 ### Different Sizes and Variants
@@ -81,58 +85,58 @@ import { Breadcrumb } from '@react-superadmin/web';
 ```jsx live
 import { Breadcrumb } from '@react-superadmin/web';
 
-<div className="space-y-4">
+<div className='space-y-4'>
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
-      { label: 'Settings', active: true }
+      { label: 'Settings', active: true },
     ]}
-    size="sm"
-    variant="muted"
+    size='sm'
+    variant='muted'
   />
-  
+
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
-      { label: 'Settings', active: true }
+      { label: 'Settings', active: true },
     ]}
-    size="md"
-    variant="primary"
+    size='md'
+    variant='primary'
   />
-  
+
   <Breadcrumb
     items={[
       { label: 'Home', href: '/' },
-      { label: 'Settings', active: true }
+      { label: 'Settings', active: true },
     ]}
-    size="lg"
-    variant="secondary"
+    size='lg'
+    variant='secondary'
   />
-</div>
+</div>;
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `BreadcrumbItem[]` | - | Array of breadcrumb items |
-| `separator` | `ReactNode` | `<ChevronRight />` | Separator between items |
-| `showHomeIcon` | `boolean` | `true` | Show home icon for first item |
-| `maxItems` | `number` | - | Maximum items to show (truncates) |
-| `showTooltips` | `boolean` | `true` | Show tooltips for truncated items |
-| `className` | `string` | - | Additional CSS classes |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size variant |
-| `variant` | `'default' \| 'primary' \| 'secondary' \| 'muted'` | `'default'` | Color variant |
+| Prop           | Type                                               | Default            | Description                       |
+| -------------- | -------------------------------------------------- | ------------------ | --------------------------------- |
+| `items`        | `BreadcrumbItem[]`                                 | -                  | Array of breadcrumb items         |
+| `separator`    | `ReactNode`                                        | `<ChevronRight />` | Separator between items           |
+| `showHomeIcon` | `boolean`                                          | `true`             | Show home icon for first item     |
+| `maxItems`     | `number`                                           | -                  | Maximum items to show (truncates) |
+| `showTooltips` | `boolean`                                          | `true`             | Show tooltips for truncated items |
+| `className`    | `string`                                           | -                  | Additional CSS classes            |
+| `size`         | `'sm' \| 'md' \| 'lg'`                             | `'md'`             | Size variant                      |
+| `variant`      | `'default' \| 'primary' \| 'secondary' \| 'muted'` | `'default'`        | Color variant                     |
 
 ## BreadcrumbItem Interface
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `label` | `string` | Text to display |
-| `href` | `string` | URL to navigate to (optional) |
-| `active` | `boolean` | Whether this is the current page |
-| `icon` | `ReactNode` | Icon to display before label |
-| `className` | `string` | Additional CSS classes |
+| Property    | Type        | Description                      |
+| ----------- | ----------- | -------------------------------- |
+| `label`     | `string`    | Text to display                  |
+| `href`      | `string`    | URL to navigate to (optional)    |
+| `active`    | `boolean`   | Whether this is the current page |
+| `icon`      | `ReactNode` | Icon to display before label     |
+| `className` | `string`    | Additional CSS classes           |
 
 ## Accessibility Features
 

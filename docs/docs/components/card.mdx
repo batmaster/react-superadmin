@@ -1,51 +1,69 @@
 ---
 id: card
 title: Card Component
-sidebar_label: Card
+sidebar_label: <Card> (IMP)
 keywords: [card, component, ui, layout, container, react, typescript, admin]
 ---
-# Card Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;Card&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The Card component provides a flexible container for organizing content with various styling options and subcomponents for structured layouts.
+
 ## Basic Usage
+
 ```jsx live
-<Card>
+&lt;Card&gt;
   <p>This is a basic card with default styling.</p>
 </Card>
 ```
+
 **Code:**
+
 ```tsx
-<Card>
+&lt;Card&gt;
   <p>This is a basic card with default styling.</p>
 </Card>
 ```
+
 ## Card Variants
+
 ### Default Variant
+
 ```jsx live
-<Card>
+&lt;Card&gt;
   <p>Default card with subtle border and shadow.</p>
 </Card>
 ```
+
 ### Outlined Variant
+
 ```jsx live
 <Card variant='outlined'>
   <p>Outlined card with visible border and no shadow.</p>
 </Card>
 ```
+
 ### Elevated Variant
+
 ```jsx live
 <Card variant='elevated'>
   <p>Elevated card with prominent shadow and no border.</p>
 </Card>
 ```
+
 ### Flat Variant
+
 ```jsx live
 <Card variant='flat'>
   <p>Flat card with subtle background and no shadow.</p>
 </Card>
 ```
+
 ## Padding Options
+
 ### No Padding
+
 ```jsx live
 <Card padding='none'>
   <div className='p-4 bg-gray-50'>
@@ -53,95 +71,111 @@ The Card component provides a flexible container for organizing content with var
   </div>
 </Card>
 ```
+
 ### Small Padding
+
 ```jsx live
 <Card padding='sm'>
   <p>Card with small padding (12px).</p>
 </Card>
 ```
+
 ### Large Padding
+
 ```jsx live
 <Card padding='lg'>
   <p>Card with large padding (24px).</p>
 </Card>
 ```
+
 ## Hover Effects
+
 ```tsx live
 // Card component is available in the live scope
 function HoverCard() {
   return (
     <Card hover>
-  <p>Hover over this card to see the elevation effect.</p>
+      <p>Hover over this card to see the elevation effect.</p>
     </Card>
   );
 }
 ```
+
 ## Interactive Demo
+
 Try different card variants and see how they look:
+
 ```jsx live
 <div className="space-y-4">
-  <Card>
-    <CardHeader>
+  &lt;Card&gt;
+    &lt;CardHeader&gt;
   <h3 className="text-lg font-semibold">Default Card</h3>
   <p className="text-sm text-gray-600">This is the default variant</p>
     </CardHeader>
-    <CardContent>
+    &lt;CardContent&gt;
   <p>Default cards have subtle borders and shadows for a clean look.</p>
     </CardContent>
   </Card>
  <Card variant="outlined">
-    <CardHeader>
+    &lt;CardHeader&gt;
   <h3 className="text-lg font-semibold">Outlined Card</h3>
   <p className="text-sm text-gray-600">This is the outlined variant</p>
     </CardHeader>
-    <CardContent>
+    &lt;CardContent&gt;
   <p>Outlined cards have visible borders and no shadows.</p>
     </CardContent>
   </Card>
  <Card variant="elevated">
-    <CardHeader>
+    &lt;CardHeader&gt;
   <h3 className="text-lg font-semibold">Elevated Card</h3>
   <p className="text-sm text-gray-600">This is the elevated variant</p>
     </CardHeader>
-    <CardContent>
+    &lt;CardContent&gt;
   <p>Elevated cards have prominent shadows and no borders.</p>
     </CardContent>
   </Card>
 </div>
 ```
+
 ## Card Subcomponents
+
 ### CardHeader
+
 ```jsx live
-<Card>
-  <CardHeader>
+&lt;Card&gt;
+  &lt;CardHeader&gt;
     <h3 className='text-lg font-semibold'>Card Title</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
     <p>This card has a header section with a title.</p>
   </CardContent>
 </Card>
 ```
+
 ### CardHeader with Action
+
 ```jsx live
-<Card>
+&lt;Card&gt;
   <CardHeader action={<Button size='sm'>Edit</Button>}>
     <h3 className='text-lg font-semibold'>User Profile</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
     <p>This card header includes an action button.</p>
   </CardContent>
 </Card>
 ```
+
 ### CardContent
+
 ```tsx live
 // Component is available in the live scope
 function CardWithContent() {
   return (
-    <Card>
-  <CardHeader>
+    &lt;Card&gt;
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Content Section</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <div className='space-y-2'>
   <p>This is the main content area of the card.</p>
   <p>It can contain any React components or HTML elements.</p>
@@ -151,7 +185,9 @@ function CardWithContent() {
   );
 }
 ```
+
 ### CardFooter
+
 ```tsx live
 import {
   Card,
@@ -162,24 +198,26 @@ import {
 } from '@react-superadmin/web';
 function CardWithFooter() {
   return (
-    <Card>
-  <CardHeader>
+    &lt;Card&gt;
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Form Card</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <p>This card has a footer with action buttons.</p>
   </CardContent>
-  <CardFooter>
+  &lt;CardFooter&gt;
   <Button variant='outline' className='mr-2'>
   Cancel
   </Button>
-  <Button>Save</Button>
+  &lt;Button&gt;Save</Button>
   </CardFooter>
     </Card>
   );
 }
 ```
+
 ### Footer Alignment
+
 ```tsx live
 import {
   Card,
@@ -191,44 +229,46 @@ import {
 function CardWithAlignedFooter() {
   return (
     <div className='space-y-4'>
-  <Card>
-  <CardHeader>
+  &lt;Card&gt;
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Left Aligned</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <p>Footer content aligned to the left.</p>
   </CardContent>
   <CardFooter align='left'>
-  <Button>Action</Button>
+  &lt;Button&gt;Action</Button>
   </CardFooter>
   </Card>
-  <Card>
-  <CardHeader>
+  &lt;Card&gt;
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Center Aligned</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <p>Footer content aligned to the center.</p>
   </CardContent>
   <CardFooter align='center'>
-  <Button>Action</Button>
+  &lt;Button&gt;Action</Button>
   </CardFooter>
   </Card>
-  <Card>
-  <CardHeader>
+  &lt;Card&gt;
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Right Aligned</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <p>Footer content aligned to the right.</p>
   </CardContent>
   <CardFooter align='right'>
-  <Button>Action</Button>
+  &lt;Button&gt;Action</Button>
   </CardFooter>
   </Card>
     </div>
   );
 }
 ```
+
 ## Complete Card Example
+
 ```tsx live
 import {
   Card,
@@ -247,7 +287,7 @@ function CompleteCard() {
   <Badge variant='success'>Active</Badge>
   </div>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <div className='space-y-3'>
   <div className='flex justify-between'>
   <span className='font-medium'>Name:</span>
@@ -270,86 +310,116 @@ function CompleteCard() {
   <Button variant='outline' className='mr-2'>
   Cancel
   </Button>
-  <Button>Save Changes</Button>
+  &lt;Button&gt;Save Changes</Button>
   </CardFooter>
     </Card>
   );
 }
 ```
+
 ## API Reference
+
 ### Card Props
-| Prop  | Type  | Default  | Description  |
-| ------------------------------------------------- | ---------------------- |
+
+| Prop        | Type                                              | Default     | Description            |
+| ----------- | ------------------------------------------------- | ----------- | ---------------------- |
 | `variant`   | `'default' \| 'outlined' \| 'elevated' \| 'flat'` | `'default'` | Card styling variant   |
-| `padding`   | `'none' \| 'sm' \| 'md' \| 'lg'`  | `'md'`  | Card padding size  |
-| `hover`  | `boolean`  | `false`  | Enable hover effects   |
-| `children`  | `ReactNode`  | -  | Card content  |
-| `className` | `string`  | -  | Additional CSS classes |
+| `padding`   | `'none' \| 'sm' \| 'md' \| 'lg'`                  | `'md'`      | Card padding size      |
+| `hover`     | `boolean`                                         | `false`     | Enable hover effects   |
+| `children`  | `ReactNode`                                       | -           | Card content           |
+| `className` | `string`                                          | -           | Additional CSS classes |
+
 ### CardHeader Props
-| Prop  | Type  | Default | Description  |
-| ----------------------------- |
-| `children`  | `ReactNode` | -  | Header content  |
-| `action`    | `ReactNode` | -  | Action element (e.g., button) |
-| `className` | `string`    | -  | Additional CSS classes  |
+
+| Prop        | Type        | Default | Description                   |
+| ----------- | ----------- | ------- | ----------------------------- |
+| `children`  | `ReactNode` | -       | Header content                |
+| `action`    | `ReactNode` | -       | Action element (e.g., button) |
+| `className` | `string`    | -       | Additional CSS classes        |
+
 ### CardContent Props
-| Prop  | Type  | Default | Description  |
-| ---------------------- |
-| `children`  | `ReactNode` | -  | Content area  |
-| `className` | `string`    | -  | Additional CSS classes |
+
+| Prop        | Type        | Default | Description            |
+| ----------- | ----------- | ------- | ---------------------- |
+| `children`  | `ReactNode` | -       | Content area           |
+| `className` | `string`    | -       | Additional CSS classes |
+
 ### CardFooter Props
-| Prop  | Type  | Default  | Description  |
-| ------------------------------- | ---------------------- |
-| `children`  | `ReactNode`  | -  | Footer content  |
-| `align`  | `'left' \| 'center' \| 'right'` | `'left'` | Content alignment  |
-| `className` | `string`  | -  | Additional CSS classes |
+
+| Prop        | Type                            | Default  | Description            |
+| ----------- | ------------------------------- | -------- | ---------------------- |
+| `children`  | `ReactNode`                     | -        | Footer content         |
+| `align`     | `'left' \| 'center' \| 'right'` | `'left'` | Content alignment      |
+| `className` | `string`                        | -        | Additional CSS classes |
+
 ## CSS Classes
+
 The Card component uses Tailwind CSS classes for styling:
+
 ### Base Classes
+
 - **Default**: `bg-white rounded-lg border border-gray-200 shadow-sm`
 - **Outlined**: `border-gray-300 shadow-none`
 - **Elevated**: `border-transparent shadow-lg`
 - **Flat**: `border-gray-100 shadow-none bg-gray-50`
+
 ### Padding Classes
+
 - **None**: No padding
 - **Small**: `p-3` (12px)
 - **Medium**: `p-4` (16px)
 - **Large**: `p-6` (24px)
+
 ### Interactive Classes
+
 - **Hover**: `hover:shadow-md hover:-translate-y-1`
 - **Focus**: `focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2`
 - **Transitions**: `transition-all duration-200`
+
 ## Accessibility
+
 Cards include proper accessibility features:
+
 - **Semantic structure** with proper HTML elements
 - **Focus indicators** with ring styles
 - **Keyboard navigation** support
 - **Screen reader** compatibility
 - **ARIA attributes** when needed
+
 ## Best Practices
+
 ### Content Organization
+
 - Use `CardHeader` for titles and actions
 - Use `CardContent` for main content
 - Use `CardFooter` for actions and metadata
+
 ### Variant Selection
+
 - **Default**: General purpose content
 - **Outlined**: Clean, minimal appearance
 - **Elevated**: Important or featured content
 - **Flat**: Subtle background content
+
 ### Responsive Design
+
 - Cards automatically adapt to container width
 - Use appropriate padding for different screen sizes
 - Consider mobile-first design principles
+
 ## Examples
+
 ### Dashboard Widget
+
 ```tsx
 // Component is available in the live scope
 function DashboardWidget() {
   return (
     <Card variant='elevated' hover>
-  <CardHeader>
+  &lt;CardHeader&gt;
   <h3 className='text-lg font-semibold'>Recent Activity</h3>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <div className='space-y-2'>
   <div className='flex justify-between text-sm'>
   <span>New user registered</span>
@@ -364,7 +434,9 @@ function DashboardWidget() {
   );
 }
 ```
+
 ### Form Container
+
 ```tsx
 import {
   Card,
@@ -376,10 +448,10 @@ import {
 function FormCard() {
   return (
     <Card variant='outlined' padding='lg'>
-  <CardHeader>
+  &lt;CardHeader&gt;
   <h2 className='text-xl font-bold'>User Registration</h2>
   </CardHeader>
-  <CardContent>
+  &lt;CardContent&gt;
   <form className='space-y-4'>
   <div>
   <label className='block text-sm font-medium mb-1'>Name</label>
@@ -395,7 +467,7 @@ function FormCard() {
   <Button variant='outline' className='mr-2'>
   Cancel
   </Button>
-  <Button>Register</Button>
+  &lt;Button&gt;Register</Button>
   </CardFooter>
     </Card>
   );

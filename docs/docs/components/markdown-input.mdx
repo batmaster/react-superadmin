@@ -2,11 +2,16 @@
 title: MarkdownInput Component
 description: Advanced markdown editor with live preview, toolbar, and syntax highlighting
 ---
-# MarkdownInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;MarkdownInput&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `MarkdownInput` component is a comprehensive markdown editor that provides a toolbar for formatting options, live preview mode, and extensive customization options. It's designed to offer a full-featured markdown editing experience with modern UI and excellent developer experience.
+
 ## Overview
+
 The MarkdownInput component provides:
+
 - **Markdown Toolbar**: Complete set of markdown formatting options
 - **Live Preview**: Toggle between edit and preview modes
 - **Syntax Highlighting**: Optional syntax highlighting for better readability
@@ -15,51 +20,58 @@ The MarkdownInput component provides:
 - **Fullscreen Mode**: Distraction-free editing experience
 - **Custom Toolbar**: Extensible toolbar with custom actions
 - **Accessibility**: Full keyboard navigation and screen reader support
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| ----------------------------------------------------------------- | ------------------------------------- |
-| `value`  | `string`  | `''`  | Current markdown value  |
-| `onChange`  | `(value: string) => void`  | -  | Change handler  |
-| `label`  | `string`  | -  | Label text for the input  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `error`  | `string`  | -  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `inputSize`  | `'sm' \| 'md' \| 'lg'`  | `'md'`  | Input size variant  |
-| `placeholder`  | `string`  | `'Write your markdown here...'` | Placeholder text  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `showPreview`  | `boolean`  | `true`  | Whether to show the preview mode  |
-| `showToolbar`  | `boolean`  | `true`  | Whether to show the toolbar  |
-| `showCharacterCount` | `boolean`  | `false`  | Whether to show character count  |
-| `maxLength`  | `number`  | -  | Maximum character length  |
-| `showLineNumbers`    | `boolean`  | `false`  | Whether to show line numbers  |
-| `spellCheck`  | `boolean`  | `true`  | Whether to enable spell checking  |
-| `autoSave`  | `boolean`  | `false`  | Whether to enable auto-save  |
-| `autoSaveInterval`   | `number`  | `30000`  | Auto-save interval in milliseconds    |
-| `toolbarItems`  | `Array<{icon: React.ReactNode, title: string, action: Function}>` | `[]`  | Custom toolbar items  |
-| `fullscreen`  | `boolean`  | `false`  | Whether to enable fullscreen mode  |
-| `syntaxHighlighting` | `boolean`  | `false`  | Whether to enable syntax highlighting |
-| `showWordCount`  | `boolean`  | `false`  | Whether to show word count  |
-| `showReadingTime`    | `boolean`  | `false`  | Whether to show reading time estimate |
-| `showHelp`  | `boolean`  | `false`  | Whether to show markdown help  |
+
+| Prop                 | Type                                                              | Default                         | Description                           |
+| -------------------- | ----------------------------------------------------------------- | ------------------------------- | ------------------------------------- |
+| `value`              | `string`                                                          | `''`                            | Current markdown value                |
+| `onChange`           | `(value: string) => void`                                         | -                               | Change handler                        |
+| `label`              | `string`                                                          | -                               | Label text for the input              |
+| `helperText`         | `string`                                                          | -                               | Helper text below the input           |
+| `error`              | `string`                                                          | -                               | Error message to display              |
+| `required`           | `boolean`                                                         | `false`                         | Whether the field is required         |
+| `disabled`           | `boolean`                                                         | `false`                         | Whether the input is disabled         |
+| `inputSize`          | `'sm' \| 'md' \| 'lg'`                                            | `'md'`                          | Input size variant                    |
+| `placeholder`        | `string`                                                          | `'Write your markdown here...'` | Placeholder text                      |
+| `loading`            | `boolean`                                                         | `false`                         | Whether to show a loading state       |
+| `showPreview`        | `boolean`                                                         | `true`                          | Whether to show the preview mode      |
+| `showToolbar`        | `boolean`                                                         | `true`                          | Whether to show the toolbar           |
+| `showCharacterCount` | `boolean`                                                         | `false`                         | Whether to show character count       |
+| `maxLength`          | `number`                                                          | -                               | Maximum character length              |
+| `showLineNumbers`    | `boolean`                                                         | `false`                         | Whether to show line numbers          |
+| `spellCheck`         | `boolean`                                                         | `true`                          | Whether to enable spell checking      |
+| `autoSave`           | `boolean`                                                         | `false`                         | Whether to enable auto-save           |
+| `autoSaveInterval`   | `number`                                                          | `30000`                         | Auto-save interval in milliseconds    |
+| `toolbarItems`       | `Array<{icon: React.ReactNode, title: string, action: Function}>` | `[]`                            | Custom toolbar items                  |
+| `fullscreen`         | `boolean`                                                         | `false`                         | Whether to enable fullscreen mode     |
+| `syntaxHighlighting` | `boolean`                                                         | `false`                         | Whether to enable syntax highlighting |
+| `showWordCount`      | `boolean`                                                         | `false`                         | Whether to show word count            |
+| `showReadingTime`    | `boolean`                                                         | `false`                         | Whether to show reading time estimate |
+| `showHelp`           | `boolean`                                                         | `false`                         | Whether to show markdown help         |
+
 ## Basic Usage
+
 ```jsx
 import { MarkdownInput } from '@react-superadmin/web';
 function MyForm() {
   const [content, setContent] = useState('');
   return (
     <MarkdownInput
-  label='Article Content'
-  value={content}
-  onChange={setContent}
-  placeholder='Write your markdown content...'
-  showPreview={true}
+      label='Article Content'
+      value={content}
+      onChange={setContent}
+      placeholder='Write your markdown content...'
+      showPreview={true}
     />
   );
 }
 ```
+
 ## Examples
+
 ### Basic Markdown Editor
+
 <LiveProvider
   code={`
 function BasicMarkdownEditor() {

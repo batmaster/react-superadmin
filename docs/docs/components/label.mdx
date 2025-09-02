@@ -1,20 +1,27 @@
 ---
 id: label
 title: Label Component
-sidebar_label: Label
+sidebar_label: <Label> (IMP)
 ---
-# Label Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;Label&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 A comprehensive and accessible form label component that follows React Admin patterns with support for required field indicators, accessibility features, and flexible styling options.
+
 ## Overview
+
 The `Label` component provides a modern, accessible form label interface that supports:
+
 - Required field indicators with customizable styling
 - Multiple size variants (sm, md, lg) and style variants (default, bold, subtle, error)
 - Helper text and error message display with icons
 - Comprehensive accessibility features (ARIA, screen reader support)
 - Flexible styling and theming integration
 - Form validation system integration
+
 ## Basic Usage
+
 ```tsx live
 import React, { useState } from 'react';
 // Component is available in the live scope
@@ -51,8 +58,11 @@ function BasicLabelExample() {
 }
 <BasicLabelExample />;
 ```
+
 ## Size Variants
+
 The Label component supports three size variants to match your design system:
+
 ```tsx live
 // Component is available in the live scope
 function SizeVariantsExample() {
@@ -92,8 +102,11 @@ function SizeVariantsExample() {
 }
 <SizeVariantsExample />;
 ```
+
 ## Style Variants
+
 Choose from different visual styles to match your design context:
+
 ```tsx live
 // Component is available in the live scope
 function StyleVariantsExample() {
@@ -143,8 +156,11 @@ function StyleVariantsExample() {
 }
 <StyleVariantsExample />;
 ```
+
 ## Helper Text and Error Messages
+
 Labels can include helper text and error messages with automatic icon support:
+
 ```tsx live
 import React, { useState } from 'react';
 // Component is available in the live scope
@@ -193,8 +209,11 @@ function HelperTextExample() {
 }
 <HelperTextExample />;
 ```
+
 ## Custom Icons
+
 You can provide custom icons for error states or other visual enhancements:
+
 ```tsx live
 // Component is available in the live scope
 import { AlertTriangle, Info, CheckCircle } from 'lucide-react';
@@ -250,8 +269,11 @@ function CustomIconsExample() {
 }
 <CustomIconsExample />;
 ```
+
 ## Disabled State
+
 Labels can be disabled to match disabled form controls:
+
 ```tsx live
 // Component is available in the live scope
 function DisabledStateExample() {
@@ -287,42 +309,56 @@ function DisabledStateExample() {
 }
 <DisabledStateExample />;
 ```
+
 ## Props Reference
+
 ### LabelProps
-| Prop  | Type  | Default  | Description  |
-| -------------------------------------------------------- |
-| `children`  | `React.ReactNode`  | -  | **Required.** The text content for the label  |
-| `htmlFor`  | `string`  | -  | The ID of the form control this label is associated with |
-| `required`  | `boolean`  | `false`  | Whether the field is required (shows required indicator) |
-| `size`  | `"sm" \| "md" \| "lg"`  | `"md"`  | Label size variant  |
-| `variant`  | `"default" \| "bold" \| "subtle" \| "error"`  | `"default"`   | Label variant/style  |
-| `showIcon`  | `boolean`  | `false`  | Whether to show an icon  |
-| `icon`  | `React.ComponentType<{ className?: string }>` | `AlertCircle` | Custom icon component  |
-| `helperText`  | `string`  | -  | Helper text to display below the label  |
-| `error`  | `string`  | -  | Error message to display (overrides helper text)  |
-| `disabled`  | `boolean`  | `false`  | Whether the label is disabled  |
-| `className`  | `string`  | -  | CSS class names for the container  |
-| `textClassName`  | `string`  | -  | CSS class names for the text content  |
-| `requiredClassName` | `string`  | -  | CSS class names for the required indicator  |
-| `helperClassName`   | `string`  | -  | CSS class names for the helper text  |
-| `errorClassName`    | `string`  | -  | CSS class names for the error message  |
-| `iconClassName`  | `string`  | -  | CSS class names for the icon  |
+
+| Prop                | Type                                          | Default       | Description                                              |
+| ------------------- | --------------------------------------------- | ------------- | -------------------------------------------------------- |
+| `children`          | `React.ReactNode`                             | -             | **Required.** The text content for the label             |
+| `htmlFor`           | `string`                                      | -             | The ID of the form control this label is associated with |
+| `required`          | `boolean`                                     | `false`       | Whether the field is required (shows required indicator) |
+| `size`              | `"sm" \| "md" \| "lg"`                        | `"md"`        | Label size variant                                       |
+| `variant`           | `"default" \| "bold" \| "subtle" \| "error"`  | `"default"`   | Label variant/style                                      |
+| `showIcon`          | `boolean`                                     | `false`       | Whether to show an icon                                  |
+| `icon`              | `React.ComponentType<{ className?: string }>` | `AlertCircle` | Custom icon component                                    |
+| `helperText`        | `string`                                      | -             | Helper text to display below the label                   |
+| `error`             | `string`                                      | -             | Error message to display (overrides helper text)         |
+| `disabled`          | `boolean`                                     | `false`       | Whether the label is disabled                            |
+| `className`         | `string`                                      | -             | CSS class names for the container                        |
+| `textClassName`     | `string`                                      | -             | CSS class names for the text content                     |
+| `requiredClassName` | `string`                                      | -             | CSS class names for the required indicator               |
+| `helperClassName`   | `string`                                      | -             | CSS class names for the helper text                      |
+| `errorClassName`    | `string`                                      | -             | CSS class names for the error message                    |
+| `iconClassName`     | `string`                                      | -             | CSS class names for the icon                             |
+
 ## Accessibility Features
+
 The Label component includes comprehensive accessibility features:
+
 ### ARIA Attributes
+
 - **`for` attribute**: Properly associates labels with form controls
 - **`aria-required`**: Indicates required fields for screen readers
 - **`aria-disabled`**: Indicates disabled state
 - **`role="alert"`**: Applied to error messages for screen reader announcements
+
 ### Screen Reader Support
+
 - Required field indicators include `aria-label="required"`
 - Error messages are announced immediately when they appear
 - Helper text provides additional context for form fields
+
 ### Keyboard Navigation
+
 - Labels are focusable and can be activated with keyboard
 - Proper tab order maintained with form controls
+
 ## Integration with Form Components
+
 The Label component is designed to work seamlessly with other form components:
+
 ```tsx live
 import React, { useState } from 'react';
 // Component is available in the live scope
@@ -372,17 +408,22 @@ function FormIntegrationExample() {
 }
 <FormIntegrationExample />;
 ```
+
 ## Best Practices
+
 ### 1. Always Use `htmlFor`
+
 ```tsx
 //  Good - Proper association
 <Label htmlFor="email">Email Address</Label>
 <input id="email" type="email" />
 //  Bad - No association
-<Label>Email Address</Label>
+&lt;Label&gt;Email Address</Label>
 <input type="email" />
 ```
+
 ### 2. Use Helper Text for Guidance
+
 ```tsx
 //  Good - Provides context
 <Label htmlFor="password" helperText="Must be at least 8 characters">
@@ -391,7 +432,9 @@ function FormIntegrationExample() {
 //  Bad - No guidance
 <Label htmlFor="password">Password</Label>
 ```
+
 ### 3. Show Required Indicators
+
 ```tsx
 //  Good - Clear indication
 <Label htmlFor="email" required>
@@ -400,7 +443,9 @@ function FormIntegrationExample() {
 //  Bad - Unclear requirements
 <Label htmlFor="email">Email Address</Label>
 ```
+
 ### 4. Use Error States Appropriately
+
 ```tsx
 //  Good - Clear error communication
 <Label
@@ -412,8 +457,11 @@ function FormIntegrationExample() {
 //  Bad - No error feedback
 <Label htmlFor="username">Username</Label>
 ```
+
 ## Theme Integration
+
 The Label component integrates with your design system through Tailwind CSS classes:
+
 ```tsx
 // Custom theme classes
 <Label
@@ -426,18 +474,25 @@ The Label component integrates with your design system through Tailwind CSS clas
   Custom Themed Label
 </Label>
 ```
+
 ## Performance Considerations
+
 - The component uses `forwardRef` for optimal ref handling
 - Conditional rendering prevents unnecessary DOM elements
 - Icon components are only rendered when needed
 - CSS classes are optimized for minimal bundle impact
+
 ## Browser Support
+
 The Label component supports all modern browsers:
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
+
 ## Related Components
+
 - **Input**: Basic form input component
 - **SelectInput**: Dropdown selection component
 - **FormField**: Form field wrapper with validation

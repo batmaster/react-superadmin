@@ -2,11 +2,16 @@
 title: RichTextInput Component
 description: Advanced rich text editor with formatting toolbar, preview mode, and markdown support
 ---
-# RichTextInput Component
- ** Last Built**: September 2, 2025 at 4:19 PM
+
+# &lt;RichTextInput&gt; Component
+
+** Last Built**: September 2, 2025 at 4:19 PM
 The `RichTextInput` component is a comprehensive rich text editor that provides a toolbar for formatting options, preview mode, and markdown support. It's designed to offer a full-featured text editing experience with modern UI and extensive customization options.
+
 ## Overview
+
 The RichTextInput component provides:
+
 - **Formatting Toolbar**: Complete set of text formatting options
 - **Preview Mode**: Toggle between edit and preview modes
 - **Markdown Support**: Built-in markdown syntax with live preview
@@ -15,50 +20,57 @@ The RichTextInput component provides:
 - **Fullscreen Mode**: Distraction-free editing experience
 - **Keyboard Shortcuts**: Standard text editor shortcuts
 - **Accessibility**: Full keyboard navigation and screen reader support
+
 ## Props
-| Prop  | Type  | Default  | Description  |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `value`  | `string`  | `''`  | Current rich text value  |
-| `onChange`  | `(value: string) => void` | -  | Change handler  |
-| `label`  | `string`  | -  | Label text for the input  |
-| `helperText`  | `string`  | -  | Helper text below the input  |
-| `error`  | `string`  | -  | Error message to display  |
-| `required`  | `boolean`  | `false`  | Whether the field is required  |
-| `disabled`  | `boolean`  | `false`  | Whether the input is disabled  |
-| `inputSize`  | `'sm' \| 'md' \| 'lg'`    | `'md'`  | Input size variant  |
-| `placeholder`  | `string`  | `'Enter your content...'`  | Placeholder text  |
-| `loading`  | `boolean`  | `false`  | Whether to show a loading state  |
-| `loadingText`  | `string`  | `'Loading...'`  | Loading text to display  |
-| `showPreview`  | `boolean`  | `false`  | Whether to show the preview mode  |
-| `showToolbar`  | `boolean`  | `true`  | Whether to show the toolbar  |
-| `showCharacterCount` | `boolean`  | `false`  | Whether to show character count  |
-| `maxLength`  | `number`  | -  | Maximum character length  |
-| `showLineNumbers`    | `boolean`  | `false`  | Whether to show line numbers  |
-| `spellCheck`  | `boolean`  | `true`  | Whether to enable spell checking  |
-| `autoSave`  | `boolean`  | `false`  | Whether to enable auto-save  |
-| `autoSaveInterval`   | `number`  | `30000`  | Auto-save interval in milliseconds    |
-| `toolbarItems`  | `string[]`  | `['bold', 'italic', 'underline', 'strikethrough', 'list', 'listOrdered', 'quote', 'code', 'link', 'image', 'align']` | Custom toolbar items  |
-| `fullscreen`  | `boolean`  | `false`  | Whether to enable fullscreen mode  |
-| `showWordCount`  | `boolean`  | `false`  | Whether to show word count  |
-| `showReadingTime`    | `boolean`  | `false`  | Whether to show reading time estimate |
+
+| Prop                 | Type                      | Default                                                                                                              | Description                           |
+| -------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `value`              | `string`                  | `''`                                                                                                                 | Current rich text value               |
+| `onChange`           | `(value: string) => void` | -                                                                                                                    | Change handler                        |
+| `label`              | `string`                  | -                                                                                                                    | Label text for the input              |
+| `helperText`         | `string`                  | -                                                                                                                    | Helper text below the input           |
+| `error`              | `string`                  | -                                                                                                                    | Error message to display              |
+| `required`           | `boolean`                 | `false`                                                                                                              | Whether the field is required         |
+| `disabled`           | `boolean`                 | `false`                                                                                                              | Whether the input is disabled         |
+| `inputSize`          | `'sm' \| 'md' \| 'lg'`    | `'md'`                                                                                                               | Input size variant                    |
+| `placeholder`        | `string`                  | `'Enter your content...'`                                                                                            | Placeholder text                      |
+| `loading`            | `boolean`                 | `false`                                                                                                              | Whether to show a loading state       |
+| `loadingText`        | `string`                  | `'Loading...'`                                                                                                       | Loading text to display               |
+| `showPreview`        | `boolean`                 | `false`                                                                                                              | Whether to show the preview mode      |
+| `showToolbar`        | `boolean`                 | `true`                                                                                                               | Whether to show the toolbar           |
+| `showCharacterCount` | `boolean`                 | `false`                                                                                                              | Whether to show character count       |
+| `maxLength`          | `number`                  | -                                                                                                                    | Maximum character length              |
+| `showLineNumbers`    | `boolean`                 | `false`                                                                                                              | Whether to show line numbers          |
+| `spellCheck`         | `boolean`                 | `true`                                                                                                               | Whether to enable spell checking      |
+| `autoSave`           | `boolean`                 | `false`                                                                                                              | Whether to enable auto-save           |
+| `autoSaveInterval`   | `number`                  | `30000`                                                                                                              | Auto-save interval in milliseconds    |
+| `toolbarItems`       | `string[]`                | `['bold', 'italic', 'underline', 'strikethrough', 'list', 'listOrdered', 'quote', 'code', 'link', 'image', 'align']` | Custom toolbar items                  |
+| `fullscreen`         | `boolean`                 | `false`                                                                                                              | Whether to enable fullscreen mode     |
+| `showWordCount`      | `boolean`                 | `false`                                                                                                              | Whether to show word count            |
+| `showReadingTime`    | `boolean`                 | `false`                                                                                                              | Whether to show reading time estimate |
+
 ## Basic Usage
+
 ```jsx
 import { RichTextInput } from '@react-superadmin/web';
 function MyForm() {
   const [content, setContent] = useState('');
   return (
     <RichTextInput
-  label='Article Content'
-  value={content}
-  onChange={setContent}
-  placeholder='Write your article...'
-  showPreview={true}
+      label='Article Content'
+      value={content}
+      onChange={setContent}
+      placeholder='Write your article...'
+      showPreview={true}
     />
   );
 }
 ```
+
 ## Examples
+
 ### Basic Rich Text Editor
+
 <LiveProvider
   code={`
 function BasicRichTextEditor() {
