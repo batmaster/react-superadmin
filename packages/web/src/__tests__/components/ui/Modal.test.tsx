@@ -209,7 +209,7 @@ describe("Modal", () => {
   it("should apply custom backdropClassName", () => {
     render(<Modal {...defaultProps} backdropClassName="custom-backdrop" />);
 
-    // Find the backdrop by looking for the fixed inset-0 element
+    // Find the backdrop by looking for the fixed inset-0 element with black background
     const backdrop = document.querySelector(".fixed.inset-0.bg-black");
     expect(backdrop).toHaveClass("custom-backdrop");
   });

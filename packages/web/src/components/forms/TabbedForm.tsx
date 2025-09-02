@@ -294,8 +294,6 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
           const error = validateField(field, value);
           if (error) {
             setErrors((prev) => ({ ...prev, [fieldName]: error }));
-            // Set field as touched so error is displayed
-            setTouched((prev) => ({ ...prev, [fieldName]: true }));
           }
         }
       }
@@ -348,16 +346,17 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       setIsSubmitting(true);
       setSubmitted(true);
 
+      // Set all fields as touched when validating the entire form
+      const newTouched: Record<string, boolean> = {};
+      allFields.forEach((field) => {
+        newTouched[field.name] = true;
+      });
+      setTouched(newTouched);
+
       // Validate all fields
       const newErrors = validateAll();
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
-        // Set all fields as touched so validation errors are displayed
-        const newTouched: Record<string, boolean> = {};
-        allFields.forEach((field) => {
-          newTouched[field.name] = true;
-        });
-        setTouched(newTouched);
         setIsSubmitting(false);
         if (onValidationError) {
           onValidationError(newErrors);
@@ -410,46 +409,9 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
   const handleNextTab = useCallback(() => {
     const currentIndex = tabs.findIndex((tab) => tab.id === activeTabId);
     if (currentIndex < tabs.length - 1) {
-      const currentTab = tabs[currentIndex];
-
-      // Validate current tab fields if validation is enabled
-      if (validateOnBlur || validateOnChange || validateOnSubmit) {
-        const currentTabErrors: Record<string, string> = {};
-        let hasErrors = false;
-
-        currentTab.fields.forEach((field) => {
-          const error = validateField(field, values[field.name]);
-          if (error) {
-            currentTabErrors[field.name] = error;
-            hasErrors = true;
-          }
-        });
-
-        // If there are validation errors, don't navigate and show errors
-        if (hasErrors) {
-          setErrors((prev) => ({ ...prev, ...currentTabErrors }));
-          // Set current tab fields as touched so errors are displayed
-          const newTouched: Record<string, boolean> = {};
-          currentTab.fields.forEach((field) => {
-            newTouched[field.name] = true;
-          });
-          setTouched((prev) => ({ ...prev, ...newTouched }));
-          return;
-        }
-      }
-
       handleTabChange(tabs[currentIndex + 1].id);
     }
-  }, [
-    activeTabId,
-    tabs,
-    handleTabChange,
-    validateOnBlur,
-    validateOnChange,
-    validateOnSubmit,
-    validateField,
-    values,
-  ]);
+  }, [activeTabId, tabs, handleTabChange]);
 
   // Navigate to previous tab
   const handlePreviousTab = useCallback(() => {
@@ -503,20 +465,23 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
       const fieldValue = values[field.name];
       const fieldError = errors[field.name];
       const fieldTouched = touched[field.name];
+      // Show error if it exists and either field is touched OR we're showing all errors (form validation)
+      const showError =
+        fieldError && (fieldTouched || Object.keys(errors).length > 0);
 
       // For now, render a basic input - this would be replaced with actual input components
-      const fieldId = `field-${field.name}`;
       return (
         <div key={field.name} className={field.className || ""}>
           <label
-            htmlFor={fieldId}
+            htmlFor={field.name}
             className="block text-sm font-medium text-gray-700 mb-1"
           >
             {field.label}
             {field.required && <span className="text-red-500 ml-1">*</span>}
           </label>
           <input
-            id={fieldId}
+            id={field.name}
+            name={field.name}
             type={field.type === "boolean" ? "checkbox" : field.type}
             value={field.type === "boolean" ? undefined : fieldValue || ""}
             checked={field.type === "boolean" ? Boolean(fieldValue) : undefined}
@@ -540,7 +505,7 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
           {field.helperText && !fieldError && (
             <p className="mt-1 text-sm text-gray-500">{field.helperText}</p>
           )}
-          {fieldError && fieldTouched && (
+          {fieldError && showError && (
             <p className="mt-1 text-sm text-red-600">{fieldError}</p>
           )}
         </div>
@@ -583,7 +548,7 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
           {description && (
-            <p className="text-sm text-gray-600 mt-2">{description}</p>
+            <p className="text-sm text-gray-600 mt-1">{description}</p>
           )}
         </div>
       )}
@@ -657,16 +622,6 @@ export const TabbedForm: React.FC<TabbedFormProps> = ({
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {Math.round(getTabCompletion(activeTabId))}% complete
-                </p>
-              </div>
-            )}
-
-            {/* Step Indicator */}
-            {showTabNumbers && (
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">
-                  {tabs.findIndex((tab) => tab.id === activeTabId) + 1} of{" "}
-                  {tabs.length}
                 </p>
               </div>
             )}

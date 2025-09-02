@@ -10,13 +10,7 @@ import {
   ListOrdered,
   Quote,
 } from "lucide-react";
-import React, {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { forwardRef, useCallback, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface MarkdownInputProps
@@ -160,9 +154,6 @@ export const MarkdownInput = forwardRef<
     const [isFullscreen, setIsFullscreen] = useState(fullscreen);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [selection, setSelection] = useState({ start: 0, end: 0 });
-
-    // Expose the internal textarea ref to parent via forwarded ref
-    useImperativeHandle(ref, () => textareaRef.current!);
 
     const inputId = id || `markdown-${Math.random().toString(36).substr(2, 9)}`;
     const hasError = !!error;
@@ -349,7 +340,7 @@ export const MarkdownInput = forwardRef<
     const renderPreview = () => {
       if (!value)
         return (
-          <div className="italic text-gray-400">No content to preview</div>
+          <div className="text-gray-400 italic">No content to preview</div>
         );
 
       // Basic markdown rendering (in a real implementation, you'd use a markdown parser)
@@ -368,7 +359,7 @@ export const MarkdownInput = forwardRef<
 
       return (
         <div
-          className="max-w-none prose prose-sm"
+          className="prose prose-sm max-w-none"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       );
@@ -388,7 +379,7 @@ export const MarkdownInput = forwardRef<
             )}
           >
             {label}
-            {required && <span className="ml-1 text-red-500">*</span>}
+            {required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
 
@@ -396,7 +387,7 @@ export const MarkdownInput = forwardRef<
         {showToolbar && (
           <div
             className={cn(
-              "flex gap-1 items-center p-2 bg-gray-50 rounded-t-md border border-gray-200",
+              "flex items-center gap-1 p-2 bg-gray-50 border border-gray-200 rounded-t-md",
               toolbarClassName,
             )}
           >
@@ -407,7 +398,7 @@ export const MarkdownInput = forwardRef<
                 onClick={() => handleToolbarAction(item.action)}
                 disabled={isDisabled}
                 className={cn(
-                  "p-2 text-gray-600 rounded transition-colors duration-200 hover:text-gray-900 hover:bg-gray-200",
+                  "p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors duration-200",
                   "disabled:opacity-50 disabled:cursor-not-allowed",
                 )}
                 title={item.title}
@@ -451,7 +442,7 @@ export const MarkdownInput = forwardRef<
           {isPreviewMode ? (
             <div
               className={cn(
-                "overflow-auto p-4 bg-white min-h-[200px]",
+                "p-4 min-h-[200px] bg-white overflow-auto",
                 previewClassName,
               )}
             >
@@ -459,7 +450,18 @@ export const MarkdownInput = forwardRef<
             </div>
           ) : (
             <textarea
-              ref={textareaRef}
+              ref={(node) => {
+                // Handle both refs
+                if (typeof ref === "function") {
+                  ref(node);
+                } else if (ref) {
+                  ref.current = node;
+                }
+                // Use a different approach to avoid readonly property issue
+                if (textareaRef) {
+                  (textareaRef as any).current = node;
+                }
+              }}
               id={inputId}
               value={value}
               onChange={handleChange}
@@ -487,7 +489,7 @@ export const MarkdownInput = forwardRef<
         </div>
 
         {/* Helper Text, Error, and Stats */}
-        <div className="flex justify-between items-center mt-2">
+        <div className="mt-2 flex items-center justify-between">
           <div className="flex-1">
             {helperText && !hasError && (
               <p id={`${inputId}-helper`} className="text-sm text-gray-500">
@@ -502,7 +504,7 @@ export const MarkdownInput = forwardRef<
             )}
           </div>
 
-          <div className="flex gap-4 items-center text-xs text-gray-500">
+          <div className="flex items-center gap-4 text-xs text-gray-500">
             {/* Character Count */}
             {showCharacterCount && maxLength && (
               <span
@@ -527,10 +529,10 @@ export const MarkdownInput = forwardRef<
         {/* Markdown Help */}
         {showHelp && (
           <details className="mt-4">
-            <summary className="text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900">
+            <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
               Markdown Help
             </summary>
-            <div className="p-3 mt-2 text-xs text-gray-600 bg-gray-50 rounded-md">
+            <div className="mt-2 p-3 bg-gray-50 rounded-md text-xs text-gray-600">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <strong>Text:</strong>
