@@ -1,0 +1,66 @@
+# No Emojis Rule
+
+**CRITICAL**: This project does NOT use emojis anywhere in code, documentation, or any text content.
+
+## What This Means
+
+- **NO emojis** in documentation files (`.md`, `.mdx`)
+- **NO emojis** in code comments
+- **NO emojis** in commit messages
+- **NO emojis** in variable names, function names, or any code
+- **NO emojis** in UI text, labels, or user-facing content
+- **NO emojis** in README files, guides, or any documentation
+
+## Professional Standards
+
+Keep all content clean, professional, and emoji-free. Use:
+- Clear, descriptive text
+- Proper formatting and structure
+- Professional language
+- Clean, readable code
+
+## Examples
+
+**WRONG:**
+```markdown
+# Features
+- Implemented
+- Missing
+```
+
+**CORRECT:**
+```markdown
+# Features
+- **IMPLEMENTED**
+- **MISSING**
+```
+
+**WRONG:**
+```javascript
+// Great success!
+const awesomeFunction = () => {
+  // This works
+}
+```
+
+**CORRECT:**
+```javascript
+// Success!
+const awesomeFunction = () => {
+  // This works
+}
+```
+
+## Enforcement
+
+When creating or editing any content:
+1. Check for emojis before saving
+2. Remove any emojis found
+3. Replace with appropriate text alternatives
+4. Maintain professional appearance
+
+This rule applies to ALL files and content in the project.
+description:
+globs:
+alwaysApply: true
+---
