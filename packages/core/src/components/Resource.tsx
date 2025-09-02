@@ -113,7 +113,7 @@ export const Resource: React.FC<ResourceProps> = ({
   }, [config.name]);
 
   // Check if user has permission to access this resource
-  const hasPermission = (operation: keyof PermissionConfig): boolean => {
+  const _hasPermission = (operation: keyof PermissionConfig): boolean => {
     const permissions = finalConfig.permissions;
     return permissions?.[operation] ?? true;
   };
@@ -124,7 +124,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Render custom field if renderer exists
-  const renderField = (fieldName: string, value: unknown): ReactNode => {
+  const _renderField = (fieldName: string, value: unknown): ReactNode => {
     const field = getFieldConfig(fieldName);
     if (!field) return String(value);
 
@@ -174,7 +174,7 @@ export const Resource: React.FC<ResourceProps> = ({
   };
 
   // Check if a specific view is available
-  const hasView = (viewName: string): boolean => {
+  const _hasView = (viewName: string): boolean => {
     return getAvailableViews().some((view) => view.name === viewName);
   };
 
