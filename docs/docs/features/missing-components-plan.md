@@ -1,21 +1,24 @@
 # Missing Components Implementation Plan
 
-*Based on React Admin comparison analysis*
+_Based on React Admin comparison analysis_
 
 ## 🎯 **Priority 1: High Impact Missing Components**
 
 ### **Bulk Operations (Critical)**
+
 - `useUpdateMany` - Bulk update operations
 - `useDeleteMany` - Bulk delete operations
 - `<BulkActionButton>` - Bulk action buttons
 - `<BulkActionToolbar>` - Bulk action toolbar
 
 ### **Advanced Data Hooks (High Priority)**
+
 - `useInfiniteGetList` - Infinite scroll support
 - `useGetTree` - Hierarchical data support
 - `useGetManyReference` - Enhanced reference handling
 
 ### **Permission System (Security)**
+
 - `usePermissions` - Permission management hook
 - `useCanAccess` - Access control hook
 - `<CanAccess>` - Permission wrapper component
@@ -23,17 +26,20 @@
 ## 🎯 **Priority 2: UI Enhancement Components**
 
 ### **Advanced List Views**
+
 - `<SimpleList>` - Simple list view
 - `<Calendar>` - Calendar view
 - `<Tree>` - Tree view
 - `<TreeWithDetails>` - Tree with details
 
 ### **Advanced Show Layouts**
+
 - `<TabbedShowLayout>` - Tabbed show layout
 - `<AccordionForm>` - Accordion form layout
 - `<WizardForm>` - Wizard form layout
 
 ### **Advanced UI Components**
+
 - `<Breadcrumb>` - Breadcrumb navigation
 - `<RecordRepresentation>` - Record display
 - `<SelectColumnsButton>` - Column selection
@@ -45,6 +51,7 @@
 ## 🎯 **Priority 3: Field Components**
 
 ### **Missing Field Types**
+
 - `<FileField>` - File display field
 - `<MarkdownField>` - Markdown display
 - `<RichTextField>` - Rich text display
@@ -55,6 +62,7 @@
 ## 🎯 **Priority 4: Internationalization**
 
 ### **Complete I18N System**
+
 - `<Translate>` - Translation component
 - `useTranslate` - Translation hook
 - `useLocaleState` - Locale state management
@@ -64,6 +72,7 @@
 ## 🎯 **Priority 5: Real-time Features**
 
 ### **Live Data System**
+
 - `usePublish` - Publish hook
 - `useSubscribe` - Subscribe hook
 - `useSubscribeCallback` - Subscribe with callback
@@ -74,6 +83,7 @@
 - `<ShowLive>` - Live show
 
 ### **Lock Management**
+
 - `useLock` - Lock a record
 - `useUnlock` - Unlock a record
 - `useGetLock` - Get lock status
@@ -84,6 +94,7 @@
 ## 🎯 **Priority 6: Advanced Theming**
 
 ### **Theme Components**
+
 - `<Box>` - Box layout component
 - `<Stack>` - Stack layout component
 - `<Grid>` - Grid layout component
@@ -93,6 +104,7 @@
 ## 🎯 **Priority 7: Advanced Inputs**
 
 ### **Missing Input Types**
+
 - `<AutocompleteArrayInput>` - Autocomplete array input
 - `<DateRangeInput>` - Date range input
 - `<DualListInput>` - Dual list input
@@ -111,6 +123,7 @@
 ## 🎯 **Priority 8: Advanced Forms**
 
 ### **Form Components**
+
 - `<LongForm>` - Long form layout
 - `<EditDialog>` - Edit dialog
 - `<EditInDialogButton>` - Edit in dialog button
@@ -122,6 +135,7 @@
 ## 🎯 **Priority 9: Advanced Navigation**
 
 ### **Navigation Components**
+
 - `<ContainerLayout>` - Container layout
 - `<HorizontalMenu>` - Horizontal menu
 - `<MultiLevelMenu>` - Multi-level menu
@@ -133,12 +147,14 @@
 ## 🎯 **Priority 10: Advanced Features**
 
 ### **Utility Components**
+
 - `<WithListContext>` - List context wrapper
 - `<Count>` - Count component
 - `<SearchWithResult>` - Search with results
 - `<Confirm>` - Enhanced confirmation dialogs
 
 ### **Advanced Hooks**
+
 - `useListController` - List controller hook
 - `useUnselect` - Unselect hook
 - `useUnselectAll` - Unselect all hook
@@ -149,6 +165,7 @@
 ## 📋 **Implementation Checklist**
 
 ### **Phase 1: Core Missing (Weeks 1-2)**
+
 - [ ] `useUpdateMany` hook
 - [ ] `useDeleteMany` hook
 - [ ] `usePermissions` hook
@@ -156,24 +173,28 @@
 - [ ] `<Breadcrumb>` component
 
 ### **Phase 2: Advanced Views (Weeks 3-4)**
+
 - [ ] `<SimpleList>` component
 - [ ] `<Calendar>` component
 - [ ] `<Tree>` component
 - [ ] `<TabbedShowLayout>` component
 
 ### **Phase 3: I18N System (Weeks 5-6)**
+
 - [ ] `useTranslate` hook
 - [ ] `<Translate>` component
 - [ ] Locale management system
 - [ ] Translation utilities
 
 ### **Phase 4: Real-time Features (Weeks 7-8)**
+
 - [ ] `usePublish` hook
 - [ ] `useSubscribe` hook
 - [ ] Live update components
 - [ ] Lock management system
 
 ### **Phase 5: Advanced UI (Weeks 9-10)**
+
 - [ ] `<Box>`, `<Stack>`, `<Grid>` components
 - [ ] `<ToggleThemeButton>` component
 - [ ] Advanced theming system
@@ -182,6 +203,7 @@
 ## 🎯 **Success Metrics**
 
 ### **Target Completion**
+
 - **Phase 1**: 80% feature parity
 - **Phase 2**: 85% feature parity
 - **Phase 3**: 90% feature parity
@@ -189,6 +211,7 @@
 - **Phase 5**: 100% feature parity
 
 ### **Quality Standards**
+
 - All components must have TypeScript support
 - All components must have comprehensive tests
 - All components must have full documentation
@@ -197,4 +220,5 @@
 
 ---
 
-*This plan ensures systematic implementation of missing components while maintaining code quality and user experience standards.*
+_This plan ensures systematic implementation of missing components while
+maintaining code quality and user experience standards._
