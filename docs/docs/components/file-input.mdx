@@ -1,0 +1,748 @@
+---
+title: FileInput Component
+description: Advanced file input component with drag and drop, validation, preview, and upload capabilities
+---
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { FileInput } from '@react-superadmin/web';
+
+# FileInput Component
+
+The `FileInput` component is a comprehensive file upload solution that provides drag and drop functionality, file validation, preview capabilities, and upload progress tracking. It's designed to handle both single and multiple file uploads with extensive customization options.
+
+## Overview
+
+The FileInput component provides:
+
+- **Drag & Drop Support**: Intuitive file upload with visual feedback
+- **File Validation**: Type, size, and custom validation rules
+- **File Preview**: Visual representation of uploaded files
+- **Multiple File Support**: Handle single or multiple file uploads
+- **Upload Progress**: Track upload progress with visual indicators
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Custom Styling**: Extensive customization options
+- **File Management**: Remove, download, and preview files
+
+## Props
+
+| Prop                   | Type                                      | Default                                          | Description                              |
+| ---------------------- | ----------------------------------------- | ------------------------------------------------ | ---------------------------------------- |
+| `value`                | `File \| File[] \| null`                  | `undefined`                                      | Current file value                       |
+| `onChange`             | `(value: File \| File[] \| null) => void` | **Required**                                     | Change handler                           |
+| `label`                | `string`                                  | `undefined`                                      | Label text for the input                 |
+| `helperText`           | `string`                                  | `undefined`                                      | Helper text below the input              |
+| `error`                | `string`                                  | `undefined`                                      | Error message to display                 |
+| `required`             | `boolean`                                 | `false`                                          | Whether the field is required            |
+| `disabled`             | `boolean`                                 | `false`                                          | Whether the input is disabled            |
+| `inputSize`            | `"sm" \| "md" \| "lg"`                    | `"md"`                                           | Input size variant                       |
+| `placeholder`          | `string`                                  | `"Choose files or drag and drop"`                | Placeholder text                         |
+| `loading`              | `boolean`                                 | `false`                                          | Whether to show a loading state          |
+| `loadingText`          | `string`                                  | `"Uploading..."`                                 | Loading text to display                  |
+| `showPreview`          | `boolean`                                 | `true`                                           | Whether to show file preview             |
+| `showInfo`             | `boolean`                                 | `false`                                          | Whether to show file info                |
+| `multiple`             | `boolean`                                 | `false`                                          | Whether to allow multiple file selection |
+| `accept`               | `string`                                  | `undefined`                                      | Accepted file types                      |
+| `maxSize`              | `number`                                  | `undefined`                                      | Maximum file size in bytes               |
+| `maxSizeText`          | `string`                                  | `undefined`                                      | Maximum file size text                   |
+| `showDragDrop`         | `boolean`                                 | `true`                                           | Whether to show drag and drop area       |
+| `dragDropText`         | `string`                                  | `"Drag and drop files here, or click to browse"` | Drag and drop text                       |
+| `showFileSize`         | `boolean`                                 | `true`                                           | Whether to show file size                |
+| `showFileType`         | `boolean`                                 | `true`                                           | Whether to show file type                |
+| `showRemoveButton`     | `boolean`                                 | `true`                                           | Whether to show remove button            |
+| `showDownloadButton`   | `boolean`                                 | `false`                                          | Whether to show download button          |
+| `showPreviewButton`    | `boolean`                                 | `true`                                           | Whether to show preview button           |
+| `showHelp`             | `boolean`                                 | `false`                                          | Whether to show help text                |
+| `showProgress`         | `boolean`                                 | `false`                                          | Whether to show upload progress          |
+| `onUpload`             | `(file: File) => Promise<string>`         | `undefined`                                      | Custom upload handler                    |
+| `showValidationErrors` | `boolean`                                 | `true`                                           | Whether to show validation errors        |
+| `validate`             | `(file: File) => string \| null`          | `undefined`                                      | Custom validation function               |
+| `maxFiles`             | `number`                                  | `undefined`                                      | Maximum number of files allowed          |
+| `showFileList`         | `boolean`                                 | `true`                                           | Whether to show file list                |
+| `allowReorder`         | `boolean`                                 | `false`                                          | Whether to allow file reordering         |
+| `showFileCount`        | `boolean`                                 | `false`                                          | Whether to show file count               |
+
+## Basic Usage
+
+```tsx
+import { FileInput } from '@react-superadmin/web';
+
+// Basic single file upload
+<FileInput
+  label="Document"
+  value={file}
+  onChange={setFile}
+  accept=".pdf,.doc,.docx"
+  showPreview={true}
+/>
+
+// Multiple file upload with validation
+<FileInput
+  label="Attachments"
+  value={files}
+  onChange={setFiles}
+  multiple={true}
+  accept="image/*,.pdf"
+  maxSize={10 * 1024 * 1024} // 10MB
+  showPreview={true}
+  showInfo={true}
+  maxFiles={5}
+/>
+```
+
+## Live Examples
+
+### Basic File Upload
+
+<LiveProvider code={`
+import React, { useState } from 'react';
+import { FileInput } from '@react-superadmin/web';
+
+function BasicFileUploadExample() {
+const [file, setFile] = useState(null);
+
+return (
+
+<div className="space-y-6">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Single File Upload</h3>
+<FileInput
+          label="Document"
+          value={file}
+          onChange={setFile}
+          accept=".pdf,.doc,.docx"
+          showPreview={true}
+          helperText="Upload a document file (PDF, DOC, DOCX)"
+        />
+</div>
+
+      <div>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">Image Upload</h3>
+        <FileInput
+          label="Profile Picture"
+          value={file}
+          onChange={setFile}
+          accept="image/*"
+          maxSize={5 * 1024 * 1024} // 5MB
+          showPreview={true}
+          showInfo={true}
+          helperText="Upload an image file (max 5MB)"
+        />
+      </div>
+    </div>
+
+);
+}
+
+render(<BasicFileUploadExample />);
+`}>
+
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+
+### Multiple File Upload
+
+<LiveProvider code={`
+import React, { useState } from 'react';
+import { FileInput } from '@react-superadmin/web';
+
+function MultipleFileUploadExample() {
+const [files, setFiles] = useState(null);
+
+return (
+
+<div className="space-y-6">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">Multiple Files</h3>
+<FileInput
+label="Attachments"
+value={files}
+onChange={setFiles}
+multiple={true}
+accept="image/_,.pdf,.doc,.docx"
+maxSize={10 _ 1024 \* 1024} // 10MB
+maxFiles={5}
+showPreview={true}
+showInfo={true}
+showFileCount={true}
+helperText="Upload up to 5 files (images, PDFs, documents)"
+/>
+</div>
+
+      <div>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">With Help Text</h3>
+        <FileInput
+          label="Gallery Images"
+          value={files}
+          onChange={setFiles}
+          multiple={true}
+          accept="image/*"
+          maxSize={2 * 1024 * 1024} // 2MB
+          maxFiles={10}
+          showPreview={true}
+          showHelp={true}
+          showFileCount={true}
+        />
+      </div>
+    </div>
+
+);
+}
+
+render(<MultipleFileUploadExample />);
+`}>
+
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+
+### Advanced Features
+
+<LiveProvider code={`
+import React, { useState } from 'react';
+import { FileInput } from '@react-superadmin/web';
+
+function AdvancedFeaturesExample() {
+const [file, setFile] = useState(null);
+const [isLoading, setIsLoading] = useState(false);
+
+// Custom upload handler
+const handleUpload = async (file) => {
+setIsLoading(true);
+// Simulate upload delay
+await new Promise(resolve => setTimeout(resolve, 2000));
+setIsLoading(false);
+return 'https://example.com/uploaded-file';
+};
+
+// Custom validation
+const validateFile = (file) => {
+if (file.size > 5 _ 1024 _ 1024) {
+return 'File size must be less than 5MB';
+}
+if (!file.name.toLowerCase().includes('report')) {
+return 'File name must contain "report"';
+}
+return null;
+};
+
+return (
+
+<div className="space-y-6">
+<div>
+<h3 className="text-sm font-medium text-gray-700 mb-2">With Custom Upload</h3>
+<FileInput
+          label="Report Upload"
+          value={file}
+          onChange={setFile}
+          accept=".pdf,.doc,.docx"
+          onUpload={handleUpload}
+          showProgress={true}
+          loading={isLoading}
+          showPreview={true}
+          showInfo={true}
+          helperText="Upload will be processed automatically"
+        />
+</div>
+
+      <div>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">With Custom Validation</h3>
+        <FileInput
+          label="Custom Validated File"
+          value={file}
+          onChange={setFile}
+          accept=".pdf,.doc,.docx"
+          validate={validateFile}
+          showPreview={true}
+          showInfo={true}
+          helperText="File must be under 5MB and contain 'report' in name"
+        />
+      </div>
+
+      <div>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">Minimal Interface</h3>
+        <FileInput
+          label="Simple Upload"
+          value={file}
+          onChange={setFile}
+          accept=".txt,.md"
+          showPreview={false}
+          showInfo={false}
+          showDragDrop={false}
+          showRemoveButton={false}
+          showPreviewButton={false}
+          helperText="Minimal interface for simple uploads"
+        />
+      </div>
+    </div>
+
+);
+}
+
+render(<AdvancedFeaturesExample />);
+`}>
+
+  <LivePreview />
+  <LiveError />
+  <LiveEditor />
+</LiveProvider>
+
+## File Validation
+
+### Built-in Validation
+
+The FileInput component provides several built-in validation features:
+
+```tsx
+<FileInput
+  label='Validated Upload'
+  value={file}
+  onChange={setFile}
+  accept='.pdf,.doc,.docx' // File type validation
+  maxSize={10 * 1024 * 1024} // File size validation (10MB)
+  maxFiles={5} // Maximum number of files
+  showValidationErrors={true} // Show validation errors
+/>
+```
+
+### Custom Validation
+
+Implement custom validation logic:
+
+```tsx
+const validateFile = file => {
+  // Check file name
+  if (!file.name.toLowerCase().includes('report')) {
+    return 'File name must contain "report"';
+  }
+
+  // Check file size
+  if (file.size > 5 * 1024 * 1024) {
+    return 'File size must be less than 5MB';
+  }
+
+  // Check file content (basic check)
+  if (file.type === 'text/plain' && file.size > 1024) {
+    return 'Text files must be smaller than 1KB';
+  }
+
+  return null; // File is valid
+};
+
+<FileInput
+  label='Custom Validated File'
+  value={file}
+  onChange={setFile}
+  validate={validateFile}
+  showValidationErrors={true}
+/>;
+```
+
+## File Types and Accept Patterns
+
+### Common File Type Patterns
+
+```tsx
+// Images
+accept = 'image/*'; // All image types
+accept = 'image/jpeg,image/png'; // Specific image types
+accept = '.jpg,.jpeg,.png,.gif'; // File extensions
+
+// Documents
+accept = '.pdf,.doc,.docx,.txt'; // Document files
+accept = 'application/pdf'; // PDF only
+
+// Media
+accept = 'video/*'; // All video types
+accept = 'audio/*'; // All audio types
+
+// Archives
+accept = '.zip,.rar,.7z'; // Archive files
+
+// Custom patterns
+accept = '.csv,.xlsx,.xls'; // Spreadsheet files
+accept = '.json,.xml,.yaml'; // Data files
+```
+
+## Upload Handling
+
+### Basic Upload
+
+```tsx
+<FileInput
+  label='Basic Upload'
+  value={file}
+  onChange={setFile}
+  accept='.pdf,.doc,.docx'
+/>
+```
+
+### Custom Upload Handler
+
+```tsx
+const handleUpload = async file => {
+  try {
+    // Create FormData
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Upload to server
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+
+    const result = await response.json();
+    return result.url; // Return the uploaded file URL
+  } catch (error) {
+    console.error('Upload error:', error);
+    throw error;
+  }
+};
+
+<FileInput
+  label='Custom Upload'
+  value={file}
+  onChange={setFile}
+  onUpload={handleUpload}
+  showProgress={true}
+/>;
+```
+
+### Upload Progress Tracking
+
+```tsx
+const handleUploadWithProgress = async file => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.upload.addEventListener('progress', event => {
+      if (event.lengthComputable) {
+        const progress = (event.loaded / event.total) * 100;
+        // Progress is automatically handled by the component
+      }
+    });
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.responseText).url);
+      } else {
+        reject(new Error('Upload failed'));
+      }
+    });
+
+    xhr.addEventListener('error', () => {
+      reject(new Error('Upload failed'));
+    });
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    xhr.open('POST', '/api/upload');
+    xhr.send(formData);
+  });
+};
+```
+
+## File Preview and Management
+
+### File Preview Options
+
+```tsx
+<FileInput
+  label='File with Preview'
+  value={file}
+  onChange={setFile}
+  showPreview={true} // Show file preview
+  showInfo={true} // Show file information
+  showPreviewButton={true} // Show preview button
+  showDownloadButton={true} // Show download button
+  showRemoveButton={true} // Show remove button
+  showFileSize={true} // Show file size
+  showFileType={true} // Show file type
+/>
+```
+
+### Custom Preview Rendering
+
+The component automatically provides file icons based on file type:
+
+- **Images**: Blue file icon
+- **Videos**: Purple file icon
+- **Audio**: Green file icon
+- **PDFs**: Red file icon
+- **Documents**: Blue file icon
+- **Spreadsheets**: Green file icon
+- **Other files**: Gray file icon
+
+## Drag and Drop
+
+### Basic Drag and Drop
+
+```tsx
+<FileInput
+  label='Drag and Drop Upload'
+  value={file}
+  onChange={setFile}
+  showDragDrop={true}
+  dragDropText='Drop your files here or click to browse'
+/>
+```
+
+### Custom Drag and Drop Styling
+
+```tsx
+<FileInput
+  label='Styled Drag and Drop'
+  value={file}
+  onChange={setFile}
+  showDragDrop={true}
+  dragDropText='Custom drag and drop text'
+  dragDropClassName='border-2 border-dashed border-blue-300 bg-blue-50 hover:bg-blue-100'
+/>
+```
+
+## Accessibility
+
+The FileInput component includes comprehensive accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for all interactions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Error Announcements**: Screen reader announcements for validation errors
+
+```tsx
+<FileInput
+  label='Accessible File Upload'
+  value={file}
+  onChange={setFile}
+  required={true}
+  helperText='This field is required for form submission'
+  error={error}
+  showHelp={true}
+/>
+```
+
+## Best Practices
+
+### 1. File Size Limits
+
+Set appropriate file size limits based on your use case:
+
+```tsx
+// Small images (profile pictures)
+<FileInput maxSize={2 * 1024 * 1024} /> // 2MB
+
+// Documents
+<FileInput maxSize={10 * 1024 * 1024} /> // 10MB
+
+// Large files (videos)
+<FileInput maxSize={100 * 1024 * 1024} /> // 100MB
+```
+
+### 2. File Type Restrictions
+
+Use specific file types to prevent security issues:
+
+```tsx
+// Images only
+<FileInput accept="image/*" />
+
+// Specific document types
+<FileInput accept=".pdf,.doc,.docx" />
+
+// Multiple types
+<FileInput accept="image/*,.pdf,.doc,.docx" />
+```
+
+### 3. User Feedback
+
+Provide clear feedback to users:
+
+```tsx
+<FileInput
+  label='Upload with Feedback'
+  value={file}
+  onChange={setFile}
+  helperText='Upload a PDF document (max 10MB)'
+  showHelp={true}
+  showFileCount={true}
+  showInfo={true}
+/>
+```
+
+### 4. Error Handling
+
+Implement proper error handling:
+
+```tsx
+const [error, setError] = useState('');
+
+const handleFileChange = file => {
+  setError(''); // Clear previous errors
+
+  if (!file) {
+    setFile(null);
+    return;
+  }
+
+  // Custom validation
+  if (file.size > 10 * 1024 * 1024) {
+    setError('File size must be less than 10MB');
+    return;
+  }
+
+  setFile(file);
+};
+
+<FileInput
+  label='Error Handling'
+  value={file}
+  onChange={handleFileChange}
+  error={error}
+  showValidationErrors={true}
+/>;
+```
+
+## Integration Examples
+
+### In Forms
+
+```tsx
+function UserProfileForm({ user, onSubmit }) {
+  const [avatar, setAvatar] = useState(user.avatar);
+  const [documents, setDocuments] = useState(user.documents);
+
+  return (
+    <form onSubmit={onSubmit} className='space-y-6'>
+      <div>
+        <label>Profile Picture</label>
+        <FileInput
+          label='Avatar'
+          value={avatar}
+          onChange={setAvatar}
+          accept='image/*'
+          maxSize={2 * 1024 * 1024}
+          showPreview={true}
+          helperText='Upload a profile picture (max 2MB)'
+        />
+      </div>
+
+      <div>
+        <label>Documents</label>
+        <FileInput
+          label='Documents'
+          value={documents}
+          onChange={setDocuments}
+          multiple={true}
+          accept='.pdf,.doc,.docx'
+          maxSize={10 * 1024 * 1024}
+          maxFiles={5}
+          showPreview={true}
+          showInfo={true}
+          helperText='Upload up to 5 documents (max 10MB each)'
+        />
+      </div>
+
+      <button type='submit'>Save Profile</button>
+    </form>
+  );
+}
+```
+
+### In Data Tables
+
+```tsx
+function DocumentTable({ documents }) {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {documents.map(doc => (
+          <tr key={doc.id}>
+            <td>{doc.name}</td>
+            <td>{doc.type}</td>
+            <td>{formatFileSize(doc.size)}</td>
+            <td>
+              <FileInput
+                value={doc.file}
+                onChange={() => {}}
+                showPreview={false}
+                showDragDrop={false}
+                showRemoveButton={true}
+                showDownloadButton={true}
+                className='inline-block'
+              />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+```
+
+### In Cards
+
+```tsx
+function DocumentCard({ document }) {
+  return (
+    <div className='card'>
+      <h3>{document.name}</h3>
+      <FileInput
+        value={document.file}
+        onChange={() => {}}
+        showPreview={true}
+        showInfo={true}
+        showRemoveButton={false}
+        showDownloadButton={true}
+        className='mt-4'
+      />
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **File not uploading**: Check that `onChange` is properly handling the file
+2. **Validation not working**: Ensure `accept` and `maxSize` are set correctly
+3. **Drag and drop not working**: Verify `showDragDrop` is true and no conflicting event handlers
+4. **Preview not showing**: Check that `showPreview` is true and file is valid
+
+### Performance Considerations
+
+- **Large files**: Consider implementing chunked uploads for very large files
+- **Multiple files**: Use `maxFiles` to limit the number of files processed
+- **Memory usage**: Clear file references when components unmount
+
+### Browser Compatibility
+
+The FileInput component supports all modern browsers with the following features:
+
+- **Drag and Drop**: Chrome, Firefox, Safari, Edge
+- **File API**: All modern browsers
+- **FileReader API**: All modern browsers
+- **FormData**: All modern browsers
+
+## Related Components
+
+- [`ImageInput`](./image-input.mdx) - Specialized image upload component (Coming Soon)
+- [`RichTextInput`](./rich-text-input.mdx) - Rich text editor with file upload (Coming Soon)
+- [`MarkdownInput`](./markdown-input.mdx) - Markdown editor with file upload (Coming Soon)
+- [`SearchInput`](./search-input.mdx) - Search input with file filtering (Coming Soon)
