@@ -1,6 +1,6 @@
+import { Check, ChevronDown } from "lucide-react";
 import React, { forwardRef, useState } from "react";
 import { cn } from "../../utils/cn";
-import { ChevronDown, Check } from "lucide-react";
 
 export interface SelectOption {
   value: any;
@@ -146,8 +146,10 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
 
     // Filter options based on search term
     const filteredOptions = searchable
-      ? options.filter((option) =>
-          option.label.toLowerCase().includes(searchTerm.toLowerCase()),
+      ? options.filter(
+          (option) =>
+            option.label &&
+            option.label.toLowerCase().includes(searchTerm.toLowerCase()),
         )
       : options;
 
@@ -227,7 +229,9 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
               <span
                 className={cn("truncate", !selectedOption && "text-gray-400")}
               >
-                {selectedOption ? selectedOption.label : placeholder}
+                {selectedOption
+                  ? selectedOption.label || "Unknown"
+                  : placeholder}
               </span>
               <ChevronDown
                 className={cn(
@@ -299,7 +303,9 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
                               option.value === value && (
                                 <Check className="h-4 w-4 text-primary-600 mr-2 flex-shrink-0" />
                               )}
-                            <span className="font-medium">{option.label}</span>
+                            <span className="font-medium">
+                              {option.label || "Unknown"}
+                            </span>
                           </div>
                           {showDescriptions && option.description && (
                             <p className="text-sm text-gray-500 mt-1">

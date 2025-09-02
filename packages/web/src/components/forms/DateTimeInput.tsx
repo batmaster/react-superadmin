@@ -1,16 +1,16 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import React, { forwardRef, useCallback, useState } from "react";
 import { cn } from "../../utils/cn";
 
-export interface NumberInputProps {
+export interface DateTimeInputProps {
   /** The name of the field */
   name: string;
   /** The label to display */
   label?: string;
   /** The current value */
-  value?: number | string;
+  value?: Date | string;
   /** Callback when the value changes */
-  onChange?: (value: number | string) => void;
+  onChange?: (value: Date | string) => void;
   /** Callback when the field is focused */
   onFocus?: () => void;
   /** Callback when the field is blurred */
@@ -23,24 +23,24 @@ export interface NumberInputProps {
   hidden?: boolean;
   /** The placeholder text */
   placeholder?: string;
-  /** The minimum value allowed */
-  min?: number;
-  /** The maximum value allowed */
-  max?: number;
-  /** The step increment/decrement */
-  step?: number;
-  /** The number format to use */
-  format?: "integer" | "decimal" | "currency";
-  /** The locale for number formatting */
+  /** The minimum date allowed */
+  min?: Date;
+  /** The maximum date allowed */
+  max?: Date;
+  /** The date format to use */
+  format?: "date" | "datetime" | "time";
+  /** The locale for date formatting */
   locale?: string;
-  /** The currency code for currency format */
-  currency?: string;
-  /** The number of decimal places */
-  decimals?: number;
-  /** Whether to show thousand separators */
-  showThousandSeparator?: boolean;
-  /** Whether to show step controls */
-  showStepControls?: boolean;
+  /** The timezone to use */
+  timezone?: string;
+  /** Whether to show time picker */
+  showTime?: boolean;
+  /** Whether to show seconds */
+  showSeconds?: boolean;
+  /** Whether to use 12-hour format */
+  use12Hour?: boolean;
+  /** Whether to show timezone selector */
+  showTimezone?: boolean;
   /** Custom CSS class name */
   className?: string;
   /** Custom CSS class name for the label */
@@ -78,26 +78,23 @@ export interface NumberInputProps {
 }
 
 /**
- * NumberInput component for handling numeric input with formatting and validation
+ * DateTimeInput component for handling date and time input with validation
  *
- * This component provides enhanced number input functionality with step controls,
- * number formatting, and validation. It supports different number formats including
- * integers, decimals, and currency.
+ * This component provides enhanced date and time input functionality with
+ * various format options, validation, and accessibility features.
  *
  * @example
  * ```tsx
- * <NumberInput
- *   name="price"
- *   label="Price"
- *   format="currency"
- *   currency="USD"
- *   min={0}
- *   step={0.01}
+ * <DateTimeInput
+ *   name="appointment"
+ *   label="Appointment Date & Time"
+ *   format="datetime"
+ *   showTime={true}
  *   required
  * />
  * ```
  */
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
+export const DateTimeInput = forwardRef<HTMLInputElement, DateTimeInputProps>(
   (
     {
       name,
@@ -112,13 +109,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       placeholder,
       min,
       max,
-      step = 1,
-      format = "decimal",
+      format = "datetime",
       locale = "en-US",
-      currency = "USD",
-      decimals = 2,
-      showThousandSeparator = true,
-      showStepControls = true,
+      timezone = "UTC",
+      showTime = true,
+      showSeconds = false,
+      use12Hour = false,
+      showTimezone = false,
       className = "",
       labelClassName = "",
       inputClassName = "",
@@ -144,68 +141,55 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const [displayValue, setDisplayValue] = useState<string>("");
 
     // Generate unique ID for the input
-    const inputId = `number-input-${name}`;
+    const inputId = `datetime-input-${name}`;
 
-    // Format number for display
-    const formatNumber = useCallback(
-      (num: number | string): string => {
-        if (num === "" || num === null || num === undefined) return "";
+    // Format date for display
+    const formatDate = useCallback(
+      (date: Date | string): string => {
+        if (!date) return "";
 
-        const number = typeof num === "string" ? parseFloat(num) : num;
-        if (isNaN(number)) return "";
+        const dateObj = typeof date === "string" ? new Date(date) : date;
+        if (isNaN(dateObj.getTime())) return "";
 
-        switch (format) {
-          case "integer":
-            return showThousandSeparator
-              ? Math.round(number).toLocaleString(locale)
-              : Math.round(number).toString();
-          case "currency":
-            return new Intl.NumberFormat(locale, {
-              style: "currency",
-              currency,
-              minimumFractionDigits: decimals,
-              maximumFractionDigits: decimals,
-              useGrouping: showThousandSeparator,
-            }).format(number);
-          case "decimal":
-          default:
-            return new Intl.NumberFormat(locale, {
-              minimumFractionDigits: decimals,
-              maximumFractionDigits: decimals,
-              useGrouping: showThousandSeparator,
-            }).format(number);
+        try {
+          switch (format) {
+            case "date":
+              return dateObj.toISOString().split("T")[0]; // YYYY-MM-DD format
+            case "time":
+              return dateObj.toTimeString().slice(0, 5); // HH:MM format
+            case "datetime":
+            default:
+              return dateObj.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM format
+          }
+        } catch (error) {
+          console.error("Error formatting date:", error);
+          return "";
         }
-      },
-      [format, locale, currency, decimals, showThousandSeparator],
-    );
-
-    // Parse number from display value
-    const parseNumber = useCallback(
-      (displayVal: string): number | string => {
-        if (!displayVal) return "";
-
-        // Remove formatting characters
-        let cleanValue = displayVal.replace(/[^\d.-]/g, "");
-
-        // Handle currency format
-        if (format === "currency") {
-          cleanValue = displayVal.replace(/[^\d.-]/g, "");
-        }
-
-        const number = parseFloat(cleanValue);
-        return isNaN(number) ? "" : number;
       },
       [format],
     );
 
+    // Parse date from display value
+    const parseDate = useCallback((displayVal: string): Date | string => {
+      if (!displayVal) return "";
+
+      try {
+        const parsed = new Date(displayVal);
+        return isNaN(parsed.getTime()) ? "" : parsed;
+      } catch (error) {
+        console.error("Error parsing date:", error);
+        return "";
+      }
+    }, []);
+
     // Update display value when value prop changes
     React.useEffect(() => {
       if (value !== undefined && value !== null) {
-        setDisplayValue(formatNumber(value));
+        setDisplayValue(formatDate(value));
       } else {
         setDisplayValue("");
       }
-    }, [value, formatNumber]);
+    }, [value, formatDate]);
 
     // Handle input change
     const handleChange = useCallback(
@@ -213,69 +197,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         const newValue = event.target.value;
         setDisplayValue(newValue);
 
-        const parsedValue = parseNumber(newValue);
+        const parsedValue = parseDate(newValue);
         onChange?.(parsedValue);
       },
-      [onChange, parseNumber],
+      [onChange, parseDate],
     );
-
-    // Handle step increment
-    const handleStepUp = useCallback(() => {
-      if (disabled) return;
-
-      const currentValue = parseNumber(displayValue);
-      if (typeof currentValue === "number") {
-        const newValue = currentValue + step;
-        if (max === undefined || newValue <= max) {
-          const formattedValue = formatNumber(newValue);
-          setDisplayValue(formattedValue);
-          onChange?.(newValue);
-        }
-      } else {
-        const newValue = step;
-        const formattedValue = formatNumber(newValue);
-        setDisplayValue(formattedValue);
-        onChange?.(newValue);
-      }
-    }, [
-      disabled,
-      displayValue,
-      step,
-      max,
-      onChange,
-      parseNumber,
-      formatNumber,
-    ]);
-
-    // Handle step decrement
-    const handleStepDown = useCallback(() => {
-      if (disabled) return;
-
-      const currentValue = parseNumber(displayValue);
-      if (typeof currentValue === "number") {
-        const newValue = currentValue - step;
-        if (min === undefined || newValue >= min) {
-          const formattedValue = formatNumber(newValue);
-          setDisplayValue(formattedValue);
-          onChange?.(newValue);
-        }
-      } else {
-        const newValue = -step;
-        if (min === undefined || newValue >= min) {
-          const formattedValue = formatNumber(newValue);
-          setDisplayValue(formattedValue);
-          onChange?.(newValue);
-        }
-      }
-    }, [
-      disabled,
-      displayValue,
-      step,
-      min,
-      onChange,
-      parseNumber,
-      formatNumber,
-    ]);
 
     // Handle clear
     const handleClear = useCallback(() => {
@@ -298,29 +224,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setIsFocused(false);
 
         // Format the value on blur
-        const parsedValue = parseNumber(displayValue);
-        if (typeof parsedValue === "number") {
-          const formattedValue = formatNumber(parsedValue);
+        const parsedValue = parseDate(displayValue);
+        if (parsedValue instanceof Date) {
+          const formattedValue = formatDate(parsedValue);
           setDisplayValue(formattedValue);
         }
 
         onBlur?.();
       },
-      [displayValue, parseNumber, formatNumber, onBlur],
-    );
-
-    // Handle key down
-    const handleKeyDown = useCallback(
-      (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "ArrowUp") {
-          event.preventDefault();
-          handleStepUp();
-        } else if (event.key === "ArrowDown") {
-          event.preventDefault();
-          handleStepDown();
-        }
-      },
-      [handleStepUp, handleStepDown],
+      [displayValue, parseDate, formatDate, onBlur],
     );
 
     // Show error if validation errors exist and field is touched or showing all errors
@@ -344,6 +256,19 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       disabled && "opacity-60 cursor-not-allowed",
       inputClassName,
     );
+
+    // Determine input type based on format
+    const getInputType = () => {
+      switch (format) {
+        case "date":
+          return "date";
+        case "time":
+          return "time";
+        case "datetime":
+        default:
+          return "datetime-local";
+      }
+    };
 
     // If hidden, don't render anything
     if (hidden) {
@@ -371,33 +296,38 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         {/* Input Container */}
         <div className="relative">
           {/* Icon */}
-          {icon && (
+          {icon ? (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               {icon}
             </div>
+          ) : (
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              {format === "time" ? (
+                <Clock className="h-4 w-4" />
+              ) : (
+                <Calendar className="h-4 w-4" />
+              )}
+            </div>
           )}
 
-          {/* Number Input */}
+          {/* DateTime Input */}
           <input
             ref={ref}
             id={inputId}
-            type="text"
+            type={getInputType()}
             name={name}
             value={displayValue}
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
             placeholder={placeholder}
             disabled={disabled}
             required={required}
-            min={min}
-            max={max}
-            step={step}
+            min={min?.toISOString().slice(0, 16)}
+            max={max?.toISOString().slice(0, 16)}
             className={cn(
               baseInputClasses,
-              icon && "pl-10",
-              showStepControls && "pr-20",
+              "pl-10",
               clearable && displayValue && !disabled && "pr-10",
             )}
             aria-describedby={cn(
@@ -407,28 +337,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             aria-invalid={showError}
             {...props}
           />
-
-          {/* Step Controls */}
-          {showStepControls && !disabled && (
-            <div className="absolute right-0 top-0 h-full flex flex-col">
-              <button
-                type="button"
-                onClick={handleStepUp}
-                className="flex-1 px-2 border-l border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset"
-                aria-label="Increase value"
-              >
-                <ChevronUp className="h-3 w-3 text-gray-400" />
-              </button>
-              <button
-                type="button"
-                onClick={handleStepDown}
-                className="flex-1 px-2 border-l border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset"
-                aria-label="Decrease value"
-              >
-                <ChevronDown className="h-3 w-3 text-gray-400" />
-              </button>
-            </div>
-          )}
 
           {/* Clear Button */}
           {clearable && displayValue && !disabled && (
@@ -478,4 +386,4 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   },
 );
 
-NumberInput.displayName = "NumberInput";
+DateTimeInput.displayName = "DateTimeInput";
