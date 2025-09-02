@@ -1,0 +1,504 @@
+---
+title: NumberField
+description: Advanced number display component with formatting, validation, and interactive features
+---
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { NumberField } from '@react-superadmin/web';
+
+# NumberField
+
+The `NumberField` component is a comprehensive number display solution that provides advanced formatting, validation, and interactive features. It supports various display styles, number formats, validation, and metadata display.
+
+## Overview
+
+The `NumberField` component provides:
+
+- **Multiple Display Styles**: Text, badge, icon, button, currency, and percentage styles
+- **Advanced Formatting**: Currency, percentage, scientific notation, compact notation
+- **Validation**: Built-in number validation with custom error messages
+- **Interactive Features**: Clickable numbers, tooltips, previews
+- **Metadata Display**: Number properties, trends, comparisons, ranges
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Customization**: Extensive styling and behavior options
+
+## Props
+
+| Prop                     | Type                                                                               | Default                   | Description                                       |
+| ------------------------ | ---------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------- |
+| `value`                  | `number \| string \| null`                                                         | -                         | The number value to display                       |
+| `record`                 | `Record<string, any>`                                                              | -                         | The source record containing the field data       |
+| `source`                 | `string`                                                                           | -                         | The source field name in the record               |
+| `className`              | `string`                                                                           | -                         | Custom CSS classes for the field container        |
+| `labelClassName`         | `string`                                                                           | -                         | Custom CSS classes for the field label            |
+| `valueClassName`         | `string`                                                                           | -                         | Custom CSS classes for the number value           |
+| `showLabel`              | `boolean`                                                                          | `true`                    | Whether to show the field label                   |
+| `label`                  | `string`                                                                           | -                         | Custom label text                                 |
+| `style`                  | `"text" \| "badge" \| "icon" \| "button" \| "currency" \| "percentage"`            | `"text"`                  | Display style for the number                      |
+| `format`                 | `"default" \| "currency" \| "percentage" \| "scientific" \| "compact" \| "custom"` | `"default"`               | Number format type                                |
+| `currency`               | `string`                                                                           | `"USD"`                   | Currency code for currency formatting             |
+| `locale`                 | `string`                                                                           | `"en-US"`                 | Locale for number formatting                      |
+| `decimalPlaces`          | `number`                                                                           | -                         | Number of decimal places to display               |
+| `showThousandsSeparator` | `boolean`                                                                          | `true`                    | Whether to show thousands separators              |
+| `loading`                | `boolean`                                                                          | `false`                   | Whether to show a loading state                   |
+| `loadingText`            | `string`                                                                           | `"Loading..."`            | Loading text                                      |
+| `disabled`               | `boolean`                                                                          | `false`                   | Whether the field is disabled                     |
+| `emptyText`              | `string`                                                                           | `"No value"`              | Custom empty state text                           |
+| `showEmpty`              | `boolean`                                                                          | `true`                    | Whether to show the empty state                   |
+| `validateNumber`         | `boolean`                                                                          | `true`                    | Whether to validate number format                 |
+| `validationErrorMessage` | `string`                                                                           | `"Invalid number format"` | Custom validation error message                   |
+| `showValidation`         | `boolean`                                                                          | `false`                   | Whether to show number validation status          |
+| `icon`                   | `React.ReactNode`                                                                  | -                         | Custom icon for the number                        |
+| `showPreview`            | `boolean`                                                                          | `false`                   | Whether to show number preview on hover           |
+| `previewContent`         | `React.ReactNode`                                                                  | -                         | Custom preview content                            |
+| `onClick`                | `(value, record) => void`                                                          | -                         | Click handler for the number                      |
+| `clickable`              | `boolean`                                                                          | `false`                   | Whether the number is clickable                   |
+| `showTooltip`            | `boolean`                                                                          | `false`                   | Whether to show a tooltip                         |
+| `tooltipContent`         | `string`                                                                           | -                         | Custom tooltip content                            |
+| `animate`                | `boolean`                                                                          | `false`                   | Whether to animate number changes                 |
+| `validNumberClassName`   | `string`                                                                           | -                         | Custom CSS classes for valid numbers              |
+| `invalidNumberClassName` | `string`                                                                           | -                         | Custom CSS classes for invalid numbers            |
+| `showMetadata`           | `boolean`                                                                          | `false`                   | Whether to show number metadata                   |
+| `showAccessibility`      | `boolean`                                                                          | `false`                   | Whether to show number accessibility features     |
+| `showStatus`             | `boolean`                                                                          | `false`                   | Whether to show number status indicators          |
+| `numberStatus`           | `"positive" \| "negative" \| "zero"`                                               | -                         | Whether the number is positive, negative, or zero |
+| `showRange`              | `boolean`                                                                          | `false`                   | Whether to show number range indicators           |
+| `minValue`               | `number`                                                                           | -                         | Minimum number for range validation               |
+| `maxValue`               | `number`                                                                           | -                         | Maximum number for range validation               |
+| `showTrend`              | `boolean`                                                                          | `false`                   | Whether to show number trends                     |
+| `previousValue`          | `number`                                                                           | -                         | Previous value for trend calculation              |
+| `showComparison`         | `boolean`                                                                          | `false`                   | Whether to show number comparison                 |
+| `comparisonValue`        | `number`                                                                           | -                         | Comparison value                                  |
+| `showUnits`              | `boolean`                                                                          | `false`                   | Whether to show number units                      |
+| `unit`                   | `string`                                                                           | -                         | Unit text to display                              |
+| `showPrecision`          | `boolean`                                                                          | `false`                   | Whether to show number precision                  |
+| `showRounding`           | `boolean`                                                                          | `false`                   | Whether to show number rounding                   |
+| `roundingMethod`         | `"round" \| "floor" \| "ceil"`                                                     | `"round"`                 | Rounding method                                   |
+
+## Basic Usage
+
+```jsx
+import { NumberField } from '@react-superadmin/web';
+
+// Basic number display
+<NumberField value={1234.56} label="Revenue" />
+
+// With record and source
+<NumberField
+  record={{ revenue: 1234.56 }}
+  source="revenue"
+  label="Revenue"
+/>
+```
+
+## Examples
+
+### Basic Number Display
+
+<LiveProvider
+  code={`
+function BasicNumberExample() {
+  return (
+    <div className="space-y-4">
+      <NumberField value={1234.56} label="Revenue" />
+      <NumberField value={42} label="Count" />
+      <NumberField value={0.123} label="Percentage" />
+      <NumberField value={null} label="Empty Value" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Different Display Styles
+
+<LiveProvider
+  code={`
+function DisplayStylesExample() {
+  const value = 1234.56;
+  
+  return (
+    <div className="space-y-4">
+      <NumberField value={value} label="Text Style" style="text" />
+      <NumberField value={value} label="Badge Style" style="badge" />
+      <NumberField value={value} label="Button Style" style="button" clickable />
+      <NumberField value={value} label="Icon Style" style="icon" />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Number Formatting
+
+<LiveProvider
+  code={`
+function NumberFormattingExample() {
+  const value = 1234.5678;
+  
+  return (
+    <div className="space-y-4">
+      <NumberField value={value} label="Default Format" format="default" />
+      <NumberField value={value} label="Currency Format" format="currency" currency="USD" />
+      <NumberField value={value} label="Percentage Format" format="percentage" />
+      <NumberField value={value} label="Scientific Format" format="scientific" />
+      <NumberField value={value} label="Compact Format" format="compact" />
+      <NumberField value={value} label="Custom Format" format="custom" decimalPlaces={3} />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Validation and Error States
+
+<LiveProvider
+  code={`
+function ValidationExample() {
+  return (
+    <div className="space-y-4">
+      <NumberField value="123.45" label="Valid Number" />
+      <NumberField value="invalid" label="Invalid Number" showValidation />
+      <NumberField value="abc123" label="Mixed Content" showValidation />
+      <NumberField value="" label="Empty Value" showValidation />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Interactive Features
+
+<LiveProvider
+  code={`
+function InteractiveExample() {
+  const handleClick = (value, record) => {
+    alert('Clicked: ' + value);
+  };
+  
+  return (
+    <div className="space-y-4">
+      <NumberField 
+        value={1234.56} 
+        label="Clickable Number" 
+        clickable 
+        onClick={handleClick}
+        showTooltip
+        tooltipContent="Click to view details"
+      />
+      <NumberField 
+        value={42} 
+        label="With Preview" 
+        showPreview 
+        previewContent="This is a custom preview"
+      />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Status and Metadata
+
+<LiveProvider
+  code={`
+function StatusMetadataExample() {
+  return (
+    <div className="space-y-4">
+      <NumberField 
+        value={1234.56} 
+        label="With Status" 
+        showStatus 
+        numberStatus="positive"
+      />
+      <NumberField 
+        value={-500} 
+        label="Negative Number" 
+        showStatus 
+        numberStatus="negative"
+      />
+      <NumberField 
+        value={0} 
+        label="Zero Value" 
+        showStatus 
+        numberStatus="zero"
+      />
+      <NumberField 
+        value={42} 
+        label="With Metadata" 
+        showMetadata 
+        showPrecision 
+        showUnits 
+        unit="items"
+      />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Trends and Comparisons
+
+<LiveProvider
+  code={`
+function TrendsComparisonExample() {
+  return (
+    <div className="space-y-4">
+      <NumberField 
+        value={1500} 
+        label="With Trend" 
+        showTrend 
+        previousValue={1200}
+      />
+      <NumberField 
+        value={800} 
+        label="Decreasing Trend" 
+        showTrend 
+        previousValue={1000}
+      />
+      <NumberField 
+        value={1000} 
+        label="With Comparison" 
+        showComparison 
+        comparisonValue={900}
+      />
+      <NumberField 
+        value={500} 
+        label="Range Validation" 
+        showRange 
+        minValue={0} 
+        maxValue={1000}
+      />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Number Formatting
+
+The component supports various number formatting options:
+
+### Currency Formatting
+
+```jsx
+<NumberField value={1234.56} format='currency' currency='USD' locale='en-US' />
+```
+
+### Percentage Formatting
+
+```jsx
+<NumberField value={0.1234} format='percentage' decimalPlaces={2} />
+```
+
+### Scientific Notation
+
+```jsx
+<NumberField value={1234567} format='scientific' decimalPlaces={3} />
+```
+
+### Compact Notation
+
+```jsx
+<NumberField value={1234567} format='compact' />
+```
+
+## Display Styles
+
+### Text Style (Default)
+
+```jsx
+<NumberField value={1234.56} style='text' />
+```
+
+### Badge Style
+
+```jsx
+<NumberField value={1234.56} style='badge' />
+```
+
+### Button Style
+
+```jsx
+<NumberField
+  value={1234.56}
+  style='button'
+  clickable
+  onClick={value => console.log(value)}
+/>
+```
+
+### Icon Style
+
+```jsx
+<NumberField value={1234.56} style='icon' icon={<span>💰</span>} />
+```
+
+## Validation
+
+The component includes built-in number validation:
+
+```jsx
+<NumberField
+  value='invalid'
+  validateNumber
+  showValidation
+  validationErrorMessage='Please enter a valid number'
+/>
+```
+
+## Interactive Features
+
+### Clickable Numbers
+
+```jsx
+<NumberField
+  value={1234.56}
+  clickable
+  onClick={(value, record) => {
+    console.log('Clicked:', value);
+    console.log('Record:', record);
+  }}
+/>
+```
+
+### Tooltips
+
+```jsx
+<NumberField
+  value={1234.56}
+  showTooltip
+  tooltipContent='Click to view detailed information'
+/>
+```
+
+### Preview on Hover
+
+```jsx
+<NumberField
+  value={1234.56}
+  showPreview
+  previewContent={
+    <div>
+      <div>Detailed Information</div>
+      <div>Value: $1,234.56</div>
+      <div>Type: Currency</div>
+    </div>
+  }
+/>
+```
+
+## Status Indicators
+
+### Number Status
+
+```jsx
+<NumberField value={1234.56} showStatus numberStatus='positive' />
+```
+
+### Range Validation
+
+```jsx
+<NumberField value={1500} showRange minValue={0} maxValue={1000} />
+```
+
+### Trends
+
+```jsx
+<NumberField value={1500} showTrend previousValue={1200} />
+```
+
+### Comparisons
+
+```jsx
+<NumberField value={1000} showComparison comparisonValue={900} />
+```
+
+## Integration with Forms
+
+The `NumberField` works seamlessly with form components:
+
+```jsx
+import { SimpleForm } from '@react-superadmin/web';
+
+const formFields = [
+  {
+    name: 'revenue',
+    label: 'Revenue',
+    type: 'number',
+    validation: [
+      { type: 'required', message: 'Revenue is required' },
+      { type: 'min', value: 0, message: 'Revenue must be positive' },
+    ],
+  },
+];
+
+function RevenueForm() {
+  return (
+    <SimpleForm fields={formFields} onSubmit={values => console.log(values)} />
+  );
+}
+```
+
+## Accessibility
+
+The component includes comprehensive accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for interactive elements
+- **Screen Reader Support**: Proper ARIA labels and roles
+- **Focus Management**: Clear focus indicators
+- **Semantic HTML**: Proper semantic structure
+
+```jsx
+<NumberField value={1234.56} showAccessibility aria-label='Revenue amount' />
+```
+
+## Styling
+
+The component supports extensive customization through CSS classes:
+
+```jsx
+<NumberField
+  value={1234.56}
+  className='custom-container'
+  labelClassName='custom-label'
+  valueClassName='custom-value'
+  validNumberClassName='text-green-600'
+  invalidNumberClassName='text-red-600'
+/>
+```
+
+## Related Components
+
+- [`TextField`](./text-field.mdx) - Text display with formatting options
+- [`DateField`](./date-field.mdx) - Date/time display with formatting
+- [`BooleanField`](./boolean-field.mdx) - Boolean value display
+- [`Resource`](./resource.mdx) - Resource definition for data management

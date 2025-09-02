@@ -1,0 +1,453 @@
+---
+title: TimeInput Component
+description: Specialized time input component with validation, 12/24-hour format, and quick time options
+---
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { TimeInput } from '@react-superadmin/web';
+
+# TimeInput Component
+
+The `TimeInput` component is a specialized time input that provides validation, accessibility features, and flexible styling options specifically designed for time input. It supports both 12-hour and 24-hour formats with comprehensive validation and quick time selection options.
+
+## Overview
+
+The TimeInput component provides:
+
+- **Time Validation**: Built-in time format validation with custom validation support
+- **12/24 Hour Format**: Support for both 12-hour and 24-hour time formats
+- **Quick Time Options**: Predefined time options for common selections
+- **Time Constraints**: Minimum and maximum time constraints
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Custom Styling**: Flexible styling options with consistent design
+- **Time Zone Support**: Optional time zone information display
+- **Current Time**: Quick current time selection button
+
+## Props
+
+| Prop               | Type                               | Default                                | Description                               |
+| ------------------ | ---------------------------------- | -------------------------------------- | ----------------------------------------- |
+| `value`            | `string \| null`                   | -                                      | Current time value (HH:MM format or null) |
+| `onChange`         | `(value: string \| null) => void`  | -                                      | Callback when time changes                |
+| `label`            | `string`                           | -                                      | Label text for the input                  |
+| `helperText`       | `string`                           | -                                      | Helper text below the input               |
+| `error`            | `string`                           | -                                      | Error message to display                  |
+| `required`         | `boolean`                          | `false`                                | Whether the field is required             |
+| `disabled`         | `boolean`                          | `false`                                | Whether the input is disabled             |
+| `size`             | `'sm' \| 'md' \| 'lg'`             | `'md'`                                 | Input size variant                        |
+| `min`              | `string`                           | -                                      | Minimum allowed time (HH:MM format)       |
+| `max`              | `string`                           | -                                      | Maximum allowed time (HH:MM format)       |
+| `step`             | `number`                           | `15`                                   | Time step in minutes                      |
+| `showIcon`         | `boolean`                          | `true`                                 | Whether to show an icon                   |
+| `showSeconds`      | `boolean`                          | `false`                                | Whether to show seconds input             |
+| `use12Hour`        | `boolean`                          | `false`                                | Whether to use 12-hour format             |
+| `showAMPM`         | `boolean`                          | `false`                                | Whether to show AM/PM selector            |
+| `placeholder`      | `string`                           | -                                      | Placeholder text                          |
+| `showTimePicker`   | `boolean`                          | `false`                                | Whether to show time picker               |
+| `showQuickOptions` | `boolean`                          | `false`                                | Whether to show quick time options        |
+| `quickTimeOptions` | `string[]`                         | `['09:00', '12:00', '15:00', '18:00']` | Quick time options to display             |
+| `showCurrentTime`  | `boolean`                          | `false`                                | Whether to show current time button       |
+| `showValidation`   | `boolean`                          | `false`                                | Whether to show time validation           |
+| `validateTime`     | `(time: string) => string \| null` | -                                      | Custom validation function                |
+| `showFormatHelp`   | `boolean`                          | `false`                                | Whether to show time format help          |
+| `showTimeZone`     | `boolean`                          | `false`                                | Whether to show time zone info            |
+| `timeZone`         | `string`                           | -                                      | Current time zone                         |
+
+## Basic Usage
+
+```jsx
+import { TimeInput } from '@react-superadmin/web';
+
+function MyForm() {
+  const [meetingTime, setMeetingTime] = useState('');
+
+  return (
+    <TimeInput
+      label='Meeting Time'
+      value={meetingTime}
+      onChange={setMeetingTime}
+      placeholder='Select meeting time'
+    />
+  );
+}
+```
+
+## Examples
+
+### Basic Time Input
+
+<LiveProvider
+  code={`
+function BasicTimeInput() {
+  const [time, setTime] = React.useState('');
+  
+  return (
+    <TimeInput
+      label="Meeting Time"
+      value={time}
+      onChange={setTime}
+      placeholder="Select meeting time"
+      showIcon={true}
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Time Input with Validation
+
+<LiveProvider
+  code={`
+function TimeInputWithValidation() {
+  const [time, setTime] = React.useState('');
+  const [error, setError] = React.useState('');
+  
+  const validateTime = (timeValue) => {
+    if (!timeValue) return null;
+    
+    const [hours, minutes] = timeValue.split(':');
+    const hour = parseInt(hours);
+    const minute = parseInt(minutes);
+    
+    if (hour < 9 || hour > 17) {
+      return 'Business hours are 9:00 AM to 5:00 PM';
+    }
+    
+    return null;
+  };
+  
+  const handleChange = (newTime) => {
+    setTime(newTime);
+    const validationError = validateTime(newTime);
+    setError(validationError || '');
+  };
+  
+  return (
+    <TimeInput
+      label="Business Hours"
+      value={time}
+      onChange={handleChange}
+      error={error}
+      min="09:00"
+      max="17:00"
+      step={30}
+      required={true}
+      helperText="Select a time during business hours"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### 12-Hour Format Time Input
+
+<LiveProvider
+  code={`
+function TwelveHourTimeInput() {
+  const [time, setTime] = React.useState('');
+  
+  return (
+    <TimeInput
+      label="Appointment Time"
+      value={time}
+      onChange={setTime}
+      use12Hour={true}
+      showAMPM={true}
+      showIcon={true}
+      placeholder="12:00 PM"
+      helperText="Select your preferred appointment time"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Time Input with Quick Options
+
+<LiveProvider
+  code={`
+function TimeInputWithQuickOptions() {
+  const [time, setTime] = React.useState('');
+  
+  const quickOptions = [
+    '08:00', '09:00', '10:00', '11:00',
+    '12:00', '13:00', '14:00', '15:00',
+    '16:00', '17:00', '18:00'
+  ];
+  
+  return (
+    <TimeInput
+      label="Preferred Time"
+      value={time}
+      onChange={setTime}
+      showQuickOptions={true}
+      quickTimeOptions={quickOptions}
+      showCurrentTime={true}
+      helperText="Select from common times or choose current time"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Time Input with Time Zone
+
+<LiveProvider
+  code={`
+function TimeInputWithTimeZone() {
+  const [time, setTime] = React.useState('');
+  
+  return (
+    <TimeInput
+      label="Meeting Time (UTC)"
+      value={time}
+      onChange={setTime}
+      showTimeZone={true}
+      timeZone="UTC"
+      showFormatHelp={true}
+      helperText="All times are in UTC timezone"
+    />
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Different Sizes
+
+<LiveProvider
+  code={`
+function TimeInputSizes() {
+  const [time, setTime] = React.useState('');
+  
+  return (
+    <div className="space-y-4">
+      <TimeInput
+        label="Small Time Input"
+        value={time}
+        onChange={setTime}
+        size="sm"
+        placeholder="14:30"
+      />
+      
+      <TimeInput
+        label="Medium Time Input (Default)"
+        value={time}
+        onChange={setTime}
+        size="md"
+        placeholder="14:30"
+      />
+      
+      <TimeInput
+        label="Large Time Input"
+        value={time}
+        onChange={setTime}
+        size="lg"
+        placeholder="14:30"
+      />
+    </div>
+  );
+}
+`}
+>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Time Validation
+
+The component supports built-in and custom validation:
+
+### Built-in Validation
+
+```jsx
+<TimeInput min='09:00' max='17:00' step={30} required={true} />
+```
+
+### Custom Validation
+
+```jsx
+const validateTime = time => {
+  if (!time) return null;
+
+  const [hours, minutes] = time.split(':');
+  const hour = parseInt(hours);
+  const minute = parseInt(minutes);
+
+  if (hour < 9 || hour > 17) {
+    return 'Business hours are 9:00 AM to 5:00 PM';
+  }
+
+  if (minute % 15 !== 0) {
+    return 'Time must be in 15-minute intervals';
+  }
+
+  return null;
+};
+
+<TimeInput validateTime={validateTime} showValidation={true} />;
+```
+
+## Time Format Support
+
+The component supports both 12-hour and 24-hour formats:
+
+### 24-Hour Format (Default)
+
+```jsx
+<TimeInput value='14:30' onChange={setTime} placeholder='14:30' />
+```
+
+### 12-Hour Format
+
+```jsx
+<TimeInput
+  value='02:30 PM'
+  onChange={setTime}
+  use12Hour={true}
+  showAMPM={true}
+  placeholder='12:00 PM'
+/>
+```
+
+## Quick Time Options
+
+You can provide predefined time options for quick selection:
+
+```jsx
+const quickOptions = [
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+];
+
+<TimeInput
+  showQuickOptions={true}
+  quickTimeOptions={quickOptions}
+  showCurrentTime={true}
+/>;
+```
+
+## Time Constraints
+
+Set minimum and maximum time constraints:
+
+```jsx
+<TimeInput
+  min='09:00'
+  max='17:00'
+  step={30}
+  helperText='Select time between 9:00 AM and 5:00 PM'
+/>
+```
+
+## Integration with Forms
+
+The TimeInput component works seamlessly with form components:
+
+```jsx
+import { SimpleForm, TimeInput } from '@react-superadmin/web';
+
+const formFields = [
+  {
+    name: 'startTime',
+    label: 'Start Time',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+      <TimeInput
+        label={field.label}
+        value={value}
+        onChange={onChange}
+        error={error}
+        min='09:00'
+        max='17:00'
+        step={30}
+      />
+    ),
+  },
+  {
+    name: 'endTime',
+    label: 'End Time',
+    type: 'custom',
+    render: (field, value, onChange, error) => (
+      <TimeInput
+        label={field.label}
+        value={value}
+        onChange={onChange}
+        error={error}
+        min='09:00'
+        max='17:00'
+        step={30}
+      />
+    ),
+  },
+];
+
+function ScheduleForm() {
+  const handleSubmit = values => {
+    console.log('Schedule submitted:', values);
+  };
+
+  return <SimpleForm fields={formFields} onSubmit={handleSubmit} />;
+}
+```
+
+## Accessibility Features
+
+The TimeInput component includes several accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for all interactions
+- **Screen Reader Support**: Proper ARIA labels and descriptions
+- **Focus Management**: Clear focus indicators and management
+- **Time Format Announcements**: Screen reader announcements for time format
+- **Validation Announcements**: Screen reader announcements for validation errors
+
+## Styling and Customization
+
+The component provides extensive styling options:
+
+```jsx
+<TimeInput
+  className='custom-container'
+  inputClassName='custom-input'
+  labelClassName='custom-label'
+  showIcon={true}
+  size='lg'
+/>
+```
+
+## Related Components
+
+- [`DateInput`](./date-input.mdx) - Date picker input component
+- [`DateTimeInput`](./date-time-input.mdx) - Combined date and time input (Coming Soon)
+- [`FormField`](./form-field.mdx) - Universal form field renderer
+- [`SimpleForm`](./simple-form.mdx) - Simple form with field rendering
+- [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation

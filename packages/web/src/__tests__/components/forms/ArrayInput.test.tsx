@@ -459,16 +459,21 @@ describe("ArrayInput", () => {
         />,
       );
 
-      // All inputs should be rendered (5 total)
       const allInputs = screen.getAllByRole("textbox");
+
+      // Verify that we have 5 items total
       expect(allInputs).toHaveLength(5);
 
-      // Check specific values
-      expect(screen.getByDisplayValue("false")).toBeInTheDocument(); // boolean false
-      expect(screen.getByDisplayValue("0")).toBeInTheDocument(); // number 0
-      // Empty string, null, and undefined all render as empty strings (3 total)
+      // Check that all values are properly converted to strings
+      expect(allInputs[0]).toHaveValue("false");
+      expect(allInputs[1]).toHaveValue("0");
+      expect(allInputs[2]).toHaveValue("");
+      expect(allInputs[3]).toHaveValue("");
+      expect(allInputs[4]).toHaveValue("");
+
+      // Verify that null and undefined values render as empty strings
       const emptyInputs = screen.getAllByDisplayValue("");
-      expect(emptyInputs).toHaveLength(3);
+      expect(emptyInputs).toHaveLength(3); // null, undefined, and empty string
     });
   });
 

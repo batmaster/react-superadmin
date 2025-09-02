@@ -1,0 +1,368 @@
+---
+title: FormField Component
+description: Universal form field component that renders different input types based on field configuration
+---
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { FormField } from '@react-superadmin/web';
+
+# FormField Component
+
+The `FormField` component is a universal form field renderer that automatically selects and renders the appropriate input component based on the field configuration. It provides a consistent interface for handling different input types while maintaining proper validation and accessibility.
+
+## Overview
+
+The FormField component provides:
+
+- **Automatic Input Selection**: Renders the correct input type based on field configuration
+- **Consistent Interface**: Unified props interface for all field types
+- **Built-in Validation**: Error display and validation support
+- **Accessibility**: Proper labels, help text, and ARIA attributes
+- **Flexible Configuration**: Supports all common input types
+- **Type Safety**: Full TypeScript support with proper typing
+
+## Props
+
+| Prop       | Type                   | Required | Description                                                       |
+| ---------- | ---------------------- | -------- | ----------------------------------------------------------------- |
+| `field`    | `FieldConfig`          | Yes      | Field configuration object defining the input type and properties |
+| `value`    | `any`                  | Yes      | Current value of the field                                        |
+| `onChange` | `(value: any) => void` | Yes      | Callback function called when the field value changes             |
+| `error`    | `string`               | No       | Error message to display below the field                          |
+| `disabled` | `boolean`              | No       | Whether the field is disabled (default: false)                    |
+
+## Field Types
+
+The FormField component supports the following field types:
+
+### Text Inputs
+
+- `text` - Standard text input
+- `email` - Email input with validation
+- `password` - Password input with masking
+
+### Numeric Inputs
+
+- `number` - Number input with numeric validation
+
+### Selection Inputs
+
+- `select` - Dropdown selection with options
+- `boolean` - Checkbox for true/false values
+
+### Multi-line Inputs
+
+- `textarea` - Multi-line text area
+
+### Date Inputs
+
+- `date` - Date picker input
+
+## Basic Usage
+
+```jsx
+import { FormField } from '@react-superadmin/web';
+
+const fieldConfig = {
+  name: 'email',
+  label: 'Email Address',
+  type: 'email',
+  required: true,
+  placeholder: 'Enter your email',
+  helpText: "We'll never share your email with anyone else.",
+};
+
+function MyForm() {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  return (
+    <FormField
+      field={fieldConfig}
+      value={value}
+      onChange={setValue}
+      error={error}
+    />
+  );
+}
+```
+
+## Field Configuration
+
+The `FieldConfig` interface defines the structure for field configuration:
+
+```typescript
+interface FieldConfig {
+  name: string;
+  label: string;
+  type:
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'select'
+    | 'textarea'
+    | 'boolean'
+    | 'date';
+  required?: boolean;
+  placeholder?: string;
+  helpText?: string;
+  options?: Array<{ value: string; label: string }>; // For select fields
+}
+```
+
+## Examples
+
+### Text Input Field
+
+<LiveProvider code={`
+function TextFieldExample() {
+  const [value, setValue] = React.useState('');
+  
+  const fieldConfig = {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    required: true,
+    placeholder: 'Enter your username',
+    helpText: 'Choose a unique username for your account.'
+  };
+
+return (
+
+<FormField field={fieldConfig} value={value} onChange={setValue} />
+); } `}>
+
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Email Input Field
+
+<LiveProvider code={`
+function EmailFieldExample() {
+  const [value, setValue] = React.useState('');
+  const [error, setError] = React.useState('');
+  
+  const fieldConfig = {
+    name: 'email',
+    label: 'Email Address',
+    type: 'email',
+    required: true,
+    placeholder: 'Enter your email address'
+  };
+
+const handleChange = (newValue) => {
+setValue(newValue);
+// Basic email validation
+if (newValue && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(newValue)) {
+setError('Please enter a valid email address');
+} else {
+setError('');
+}
+};
+
+return (
+
+<FormField
+  field={fieldConfig}
+  value={value}
+  onChange={handleChange}
+  error={error}
+/>
+); } `}>
+
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Select Field
+
+<LiveProvider code={`
+function SelectFieldExample() {
+  const [value, setValue] = React.useState('');
+  
+  const fieldConfig = {
+    name: 'role',
+    label: 'User Role',
+    type: 'select',
+    required: true,
+    placeholder: 'Select a role',
+    options: [
+      { value: 'admin', label: 'Administrator' },
+      { value: 'user', label: 'Regular User' },
+      { value: 'moderator', label: 'Moderator' }
+    ]
+  };
+
+return (
+
+<FormField field={fieldConfig} value={value} onChange={setValue} />
+); } `}>
+
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Boolean Field
+
+<LiveProvider code={`
+function BooleanFieldExample() {
+  const [value, setValue] = React.useState(false);
+  
+  const fieldConfig = {
+    name: 'newsletter',
+    label: 'Subscribe to Newsletter',
+    type: 'boolean',
+    helpText: 'Receive updates about new features and announcements.'
+  };
+
+return (
+
+<FormField field={fieldConfig} value={value} onChange={setValue} />
+); } `}>
+
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Date Field
+
+<LiveProvider code={`
+function DateFieldExample() {
+  const [value, setValue] = React.useState('');
+  
+  const fieldConfig = {
+    name: 'birthdate',
+    label: 'Date of Birth',
+    type: 'date',
+    required: true,
+    helpText: 'Please enter your date of birth.'
+  };
+
+return (
+
+<FormField field={fieldConfig} value={value} onChange={setValue} />
+); } `}>
+
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Integration with Forms
+
+The FormField component is designed to work seamlessly with form components:
+
+```jsx
+import { SimpleForm, FormField } from '@react-superadmin/web';
+
+const formFields = [
+  {
+    name: 'name',
+    label: 'Full Name',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+    required: true,
+  },
+  {
+    name: 'role',
+    label: 'Role',
+    type: 'select',
+    options: [
+      { value: 'admin', label: 'Administrator' },
+      { value: 'user', label: 'User' },
+    ],
+  },
+];
+
+function MyForm() {
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+  };
+
+  return (
+    <SimpleForm
+      fields={formFields}
+      onSubmit={handleSubmit}
+      renderField={(field, value, onChange, error) => (
+        <FormField
+          field={field}
+          value={value}
+          onChange={onChange}
+          error={error}
+        />
+      )}
+    />
+  );
+}
+```
+
+## Error Handling
+
+The FormField component provides built-in error display:
+
+```jsx
+function ErrorHandlingExample() {
+  const [value, setValue] = React.useState('');
+  const [error, setError] = React.useState('');
+
+  const validateField = newValue => {
+    if (!newValue) {
+      setError('This field is required');
+    } else if (newValue.length < 3) {
+      setError('Must be at least 3 characters long');
+    } else {
+      setError('');
+    }
+  };
+
+  const handleChange = newValue => {
+    setValue(newValue);
+    validateField(newValue);
+  };
+
+  return (
+    <FormField
+      field={{
+        name: 'username',
+        label: 'Username',
+        type: 'text',
+        required: true,
+      }}
+      value={value}
+      onChange={handleChange}
+      error={error}
+    />
+  );
+}
+```
+
+## Accessibility Features
+
+The FormField component includes several accessibility features:
+
+- **Proper Labels**: Each field has an associated label
+- **Required Indicators**: Visual indicators for required fields
+- **Error Announcements**: Screen reader announcements for errors
+- **Help Text**: Descriptive text for field guidance
+- **Keyboard Navigation**: Full keyboard accessibility
+
+## Related Components
+
+- [`SimpleForm`](./simple-form.mdx) - Simple form with automatic field rendering
+- [`ResourceForm`](./resource-form.mdx) - Resource-based form with validation
+- [`TabbedForm`](./tabbed-form.mdx) - Multi-tab form layout
+- [`TextInput`](./text-input.mdx) - Basic text input component
+- [`SelectInput`](./select-input.mdx) - Dropdown selection component
+- [`DateInput`](./date-input.mdx) - Date picker component
+- [`CheckboxInput`](./checkbox-input.mdx) - Boolean input component

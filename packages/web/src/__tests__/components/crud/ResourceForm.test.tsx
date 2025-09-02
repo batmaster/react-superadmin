@@ -12,19 +12,25 @@ jest.mock("@react-superadmin/core", () => ({
 // Mock the services
 jest.mock("../../../services/mockService", () => ({
   userService: {
-    create: jest.fn(),
-    read: jest.fn(),
-    update: jest.fn(),
+    instance: {
+      create: jest.fn(),
+      read: jest.fn(),
+      update: jest.fn(),
+    },
   },
   postService: {
-    create: jest.fn(),
-    read: jest.fn(),
-    update: jest.fn(),
+    instance: {
+      create: jest.fn(),
+      read: jest.fn(),
+      update: jest.fn(),
+    },
   },
   productService: {
-    create: jest.fn(),
-    read: jest.fn(),
-    update: jest.fn(),
+    instance: {
+      create: jest.fn(),
+      read: jest.fn(),
+      update: jest.fn(),
+    },
   },
 }));
 
@@ -330,7 +336,7 @@ describe("ResourceForm", () => {
   describe("Edit Mode", () => {
     it("shows edit title and description", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.read.mockResolvedValue(mockUserData);
+      userService.instance.read.mockResolvedValue(mockUserData);
 
       renderWithRouter(<ResourceForm />, "/users/1/edit");
 
@@ -344,7 +350,7 @@ describe("ResourceForm", () => {
 
     it("shows update button text", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.read.mockResolvedValue(mockUserData);
+      userService.instance.read.mockResolvedValue(mockUserData);
 
       renderWithRouter(<ResourceForm />, "/users/1/edit");
 
@@ -355,7 +361,7 @@ describe("ResourceForm", () => {
 
     it("loads existing data for editing", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.read.mockResolvedValue(mockUserData);
+      userService.instance.read.mockResolvedValue(mockUserData);
 
       renderWithRouter(<ResourceForm />, "/users/1/edit");
 
@@ -374,7 +380,7 @@ describe("ResourceForm", () => {
 
     it("handles loading errors gracefully", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.read.mockRejectedValue(new Error("Failed to load"));
+      userService.instance.read.mockRejectedValue(new Error("Failed to load"));
 
       renderWithRouter(<ResourceForm />, "/users/1/edit");
 
@@ -457,7 +463,7 @@ describe("ResourceForm", () => {
   describe("Form Submission", () => {
     it("calls create service when submitting new user form", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.create.mockResolvedValue({ id: 1 });
+      userService.instance.create.mockResolvedValue({ id: 1 });
 
       renderWithRouter(<ResourceForm />, "/users/create");
 
@@ -484,7 +490,7 @@ describe("ResourceForm", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(userService.create).toHaveBeenCalledWith({
+        expect(userService.instance.create).toHaveBeenCalledWith({
           name: "John Doe",
           email: "john@example.com",
           role: "admin",
@@ -495,8 +501,8 @@ describe("ResourceForm", () => {
 
     it("calls update service when submitting edit user form", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.read.mockResolvedValue(mockUserData);
-      userService.update.mockResolvedValue({ id: 1 });
+      userService.instance.read.mockResolvedValue(mockUserData);
+      userService.instance.update.mockResolvedValue({ id: 1 });
 
       renderWithRouter(<ResourceForm />, "/users/1/edit");
 
@@ -508,13 +514,16 @@ describe("ResourceForm", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(userService.update).toHaveBeenCalledWith("1", mockUserData);
+        expect(userService.instance.update).toHaveBeenCalledWith(
+          "1",
+          mockUserData,
+        );
       });
     });
 
     it("navigates back to resource list after successful submission", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.create.mockResolvedValue({ id: 1 });
+      userService.instance.create.mockResolvedValue({ id: 1 });
 
       renderWithRouter(<ResourceForm />, "/users/create");
 
@@ -547,7 +556,9 @@ describe("ResourceForm", () => {
 
     it("shows general error when submission fails", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.create.mockRejectedValue(new Error("Failed to save"));
+      userService.instance.create.mockRejectedValue(
+        new Error("Failed to save"),
+      );
 
       renderWithRouter(<ResourceForm />, "/users/create");
 
@@ -604,7 +615,9 @@ describe("ResourceForm", () => {
   describe("Loading States", () => {
     it("shows loading state on submit button during submission", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.create.mockImplementation(() => new Promise(() => {})); // Never resolves
+      userService.instance.create.mockImplementation(
+        () => new Promise(() => {}),
+      ); // Never resolves
 
       renderWithRouter(<ResourceForm />, "/users/create");
 
@@ -703,7 +716,7 @@ describe("ResourceForm", () => {
 
     it("handles form submission with partial data", async () => {
       const { userService } = jest.requireMock("../../../services/mockService");
-      userService.create.mockResolvedValue({ id: 1 });
+      userService.instance.create.mockResolvedValue({ id: 1 });
 
       renderWithRouter(<ResourceForm />, "/users/create");
 
@@ -723,7 +736,7 @@ describe("ResourceForm", () => {
         expect(screen.getByTestId("error-status")).toBeInTheDocument();
       });
 
-      expect(userService.create).not.toHaveBeenCalled();
+      expect(userService.instance.create).not.toHaveBeenCalled();
     });
   });
 });

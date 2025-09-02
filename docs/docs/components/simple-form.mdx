@@ -5,6 +5,7 @@ description: A flexible and customizable form component for building simple to c
 
 import { SimpleForm } from '@react-superadmin/web';
 import { useState } from 'react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 # SimpleForm
 
@@ -142,27 +143,31 @@ function SimpleFormExample() {
   };
 
   return (
-    <div className='space-y-6'>
-      <SimpleForm
-        fields={fields}
-        onSubmit={handleSubmit}
-        title='User Registration Form'
-        submitText='Create User'
-        layout='grid'
-        columns={2}
-      />
+    <BrowserOnly fallback={<div />}>
+      {() => (
+        <div className='space-y-6'>
+          <SimpleForm
+            fields={fields}
+            onSubmit={handleSubmit}
+            title='User Registration Form'
+            submitText='Create User'
+            layout='grid'
+            columns={2}
+          />
 
-      {submittedValues && (
-        <div className='mt-6 p-4 bg-green-50 border border-green-200 rounded-md'>
-          <h3 className='text-lg font-medium text-green-800 mb-2'>
-            Form Submitted Successfully!
-          </h3>
-          <pre className='text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto'>
-            {JSON.stringify(submittedValues, null, 2)}
-          </pre>
+          {submittedValues && (
+            <div className='mt-6 p-4 bg-green-50 border border-green-200 rounded-md'>
+              <h3 className='text-lg font-medium text-green-800 mb-2'>
+                Form Submitted Successfully!
+              </h3>
+              <pre className='text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto'>
+                {JSON.stringify(submittedValues, null, 2)}
+              </pre>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </BrowserOnly>
   );
 }
 ```
